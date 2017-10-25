@@ -18,6 +18,8 @@ public class UtenzaAcqua {
 	String CategoriaDescrizione;
 	String Contribuente;
 	String Interno;
+	String notabreve;
+	String codicefiscale;
 	Integer UtenzaCondominiale;
 	String NumeroDipendenze;
 	
@@ -88,6 +90,18 @@ public class UtenzaAcqua {
 	}
 	public void setDatafine(String datafine) {
 		this.datafine = datafine;
+	}
+	public String getNotabreve() {
+		return notabreve;
+	}
+	public void setNotabreve(String notabreve) {
+		this.notabreve = notabreve;
+	}
+	public String getCodicefiscale() {
+		return codicefiscale;
+	}
+	public void setCodicefiscale(String codicefiscale) {
+		this.codicefiscale = codicefiscale;
 	}
 	
 	

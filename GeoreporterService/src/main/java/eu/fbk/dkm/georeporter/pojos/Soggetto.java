@@ -13,6 +13,9 @@ public class Soggetto {
 	
 	String uri;
 	String codiceFiscale;
+	String partitaiva;
+	String tiposoggetto;
+	String denominazioneita;
 	String nome;
 	String cognome;
 	Date dataNascita;
@@ -75,5 +78,23 @@ public class Soggetto {
 	}
 	public void setIndirizzoresidenza(Indirizzo indirizzoresidenza) {
 		this.indirizzoresidenza = indirizzoresidenza;
+	}
+	public String getPartitaiva() {
+		return partitaiva;
+	}
+	public void setPartitaiva(String partitaiva) {
+		this.partitaiva = partitaiva;
+	}
+	public String getTiposoggetto() {
+		return tiposoggetto;
+	}
+	public void setTiposoggetto(String tiposoggetto) {
+		this.tiposoggetto = tiposoggetto;
+	}
+	public String getDenominazioneita() {
+		return denominazioneita;
+	}
+	public void setDenominazioneita(String denominazioneita) {
+		this.denominazioneita = denominazioneita;
 	}
 }

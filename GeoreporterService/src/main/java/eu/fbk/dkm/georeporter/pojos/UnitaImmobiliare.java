@@ -9,6 +9,7 @@ public class UnitaImmobiliare {
 	
 	
 	String uri;
+	String ui;
 	String piano;
 	String interno;
 	String scala;
@@ -64,6 +65,12 @@ public class UnitaImmobiliare {
 	}
 	public void setSuperficie(String superficie) {
 		this.superficie = superficie;
+	}
+	public String getUi() {
+		return ui;
+	}
+	public void setUi(String ui) {
+		this.ui = ui;
 	}
 	
 }

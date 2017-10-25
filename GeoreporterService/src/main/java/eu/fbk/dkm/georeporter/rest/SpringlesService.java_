@@ -98,14 +98,14 @@ import info.aduna.iteration.Iterations;
  *
  */
 @Path("/rest")
-public class GeoreporterService {
+public class SpringlesService {
 	
 	@Context
 	UriInfo uriInfo;
 	@Context
 	Request request;
 
-    public  GeoreporterService (){
+    public  SpringlesService (){
     	super();
     }
 

@@ -16,6 +16,7 @@ public class TributiICI {
 	String categoriadescrizione;
 	String contribuente;
 	String indirizzo;
+	String rendita;
 	public String getCodiceUtenza() {
 		return codiceUtenza;
 	}
@@ -63,6 +64,12 @@ public class TributiICI {
 	}
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
+	}
+	public String getRendita() {
+		return rendita;
+	}
+	public void setRendita(String rendita) {
+		this.rendita = rendita;
 	}
 
 }
