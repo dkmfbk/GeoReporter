@@ -1,0 +1,220 @@
+:progr a  owl:DatatypeProperty  ;
+rdfs:label "Progr" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:numero_famiglia a  owl:DatatypeProperty  ;
+rdfs:label "Numero_Famiglia" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:cod_frazione a  owl:DatatypeProperty  ;
+rdfs:label "Cod_Frazione" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:cod_via a  owl:DatatypeProperty  ;
+rdfs:label "Cod_Via" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:civico a  owl:DatatypeProperty  ;
+rdfs:label "Civico" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:barrato a  owl:DatatypeProperty  ;
+rdfs:label "Barrato" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:interno a  owl:DatatypeProperty  ;
+rdfs:label "Interno" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:descr_frazione a  owl:DatatypeProperty  ;
+rdfs:label "Descr_Frazione" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:descr_via a  owl:DatatypeProperty  ;
+rdfs:label "Descr_Via" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:cognome i.s./r.c. a  owl:DatatypeProperty  ;
+rdfs:label "Cognome I.S./R.C." ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:nome a  owl:DatatypeProperty  ;
+rdfs:label "Nome" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:data_nascita a  owl:DatatypeProperty  ;
+rdfs:label "Data_nascita" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:sesso a  owl:DatatypeProperty  ;
+rdfs:label "Sesso" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:citt a  owl:DatatypeProperty  ;
+rdfs:label "Citt" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:rel_par a  owl:DatatypeProperty  ;
+rdfs:label "Rel_par" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:eta a  owl:DatatypeProperty  ;
+rdfs:label "Eta" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:numero_comp a  owl:DatatypeProperty  ;
+rdfs:label "Numero_comp" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:isolato a  owl:DatatypeProperty  ;
+rdfs:label "Isolato" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:zona_montana a  owl:DatatypeProperty  ;
+rdfs:label "Zona_montana" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:circ a  owl:DatatypeProperty  ;
+rdfs:label "Circ" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:parr a  owl:DatatypeProperty  ;
+rdfs:label "Parr" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:sez_cens a  owl:DatatypeProperty  ;
+rdfs:label "Sez_cens" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:cap a  owl:DatatypeProperty  ;
+rdfs:label "Cap" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:convivenza a  owl:DatatypeProperty  ;
+rdfs:label "Convivenza" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:rione a  owl:DatatypeProperty  ;
+rdfs:label "Rione" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:area_c a  owl:DatatypeProperty  ;
+rdfs:label "Area_c" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:num_minori a  owl:DatatypeProperty  ;
+rdfs:label "Num_minori" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:num_figli a  owl:DatatypeProperty  ;
+rdfs:label "Num_Figli" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:num_figli_minori a  owl:DatatypeProperty  ;
+rdfs:label "Num_Figli_minori" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:num_figli_fino_26_anni a  owl:DatatypeProperty  ;
+rdfs:label "Num_Figli_fino_26_anni" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:num_figli_fino_6_anni a  owl:DatatypeProperty  ;
+rdfs:label "Num_Figli_fino_6_anni" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:unipersonale a  owl:DatatypeProperty  ;
+rdfs:label "Unipersonale" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:con_stranieri a  owl:DatatypeProperty  ;
+rdfs:label "Con_stranieri" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:citt_omogenea a  owl:DatatypeProperty  ;
+rdfs:label "Citt_omogenea" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:monoparentale a  owl:DatatypeProperty  ;
+rdfs:label "Monoparentale" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:padre_figli a  owl:DatatypeProperty  ;
+rdfs:label "Padre_figli" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:madre_figli a  owl:DatatypeProperty  ;
+rdfs:label "Madre_figli" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:ma_mg_senza_figli a  owl:DatatypeProperty  ;
+rdfs:label "MA_MG_senza_figli" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:solo_ultra65enni a  owl:DatatypeProperty  ;
+rdfs:label "Solo_ultra65enni" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:eta_min a  owl:DatatypeProperty  ;
+rdfs:label "Eta_min" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:eta_max a  owl:DatatypeProperty  ;
+rdfs:label "Eta_max" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:ultracentenari a  owl:DatatypeProperty  ;
+rdfs:label "Ultracentenari" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+
+:num_minori_fino_6_anni a  owl:DatatypeProperty  ;
+rdfs:label "Num_minori_fino_6_anni" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:int .
+
+:con_ultra64enni a  owl:DatatypeProperty  ;
+rdfs:label "Con_ultra64enni" ;
+rdfs:domain :AnagraficaComunale ;
+rdfs:range xsd:string .
+

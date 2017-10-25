@@ -1,0 +1,495 @@
+:codiceutenza a rdf:Property ;
+rdfs:label "CodiceUtenza" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codutenza a rdf:Property ;
+rdfs:label "CodUtenza" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:indirizzo a rdf:Property ;
+rdfs:label "Indirizzo" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:contribuente a rdf:Property ;
+rdfs:label "Contribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codcomune a rdf:Property ;
+rdfs:label "CodComune" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:datainizio a rdf:Property ;
+rdfs:label "DataInizio" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:datafine a rdf:Property ;
+rdfs:label "DataFine" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:numero a rdf:Property ;
+rdfs:label "Numero" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:localita a rdf:Property ;
+rdfs:label "Localita" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:esclusionefatturazione a rdf:Property ;
+rdfs:label "EsclusioneFatturazione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:bool .
+
+:particellaedificabile a rdf:Property ;
+rdfs:label "ParticellaEdificabile" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:subalterno a rdf:Property ;
+rdfs:label "Subalterno" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codiceecografico a rdf:Property ;
+rdfs:label "CodiceEcografico" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:oggetto a rdf:Property ;
+rdfs:label "Oggetto" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:_comune a rdf:Property ;
+rdfs:label "_Comune" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codcondominio a rdf:Property ;
+rdfs:label "CodCondominio" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codfiscale a rdf:Property ;
+rdfs:label "CodFiscale" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codicepod a rdf:Property ;
+rdfs:label "CodicePOD" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codicepodpresente a rdf:Property ;
+rdfs:label "CodicePODPresente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:occupante a rdf:Property ;
+rdfs:label "Occupante" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codicecliente a rdf:Property ;
+rdfs:label "CodiceCliente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:foglio a rdf:Property ;
+rdfs:label "Foglio" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:categoria a rdf:Property ;
+rdfs:label "Categoria" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:proprieta a rdf:Property ;
+rdfs:label "Proprieta" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:comunecatastale a rdf:Property ;
+rdfs:label "ComuneCatastale" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codicecontribuente a rdf:Property ;
+rdfs:label "CodiceContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:toponimo a rdf:Property ;
+rdfs:label "Toponimo" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:denominazione a rdf:Property ;
+rdfs:label "Denominazione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:lettera a rdf:Property ;
+rdfs:label "Lettera" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:denominazionetipodenunciainizio a rdf:Property ;
+rdfs:label "DenominazioneTipoDenunciaInizio" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codesternoareacircolazione a rdf:Property ;
+rdfs:label "CodEsternoAreaCircolazione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:denominazionecircoscrizione a rdf:Property ;
+rdfs:label "DenominazioneCircoscrizione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:porzionemateriale a rdf:Property ;
+rdfs:label "PorzioneMateriale" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:tag a rdf:Property ;
+rdfs:label "Tag" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codicecontrattocomunale a rdf:Property ;
+rdfs:label "CodiceContrattoComunale" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:partitaiva a rdf:Property ;
+rdfs:label "PartitaIVA" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:particellaestensione a rdf:Property ;
+rdfs:label "ParticellaEstensione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:utenzacondominiale a rdf:Property ;
+rdfs:label "UtenzaCondominiale" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:codcategoriautenza a rdf:Property ;
+rdfs:label "CodCategoriaUtenza" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:categoriadescrizione a rdf:Property ;
+rdfs:label "CategoriaDescrizione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codtitolooccupazione a rdf:Property ;
+rdfs:label "CodTitoloOccupazione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:indirizzocontribuente a rdf:Property ;
+rdfs:label "IndirizzoContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:datadenunciainizio a rdf:Property ;
+rdfs:label "DataDenunciaInizio" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:capcontribuente a rdf:Property ;
+rdfs:label "CAPContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:comunecontribuente a rdf:Property ;
+rdfs:label "ComuneContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:provcontribuente a rdf:Property ;
+rdfs:label "ProvContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:pressocontribuente a rdf:Property ;
+rdfs:label "PressoContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:indirizzorecapitocontribuente a rdf:Property ;
+rdfs:label "IndirizzoRecapitoContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:caprecapitocontribuente a rdf:Property ;
+rdfs:label "CAPRecapitoContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:comunerecapitocontribuente a rdf:Property ;
+rdfs:label "ComuneRecapitoContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:provrecapitocontribuente a rdf:Property ;
+rdfs:label "ProvRecapitoContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:pressorecapitocontribuente a rdf:Property ;
+rdfs:label "PressoRecapitoContribuente" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:interno a rdf:Property ;
+rdfs:label "Interno" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codutenzacomunale a rdf:Property ;
+rdfs:label "CodUtenzaComunale" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:codicepratica a rdf:Property ;
+rdfs:label "CodicePratica" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:annopratica a rdf:Property ;
+rdfs:label "AnnoPratica" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:numerodipendenze a rdf:Property ;
+rdfs:label "NumeroDipendenze" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:codtipodenunciainizio a rdf:Property ;
+rdfs:label "CodTipoDenunciaInizio" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:codtipodenunciafine a rdf:Property ;
+rdfs:label "CodTipoDenunciaFine" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:sezione a rdf:Property ;
+rdfs:label "Sezione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:login a rdf:Property ;
+rdfs:label "Login" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:password a rdf:Property ;
+rdfs:label "Password" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:note a rdf:Property ;
+rdfs:label "Note" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:notabreve a rdf:Property ;
+rdfs:label "NotaBreve" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:datanascita a rdf:Property ;
+rdfs:label "DataNascita" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:luogonascita a rdf:Property ;
+rdfs:label "LuogoNascita" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:contrattofirmato a rdf:Property ;
+rdfs:label "ContrattoFirmato" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:bool .
+
+:_numerorecord a rdf:Property ;
+rdfs:label "_NumeroRecord" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:_numeropagina a rdf:Property ;
+rdfs:label "_NumeroPagina" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:_numeroriga a rdf:Property ;
+rdfs:label "_NumeroRiga" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:autoreultimavariazione a rdf:Property ;
+rdfs:label "AutoreUltimaVariazione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:dataultimavariazione a rdf:Property ;
+rdfs:label "DataUltimaVariazione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:float .
+
+:codiceconsegna a rdf:Property ;
+rdfs:label "CodiceConsegna" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codicepratica a rdf:Property ;
+rdfs:label "CodicePratica" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:annopratica a rdf:Property ;
+rdfs:label "AnnoPratica" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:statocodicepdf a rdf:Property ;
+rdfs:label "StatoCodicePDF" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:statocodpdf a rdf:Property ;
+rdfs:label "StatoCodPDF" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:riferimento a rdf:Property ;
+rdfs:label "Riferimento" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:mqlocalipertinenza a rdf:Property ;
+rdfs:label "MQLocaliPertinenza" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:mqcatastali a rdf:Property ;
+rdfs:label "MqCatastali" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:utenzagiornaliera a rdf:Property ;
+rdfs:label "UtenzaGiornaliera" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:bool .
+
+:dataconcessione a rdf:Property ;
+rdfs:label "DataConcessione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:numconcessione a rdf:Property ;
+rdfs:label "NumConcessione" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:enteconcessionario a rdf:Property ;
+rdfs:label "EnteConcessionario" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:componentianagrafe a rdf:Property ;
+rdfs:label "ComponentiAnagrafe" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:utenzaorigine a rdf:Property ;
+rdfs:label "UtenzaOrigine" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:esclusioneallineamentoanagrafe a rdf:Property ;
+rdfs:label "EsclusioneAllineamentoAnagrafe" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:bool .
+
+:login a rdf:Property ;
+rdfs:label "Login" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:password a rdf:Property ;
+rdfs:label "Password" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:email a rdf:Property ;
+rdfs:label "Email" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:rendita a rdf:Property ;
+rdfs:label "Rendita" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:float .
+
+:esclusionefatturazionec a rdf:Property ;
+rdfs:label "EsclusioneFatturazioneC" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:bool .
+
+:codcategoriautenza a rdf:Property ;
+rdfs:label "CodCategoriaUtenza" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:nomecondominio a rdf:Property ;
+rdfs:label "NomeCondominio" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:consistenza a rdf:Property ;
+rdfs:label "Consistenza" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:codiceesternoutenza a rdf:Property ;
+rdfs:label "CodiceEsternoUtenza" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:string .
+
+:_numerorecord a rdf:Property ;
+rdfs:label "_NumeroRecord" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:_numeropagina a rdf:Property ;
+rdfs:label "_NumeroPagina" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
+:_numeroriga a rdf:Property ;
+rdfs:label "_NumeroRiga" ;
+rdfs:domain :UtenzaAcqua ;
+rdfs:range xsd:int .
+
