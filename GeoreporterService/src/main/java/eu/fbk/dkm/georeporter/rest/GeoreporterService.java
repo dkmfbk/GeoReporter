@@ -42,6 +42,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.type.MapType;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.openrdf.OpenRDFException;
@@ -861,9 +862,9 @@ public class GeoreporterService {
 	) {
 
 		String result = "FAIL";
-		ObjectMapper mapper = new ObjectMapper();
-		MapType type = mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
-		Map<String, Object> data;
+	//	ObjectMapper mapper = new ObjectMapper();
+	//	MapType type = mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
+	//	Map<String, Object> data;
 
 		// data = mapper.readValue(input, type);
 
@@ -1710,6 +1711,94 @@ public class GeoreporterService {
 		return listaAttributi;
 	}
 
+	@GET
+	@Path("/checkesiste")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String  getCheckEsiste(
+
+			
+			JSONObject input
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+String result="";
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<Attributo> listaAttributi = new ArrayList<Attributo>();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		
+		JSONArray chiave_array;
+		String nometabella;
+	
+			try {
+				nometabella = (String) input.get("nometabella");
+				chiave_array = (JSONArray) input.getJSONArray("chiave");
+			
+				
+		
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+			ValueFactory factory = myRepository.getValueFactory();
+			
+			
+			String listaattributi =buidListaAttributi(chiave_array, factory);
+			
+			
+			String queryString = queryStringPrefix
+
+					+ "select ?uriid  where { "
+					+ " :uriid  a" + nometabella + " ."
+					+ listaattributi + "}";
+
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value uriid= bindingSet.getValue("uriid");
+			
+				if (uriid!=null)
+					result=uriid.stringValue();
+				
+			}
+			
+				
+				
+			qresult.close();
+			connection.close();
+		
+		
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	
+		
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+		}
+		}	 catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return result;
+	}
+	
 	public static HashMap<String, String> jsonToMap(JSONObject jObject) throws JSONException {
 
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -1727,4 +1816,37 @@ public class GeoreporterService {
 		System.out.println("map : " + map);
 		return map;
 	}
+	private String buidListaAttributi(JSONArray lista_attributi, ValueFactory factory) throws JSONException {
+		
+		String result="";
+		
+		
+		for (int i = 0; i < lista_attributi.length(); ++i) {
+			try {
+			JSONObject  rec = lista_attributi.getJSONObject(i);
+			 Attributo attr = new Attributo();
+		    attr.setNome(rec.getString("nome"));
+		    attr.setValore(rec.getString("valore"));
+		    attr.setTipo(rec.getString("tipo"));
+		  
+		 
+		   result = result + ":"+attr.getNome()+ "="+ getLiteral(attr, factory) +" . "; 
+		
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		   
+		   
+		    
+		    // ...
+		}
+return result;
+		
+		
+		
+	}
+
+		
 }
