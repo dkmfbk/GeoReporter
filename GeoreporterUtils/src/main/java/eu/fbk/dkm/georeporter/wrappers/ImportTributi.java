@@ -32,14 +32,14 @@ import org.apache.poi.xssf.usermodel.ListAutoNumber;
 
 import com.google.common.collect.Sets;
 
-import eu.dbk.dkm.georeporter.wrappers.pojo.Acqua;
-import eu.dbk.dkm.georeporter.wrappers.pojo.ICI_IMU;
-import eu.dbk.dkm.georeporter.wrappers.pojo.IdentificativiCatastali;
-import eu.dbk.dkm.georeporter.wrappers.pojo.Particella;
-import eu.dbk.dkm.georeporter.wrappers.pojo.Rifiuti;
-import eu.dbk.dkm.georeporter.wrappers.pojo.Soggetto;
-import eu.dbk.dkm.georeporter.wrappers.pojo.Titolarita;
-import eu.dbk.dkm.georeporter.wrappers.pojo.UnitaImmobiliare;
+import eu.fbk.dkm.georeporter.wrappers.pojo.Acqua;
+import eu.fbk.dkm.georeporter.wrappers.pojo.ICI_IMU;
+import eu.fbk.dkm.georeporter.wrappers.pojo.IdentificativiCatastali;
+import eu.fbk.dkm.georeporter.wrappers.pojo.Particella;
+import eu.fbk.dkm.georeporter.wrappers.pojo.Rifiuti;
+import eu.fbk.dkm.georeporter.wrappers.pojo.Soggetto;
+import eu.fbk.dkm.georeporter.wrappers.pojo.Titolarita;
+import eu.fbk.dkm.georeporter.wrappers.pojo.UnitaImmobiliare;
 
 public class ImportTributi {
 

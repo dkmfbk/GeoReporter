@@ -1,4 +1,4 @@
-package eu.dbk.dkm.georeporter.wrappers.pojo;
+package eu.fbk.dkm.georeporter.wrappers.pojo;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;

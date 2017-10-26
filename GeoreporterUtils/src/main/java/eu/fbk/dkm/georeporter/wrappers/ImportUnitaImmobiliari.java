@@ -32,9 +32,9 @@ import org.apache.poi.xssf.usermodel.ListAutoNumber;
 
 import com.google.common.collect.Sets;
 
-import eu.dbk.dkm.georeporter.wrappers.pojo.IdentificativiCatastali;
-import eu.dbk.dkm.georeporter.wrappers.pojo.Particella;
-import eu.dbk.dkm.georeporter.wrappers.pojo.UnitaImmobiliare;
+import eu.fbk.dkm.georeporter.wrappers.pojo.IdentificativiCatastali;
+import eu.fbk.dkm.georeporter.wrappers.pojo.Particella;
+import eu.fbk.dkm.georeporter.wrappers.pojo.UnitaImmobiliare;
 
 public class ImportUnitaImmobiliari {
 

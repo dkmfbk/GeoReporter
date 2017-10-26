@@ -70,8 +70,8 @@ import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.gson.Gson;
 
-import eu.dbk.dkm.georeporter.wrappers.pojo.DataProperty;
-import eu.dbk.dkm.georeporter.wrappers.pojo.RowNumberTable;
+import eu.fbk.dkm.georeporter.wrappers.pojo.DataProperty;
+import eu.fbk.dkm.georeporter.wrappers.pojo.RowNumberTable;
 import eu.fbk.dkm.wrappers.utils.TableColumnAdjuster;
 import jxl.read.biff.BiffException;
 

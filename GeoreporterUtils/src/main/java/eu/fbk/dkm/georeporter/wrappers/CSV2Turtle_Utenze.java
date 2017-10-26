@@ -25,7 +25,7 @@ import org.apache.poi.ss.usermodel.CellType;
 
 import com.google.common.collect.Sets;
 
-import eu.dbk.dkm.georeporter.wrappers.pojo.DataProperty;
+import eu.fbk.dkm.georeporter.wrappers.pojo.DataProperty;
 
 public class CSV2Turtle_Utenze {
 

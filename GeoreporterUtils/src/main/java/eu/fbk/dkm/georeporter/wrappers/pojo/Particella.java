@@ -1,4 +1,4 @@
-package eu.dbk.dkm.georeporter.wrappers.pojo;
+package eu.fbk.dkm.georeporter.wrappers.pojo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package eu.dbk.dkm.georeporter.wrappers.pojo;
+package eu.fbk.dkm.georeporter.wrappers.pojo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ICI_IMU {
+public class Acqua {
 
 	
 	String uri;
@@ -119,7 +119,7 @@ public class ICI_IMU {
 	public void setValori(Map<String, String> valori) {
 		this.valori = valori;
 	}
-	public ICI_IMU() {
+	public Acqua() {
 	
 		// TODO Auto-generated constructor stub
 	}
