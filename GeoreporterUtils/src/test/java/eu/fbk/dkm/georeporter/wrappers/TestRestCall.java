@@ -71,7 +71,7 @@ public class TestRestCall {
 	        //CAMPI OBBLIGATORI!!!
 	        obj.addProperty("idtabella","UnitaImmobiliare");
 	        obj.addProperty("uriid","1234999");
-	
+
 	        obj.addProperty("http://dkm.fbk.eu/georeporter#codiceAmministrativo","1234999");
 	        obj.addProperty("http://dkm.fbk.eu/georeporter#progressivo", "12345");
 	        obj.addProperty("http://dkm.fbk.eu/georeporter#superficie", "205");
