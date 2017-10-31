@@ -1,4 +1,4 @@
-package eu.fbk.dkm.georeporter.pojos;
+package eu.fbk.dkm.georeporter.interfaces;
 
 
 
@@ -9,7 +9,7 @@ package eu.fbk.dkm.georeporter.pojos;
 	//@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
 	public class Attributo {
 
-		
+		String idDomain;
 		String nome;
 		String tipo;
 		String valore;
@@ -38,6 +38,7 @@ package eu.fbk.dkm.georeporter.pojos;
 		public void setMapping(String mapping) {
 			this.mapping = mapping;
 		}
+
 		
 		
 		

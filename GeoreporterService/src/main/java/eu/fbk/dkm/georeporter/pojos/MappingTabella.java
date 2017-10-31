@@ -7,6 +7,8 @@ package eu.fbk.dkm.georeporter.pojos;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import eu.fbk.dkm.georeporter.interfaces.Attributo;
+
 	@XmlRootElement
 	//@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
 	public class MappingTabella {

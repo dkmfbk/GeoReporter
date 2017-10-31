@@ -38,6 +38,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.naming.factory.ResourceFactory;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -64,10 +65,13 @@ import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.http.HTTPRepository;
 
+import com.google.gson.Gson;
 import com.sun.jersey.api.json.JSONWithPadding;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 
-import eu.fbk.dkm.georeporter.pojos.Attributo;
+import eu.fbk.dkm.georeporter.interfaces.Attributo;
+import eu.fbk.dkm.georeporter.interfaces.Relazione;
+import eu.fbk.dkm.georeporter.interfaces.RigaTabella;
 import eu.fbk.dkm.georeporter.pojos.FornituraEnergia;
 import eu.fbk.dkm.georeporter.pojos.FornituraGas;
 import eu.fbk.dkm.georeporter.pojos.FornituraLocazioni;
@@ -862,6 +866,84 @@ public class GeoreporterService {
 	) {
 
 		String result = "FAIL";
+
+		Gson gson = new Gson();
+		String json = gson.toJson(input.toString());
+
+		System.out.println(json);
+		RigaTabella rigatabella = gson.fromJson(input.toString(), RigaTabella.class);
+				
+		
+		try {
+			
+
+			Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+
+			List<Attributo> tableAttributiChiave_List = rigatabella.getListachiave();
+			List<Attributo> tableAttributi_List = rigatabella.getListaattributi();
+            List<Relazione> tableRelazioni_List= rigatabella.getListarelazioni();
+			// converto la lista in HM
+			
+
+			myRepository.initialize();
+			RepositoryConnection con = myRepository.getConnection();
+			String queryString = "";
+
+			ValueFactory factory = myRepository.getValueFactory();
+			URI uriid = factory.createURI(":"+rigatabella.getUririga());
+			URI tabella = factory.createURI(":" + rigatabella.getNometabella());
+			
+		//	URI context = factory.createURI(uricontesto);
+
+			con.begin();
+			con.add(uriid, RDF.TYPE, tabella);
+
+			
+			
+			for (Attributo attributoChiave : tableAttributiChiave_List) {
+				Literal lit = getLiteral(attributoChiave, factory);
+				con.add(uriid, factory.createURI(attributoChiave.getMapping()), lit);
+				System.out.println(uriid + " " + factory.createURI(attributoChiave.getMapping()) + " " + lit + " " );
+			}
+			
+			if (tableAttributi_List!=null) {
+			for (Attributo attributo : tableAttributi_List) {
+				Literal lit = getLiteral(attributo, factory);
+				con.add(uriid, factory.createURI(attributo.getMapping()), lit);
+				System.out.println(uriid + " " + factory.createURI(attributo.getMapping()) + " " + lit + " " );
+			}
+			}
+			if (tableRelazioni_List!=null) {
+			for (Relazione relazione : tableRelazioni_List) {
+				//Literal lit = getLiteral(attributo, factory);
+				con.add( factory.createURI(relazione.getUriDomain()), factory.createURI(relazione.getNomerelazione()), factory.createURI(relazione.getUriRange()));
+				System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
+			}
+			}
+
+			con.commit();
+
+	
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	
+	@POST
+	@Path("/inseriscirigassss")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String insertTableRowssssss(
+
+			JSONObject input
+
+	) {
+
+		String result = "FAIL";
 	//	ObjectMapper mapper = new ObjectMapper();
 	//	MapType type = mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
 	//	Map<String, Object> data;
@@ -925,7 +1007,7 @@ public class GeoreporterService {
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			System.out.println("ERRORE: parametro iduri o idtabella mancante");
+			System.out.println("ERROREzxsss: parametro iduri o idtabella mancante");
 			// e.printStackTrace();
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
@@ -934,6 +1016,7 @@ public class GeoreporterService {
 
 		return result;
 	}
+	
 
 	public Literal getLiteral(Attributo attributo, ValueFactory factory) {
 
@@ -1042,8 +1125,11 @@ public class GeoreporterService {
 
 		String uiuri;
 		try {
-			uiuri = (String) input.get("uiuri");
+			uiuri = input.getString("uiuri");
 
+			
+			
+			
 			Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
 			if ((uiuri == null) || uiuri.equals("")) {
 
@@ -1061,6 +1147,11 @@ public class GeoreporterService {
 		return result;
 	}
 
+	
+	
+	
+	
+	
 	@POST
 	@Path("/indentificativocatastale")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -1734,7 +1825,8 @@ String result="";
 	
 			try {
 				nometabella = (String) input.get("nometabella");
-				chiave_array = (JSONArray) input.getJSONArray("chiave");
+				chiave_array = (JSONArray) input.getJSONArray(""
+						+ "");
 			
 				
 		
@@ -1751,7 +1843,7 @@ String result="";
 			String queryString = queryStringPrefix
 
 					+ "select ?uriid  where { "
-					+ " :uriid  a" + nometabella + " ."
+					+ " ?uriid  a" + nometabella + " ."
 					+ listaattributi + "}";
 
 			System.out.println(queryString);
