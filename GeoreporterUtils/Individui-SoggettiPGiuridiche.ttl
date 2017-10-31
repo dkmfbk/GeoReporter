@@ -1,0 +1,408 @@
+:sog_10004100 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:sedeita "TRENTO" ;
+:sede "L378" ;
+:denominazioneted "ISTITUTO TRENTINO PER L' EDILIZIA ABITATIVA I.T.E.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "ISTITUTO TRENTINO PER L' EDILIZIA ABITATIVA I.T.E.A." ;
+:identificativosoggetto "10004100" .
+:sog_10083313 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "1807370224" ;
+:sedeita "TRENTO" ;
+:sede "L378" ;
+:denominazioneted "TRENTINO TRASPORTI S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "TRENTINO TRASPORTI S.P.A." ;
+:identificativosoggetto "10083313" .
+:sog_10191131 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "125390229" ;
+:denominazioneted "COMUNE DI ROVERETO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI ROVERETO" ;
+:identificativosoggetto "10191131" .
+:sog_10273365 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "1932800228" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "SOCIETA' ELETTRICA TRENTINA PER LA DISTRIBUZIONE DI ENERGIA ELETTRICA S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "SOCIETA' ELETTRICA TRENTINA PER LA DISTRIBUZIONE DI ENERGIA ELETTRICA S.P.A." ;
+:identificativosoggetto "10273365" .
+:sog_10714654 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "270830227" ;
+:denominazioneted "COMUNE DI TRAMBILENO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI TRAMBILENO" ;
+:identificativosoggetto "10714654" .
+:sog_10714655 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "270840226" ;
+:denominazioneted "COMUNE DI VALLARSA" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI VALLARSA" ;
+:identificativosoggetto "10714655" .
+:sog_10737732 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "80003990225" ;
+:sedeita "TRENTO" ;
+:sede "L378" ;
+:denominazioneted "SOCIETA' ALPINISTI TRIDENTINI S.A.T." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "SOCIETA' ALPINISTI TRIDENTINI S.A.T." ;
+:identificativosoggetto "10737732" .
+:sog_10782615 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "267990224" ;
+:denominazioneted "COMUNE DI TERRAGNOLO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI TERRAGNOLO" ;
+:identificativosoggetto "10782615" .
+:sog_10796930 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "MARFIN SOCIETA' PER AZIONI IN SIGLA MARFIN S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "MARFIN SOCIETA' PER AZIONI IN SIGLA MARFIN S.P.A." ;
+:identificativosoggetto "10796930" .
+:sog_10824167 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:sedeita "ROVERETO" ;
+:denominazioneted "AMICI DEL PASUBIO IN PERSONA DEL LEGALE RAPPRESENTANTE PRO TEMPORE" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "AMICI DEL PASUBIO IN PERSONA DEL LEGALE RAPPRESENTANTE PRO TEMPORE" ;
+:identificativosoggetto "10824167" .
+:sog_10824184 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:sedeita "POZZA DI TRAMBILENO" ;
+:denominazioneted "FAMIGLIA COOPERATIVA DI TRAMBILENO COOPERATIVA A R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "FAMIGLIA COOPERATIVA DI TRAMBILENO COOPERATIVA A R.L." ;
+:identificativosoggetto "10824184" .
+:sog_10824188 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:denominazioneted "FRAZIONE DEI MOSCARI" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "FRAZIONE DEI MOSCARI" ;
+:identificativosoggetto "10824188" .
+:sog_10824189 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:denominazioneted "FRAZIONE DI POZZACCHIO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "FRAZIONE DI POZZACCHIO" ;
+:identificativosoggetto "10824189" .
+:sog_10824197 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:sedeita "ROVERETO" ;
+:denominazioneted "PARROCCHIA DI S. MARIA DEL MONTE CARMELO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "PARROCCHIA DI S. MARIA DEL MONTE CARMELO" ;
+:identificativosoggetto "10824197" .
+:sog_10824198 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "94005350221" ;
+:sedeita "TRAMBILENO FRAZ. MOSCHERI" ;
+:sede "L322" ;
+:denominazioneted "PARROCCHIA DI S. MAURO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "PARROCCHIA DI S. MAURO" ;
+:identificativosoggetto "10824198" .
+:sog_10824222 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:denominazioneted "VICINIA DELLA GIAZZERA" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "VICINIA DELLA GIAZZERA" ;
+:identificativosoggetto "10824222" .
+:sog_10826145 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:denominazioneted "COMUNE DI SCHIO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI SCHIO" ;
+:identificativosoggetto "10826145" .
+:sog_10826162 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "QUICK POINT DI AITA MARCO E C. S.N.C." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "QUICK POINT DI AITA MARCO E C. S.N.C." ;
+:identificativosoggetto "10826162" .
+:sog_10877045 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:originecodicefiscale "R" ;
+:codicefiscale "337460224" ;
+:denominazioneted "PROVINCIA AUTONOMA DI TRENTO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "PROVINCIA AUTONOMA DI TRENTO" ;
+:identificativosoggetto "10877045" .
+:sog_10877143 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:denominazioneted "PARROCCHIA DI S. VALENTINO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "PARROCCHIA DI S. VALENTINO" ;
+:identificativosoggetto "10877143" .
+:sog_10878020 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:denominazioneted "FRAZIONE DELLA POZZA" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "FRAZIONE DELLA POZZA" ;
+:identificativosoggetto "10878020" .
+:sog_11115513 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "617930227" ;
+:sedeita "FOLGARIA" ;
+:sede "D651" ;
+:denominazioneted "IMPRESA PLOTEGHER S.N.C. DI PLOTEGHER MARCO & C." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "IMPRESA PLOTEGHER S.N.C. DI PLOTEGHER MARCO & C." ;
+:identificativosoggetto "11115513" .
+:sog_11211905 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "94005340222" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "PARROCCHIA DI S. VALENTINO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "PARROCCHIA DI S. VALENTINO" ;
+:identificativosoggetto "11211905" .
+:sog_11245361 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1543190225" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "TASIN INIZIATIVE S.R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "TASIN INIZIATIVE S.R.L." ;
+:identificativosoggetto "11245361" .
+:sog_11251549 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "411560220" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "BROFIMA SOCIETA' A RESPONSABILITA' LIMITATA IN SIGLA BROFIMA S.R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "BROFIMA SOCIETA' A RESPONSABILITA' LIMITATA IN SIGLA BROFIMA S.R.L." ;
+:identificativosoggetto "11251549" .
+:sog_11273905 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1932800228" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "SOCIETA' ELETTRICA TRENTINA PER LA DISTRIBUZIONE DI ENERGIA ELETTRICA S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "SOCIETA' ELETTRICA TRENTINA PER LA DISTRIBUZIONE DI ENERGIA ELETTRICA S.P.A." ;
+:identificativosoggetto "11273905" .
+:sog_11281445 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1941340224" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "LENO INIZIATIVE S.R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "LENO INIZIATIVE S.R.L." ;
+:identificativosoggetto "11281445" .
+:sog_11332337 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1694750223" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "MARAL S.R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "MARAL S.R.L." ;
+:identificativosoggetto "11332337" .
+:sog_11393471 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "123240228" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "TRENTINO SVILUPPO S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "TRENTINO SVILUPPO S.P.A." ;
+:identificativosoggetto "11393471" .
+:sog_11405219 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "123240228" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "TRENTINO SVILUPPO S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "TRENTINO SVILUPPO S.P.A." ;
+:identificativosoggetto "11405219" .
+:sog_11413734 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "270830227" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "COMUNE DI TRAMBILENO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI TRAMBILENO" ;
+:identificativosoggetto "11413734" .
+:sog_11422135 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "5727920968" ;
+:sedeita "MILANO" ;
+:sede "F205" ;
+:denominazioneted "REAL S.R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "REAL S.R.L." ;
+:identificativosoggetto "11422135" .
+:sog_11454051 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "2041680220" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "GINA DI CRISTOFORETTI RITA & C. S.A.S." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "GINA DI CRISTOFORETTI RITA & C. S.A.S." ;
+:identificativosoggetto "11454051" .
+:sog_11460407 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1904880224" ;
+:sedeita "TRENTO" ;
+:sede "L378" ;
+:denominazioneted "TRENTINO NETWORK S.R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "TRENTINO NETWORK S.R.L." ;
+:identificativosoggetto "11460407" .
+:sog_11494090 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "270830227" ;
+:denominazioneted "COMUNE DI TRAMBILENO - BENE PUBBLICO STRADE" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI TRAMBILENO - BENE PUBBLICO STRADE" ;
+:identificativosoggetto "11494090" .
+:sog_11550859 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "2093810220" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "SALUMIFICIO MARSILLI 1914 S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "SALUMIFICIO MARSILLI 1914 S.P.A." ;
+:identificativosoggetto "11550859" .
+:sog_11583386 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "2212130229" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "CARPINUS SOCIETA' A RESPONSABILITA' LIMITATA" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "CARPINUS SOCIETA' A RESPONSABILITA' LIMITATA" ;
+:identificativosoggetto "11583386" .
+:sog_11595427 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1522740222" ;
+:sedeita "VILLA LAGARINA" ;
+:sede "L957" ;
+:denominazioneted "FIORITO COSTRUZIONI SOCIETA' A RESPONSABILITA' LIMITATA" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "FIORITO COSTRUZIONI SOCIETA' A RESPONSABILITA' LIMITATA" ;
+:identificativosoggetto "11595427" .
+:sog_11658456 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "270830227" ;
+:denominazioneted "COMUNE DI TRAMBILENO" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "COMUNE DI TRAMBILENO" ;
+:identificativosoggetto "11658456" .
+:sog_11677004 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "215120239" ;
+:sedeita "VERONA" ;
+:sede "L781" ;
+:denominazioneted "AZIENDA GENERALE SERVIZI MUNICIPALI DI VERONA S.P.A. - ABBR. AGSM VERONA S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "AZIENDA GENERALE SERVIZI MUNICIPALI DI VERONA S.P.A. - ABBR. AGSM VERONA S.P.A." ;
+:identificativosoggetto "11677004" .
+:sog_11739679 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1248360222" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "S.C.S. SOCIETA' COOPERATIVA" ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "S.C.S. SOCIETA' COOPERATIVA" ;
+:identificativosoggetto "11739679" .
+:sog_11757562 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1754250221" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "CLIMART S.R.L." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "CLIMART S.R.L." ;
+:identificativosoggetto "11757562" .
+:sog_11810859 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "226870228" ;
+:sedeita "TRAMBILENO" ;
+:sede "L322" ;
+:denominazioneted "MARFIN SOCIETA' PER AZIONI IN SIGLA MARFIN S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "MARFIN SOCIETA' PER AZIONI IN SIGLA MARFIN S.P.A." ;
+:identificativosoggetto "11810859" .
+:sog_11883342 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1614640223" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "DOLOMITI ENERGIA HOLDING S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "DOLOMITI ENERGIA HOLDING S.P.A." ;
+:identificativosoggetto "11883342" .
+:sog_11883348 rdf:type owl:NamedIndividual ,
+:PersonaGiuridica  ;
+:codicefiscale "1405600220" ;
+:sedeita "ROVERETO" ;
+:denominazioneted "NOVARETI S.P.A." ;
+:codiceamministrativo "L322" ;
+:tiposoggetto "G" ;
+:denominazioneita "NOVARETI S.P.A." ;
+:identificativosoggetto "11883348" .

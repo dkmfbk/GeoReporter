@@ -1,0 +1,495 @@
+:codiceutenza a rdf:Property ;
+rdfs:label "CodiceUtenza" ;
+rdfs:domain :Tributi_e_Utenze ;
+rdfs:range xsd:string .
+
+:codutenza a rdf:Property ;
+rdfs:label "CodUtenza" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:tipoutenza a rdf:Property ;
+rdfs:label "TipoUtenza" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codcategoriautenzacomunale a rdf:Property ;
+rdfs:label "CodCategoriaUtenzaComunale" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:descrizione a rdf:Property ;
+rdfs:label "Descrizione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:indirizzo a rdf:Property ;
+rdfs:label "Indirizzo" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:contribuente a rdf:Property ;
+rdfs:label "Contribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codcomune a rdf:Property ;
+rdfs:label "CodComune" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:datainizio a rdf:Property ;
+rdfs:label "DataInizio" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:datafine a rdf:Property ;
+rdfs:label "DataFine" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:numero a rdf:Property ;
+rdfs:label "Numero" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:mqlocali a rdf:Property ;
+rdfs:label "MQLocali" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:float .
+
+:codmacrocategoria a rdf:Property ;
+rdfs:label "CodMacroCategoria" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:localita a rdf:Property ;
+rdfs:label "Localita" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:esclusionefatturazione a rdf:Property ;
+rdfs:label "EsclusioneFatturazione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:bool .
+
+:particellaedificabile a rdf:Property ;
+rdfs:label "ParticellaEdificabile" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:subalterno a rdf:Property ;
+rdfs:label "Subalterno" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codiceecografico a rdf:Property ;
+rdfs:label "CodiceEcografico" ;
+rdfs:domain :Utenze;
+rdfs:range xsd:string .
+
+:oggetto a rdf:Property ;
+rdfs:label "Oggetto" ;
+rdfs:domain :Utenze ;
+rdfs:range xsd:string .
+
+:_comune a rdf:Property ;
+rdfs:label "_Comune" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codcondominio a rdf:Property ;
+rdfs:label "CodCondominio" ;
+rdfs:domain :Utenze ;
+rdfs:range xsd:string .
+
+:codfiscale a rdf:Property ;
+rdfs:label "CodFiscale" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codicepod a rdf:Property ;
+rdfs:label "CodicePOD" ;
+rdfs:domain :Utenze ;
+rdfs:range xsd:string .
+
+:codicepodpresente a rdf:Property ;
+rdfs:label "CodicePODPresente" ;
+rdfs:domain :Utenze ;
+rdfs:range xsd:int .
+
+:occupante a rdf:Property ;
+rdfs:label "Occupante" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codicecliente a rdf:Property ;
+rdfs:label "CodiceCliente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:superficiecatastale a rdf:Property ;
+rdfs:label "SuperficieCatastale" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:foglio a rdf:Property ;
+rdfs:label "Foglio" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:categoria a rdf:Property ;
+rdfs:label "Categoria" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:proprieta a rdf:Property ;
+rdfs:label "Proprieta" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:comunecatastale a rdf:Property ;
+rdfs:label "ComuneCatastale" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codicecontribuente a rdf:Property ;
+rdfs:label "CodiceContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:toponimo a rdf:Property ;
+rdfs:label "Toponimo" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:denominazione a rdf:Property ;
+rdfs:label "Denominazione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:lettera a rdf:Property ;
+rdfs:label "Lettera" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:denominazionetipodenunciainizio a rdf:Property ;
+rdfs:label "DenominazioneTipoDenunciaInizio" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codesternoareacircolazione a rdf:Property ;
+rdfs:label "CodEsternoAreaCircolazione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:denominazionecircoscrizione a rdf:Property ;
+rdfs:label "DenominazioneCircoscrizione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:porzionemateriale a rdf:Property ;
+rdfs:label "PorzioneMateriale" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:tag a rdf:Property ;
+rdfs:label "Tag" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codicecontrattocomunale a rdf:Property ;
+rdfs:label "CodiceContrattoComunale" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:partitaiva a rdf:Property ;
+rdfs:label "PartitaIVA" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:particellaestensione a rdf:Property ;
+rdfs:label "ParticellaEstensione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:utenzacondominiale a rdf:Property ;
+rdfs:label "UtenzaCondominiale" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:noteaccertamenti a rdf:Property ;
+rdfs:label "NoteAccertamenti" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:mqmin a rdf:Property ;
+rdfs:label "MQMin" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:mqmax a rdf:Property ;
+rdfs:label "MQMax" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:codicepdf a rdf:Property ;
+rdfs:label "CodicePDF" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:indirizzocontribuente a rdf:Property ;
+rdfs:label "IndirizzoContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:capcontribuente a rdf:Property ;
+rdfs:label "CAPContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:comunecontribuente a rdf:Property ;
+rdfs:label "ComuneContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:provcontribuente a rdf:Property ;
+rdfs:label "ProvContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:pressocontribuente a rdf:Property ;
+rdfs:label "PressoContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:indirizzorecapitocontribuente a rdf:Property ;
+rdfs:label "IndirizzoRecapitoContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:caprecapitocontribuente a rdf:Property ;
+rdfs:label "CAPRecapitoContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:comunerecapitocontribuente a rdf:Property ;
+rdfs:label "ComuneRecapitoContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:provrecapitocontribuente a rdf:Property ;
+rdfs:label "ProvRecapitoContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:pressorecapitocontribuente a rdf:Property ;
+rdfs:label "PressoRecapitoContribuente" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codicefamiglia a rdf:Property ;
+rdfs:label "CodiceFamiglia" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codtitolooccupazione a rdf:Property ;
+rdfs:label "CodTitoloOccupazione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:datadenunciainizio a rdf:Property ;
+rdfs:label "DataDenunciaInizio" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:notabreve a rdf:Property ;
+rdfs:label "NotaBreve" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:interno a rdf:Property ;
+rdfs:label "Interno" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:denominazione1 a rdf:Property ;
+rdfs:label "Denominazione1" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:denominazione2 a rdf:Property ;
+rdfs:label "Denominazione2" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:denominazionetipodenunciafine a rdf:Property ;
+rdfs:label "DenominazioneTipoDenunciaFine" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:datadenunciafine a rdf:Property ;
+rdfs:label "DataDenunciaFine" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:float .
+
+:sezione a rdf:Property ;
+rdfs:label "Sezione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:autoreinserimento a rdf:Property ;
+rdfs:label "AutoreInserimento" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:datainserimento a rdf:Property ;
+rdfs:label "DataInserimento" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:float .
+
+:autoreultimavariazione a rdf:Property ;
+rdfs:label "AutoreUltimaVariazione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:dataultimavariazione a rdf:Property ;
+rdfs:label "DataUltimaVariazione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:float .
+
+:codiceconsegna a rdf:Property ;
+rdfs:label "CodiceConsegna" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codicepratica a rdf:Property ;
+rdfs:label "CodicePratica" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:annopratica a rdf:Property ;
+rdfs:label "AnnoPratica" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:statocodicepdf a rdf:Property ;
+rdfs:label "StatoCodicePDF" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:statocodpdf a rdf:Property ;
+rdfs:label "StatoCodPDF" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:riferimento a rdf:Property ;
+rdfs:label "Riferimento" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:mqlocalipertinenza a rdf:Property ;
+rdfs:label "MQLocaliPertinenza" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:mqcatastali a rdf:Property ;
+rdfs:label "MqCatastali" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:utenzagiornaliera a rdf:Property ;
+rdfs:label "UtenzaGiornaliera" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:bool .
+
+:dataconcessione a rdf:Property ;
+rdfs:label "DataConcessione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:numconcessione a rdf:Property ;
+rdfs:label "NumConcessione" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:enteconcessionario a rdf:Property ;
+rdfs:label "EnteConcessionario" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:componentianagrafe a rdf:Property ;
+rdfs:label "ComponentiAnagrafe" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:utenzaorigine a rdf:Property ;
+rdfs:label "UtenzaOrigine" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:esclusioneallineamentoanagrafe a rdf:Property ;
+rdfs:label "EsclusioneAllineamentoAnagrafe" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:bool .
+
+:login a rdf:Property ;
+rdfs:label "Login" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:password a rdf:Property ;
+rdfs:label "Password" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:email a rdf:Property ;
+rdfs:label "Email" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:rendita a rdf:Property ;
+rdfs:label "Rendita" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:float .
+
+:esclusionefatturazionec a rdf:Property ;
+rdfs:label "EsclusioneFatturazioneC" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:bool .
+
+:codcategoriautenza a rdf:Property ;
+rdfs:label "CodCategoriaUtenza" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:nomecondominio a rdf:Property ;
+rdfs:label "NomeCondominio" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:consistenza a rdf:Property ;
+rdfs:label "Consistenza" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:codiceesternoutenza a rdf:Property ;
+rdfs:label "CodiceEsternoUtenza" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:string .
+
+:_numerorecord a rdf:Property ;
+rdfs:label "_NumeroRecord" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:_numeropagina a rdf:Property ;
+rdfs:label "_NumeroPagina" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+
+:_numeroriga a rdf:Property ;
+rdfs:label "_NumeroRiga" ;
+rdfs:domain :UtenzaRifiuti ;
+rdfs:range xsd:int .
+

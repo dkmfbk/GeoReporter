@@ -1,0 +1,495 @@
+:codiceutenza a rdf:Property ;
+rdfs:label "CodiceUtenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codutenza a rdf:Property ;
+rdfs:label "CodUtenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:indirizzo a rdf:Property ;
+rdfs:label "Indirizzo" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:contribuente a rdf:Property ;
+rdfs:label "Contribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codcomune a rdf:Property ;
+rdfs:label "CodComune" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:datainizio a rdf:Property ;
+rdfs:label "DataInizio" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:datafine a rdf:Property ;
+rdfs:label "DataFine" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:numero a rdf:Property ;
+rdfs:label "Numero" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:localita a rdf:Property ;
+rdfs:label "Localita" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:esclusionefatturazione a rdf:Property ;
+rdfs:label "EsclusioneFatturazione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:bool .
+
+:_comune a rdf:Property ;
+rdfs:label "_Comune" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codfiscale a rdf:Property ;
+rdfs:label "CodFiscale" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codicecliente a rdf:Property ;
+rdfs:label "CodiceCliente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codicecontribuente a rdf:Property ;
+rdfs:label "CodiceContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:toponimo a rdf:Property ;
+rdfs:label "Toponimo" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:denominazione a rdf:Property ;
+rdfs:label "Denominazione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:lettera a rdf:Property ;
+rdfs:label "Lettera" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:denominazionetipodenunciainizio a rdf:Property ;
+rdfs:label "DenominazioneTipoDenunciaInizio" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codesternoareacircolazione a rdf:Property ;
+rdfs:label "CodEsternoAreaCircolazione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:denominazionecircoscrizione a rdf:Property ;
+rdfs:label "DenominazioneCircoscrizione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:tag a rdf:Property ;
+rdfs:label "Tag" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codicecontrattocomunale a rdf:Property ;
+rdfs:label "CodiceContrattoComunale" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:partitaiva a rdf:Property ;
+rdfs:label "PartitaIVA" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codcategoriautenza a rdf:Property ;
+rdfs:label "CodCategoriaUtenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:categoriadescrizione a rdf:Property ;
+rdfs:label "CategoriaDescrizione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:indirizzocontribuente a rdf:Property ;
+rdfs:label "IndirizzoContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:capcontribuente a rdf:Property ;
+rdfs:label "CAPContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:comunecontribuente a rdf:Property ;
+rdfs:label "ComuneContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:provcontribuente a rdf:Property ;
+rdfs:label "ProvContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:pressocontribuente a rdf:Property ;
+rdfs:label "PressoContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:indirizzorecapitocontribuente a rdf:Property ;
+rdfs:label "IndirizzoRecapitoContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:caprecapitocontribuente a rdf:Property ;
+rdfs:label "CAPRecapitoContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:comunerecapitocontribuente a rdf:Property ;
+rdfs:label "ComuneRecapitoContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:provrecapitocontribuente a rdf:Property ;
+rdfs:label "ProvRecapitoContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:pressorecapitocontribuente a rdf:Property ;
+rdfs:label "PressoRecapitoContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:datadenunciainizio a rdf:Property ;
+rdfs:label "DataDenunciaInizio" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:tipoutenza a rdf:Property ;
+rdfs:label "TipoUtenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:idimmobile a rdf:Property ;
+rdfs:label "IdImmobile" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:idimmobileprincipale a rdf:Property ;
+rdfs:label "IdImmobilePrincipale" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:sezione a rdf:Property ;
+rdfs:label "Sezione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:foglio a rdf:Property ;
+rdfs:label "Foglio" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:particellaedificabile a rdf:Property ;
+rdfs:label "ParticellaEdificabile" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:subalterno a rdf:Property ;
+rdfs:label "Subalterno" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:percentualequote a rdf:Property ;
+rdfs:label "PercentualeQuote" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:ereditacatasto a rdf:Property ;
+rdfs:label "EreditaCatasto" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:bool .
+
+:particellaestensione a rdf:Property ;
+rdfs:label "ParticellaEstensione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:rendita a rdf:Property ;
+rdfs:label "Rendita" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:valoreutenzat a rdf:Property ;
+rdfs:label "ValoreUtenzaT" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:classe a rdf:Property ;
+rdfs:label "Classe" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:consistenza a rdf:Property ;
+rdfs:label "Consistenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:calcolaminori a rdf:Property ;
+rdfs:label "CalcolaMinori" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:bool .
+
+:idaliquotaapplicata a rdf:Property ;
+rdfs:label "IdAliquotaApplicata" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:codcontribuente a rdf:Property ;
+rdfs:label "CodContribuente" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:mqlocali a rdf:Property ;
+rdfs:label "MQLocali" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:certificato a rdf:Property ;
+rdfs:label "Certificato" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:occupante a rdf:Property ;
+rdfs:label "Occupante" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:renditautenza a rdf:Property ;
+rdfs:label "RenditaUtenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:renditacatasto a rdf:Property ;
+rdfs:label "RenditaCatasto" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:notabreve a rdf:Property ;
+rdfs:label "NotaBreve" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:postacertificata a rdf:Property ;
+rdfs:label "PostaCertificata" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:_numerorecord a rdf:Property ;
+rdfs:label "_NumeroRecord" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:_numeropagina a rdf:Property ;
+rdfs:label "_NumeroPagina" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:_numeroriga a rdf:Property ;
+rdfs:label "_NumeroRiga" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:denominazione1 a rdf:Property ;
+rdfs:label "Denominazione1" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:denominazione2 a rdf:Property ;
+rdfs:label "Denominazione2" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:denominazionetipodenunciafine a rdf:Property ;
+rdfs:label "DenominazioneTipoDenunciaFine" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:datadenunciafine a rdf:Property ;
+rdfs:label "DataDenunciaFine" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:sezione a rdf:Property ;
+rdfs:label "Sezione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:autoreinserimento a rdf:Property ;
+rdfs:label "AutoreInserimento" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:datainserimento a rdf:Property ;
+rdfs:label "DataInserimento" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:autoreultimavariazione a rdf:Property ;
+rdfs:label "AutoreUltimaVariazione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:dataultimavariazione a rdf:Property ;
+rdfs:label "DataUltimaVariazione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:codiceconsegna a rdf:Property ;
+rdfs:label "CodiceConsegna" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codicepratica a rdf:Property ;
+rdfs:label "CodicePratica" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:annopratica a rdf:Property ;
+rdfs:label "AnnoPratica" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:statocodicepdf a rdf:Property ;
+rdfs:label "StatoCodicePDF" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:statocodpdf a rdf:Property ;
+rdfs:label "StatoCodPDF" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:riferimento a rdf:Property ;
+rdfs:label "Riferimento" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:mqlocalipertinenza a rdf:Property ;
+rdfs:label "MQLocaliPertinenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:mqcatastali a rdf:Property ;
+rdfs:label "MqCatastali" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:utenzagiornaliera a rdf:Property ;
+rdfs:label "UtenzaGiornaliera" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:bool .
+
+:dataconcessione a rdf:Property ;
+rdfs:label "DataConcessione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:numconcessione a rdf:Property ;
+rdfs:label "NumConcessione" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:enteconcessionario a rdf:Property ;
+rdfs:label "EnteConcessionario" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:componentianagrafe a rdf:Property ;
+rdfs:label "ComponentiAnagrafe" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:utenzaorigine a rdf:Property ;
+rdfs:label "UtenzaOrigine" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:esclusioneallineamentoanagrafe a rdf:Property ;
+rdfs:label "EsclusioneAllineamentoAnagrafe" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:bool .
+
+:login a rdf:Property ;
+rdfs:label "Login" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:password a rdf:Property ;
+rdfs:label "Password" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:email a rdf:Property ;
+rdfs:label "Email" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:rendita a rdf:Property ;
+rdfs:label "Rendita" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:float .
+
+:esclusionefatturazionec a rdf:Property ;
+rdfs:label "EsclusioneFatturazioneC" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:bool .
+
+:codcategoriautenza a rdf:Property ;
+rdfs:label "CodCategoriaUtenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:nomecondominio a rdf:Property ;
+rdfs:label "NomeCondominio" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:consistenza a rdf:Property ;
+rdfs:label "Consistenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:codiceesternoutenza a rdf:Property ;
+rdfs:label "CodiceEsternoUtenza" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:string .
+
+:_numerorecord a rdf:Property ;
+rdfs:label "_NumeroRecord" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:_numeropagina a rdf:Property ;
+rdfs:label "_NumeroPagina" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+
+:_numeroriga a rdf:Property ;
+rdfs:label "_NumeroRiga" ;
+rdfs:domain :ICI_IMU ;
+rdfs:range xsd:int .
+

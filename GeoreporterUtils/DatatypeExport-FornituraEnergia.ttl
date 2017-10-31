@@ -1,0 +1,90 @@
+:idsiatelenergiadettaglio a rdf:Property ;
+rdfs:label "IdSiatelEnergiaDettaglio" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:denominazione a rdf:Property ;
+rdfs:label "Denominazione" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:_comune a rdf:Property ;
+rdfs:label "_Comune" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:codcomune a rdf:Property ;
+rdfs:label "CodComune" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:annoriferimento a rdf:Property ;
+rdfs:label "AnnoRiferimento" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:codfiscaletitolareutenza a rdf:Property ;
+rdfs:label "CodFiscaleTitolareUtenza" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:tipopersona a rdf:Property ;
+rdfs:label "TipoPersona" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:datianagrafici a rdf:Property ;
+rdfs:label "DatiAnagrafici" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:tipoutenzaenergia a rdf:Property ;
+rdfs:label "TipoUtenzaEnergia" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:indirizzoutenza a rdf:Property ;
+rdfs:label "IndirizzoUtenza" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:spesaconsumo a rdf:Property ;
+rdfs:label "SpesaConsumo" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:kwhfatturato a rdf:Property ;
+rdfs:label "KWhFatturato" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:numeromesifatturazione a rdf:Property ;
+rdfs:label "NumeroMesiFatturazione" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:idsiatelenergia a rdf:Property ;
+rdfs:label "IdSiatelEnergia" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:caputenza a rdf:Property ;
+rdfs:label "CAPUtenza" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:string .
+
+:_numerorecord a rdf:Property ;
+rdfs:label "_NumeroRecord" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:_numeropagina a rdf:Property ;
+rdfs:label "_NumeroPagina" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
+:_numeroriga a rdf:Property ;
+rdfs:label "_NumeroRiga" ;
+rdfs:domain :FornituraEnergia ;
+rdfs:range xsd:int .
+
