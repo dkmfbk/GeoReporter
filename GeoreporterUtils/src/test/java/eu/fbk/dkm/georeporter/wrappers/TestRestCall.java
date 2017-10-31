@@ -7,10 +7,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -63,12 +67,11 @@ public class TestRestCall {
 	        WebResource webResource = client.resource("http://localhost.fbk.eu:8080/GeoreporterService/servizio/rest/"+service);
 	        //WebResource webResource = client.resource("http://localhost:8080/SpringlesREST/rest/rest/"+service);
 	     
-	        JsonObject obj = new JsonObject();
-	      
+	   
 
-	       // obj.addProperty("http://dkm.fbk.eu/georeporter#uiuri", ":123456933fsfsdff");
 	        
-	        //CAMPI OBBLIGATORI!!!
+	        
+	        JsonObject obj = new JsonObject();
 	        obj.addProperty("idtabella","UnitaImmobiliare");
 	        obj.addProperty("uriid","1234999");
 
@@ -76,17 +79,34 @@ public class TestRestCall {
 	        obj.addProperty("http://dkm.fbk.eu/georeporter#progressivo", "12345");
 	        obj.addProperty("http://dkm.fbk.eu/georeporter#superficie", "205");
 	        System.out.println(obj.toString());
-	        ClientResponse response = webResource.type("application/json")
-	           .post(ClientResponse.class, obj.toString());
+	        
+	        
+	        //WebResource resource = c.resource("http://example.com/helloWorld");
+	        MultivaluedMap queryParams = new MultivaluedMapImpl();
+	        queryParams.add("input", obj.toString());
+	     //   queryParams.add("param2", "val2");
+	        String response = webResource.queryParams(queryParams).get(String.class);
+	        
+	        
+	        
+	      
 
-	        if (response.getStatus() != 200) {
-	            throw new RuntimeException("Failed : HTTP error code : "
-	                 + response.getStatus()+ response.toString());
-	        }
+	       // obj.addProperty("http://dkm.fbk.eu/georeporter#uiuri", ":123456933fsfsdff");
+	        
+	        //CAMPI OBBLIGATORI!!!
+	      
+	        
+	  //      ClientResponse response = webResource.type("application/json")
+	   //        .post(ClientResponse.class, obj.toString());*/
+
+	     //   if (response.getStatus() != 200) {
+	      //      throw new RuntimeException("Failed : HTTP error code : "
+	       //          + response.getStatus()+ response.toString());
+	        //}
 
 	        System.out.println("Output from Server .... \n");
-	        String output = response.getEntity(String.class);
-	        System.out.println(output);
+	   //     String output = response.getEntity(String.class);
+	   //    System.out.println(output);
 		
 		
 		

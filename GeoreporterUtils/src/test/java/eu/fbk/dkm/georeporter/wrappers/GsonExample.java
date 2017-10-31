@@ -2,6 +2,10 @@ package eu.fbk.dkm.georeporter.wrappers;
 
 import com.google.gson.Gson;
 
+import eu.fbk.dkm.georeporter.interfaces.Attributo;
+import eu.fbk.dkm.georeporter.interfaces.Record;
+import eu.fbk.dkm.georeporter.interfaces.RigaTabella;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,8 +24,18 @@ public class GsonExample {
 
         Unitaimmobiliare staff = createDummyObject();
 
+
+Gson gson = new Gson();
+String json2 = gson.toJson(rec);
+
+System.out.println(json2);
+RigaTabella record = gson.fromJson(json2, RigaTabella.class);
+System.out.println(record.getIdtabella());
+System.out.println(record.getListaattributi().keySet());
+
+
         //1. Convert object to JSON string
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         String json = gson.toJson(staff);
         
         System.out.println(json);
@@ -35,7 +49,7 @@ public class GsonExample {
        
         
         
-        
+      
         
         
 /*       try {
@@ -97,6 +111,12 @@ public class GsonExample {
        
 
         return ui;
+
+    }
+  
+       
+
+        return rec;
 
     }
 
