@@ -9,11 +9,14 @@ import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import eu.fbk.dkm.georeporter.interfaces.RigaTabella;
 
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.http.HttpResponse;
@@ -68,22 +71,25 @@ public class TestRestCall {
 	        //WebResource webResource = client.resource("http://localhost:8080/SpringlesREST/rest/rest/"+service);
 	     
 	   
-
+RigaTabella rt= new RigaTabella();
 	        
-	        
-	        JsonObject obj = new JsonObject();
+	        rt.setNometabella("UnitaImmobiliare");
+	        rt.setUririga("ui_999999");
+	        Gson gson = new Gson();
+	        String json = gson.toJson(rt);
+	     /*   JsonObject obj = new JsonObject();
 	        obj.addProperty("idtabella","UnitaImmobiliare");
 	        obj.addProperty("uriid","1234999");
 
 	        obj.addProperty("http://dkm.fbk.eu/georeporter#codiceAmministrativo","1234999");
 	        obj.addProperty("http://dkm.fbk.eu/georeporter#progressivo", "12345");
-	        obj.addProperty("http://dkm.fbk.eu/georeporter#superficie", "205");
-	        System.out.println(obj.toString());
+	        obj.addProperty("http://dkm.fbk.eu/georeporter#superficie", "205");*/
+	        System.out.println(json);
 	        
 	        
 	        //WebResource resource = c.resource("http://example.com/helloWorld");
 	        MultivaluedMap queryParams = new MultivaluedMapImpl();
-	        queryParams.add("input", obj.toString());
+	        queryParams.add("input", json);
 	     //   queryParams.add("param2", "val2");
 	        String response = webResource.queryParams(queryParams).get(String.class);
 	        
