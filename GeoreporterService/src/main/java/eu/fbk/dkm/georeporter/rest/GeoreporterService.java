@@ -51,7 +51,10 @@ import org.openrdf.model.Literal;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
+import org.openrdf.model.impl.LiteralImpl;
+import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.XMLSchema;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
@@ -861,17 +864,18 @@ public class GeoreporterService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String insertTable(
 
-			JSONObject input
+			//JSONObject input
+			RigaTabella rigatabella
 
 	) {
 
 		String result = "FAIL";
 
-		Gson gson = new Gson();
-		String json = gson.toJson(input.toString());
+	//	Gson gson = new Gson();
+//		String json = gson.toJson(input.toString());
 
-		System.out.println(json);
-		RigaTabella rigatabella = gson.fromJson(input.toString(), RigaTabella.class);
+//		System.out.println(json);
+	///	RigaTabella rigatabella = gson.fromJson(input.toString(), RigaTabella.class);
 				
 		
 		try {
@@ -882,7 +886,7 @@ public class GeoreporterService {
 			List<Attributo> tableAttributiChiave_List = rigatabella.getListachiave();
 			List<Attributo> tableAttributi_List = rigatabella.getListaattributi();
             List<Relazione> tableRelazioni_List= rigatabella.getListarelazioni();
-			// converto la lista in HM
+		
 			
 
 			myRepository.initialize();
@@ -890,27 +894,32 @@ public class GeoreporterService {
 			String queryString = "";
 
 			ValueFactory factory = myRepository.getValueFactory();
-			URI uriid = factory.createURI(":"+rigatabella.getUririga());
-			URI tabella = factory.createURI(":" + rigatabella.getNometabella());
+			URI uriid = new URIImpl(rigatabella.getUririga());
+			URI tabella = new URIImpl(rigatabella.getNometabella());
 			
 		//	URI context = factory.createURI(uricontesto);
 
 			con.begin();
+		//	con.setNamespace("","" );
 			con.add(uriid, RDF.TYPE, tabella);
+			con.add(uriid, RDF.TYPE,new URIImpl("http://www.w3.org/2002/07/owl#NamedIndividual"));
 
 			
 			
 			for (Attributo attributoChiave : tableAttributiChiave_List) {
-				Literal lit = getLiteral(attributoChiave, factory);
-				con.add(uriid, factory.createURI(attributoChiave.getMapping()), lit);
-				System.out.println(uriid + " " + factory.createURI(attributoChiave.getMapping()) + " " + lit + " " );
+				
+				//Literal lit = factory.createLiteral(attributoChiave.getValore());
+				//Statemtent stmt = new StatementImpl(subject, predicate, object);
+				Value literal = new LiteralImpl(attributoChiave.getValore(),new URIImpl( attributoChiave.getTipo()));
+				con.add(uriid, new URIImpl(attributoChiave.getMapping()), literal);
+				System.out.println(uriid + " " + factory.createURI(attributoChiave.getMapping()) + " " + literal + " " );
 			}
 			
 			if (tableAttributi_List!=null) {
 			for (Attributo attributo : tableAttributi_List) {
-				Literal lit = getLiteral(attributo, factory);
-				con.add(uriid, factory.createURI(attributo.getMapping()), lit);
-				System.out.println(uriid + " " + factory.createURI(attributo.getMapping()) + " " + lit + " " );
+				Value literal = new LiteralImpl(attributo.getValore(),new URIImpl( attributo.getTipo()));
+				con.add(uriid, new URIImpl(attributo.getMapping()), literal);
+				System.out.println(uriid + " " + factory.createURI(attributo.getMapping()) + " " + literal + " " );
 			}
 			}
 			if (tableRelazioni_List!=null) {
@@ -923,7 +932,7 @@ public class GeoreporterService {
 
 			con.commit();
 
-	
+			result = rigatabella.getUririga();
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1032,6 +1041,7 @@ public class GeoreporterService {
 			result = "^^xsd:string";
 			l = factory.createLiteral(attributo.getValore());
 		}
+	
 		if (localName.equals(Costanti.FLOAT.stringValue())) {
 			result = "^^xsd:float";
 			Float floatvalue = (new Float(attributo.getValore()));
@@ -1707,7 +1717,7 @@ public class GeoreporterService {
 			Attributo nome =new Attributo();
 			nome.setNome(tabella);
 			nome.setMapping(tabella);
-			mappingtabella.setId(nome);
+			mappingtabella.setIdTabella(nome);
 			mappingtabella.setAttributi(listaAttributi);
 			qresult.close();
 			connection.close();
@@ -1802,11 +1812,11 @@ public class GeoreporterService {
 		return listaAttributi;
 	}
 
-	@GET
-	@Path("/checkesiste")
+/*	@GET
+	@Path("/checkesiste_old")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String  getCheckEsiste(
+	public String  getCheckEsiste_old(
 
 			
 			JSONObject input
@@ -1891,6 +1901,104 @@ String result="";
 		return result;
 	}
 	
+*/
+	
+	
+	
+	@POST
+	@Path("/checkesiste")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String  getCheckEsiste(
+
+			
+			RigaTabella input
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+String result="";
+		// String springlesrepositoryID ="georeporter";
+
+		//List<BindingSet> tuples = new ArrayList<BindingSet>();
+		//List<Attributo> listaAttributi = new ArrayList<Attributo>();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		
+		//JSONArray chiave_array;
+		
+	
+			String	nometabella = input.getNometabella();
+				
+			
+				
+		
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+			ValueFactory factory = myRepository.getValueFactory();
+			
+			
+			String listaattributi =buidListaAttributi(input.getListachiave(), factory);
+			
+			
+			String queryString = queryStringPrefix
+
+					+ "select ?uriid  where { "
+					+ " ?uriid  a <" + nometabella + "> ."
+					+ listaattributi + "}";
+
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value uriid= bindingSet.getValue("uriid");
+			
+				if (uriid!=null)
+					result=uriid.stringValue();
+				
+			}
+			
+				
+				
+			qresult.close();
+			connection.close();
+		
+		
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	
+		
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+		}
+	
+		return "{"+result+"}";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static HashMap<String, String> jsonToMap(JSONObject jObject) throws JSONException {
 
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -1908,34 +2016,16 @@ String result="";
 		System.out.println("map : " + map);
 		return map;
 	}
-	private String buidListaAttributi(JSONArray lista_attributi, ValueFactory factory) throws JSONException {
+	private String buidListaAttributi(List<Attributo> lista_attributi, ValueFactory factory)  {
 		
 		String result="";
-		
-		
-		for (int i = 0; i < lista_attributi.length(); ++i) {
-			try {
-			JSONObject  rec = lista_attributi.getJSONObject(i);
-			 Attributo attr = new Attributo();
-		    attr.setNome(rec.getString("nome"));
-		    attr.setValore(rec.getString("valore"));
-		    attr.setTipo(rec.getString("tipo"));
-		  
-		 
-		   result = result + ":"+attr.getNome()+ "="+ getLiteral(attr, factory) +" . "; 
-		
-				
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		   
-		   
-		    
-		    // ...
+		for (Attributo attr : lista_attributi) {
+			//Value literal = new LiteralImpl(attr.getValore(),new URIImpl( attr.getTipo()));
+			
+			   result = result + "?uriid <"+attr.getMapping()+ ">  \""+attr.getValore() +"\"^^"+attr.getTipo().replace("http://www.w3.org/2001/XMLSchema#", "xsd:") +" . "; 	
 		}
-return result;
-		
+	
+           return result;
 		
 		
 	}

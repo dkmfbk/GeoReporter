@@ -14,7 +14,7 @@ import eu.fbk.dkm.georeporter.interfaces.Attributo;
 	public class MappingTabella {
 
 		
-		Attributo id;
+		Attributo idTabella;
 		List <Attributo> attributi;
 		
 		public List<Attributo> getAttributi() {
@@ -23,12 +23,13 @@ import eu.fbk.dkm.georeporter.interfaces.Attributo;
 		public void setAttributi(List<Attributo> attributi) {
 			this.attributi = attributi;
 		}
-		public Attributo getId() {
-			return id;
+		public Attributo getIdTabella() {
+			return idTabella;
 		}
-		public void setId(Attributo id) {
-			this.id = id;
+		public void setIdTabella(Attributo idTabella) {
+			this.idTabella = idTabella;
 		}
+		
 		
 		
 		
