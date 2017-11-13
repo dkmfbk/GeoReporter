@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 //@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
-public class RigaTabella<Relazione> {
+public class RigaTabella {
 
 	
 	 String nometabella="";

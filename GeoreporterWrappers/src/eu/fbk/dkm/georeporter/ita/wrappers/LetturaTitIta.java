@@ -10,7 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import eu.fbk.dkm.georeporter.ita.wrappers.pojo.Titolarita;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
+
 
 public class LetturaTitIta {
 
