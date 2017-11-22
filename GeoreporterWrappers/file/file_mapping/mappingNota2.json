@@ -1,0 +1,7 @@
+{"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#annoNota","nome":"http://dkm.fbk.eu/georeporter#annonota","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#dataEfficacia","nome":"http://dkm.fbk.eu/georeporter#datadivalidita","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},
+{"mapping":"http://dkm.fbk.eu/georeporter#hasTipoNota","nome":"http://dkm.fbk.eu/georeporter#tiponota","tipo":"http://dkm.fbk.eu/georeporter#TipoNota"},
+{"mapping":"http://dkm.fbk.eu/georeporter#numeroNota","nome":"http://dkm.fbk.eu/georeporter#numeronota","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#progressivoNota","nome":"http://dkm.fbk.eu/georeporter#progressivonota","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#dataRegistrazione","nome":"http://dkm.fbk.eu/georeporter#datadiregistrazioneinatti","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"}],
+"idTabella":{"mapping":"Nota","nome":"Nota"}}
