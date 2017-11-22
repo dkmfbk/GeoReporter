@@ -8,8 +8,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Indirizzi {
-	
+
 	Map<String, String> valori = new HashMap<String, String>();
+	List<Map<String, String>> ListaValoriChiave = new ArrayList<Map<String, String>>();
 
 	public Map<String, String> getValori() {
 		return valori;
@@ -18,9 +19,18 @@ public class Indirizzi {
 	public void setValori(Map<String, String> valori) {
 		this.valori = valori;
 	}
+
+	public List<Map<String, String>> getListaValoriChiave() {
+		return ListaValoriChiave;
+	}
+
+	public void setListaValoriChiave(List<Map<String, String>> ListaValoriChiave) {
+		this.ListaValoriChiave = ListaValoriChiave;
+	}
+
 	public Indirizzi() {
-	
+
 		// TODO Auto-generated constructor stub
 	}
-	
+
 }

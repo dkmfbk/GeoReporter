@@ -8,8 +8,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Titolarita {
-	
+
 	Map<String, String> valori = new HashMap<String, String>();
+	Nota notaIniziale = new Nota();
+	Nota notaFinale = new Nota();
+	List<Map<String, String>> ListaValoriChiave = new ArrayList<Map<String, String>>();
 
 	public Map<String, String> getValori() {
 		return valori;
@@ -18,7 +21,31 @@ public class Titolarita {
 	public void setValori(Map<String, String> valori) {
 		this.valori = valori;
 	}
-	
+
+	public Nota getNotaIniziale() {
+		return notaIniziale;
+	}
+
+	public void setNotaIniziale(Nota notaIniziale) {
+		this.notaIniziale = notaIniziale;
+	}
+
+	public Nota getNotaFinale() {
+		return notaFinale;
+	}
+
+	public void setNotaFinale(Nota notaFinale) {
+		this.notaFinale = notaFinale;
+	}
+
+	public List<Map<String, String>> getListaValoriChiave() {
+		return ListaValoriChiave;
+	}
+
+	public void setListaValoriChiave(List<Map<String, String>> ListaValoriChiave) {
+		this.ListaValoriChiave = ListaValoriChiave;
+	}
+
 	public Titolarita() {
 		// TODO Auto-generated constructor stub
 	}

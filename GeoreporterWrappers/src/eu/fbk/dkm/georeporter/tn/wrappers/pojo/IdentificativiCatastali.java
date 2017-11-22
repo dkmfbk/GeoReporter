@@ -10,6 +10,7 @@ import java.util.TreeSet;
 public class IdentificativiCatastali {
 
 	Map<String, String> valori = new HashMap<String, String>();
+	List<Map<String, String>> ListaValoriChiave = new ArrayList<Map<String, String>>();
 
 	public Map<String, String> getValori() {
 		return valori;
@@ -18,9 +19,18 @@ public class IdentificativiCatastali {
 	public void setValori(Map<String, String> valori) {
 		this.valori = valori;
 	}
+
+	public List<Map<String, String>> getListaValoriChiave() {
+		return ListaValoriChiave;
+	}
+
+	public void setListaValoriChiave(List<Map<String, String>> ListaValoriChiave) {
+		this.ListaValoriChiave = ListaValoriChiave;
+	}
+
 	public IdentificativiCatastali() {
-	
+
 		// TODO Auto-generated constructor stub
 	}
-	
+
 }
