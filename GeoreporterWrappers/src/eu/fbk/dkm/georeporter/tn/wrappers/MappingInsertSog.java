@@ -4,17 +4,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import java.util.Date;
+import java.util.Calendar;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -26,166 +28,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.PersonaGiuridica;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ProprietarioproTempore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSog;
 
-public class LetturaSog {
-
-	public static List<String[]> headerSog = new ArrayList<String[]>();
-
-	public static String[] filename = { "P", "G", "T" };
-
-	public static List<PersonaFisica> listPersonaFisica = new ArrayList<PersonaFisica>();
-	public static List<PersonaGiuridica> listPersonaGiuridica = new ArrayList<PersonaGiuridica>();
-	public static List<ProprietarioproTempore> listProprietarioproTempore = new ArrayList<ProprietarioproTempore>();
-
-	public static void estrazioneHeaderFileSog(String pathP) {
-
-		String[] tmp = new String[99];
-
-		try {
-			File file = new File(pathP);
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String rigaCorrente = reader.readLine();
-
-			while (rigaCorrente != null) {
-
-				tmp = rigaCorrente.split(";", -1);
-				headerSog.add(tmp);
-				rigaCorrente = reader.readLine();
-
-			}
-
-			reader.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void letturaFileSog(String pathP) {
-
-		try {
-			File file = new File(pathP);
-			BufferedReader reader = new BufferedReader(new FileReader(file));
-			String rigaCorrente = reader.readLine();
-
-			while (rigaCorrente != null) {
-				Map<String, String> campi = new HashMap<String, String>();
-				Map<String, String> valoriChiave = new HashMap<String, String>();
-				List<Map<String, String>> listaValoriChiave = new ArrayList<Map<String, String>>();
-				String[] tmpRiga = rigaCorrente.split("\\|", -1);
-
-				String indiceL = tmpRiga[3];
-
-				int indice;
-
-				if (indiceL.equals("P")) {
-					indice = 0;
-
-					// modificare ciclo, da 0 a dimensione massima della riga
-					for (int i = 0; i < headerSog.get(indice).length; i++) {
-
-						if (i < 4) {
-							valoriChiave.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-							listaValoriChiave.add(valoriChiave);
-						}
-
-						if (((tmpRiga.length) - 1) == 15) {
-							campi.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-						} else {
-							if ((i > 3) && (i < 9)) {
-								campi.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-							} else if (i == 9) {
-								campi.put(headerSog.get(indice)[i + 2].toLowerCase(), tmpRiga[i]);
-							} else if ((i == 10) || (i == 11)) {
-								campi.put(headerSog.get(indice)[i + 3].toLowerCase(), tmpRiga[i]);
-							}
-
-						}
-
-					}
-
-				} else if (indiceL.equals("G")) {
-					indice = 1;
-					// modificare ciclo, da 0 a dimensione massima della riga
-					for (int i = 0; i < headerSog.get(indice).length; i++) {
-						if (i < 4) {
-							valoriChiave.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-							listaValoriChiave.add(valoriChiave);
-						}
-						if (((tmpRiga.length) - 1) == 11) {
-							campi.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-						} else {
-							if ((i > 3) && (i < 7)) {
-								campi.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-							} else if (i == 7) {
-								campi.put(headerSog.get(indice)[i + 2].toLowerCase(), tmpRiga[i]);
-							}
-						}
-					}
-
-				} else {
-					indice = 2;
-					// System.out.println("INIZIO RIGA");
-					for (int i = 0; i < 6; i++) {
-						if (i < 4) {
-							valoriChiave.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-							listaValoriChiave.add(valoriChiave);
-							// System.out.println(headerSog.get(indice)[i].toLowerCase() + "->" +
-							// tmpRiga[i]);
-						} else {
-							campi.put(headerSog.get(indice)[i].toLowerCase(), tmpRiga[i]);
-							// System.out.println(headerSog.get(indice)[i].toLowerCase() + "->" +
-							// tmpRiga[i]);
-						}
-					}
-
-				}
-
-				settareElementoSog(indice, campi, listaValoriChiave);
-
-				rigaCorrente = reader.readLine();
-			}
-
-			reader.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void settareElementoSog(int indice, Map<String, String> campi,
-			List<Map<String, String>> listaValoriChiave) {
-
-		switch (indice) {
-		case 0:
-			PersonaFisica pf = new PersonaFisica();
-			pf.setValori(campi);
-			pf.setListaValoriChiave(listaValoriChiave);
-			listPersonaFisica.add(pf);
-			break;
-		case 1:
-			PersonaGiuridica pg = new PersonaGiuridica();
-			pg.setValori(campi);
-			pg.setListaValoriChiave(listaValoriChiave);
-			listPersonaGiuridica.add(pg);
-			break;
-		case 2:
-			ProprietarioproTempore pt = new ProprietarioproTempore();
-			pt.setValori(campi);
-			pt.setListaValoriChiave(listaValoriChiave);
-			listProprietarioproTempore.add(pt);
-			break;
-		default:
-			;
-			break;
-		}
-
-	}
+public class MappingInsertSog {
 
 	private static void LoadFile1(File filename, File filename2, List<PersonaFisica> listPers) {
-
+		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
 		JsonReader reader;
 
@@ -224,7 +72,6 @@ public class LetturaSog {
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
-			// chiamata al metodo per l'accoppiamento effettivo
 			associazioneMappingNomeVal2(data, data2, listPers);
 
 		} catch (FileNotFoundException e) {
@@ -243,14 +90,13 @@ public class LetturaSog {
 		JsonReader reader2;
 
 		try {
-		
+
 			reader = new JsonReader(new FileReader(filename));
 			MappingTabella data = gson.fromJson(reader, MappingTabella.class);
 
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
-			
-			// chiamata al metodo per l'accoppiamento effettivo
+
 			associazioneMappingNomeVal3(data, data2, listPers);
 
 		} catch (FileNotFoundException e) {
@@ -274,18 +120,24 @@ public class LetturaSog {
 				String[] parts = string.split("#");
 
 				Attributo tmp = new Attributo();
-				// tmp.setIdDomain(data.getIdTabella().getMapping());
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
 
-				if (listPers.get(j).getValori().get(parts[1]) != null) {
-					tmp.setValore(listPers.get(j).getValori().get(parts[1]));
+				if ((listPers.get(j).getValori().get(parts[1]) != null)
+						&& (listPers.get(j).getValori().get(parts[1]).isEmpty() == false)) {
+
+					if ((parts[1].equals("datadinascita"))) {
+						tmp.setValore(ControlloValore.cambioData(listPers.get(j).getValori().get(parts[1])));
+					} else {
+						tmp.setValore(listPers.get(j).getValori().get(parts[1]));
+					}
 					listAttributi.add(tmp);
+
 				}
 
 			}
-
+			// ciclo per creare listaCHIAVI richiesti dal mapping
 			for (int i = 0; i < data2.getAttributi().size(); i++) {
 
 				String string = data2.getAttributi().get(i).getNome();
@@ -296,7 +148,8 @@ public class LetturaSog {
 				tmp2.setMapping(data2.getAttributi().get(i).getMapping());
 				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
 
-				if (listPers.get(j).getValori().get(parts[1]) != null) {
+				if ((listPers.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
+						&& (listPers.get(j).getListaValoriChiave().get(0).get(parts[1]).isEmpty() == false)) {
 					tmp2.setValore(listPers.get(j).getListaValoriChiave().get(0).get(parts[1]));
 					listChiavi.add(tmp2);
 				}
@@ -308,10 +161,9 @@ public class LetturaSog {
 			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTPF.setListaattributi(listAttributi);
 			rigaTPF.setListachiave(listChiavi);
-			String codamm = listPers.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
-			String idesog = listPers.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
-			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codamm + "_" + idesog);
-
+			String codfis = listPers.get(j).getListaValoriChiave().get(0).get("codicefiscale");
+			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+			// inserimento dell'elemento
 			insertRiga(rigaTPF);
 		}
 
@@ -331,18 +183,25 @@ public class LetturaSog {
 				String[] parts = string.split("#");
 
 				Attributo tmp = new Attributo();
-				// tmp.setIdDomain(data.getIdTabella().getMapping());
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
 
-				if (listPers.get(j).getValori().get(parts[1]) != null) {
-					tmp.setValore(listPers.get(j).getValori().get(parts[1]));
+				if ((listPers.get(j).getValori().get(parts[1]) != null)
+						&& (listPers.get(j).getValori().get(parts[1]).isEmpty() == false)) {
+
+					// controllo data e sistemare in formato
+					if ((parts[1].equals("datadinascita"))) {
+						tmp.setValore(ControlloValore.cambioData(listPers.get(j).getValori().get(parts[1])));
+					} else {
+						tmp.setValore(listPers.get(j).getValori().get(parts[1]));
+					}
 					listAttributi.add(tmp);
+
 				}
 
 			}
-
+			// ciclo per creare listaCHIAVI richiesti dal mapping
 			for (int i = 0; i < data2.getAttributi().size(); i++) {
 
 				String string = data2.getAttributi().get(i).getNome();
@@ -353,22 +212,22 @@ public class LetturaSog {
 				tmp2.setMapping(data2.getAttributi().get(i).getMapping());
 				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
 
-				if (listPers.get(j).getValori().get(parts[1]) != null) {
+				if ((listPers.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
+						&& (listPers.get(j).getListaValoriChiave().get(0).get(parts[1]).isEmpty() == false)) {
 					tmp2.setValore(listPers.get(j).getListaValoriChiave().get(0).get(parts[1]));
 					listChiavi.add(tmp2);
 				}
 
 			}
 
-			// riga di tipo RIGATABELLA per PF
+			// riga di tipo RIGATABELLA per PG
 			RigaTabella rigaTPF = new RigaTabella();
 			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTPF.setListaattributi(listAttributi);
 			rigaTPF.setListachiave(listChiavi);
-			String codamm = listPers.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
-			String idesog = listPers.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
-			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codamm + "_" + idesog);
-
+			String codfis = listPers.get(j).getListaValoriChiave().get(0).get("codicefiscale");
+			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+			// inserimento dell'elemento
 			insertRiga(rigaTPF);
 		}
 
@@ -376,7 +235,7 @@ public class LetturaSog {
 
 	public static void associazioneMappingNomeVal3(MappingTabella data, MappingTabella data2,
 			List<ProprietarioproTempore> listPers) {
-		// ciclo la lista degli elementi PP
+		// ciclo la lista degli elementi PPT
 		for (int j = 0; j < listPers.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
@@ -388,18 +247,18 @@ public class LetturaSog {
 				String[] parts = string.split("#");
 
 				Attributo tmp = new Attributo();
-				// tmp.setIdDomain(data.getIdTabella().getMapping());
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
 
-				if (listPers.get(j).getValori().get(parts[1]) != null) {
+				if ((listPers.get(j).getValori().get(parts[1]) != null)
+						&& (listPers.get(j).getValori().get(parts[1]).isEmpty() == false)) {
 					tmp.setValore(listPers.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
 
 			}
-
+			// ciclo per creare listaCHIAVI richiesti dal mapping
 			for (int i = 0; i < data2.getAttributi().size(); i++) {
 
 				String string = data2.getAttributi().get(i).getNome();
@@ -410,14 +269,15 @@ public class LetturaSog {
 				tmp2.setMapping(data2.getAttributi().get(i).getMapping());
 				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
 
-				if (listPers.get(j).getValori().get(parts[1]) != null) {
+				if ((listPers.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
+						&& (listPers.get(j).getListaValoriChiave().get(0).get(parts[1]).isEmpty() == false)) {
 					tmp2.setValore(listPers.get(j).getListaValoriChiave().get(0).get(parts[1]));
 					listChiavi.add(tmp2);
 				}
 
 			}
 
-			// riga di tipo RIGATABELLA per PF
+			// riga di tipo RIGATABELLA per PPT
 			RigaTabella rigaTPF = new RigaTabella();
 			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTPF.setListaattributi(listAttributi);
@@ -425,7 +285,7 @@ public class LetturaSog {
 			String codamm = listPers.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
 			String idesog = listPers.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
 			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codamm + "_" + idesog);
-
+			// inserimento dell'elemento
 			insertRiga(rigaTPF);
 		}
 
@@ -486,19 +346,21 @@ public class LetturaSog {
 
 	public static void main(String[] args) {
 
-		// String pathS =
-		// "/home/ameneghini/Desktop/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG";
-		String pathS = "file/TN_file/prova.SOG";
+		String pathS = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG";
 		String pathP = "file/TN_header/headerfilesog.csv";
 
-		estrazioneHeaderFileSog(pathP);
-		letturaFileSog(pathS);
-		// LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
-		// new File("file/file_mapping/mappingSoggetto.json"), listPersonaFisica);
-		// LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
-		// new File("file/file_mapping/mappingSoggetto.json"), listPersonaGiuridica);
-		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
-				new File("file/file_mapping/mappingSoggetto.json"), listProprietarioproTempore);
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		// dal file SOG
+		WrapperSog.estrazioneHeaderFileSog(pathP);
+		WrapperSog.letturaFileSog(pathS);
+		// mapping e insert degli elementi PF PG PPT
+		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listPersonaFisica);
+		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listPersonaGiuridica);
+		// LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
+		// new File("file/file_mapping/mappingSoggetto.json"),
+		// WrapperSog.listProprietarioproTempore);
 
 	}
 

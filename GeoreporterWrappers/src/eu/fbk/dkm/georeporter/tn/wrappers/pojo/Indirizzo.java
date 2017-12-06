@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Indirizzi {
+public class Indirizzo {
 
 	Map<String, String> valori = new HashMap<String, String>();
 	List<Map<String, String>> ListaValoriChiave = new ArrayList<Map<String, String>>();
@@ -28,7 +28,7 @@ public class Indirizzi {
 		this.ListaValoriChiave = ListaValoriChiave;
 	}
 
-	public Indirizzi() {
+	public Indirizzo() {
 
 		// TODO Auto-generated constructor stub
 	}

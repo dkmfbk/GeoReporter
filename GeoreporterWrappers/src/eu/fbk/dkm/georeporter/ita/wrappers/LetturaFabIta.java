@@ -12,7 +12,7 @@ import java.util.Map;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Comuni;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IdentificativiCatastali;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Indirizzi;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Indirizzo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Riserve;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
 
@@ -22,7 +22,7 @@ public class LetturaFabIta {
 
 	public static List<UnitaImmobiliare> listUnitaImmobiliari = new ArrayList<UnitaImmobiliare>();
 	public static List<IdentificativiCatastali> listIdentificativiCatastali = new ArrayList<IdentificativiCatastali>();
-	public static List<Indirizzi> listIndirizzi = new ArrayList<Indirizzi>();
+	public static List<Indirizzo> listIndirizzi = new ArrayList<Indirizzo>();
 	public static List<Comuni> listComuni = new ArrayList<Comuni>();
 	public static List<Riserve> listRiserve = new ArrayList<Riserve>();
 
@@ -109,7 +109,7 @@ public class LetturaFabIta {
 			listIdentificativiCatastali.add(ic);
 			break;
 		case 3:
-			Indirizzi ii = new Indirizzi();
+			Indirizzo ii = new Indirizzo();
 			ii.setValori(campi);
 			listIndirizzi.add(ii);
 			break;
