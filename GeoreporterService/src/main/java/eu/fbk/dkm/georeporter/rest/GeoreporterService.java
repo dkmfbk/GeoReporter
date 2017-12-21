@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -38,6 +39,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.naming.factory.ResourceFactory;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -69,12 +71,21 @@ import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.http.HTTPRepository;
 
 import com.google.gson.Gson;
+import com.sun.jersey.api.client.ClientResponse.Status;
 import com.sun.jersey.api.json.JSONWithPadding;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
+import com.sun.jersey.multipart.BodyPartEntity;
+import com.sun.jersey.multipart.MultiPart;
 
+import eu.fbk.dkm.georeporter.ExceptionHandlingRelated.CustomerDataNotFoundException;
 import eu.fbk.dkm.georeporter.interfaces.Attributo;
+import eu.fbk.dkm.georeporter.interfaces.AttributoEntita;
+import eu.fbk.dkm.georeporter.interfaces.Entita;
+import eu.fbk.dkm.georeporter.interfaces.GerarchiaClasse;
 import eu.fbk.dkm.georeporter.interfaces.Relazione;
+import eu.fbk.dkm.georeporter.interfaces.RelazioneEntita;
 import eu.fbk.dkm.georeporter.interfaces.RigaTabella;
+import eu.fbk.dkm.georeporter.pojos.Esiste;
 import eu.fbk.dkm.georeporter.pojos.FornituraEnergia;
 import eu.fbk.dkm.georeporter.pojos.FornituraGas;
 import eu.fbk.dkm.georeporter.pojos.FornituraLocazioni;
@@ -86,6 +97,7 @@ import eu.fbk.dkm.georeporter.pojos.UnitaImmobiliare;
 import eu.fbk.dkm.georeporter.pojos.UtenzaAcqua;
 import eu.fbk.dkm.georeporter.pojos.UtenzaRifiuti;
 import eu.fbk.dkm.georeporter.utils.Costanti;
+
 
 /**
  * GeoreporterService e' un servizio REST che espone i metodi per gestire la
@@ -858,6 +870,16 @@ public class GeoreporterService {
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@POST
 	@Path("/inserttable")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -894,8 +916,31 @@ public class GeoreporterService {
 			String queryString = "";
 
 			ValueFactory factory = myRepository.getValueFactory();
+
+        //     System.out.println("AAAAAAAAAAAAAAAAAAAA");
+		//	 if ((rigatabella.getUririga()==null)||rigatabella.getUririga().equals("")){
+		//		 System.out.println("BBBBBBBBBBBBBBBBBBBBBB");					
+					//ResponseBuilderImpl builder = new ResponseBuilderImpl();
+					//builder.status(Response.Status.UNSUPPORTED_MEDIA_TYPE);
+					//builder.entity("ERROR! URIRiga parameter missing or null");
+					//builder.type(MediaType.TEXT_HTML);
+					//Response response = builder.build();
+				//	throw new WebApplicationException(response);
+			//		throw new CustomerDataNotFoundException("Customer status not found with id ");
+				// }
+			
+			
+		
+			 //System.out.println("CCCCCCCCCCCCCCCCCCCCCCCC");			
+			
+			
+			
 			URI uriid = new URIImpl(rigatabella.getUririga());
 			URI tabella = new URIImpl(rigatabella.getNometabella());
+		    
+			Esiste esiste= esiste(rigatabella.getUririga(),rigatabella.getNometabella());
+			
+			
 			
 		//	URI context = factory.createURI(uricontesto);
 
@@ -904,29 +949,33 @@ public class GeoreporterService {
 			con.add(uriid, RDF.TYPE, tabella);
 			con.add(uriid, RDF.TYPE,new URIImpl("http://www.w3.org/2002/07/owl#NamedIndividual"));
 
-			
-			
+			if (tableAttributiChiave_List!=null) {
 			for (Attributo attributoChiave : tableAttributiChiave_List) {
-				
+				if (!esiste.checkEsiste(attributoChiave.getMapping())){
 				//Literal lit = factory.createLiteral(attributoChiave.getValore());
 				//Statemtent stmt = new StatementImpl(subject, predicate, object);
 				Value literal = new LiteralImpl(attributoChiave.getValore(),new URIImpl( attributoChiave.getTipo()));
 				con.add(uriid, new URIImpl(attributoChiave.getMapping()), literal);
-				System.out.println(uriid + " " + factory.createURI(attributoChiave.getMapping()) + " " + literal + " " );
+			//	System.out.println(uriid + " " + factory.createURI(attributoChiave.getMapping()) + " " + literal + " " );
+				}
 			}
-			
+			}
 			if (tableAttributi_List!=null) {
 			for (Attributo attributo : tableAttributi_List) {
+				if (!esiste.checkEsiste(attributo.getMapping())){
 				Value literal = new LiteralImpl(attributo.getValore(),new URIImpl( attributo.getTipo()));
 				con.add(uriid, new URIImpl(attributo.getMapping()), literal);
-				System.out.println(uriid + " " + factory.createURI(attributo.getMapping()) + " " + literal + " " );
+			//	System.out.println(uriid + " " + factory.createURI(attributo.getMapping()) + " " + literal + " " );
+				}
 			}
 			}
 			if (tableRelazioni_List!=null) {
 			for (Relazione relazione : tableRelazioni_List) {
+				if (!esiste.checkEsiste(relazione.getNomerelazione())){
 				//Literal lit = getLiteral(attributo, factory);
 				con.add( factory.createURI(relazione.getUriDomain()), factory.createURI(relazione.getNomerelazione()), factory.createURI(relazione.getUriRange()));
-				System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
+			//	System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
+				}
 			}
 			}
 
@@ -938,7 +987,7 @@ public class GeoreporterService {
 			e.printStackTrace();
 		}
 
-		return result;
+		return  result;
 	}
 	
 	
@@ -1072,6 +1121,37 @@ public class GeoreporterService {
 
 	}
 
+	
+	@POST
+	@Path("/uploadunitaimmobiliari")
+	@Consumes("multipart/mixed")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String uploadUnitaImmobiliari (MultiPart multiPart) {
+        String result="fail";
+       
+
+            BodyPartEntity bpe = (BodyPartEntity) multiPart.getBodyParts().get(0)
+                    .getEntity();
+
+            boolean isProcessed = false;
+            String message = null;
+         
+          InputStream source = bpe.getInputStream();
+          try {
+			String sresult = IOUtils.toString(source, StandardCharsets.UTF_8);
+			System.out.println(sresult);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+
+	
+	
+	
+	
 	@GET
 	@Path("/tributiiciintestatarioui")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -1812,6 +1892,308 @@ public class GeoreporterService {
 		return listaAttributi;
 	}
 
+	
+	
+	
+	@GET
+	@Path("/attributientita")
+	@Produces({ "application/javascript" })
+	public JSONWithPadding searchDatatypeProperties(
+			@QueryParam("callback") String callback ,
+			@QueryParam("entita") String idEntita
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		Entita entita = new Entita();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+				//	+ "select ?property ?domain ?range where { "
+				//	+ "  ?property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + entita + " ."
+				//	+ " ?property rdfs:range ?range " + "}";
+
+			+ "			SELECT DISTINCT ?domain ?property  ?range  ?label"
+			+ "		WHERE { "
+			+ "		  ?property a owl:DatatypeProperty ;"
+			+ "	            rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + idEntita + ";"
+			+ "	            rdfs:range ?range ;"
+		    + "             rdfs:label ?label ."
+			//+ "			  FILTER (!isBlank(?domain))"
+			+ "	}";
+			
+			
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			
+			entita.setIdEntita(idEntita);
+			List<AttributoEntita> listaAttributiEntita= new ArrayList<AttributoEntita>();
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+				Value label = bindingSet.getValue("label");
+				Value property = bindingSet.getValue("property");
+				Value range = bindingSet.getValue("range");
+
+				AttributoEntita attributoEntita =new AttributoEntita();
+
+				if (property != null) {
+				
+					attributoEntita.setId(property.stringValue().substring(property.stringValue().lastIndexOf('#') + 1));
+					attributoEntita.setField(property.stringValue().substring(property.stringValue().lastIndexOf('#') + 1));
+					attributoEntita.setLabel(property.stringValue().substring(property.stringValue().lastIndexOf('#') + 1));
+				}
+				if (label != null) {
+					
+			
+					attributoEntita.setLabel(label.stringValue().substring(label.stringValue().lastIndexOf('#') + 1));
+				}
+				if (range != null) {
+					attributoEntita.setType(range.stringValue().substring(range.stringValue().lastIndexOf('#') + 1));
+				}
+
+				listaAttributiEntita.add(attributoEntita);
+			}
+			entita.setListaAttributiEntita(listaAttributiEntita);
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		return new JSONWithPadding(new GenericEntity<Entita>(entita) {
+		}, callback);
+	
+	}
+
+	@GET
+	@Path("/relazionientita")
+	@Produces({ "application/javascript" })
+	public JSONWithPadding searchObjectProperties(
+			@QueryParam("callback") String callback ,
+			@QueryParam("entita") String idEntita
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		Entita entita = new Entita();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+				//	+ "select ?property ?domain ?range where { "
+				//	+ "  ?property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + entita + " ."
+				//	+ " ?property rdfs:range ?range " + "}";
+
+			+ "			SELECT DISTINCT ?domain ?property  ?range  ?label ?rangelabel"
+			+ "		WHERE { "
+			+ "		  ?property a owl:ObjectProperty ;"
+			+ "	            rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + idEntita + ";"
+			+ "	            rdfs:range ?range ;"
+		    + "             rdfs:label ?label ."
+		    + "            ?range rdfs:label ?rangelabel ."
+			//+ "			  FILTER (!isBlank(?domain))"
+			+ "	}";
+			
+			
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			
+			entita.setIdEntita(idEntita);
+			List<RelazioneEntita> listaRelazioniEntita= new ArrayList<RelazioneEntita>();
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+				Value label = bindingSet.getValue("label");
+				Value property = bindingSet.getValue("property");
+				Value range = bindingSet.getValue("range");
+				Value rangelabel = bindingSet.getValue("rangelabel");
+
+				RelazioneEntita relazioneEntita =new RelazioneEntita();
+
+				if (property != null) {
+				
+					relazioneEntita.setId(property.stringValue().substring(property.stringValue().lastIndexOf('#') + 1));
+					relazioneEntita.setField(property.stringValue().substring(property.stringValue().lastIndexOf('#') + 1));
+					relazioneEntita.setLabel(property.stringValue().substring(property.stringValue().lastIndexOf('#') + 1));
+				}
+				if (label != null) {
+					
+			
+					relazioneEntita.setLabel(label.stringValue().substring(label.stringValue().lastIndexOf('#') + 1));
+				}
+				if (range != null) {
+					
+					Entita entitarange = new Entita();
+					entitarange.setIdEntita(range.stringValue().substring(range.stringValue().lastIndexOf('#') + 1));
+					entitarange.setField(range.stringValue().substring(range.stringValue().lastIndexOf('#') + 1));
+					entitarange.setLabel(range.stringValue().substring(range.stringValue().lastIndexOf('#') + 1));
+					if (rangelabel!=null) {
+						entitarange.setLabel(rangelabel.stringValue().substring(rangelabel.stringValue().lastIndexOf('#') + 1));
+					}
+					relazioneEntita.setEntitarange(entitarange);
+				}
+
+				listaRelazioniEntita.add(relazioneEntita);
+			}
+			entita.setListaRelazioniEntita(listaRelazioniEntita);
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		return new JSONWithPadding(new GenericEntity<Entita>(entita) {
+		}, callback);
+	
+	}
+
+	
+	@GET
+	@Path("/gerarchiaclassi")
+	@Produces({ "application/javascript" })
+	public JSONWithPadding getGerarchiaClass(
+			@QueryParam("callback") String callback 
+	
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<GerarchiaClasse> listaClassi= new ArrayList<GerarchiaClasse>();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+				//	+ "select ?property ?domain ?range where { "
+				//	+ "  ?property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + entita + " ."
+				//	+ " ?property rdfs:range ?range " + "}";
+
+					
+					
+			+ "				SELECT DISTINCT ?class ?label ?superclass "
+			+ "				WHERE {  "
+			+ "				  ?class a owl:Class ; "
+			+ "					    rdfs:label ?label . "
+			+ "				  OPTIONAL {?class rdfs:subClassOf ?superclass . } "
+			+ "				  FILTER (!isBlank(?class)) "
+			+ "				} ";
+					
+	
+			
+			
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			
+			
+			
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+				Value label = bindingSet.getValue("label");
+				Value classe = bindingSet.getValue("class");
+				Value superclasse = bindingSet.getValue("superclass");
+				
+
+				GerarchiaClasse gerarchiaClasse =new GerarchiaClasse();
+
+				if (classe != null) {
+				
+					gerarchiaClasse.setIdclasse(classe.stringValue().substring(classe.stringValue().lastIndexOf('#') + 1));
+					gerarchiaClasse.setField(classe.stringValue().substring(classe.stringValue().lastIndexOf('#') + 1));
+					gerarchiaClasse.setLabel(classe.stringValue().substring(classe.stringValue().lastIndexOf('#') + 1));
+				}
+				if (label != null) {
+					
+			
+					gerarchiaClasse.setLabel(label.stringValue().substring(label.stringValue().lastIndexOf('#') + 1));
+				}
+				if (superclasse != null) {
+					
+					gerarchiaClasse.setIdsuperclasse(superclasse.stringValue().substring(superclasse.stringValue().lastIndexOf('#') + 1));
+					
+				}
+
+				listaClassi.add(gerarchiaClasse);
+			}
+			
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		return new JSONWithPadding(new GenericEntity<List<GerarchiaClasse>>(listaClassi) {
+		}, callback);
+	
+	}
+
+	
+	
+	
 /*	@GET
 	@Path("/checkesiste_old")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -1902,8 +2284,107 @@ String result="";
 	}
 	
 */
+
+	@GET
+	@Path("/test")
+	//@Produces({ "application/javascript" })
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public void test(){
+		
+		Esiste esiste= esiste("L322627536","UnitaImmobiliare");
+		
+		System.out.println(esiste.checkEsiste("http://dkm.fbk.eu/georeporter#consistenza"));
+		
+		
+		
+	}
 	
 	
+	
+	
+	
+	@GET
+	@Path("/exist")
+	//@Produces({ "application/javascript" })
+	@Produces(MediaType.APPLICATION_JSON)
+	// public List<Soggetto> getAnagraficaSoggettoui(@QueryParam("ui") String ui) {
+	
+	public Esiste esiste(
+			// @QueryParam("callback") String callback,
+		 @QueryParam("uri") String uri,
+		 @QueryParam("classe") String classe
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+   //     System.out.println(uri);
+   //     System.out.println(classe);
+        
+		String uripart[] = uri.split("#");
+		String classepart[] = classe.split("#");
+		uri=uripart[1];
+		classe=classepart[1];
+		Esiste risposta=new Esiste();
+		List<String> listaProprieta = new ArrayList<String>();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+			+"		SELECT DISTINCT ?p ?o " 
+			+"				WHERE {"
+			+"				         :%s rdf:type :%s ;" 
+			+"				             ?p ?o       "
+			+"				         filter ( ?p not in ( rdf:type ) )"
+			+"				} ";
+
+			
+			 queryString = String.format(queryString, uri,classe);
+			
+		//	System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value p = bindingSet.getValue("p");
+			    String proprieta="";
+				if (proprieta!=null) {
+					proprieta=p.stringValue();
+			        listaProprieta.add(proprieta);
+			    }
+			}
+			risposta.setRisposta(listaProprieta);
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		//return new JSONWithPadding(new GenericEntity<Risposta>(risposta) {
+		//}, callback);
+		return risposta;
+		
+	}
 	
 	@POST
 	@Path("/checkesiste")
@@ -1990,8 +2471,233 @@ String result="";
 	}
 	
 	
+	@GET
+	@Path("icfromui")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getICFromUi(
+
+			@QueryParam("ui") String ui
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ "SELECT ?ic  WHERE { "
+					+ "    ?ic a :IdentificativoCatastale ." 
+					+ "    ?ic :hasUnitaImmobiliare  :"+ ui 
+
+					
+
+					+ " }  ";
+
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				
+				Value icURI = bindingSet.getValue("ic");
+				result= icURI.stringValue();
+				}
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return result;
+	}
+	
+
 	
 	
+	@GET
+	@Path("idIndirizzodacoordinate")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getIDIndirizzoFromCoordinates(
+
+			@QueryParam("latitudine") String latitudine,
+			@QueryParam("longitudine") String longitudine
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ "SELECT ?id  WHERE { "
+					+ "    ?id a :Indirizzo ." 
+					+ "    ?id :coordinateLat  :"+ latitudine +"."
+					+ "    ?id :coordinateLong  :"+ longitudine + "."
+					+ " }  ";
+
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				
+				Value idURI = bindingSet.getValue("id");
+				result= idURI.stringValue();
+				}
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return result;
+	}
+	
+	
+	
+	@GET
+	@Path("/strutturaontologia")
+	@Produces({ "application/javascript" })
+	// @Produces(MediaType.APPLICATION_JSON)
+
+	// public List<UtenzaAcqua> getUtenzeAcquaUI(
+	public JSONWithPadding getStrutturaOntologia(@QueryParam("callback") String callback 
+				// @QueryParam("particella") String particella,
+	// @QueryParam("subalterno") String subalterno
+
+	) {
+
+	
+		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<Relazione> listaRelazioni= new ArrayList<Relazione>();
+
+		/// Soggetto soggetto =new Soggetto();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+			+"		SELECT DISTINCT ?classe1 ?p ?classe2 WHERE {"
+			+"	?classe1  a owl:Class . "
+			+"	?classe2 a owl:Class .  "
+				 
+			+"	    ?p rdfs:domain ?classe1 . "
+			+"	    ?p  rdfs:range ?classe2   "
+				 
+			+"	  FILTER NOT EXISTS  { ?classe1 rdfs:subClassOf ?super} " 
+			+"	 FILTER (!isBlank(?classe1))} ";
+
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value classe1 = bindingSet.getValue("classe1");
+				Value relazione = bindingSet.getValue("p");
+				Value classe2 = bindingSet.getValue("classe2");
+				
+
+				Relazione rel = new Relazione();
+
+				if (classe1 != null) {
+					rel.setUriDomain(classe1.stringValue().substring(classe1.stringValue().lastIndexOf('#') + 1));
+				}
+				
+			
+				if (classe2 != null) {
+					rel.setUriRange((classe2.stringValue().substring(classe2.stringValue().lastIndexOf('#') + 1)));
+				}
+
+				if (relazione != null) {
+					rel.setNomerelazione((relazione.stringValue().substring(relazione.stringValue().lastIndexOf('#') + 1)));
+				}
+
+				listaRelazioni.add(rel);
+			}
+			// qresult.close();
+			// connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		// return listaUtenzaAcqua;
+		return new JSONWithPadding(new GenericEntity<List<Relazione>>(listaRelazioni) {
+		}, callback);
+	}
 	
 	
 	
