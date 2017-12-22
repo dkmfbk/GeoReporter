@@ -1,4 +1,4 @@
-package eu.fbk.dkm.georeporter.tn.wrappers;
+package eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,9 +12,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -35,13 +37,16 @@ public class MappingInsertAnagraficaComunale {
 
 	public static List<AnagraficaComunale> listAnagraficaComunale = WrapperAnagraficaComunale.listAnagraficaComunale;
 
-	private static void LoadFile(File filename, File filename2) {
+	private static void LoadFile(File filename, File filename2, File filenameI) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
 
 		Gson gson2 = new Gson();
 		JsonReader reader2;
+
+		Gson gsonI = new Gson();
+		JsonReader readerI;
 
 		try {
 			reader = new JsonReader(new FileReader(filename));
@@ -50,8 +55,11 @@ public class MappingInsertAnagraficaComunale {
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
+			readerI = new JsonReader(new FileReader(filenameI));
+			MappingTabella dataI = gsonI.fromJson(readerI, MappingTabella.class);
+
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, data2);
+			associazioneMappingNomeVal(data, data2, dataI);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -60,7 +68,7 @@ public class MappingInsertAnagraficaComunale {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2) {
+	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella dataI) {
 		// ciclo la lista degli elementi AC
 		for (int j = 0; j < listAnagraficaComunale.size(); j++) {
 
@@ -105,6 +113,25 @@ public class MappingInsertAnagraficaComunale {
 				}
 
 			}
+			List<Attributo> listAttributiI = new ArrayList<Attributo>();
+			// ciclo per crea la e listaATTRIBUTI richiesti dal mapping
+			for (int i = 0; i < dataI.getAttributi().size(); i++) {
+
+				String stringI = dataI.getAttributi().get(i).getNome();
+				String[] partsI = stringI.split("#");
+
+				Attributo tmpI = new Attributo();
+				tmpI.setNome(dataI.getAttributi().get(i).getNome());
+				tmpI.setMapping(dataI.getAttributi().get(i).getMapping());
+				tmpI.setTipo(dataI.getAttributi().get(i).getTipo());
+
+				if ((listAnagraficaComunale.get(j).getValori().get(partsI[1]) != null)
+						&& (listAnagraficaComunale.get(j).getValori().get(partsI[1]).isEmpty() == false)) {
+					tmpI.setValore(listAnagraficaComunale.get(j).getValori().get(partsI[1]));
+					listAttributiI.add(tmpI);
+				}
+
+			}
 
 			// riga di tipo RIGATABELLA per AC
 			RigaTabella rigaTAC = new RigaTabella();
@@ -114,35 +141,65 @@ public class MappingInsertAnagraficaComunale {
 			rigaTAC.setUririga("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
 
 			// relazione AC con FAM
-			List<Relazione> listRelACFAM = new ArrayList<Relazione>();
+			List<Relazione> listRelAC = new ArrayList<Relazione>();
 			Relazione relACFAM = new Relazione();
 			relACFAM.setNomerelazione("http://dkm.fbk.eu/georeporter#hasNucleoFamiliare");
 			relACFAM.setUriDomain("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
 			String fam = listAnagraficaComunale.get(j).getValori().get("fam");
-			relACFAM.setUriRange("http://dkm.fbk.eu/georeporter#FAM_"+fam);
-			listRelACFAM.add(relACFAM);
+			relACFAM.setUriRange("http://dkm.fbk.eu/georeporter#FAM_" + fam);
+			listRelAC.add(relACFAM);
+			// rel ind + rel convivente
 
-			rigaTAC.setListarelazioni(listRelACFAM);
-
-			// riga di tipo RIGATABELLA per PF
-			RigaTabella rigaTPF = new RigaTabella();
-			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
-			rigaTPF.setListaattributi(listAttributi);
-			// rigaTPF.setListachiave(listChiavi);
 			String codfis = listAnagraficaComunale.get(j).getValori().get("fisc");
-			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+			// controllo codfis
+			if (!codfis.isEmpty()) {
+				// riga di tipo RIGATABELLA per PF
+				RigaTabella rigaTPF = new RigaTabella();
+				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
+				rigaTPF.setListaattributi(listAttributi);
+				// rigaTPF.setListachiave(listChiavi);
 
-			// relazione PF con AC
-			List<Relazione> listRelPFAC = new ArrayList<Relazione>();
-			Relazione relPFAC = new Relazione();
-			relPFAC.setNomerelazione("http://dkm.fbk.eu/georeporter#hasAnagrafica");
-			relPFAC.setUriDomain("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
-			relPFAC.setUriRange("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
-			listRelPFAC.add(relPFAC);
+				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 
-			rigaTPF.setListarelazioni(listRelPFAC);
+				// relazione PF con AC
+				List<Relazione> listRelPFAC = new ArrayList<Relazione>();
+				Relazione relPFAC = new Relazione();
+				relPFAC.setNomerelazione("http://dkm.fbk.eu/georeporter#hasAnagrafica");
+				relPFAC.setUriDomain("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+				relPFAC.setUriRange("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
+				listRelPFAC.add(relPFAC);
+				rigaTPF.setListarelazioni(listRelPFAC);
+				insertRiga(rigaTPF);
+			}
 
-			insertRiga(rigaTPF);
+			// relazione INQUI con AC
+			String resconv = listAnagraficaComunale.get(j).getValori().get("residenteconviv");
+			if (!resconv.isEmpty()) {
+				Relazione relINQUIAC = new Relazione();
+				relINQUIAC.setNomerelazione("http://dkm.fbk.eu/georeporter#hasResidenteConvivente");
+				relINQUIAC.setUriDomain("http://dkm.fbk.eu/georeporter#SOG_" + resconv);
+				relINQUIAC.setUriRange("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
+				listRelAC.add(relINQUIAC);
+			}
+
+			// riga di tipo RIGATABELLA per IND
+			RigaTabella rigaTIND = new RigaTabella();
+			rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + dataI.getIdTabella().getMapping());
+			rigaTIND.setListaattributi(listAttributiI);
+			// creo l'indirizzo univoco grazie dalla data d'inserimento
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			long time = cal.getTimeInMillis();
+			rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
+			insertRiga(rigaTIND);
+
+			// rel cin ind
+			Relazione relIND = new Relazione();
+			relIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzo");
+			relIND.setUriDomain("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
+			relIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+			listRelAC.add(relIND);
+
+			rigaTAC.setListarelazioni(listRelAC);
 
 			insertRiga(rigaTAC);
 
@@ -210,7 +267,8 @@ public class MappingInsertAnagraficaComunale {
 		WrapperAnagraficaComunale.LetturaFile(path);
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
-				new File("file/file_mapping/mappingPersonaFisica2.json"));
+				new File("file/file_mapping/mappingPersonaFisica2.json"),
+				new File("file/file_mapping/mappingIndirizzo.json"));
 
 	}
 

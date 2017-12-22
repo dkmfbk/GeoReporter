@@ -1,4 +1,4 @@
-package eu.fbk.dkm.georeporter.tn.wrappers;
+package eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,6 +28,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.PersonaGiuridica;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ProprietarioproTempore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSog;
 
 public class MappingInsertSog {
@@ -113,6 +114,9 @@ public class MappingInsertSog {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
 
+			
+			//for (Attributo attributo : listChiavi) {}
+			
 			// ciclo per creare listaATTRIBUTI richiesti dal mapping
 			for (int i = 0; i < data.getAttributi().size(); i++) {
 
@@ -155,16 +159,19 @@ public class MappingInsertSog {
 				}
 
 			}
+			String codfis = listPers.get(j).getValori().get("codicefiscale");
+			if (!codfis.isEmpty()) {
+				//inserire log in caso di assenza COD FIS
+				// riga di tipo RIGATABELLA per PF
+				RigaTabella rigaTPF = new RigaTabella();
+				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+				rigaTPF.setListaattributi(listAttributi);
+				rigaTPF.setListachiave(listChiavi);
+				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+				// inserimento dell'elemento
+				insertRiga(rigaTPF);
+			}
 
-			// riga di tipo RIGATABELLA per PF
-			RigaTabella rigaTPF = new RigaTabella();
-			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
-			rigaTPF.setListaattributi(listAttributi);
-			rigaTPF.setListachiave(listChiavi);
-			String codfis = listPers.get(j).getListaValoriChiave().get(0).get("codicefiscale");
-			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
-			// inserimento dell'elemento
-			insertRiga(rigaTPF);
 		}
 
 	}
@@ -219,16 +226,18 @@ public class MappingInsertSog {
 				}
 
 			}
+			String codfis = listPers.get(j).getValori().get("codicefiscale");
+			if (!codfis.isEmpty()) {
+				// riga di tipo RIGATABELLA per P
+				RigaTabella rigaTPF = new RigaTabella();
+				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+				rigaTPF.setListaattributi(listAttributi);
+				rigaTPF.setListachiave(listChiavi);
+				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+				// inserimento dell'elemento
+				insertRiga(rigaTPF);
+			}
 
-			// riga di tipo RIGATABELLA per PG
-			RigaTabella rigaTPF = new RigaTabella();
-			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
-			rigaTPF.setListaattributi(listAttributi);
-			rigaTPF.setListachiave(listChiavi);
-			String codfis = listPers.get(j).getListaValoriChiave().get(0).get("codicefiscale");
-			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
-			// inserimento dell'elemento
-			insertRiga(rigaTPF);
 		}
 
 	}
@@ -276,7 +285,6 @@ public class MappingInsertSog {
 				}
 
 			}
-
 			// riga di tipo RIGATABELLA per PPT
 			RigaTabella rigaTPF = new RigaTabella();
 			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
@@ -356,6 +364,7 @@ public class MappingInsertSog {
 		// mapping e insert degli elementi PF PG PPT
 		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
 				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listPersonaFisica);
+
 		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
 				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listPersonaGiuridica);
 		// LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
