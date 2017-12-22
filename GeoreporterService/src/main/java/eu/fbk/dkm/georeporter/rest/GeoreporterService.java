@@ -2604,6 +2604,73 @@ String result="";
 	}
 	
 	
+	@GET
+	@Path("urisoggettodaid")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getIDIndirizzoFromCoordinates(
+
+			@QueryParam("identificativoSoggetto") String idSoggetto
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+				+"	SELECT DISTINCT $id " 
+
+				+"	WHERE { "
+				+"	  {?id a :PersonaGiuridica .}"
+				+"	  UNION {?id a :PersonaFisica .}"
+				+"	   UNION {?id a :ProprietarioProTempore .}"
+				+"	  ?id :identificativoSoggetto " +idSoggetto
+						    
+				+"	}";
+			
+			
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+				
+				Value idURI = bindingSet.getValue("id");
+				result= idURI.stringValue();
+				}
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return result;
+	}
+	
 	
 	@GET
 	@Path("/strutturaontologia")
