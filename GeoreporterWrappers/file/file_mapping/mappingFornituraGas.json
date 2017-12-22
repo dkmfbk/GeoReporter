@@ -1,0 +1,4 @@
+{"attributi":[
+{"mapping":"http://dkm.fbk.eu/georeporter#ammontareFatturato","nome":"http://dkm.fbk.eu/georeporter#ammontarefatturato","tipo":"http://www.w3.org/2001/XMLSchema#integer"},{"mapping":"http://dkm.fbk.eu/georeporter#consumoFatturato","nome":"http://dkm.fbk.eu/georeporter#consumofatturato","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#idSiatelGas","nome":"http://dkm.fbk.eu/georeporter#idsiatelgas","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#idSiatelGasDettaglio","nome":"http://dkm.fbk.eu/georeporter#idsiatelgasdettaglio","tipo":"http://www.w3.org/2001/XMLSchema#integer"},{"mapping":"http://dkm.fbk.eu/georeporter#tipoUtenzaGas","nome":"http://dkm.fbk.eu/georeporter#tipoutenzagas","tipo":"http://www.w3.org/2001/XMLSchema#string"}],"idTabella":{"mapping":"FornituraGas","nome":"FornituraGas"}}

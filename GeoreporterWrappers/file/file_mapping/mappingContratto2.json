@@ -1,0 +1,8 @@
+{"attributi":[
+{"mapping":"http://dkm.fbk.eu/georeporter#annoRiferimento","nome":"http://dkm.fbk.eu/georeporter#anno","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#comuneContratto","nome":"http://dkm.fbk.eu/georeporter#comune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#hasTitolareContratto","nome":"http://dkm.fbk.eu/georeporter#hasTitolareContratto","tipo":"http://dkm.fbk.eu/georeporter#Soggetto"},
+{"mapping":"http://dkm.fbk.eu/georeporter#numeroMesiFatturazione","nome":"http://dkm.fbk.eu/georeporter#numero","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza","nome":"http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza","tipo":"http://dkm.fbk.eu/georeporter#Indirizzo"},{"mapping":"http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale","nome":"http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale","tipo":"http://dkm.fbk.eu/georeporter#IdentificativoCatastale"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codComuneContratto","nome":"http://dkm.fbk.eu/georeporter#codcomune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#denominazione","nome":"http://dkm.fbk.eu/georeporter#denominazione","tipo":"http://www.w3.org/2001/XMLSchema#string"}],"idTabella":{"mapping":"Contratto","nome":"Contratto"}}
