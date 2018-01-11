@@ -1,0 +1,11 @@
+{"attributi":[
+{"mapping":"http://dkm.fbk.eu/georeporter#annoLocazione","nome":"http://dkm.fbk.eu/georeporter#anno","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codiceNegozio","nome":"http://dkm.fbk.eu/georeporter#codicenegozio","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#denominazioneFile","nome":"http://dkm.fbk.eu/georeporter#denominazionefile","tipo":"http://www.w3.org/2001/XMLSchema#string"},{"mapping":"http://dkm.fbk.eu/georeporter#hasInquilino","nome":"http://dkm.fbk.eu/georeporter#hasInquilino","tipo":"http://dkm.fbk.eu/georeporter#Soggetto"},
+{"mapping":"http://dkm.fbk.eu/georeporter#hasProprietario","nome":"http://dkm.fbk.eu/georeporter#hasProprietario","tipo":"http://dkm.fbk.eu/georeporter#Soggetto"},
+{"mapping":"http://dkm.fbk.eu/georeporter#idSiatelLocazioni","nome":"http://dkm.fbk.eu/georeporter#idsiatellocazioni","tipo":"http://www.w3.org/2001/XMLSchema#integer"},{"mapping":"http://dkm.fbk.eu/georeporter#importoCanone","nome":"http://dkm.fbk.eu/georeporter#importocanone","tipo":"http://www.w3.org/2001/XMLSchema#float"},
+{"mapping":"http://dkm.fbk.eu/georeporter#tipoCanone","nome":"http://dkm.fbk.eu/georeporter#tipocanone","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#dataFine","nome":"http://dkm.fbk.eu/georeporter#datafine","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},
+{"mapping":"http://dkm.fbk.eu/georeporter#dataInizio","nome":"http://dkm.fbk.eu/georeporter#datainizio","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},
+{"mapping":"http://dkm.fbk.eu/georeporter#descrizione","nome":"http://dkm.fbk.eu/georeporter#descrizione","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#numero","nome":"http://dkm.fbk.eu/georeporter#numero","tipo":"http://www.w3.org/2001/XMLSchema#integer"}],"idTabella":{"mapping":"Locazione","nome":"Locazione"}}

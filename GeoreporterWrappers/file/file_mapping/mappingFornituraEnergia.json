@@ -1,0 +1,7 @@
+{"attributi":[
+{"mapping":"http://dkm.fbk.eu/georeporter#capUtenza","nome":"http://dkm.fbk.eu/georeporter#caputenza","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#idSiatelEnergia","nome":"http://dkm.fbk.eu/georeporter#idsiatelenergia","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#idSiatelEnergiaDettaglio","nome":"http://dkm.fbk.eu/georeporter#idsiatelenergiadettaglio","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#kwhFatturato","nome":"http://dkm.fbk.eu/georeporter#kwhfatturato","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#spesaConsumo","nome":"http://dkm.fbk.eu/georeporter#spesaconsumo","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#tipoUtenzaEnergia","nome":"http://dkm.fbk.eu/georeporter#tipoutenzaenergia","tipo":"http://www.w3.org/2001/XMLSchema#string"}],"idTabella":{"mapping":"FornituraEnergia","nome":"FornituraEnergia"}}

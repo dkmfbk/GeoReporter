@@ -19,6 +19,8 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.WebResource;
 
+import eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert.MappingInsertFabIde;
+import eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert.MappingInsertFabUiNote;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Annotazioni;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Comuni;
@@ -30,7 +32,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Riserve;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
-import eu.fbk.dkm.georeporter.tn.wrappers.MappingInsertFabUiNote;
 
 public class WrapperFab {
 
@@ -245,7 +246,8 @@ public class WrapperFab {
 		// per l'inserimento
 		// questo grazie ai file di mapping
 		MappingInsertFabUiNote.LoadFile(new File("file/file_mapping/mappingUI.json"),
-				new File("file/file_mapping/mappingNota.json"));
+				new File("file/file_mapping/mappingNota.json"),
+				new File("file/file_mapping/mappingIndirizzo.json"));
 
 		MappingInsertFabIde.LoadFileIdentificativi(new File("file/file_mapping/mappingParticella.json"),
 				new File("file/file_mapping/mappingIdentificativoCatastale.json"));

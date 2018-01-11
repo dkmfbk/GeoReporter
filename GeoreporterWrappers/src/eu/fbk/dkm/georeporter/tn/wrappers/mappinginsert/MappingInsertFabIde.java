@@ -1,4 +1,4 @@
-package eu.fbk.dkm.georeporter.tn.wrappers;
+package eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,7 +37,7 @@ public class MappingInsertFabIde {
 	public static List<IdentificativiCatastali> listIdentificativiCatastali = WrapperFab.listIdentificativiCatastali;
 
 	// metodo che acquisisce i 2 file di tipo json
-	static void LoadFileIdentificativi(File fileParticella, File fileIdeCat) {
+	public static void LoadFileIdentificativi(File fileParticella, File fileIdeCat) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -80,13 +80,14 @@ public class MappingInsertFabIde {
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
 
 				if ((listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
-						&&(listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]).isEmpty() == false) ) {
+						&& (listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1])
+								.isEmpty() == false)) {
 					tmp.setValore(listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]));
 					listChiavi.add(tmp);
 				}
 
 				if ((listIdentificativiCatastali.get(j).getValori().get(parts[1]) != null)
-						&&(listIdentificativiCatastali.get(j).getValori().get(parts[1]).isEmpty() == false)) {
+						&& (listIdentificativiCatastali.get(j).getValori().get(parts[1]).isEmpty() == false)) {
 					tmp.setValore(listIdentificativiCatastali.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
@@ -101,11 +102,20 @@ public class MappingInsertFabIde {
 					.get("codiceamministrativo");
 			String ideimm = listIdentificativiCatastali.get(j).getListaValoriChiave().get(0)
 					.get("identificativoimmobile");
+			// controllo su uri
 			String num = listIdentificativiCatastali.get(j).getValori().get("numero");
 			String den = listIdentificativiCatastali.get(j).getValori().get("denominatore");
 			String sub = listIdentificativiCatastali.get(j).getValori().get("subalterno");
-			rigaTPar.setUririga(
-					"http://dkm.fbk.eu/georeporter#PA_C" + codamm + "_N" + num + "_D" + den);
+			String[] tmpv = num.split("/",-1);
+			if (num.isEmpty()) {
+				num = "";
+				den = "";
+			} else if(tmpv.length == 2) {
+				num = tmpv[0];
+				den = tmpv[1];
+			}
+
+			rigaTPar.setUririga("http://dkm.fbk.eu/georeporter#PA_C" + codamm + "_N" + num + "_D" + den);
 
 			String relRange = MappingInsertFabUiNote.insertRigaReturn(rigaTPar);
 
@@ -121,12 +131,13 @@ public class MappingInsertFabIde {
 				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
 
 				if ((listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
-						&&(listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]).isEmpty() == false)) {
+						&& (listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1])
+								.isEmpty() == false)) {
 					tmp2.setValore(listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]));
 					listChiavi2.add(tmp2);
 				}
 				if ((listIdentificativiCatastali.get(j).getValori().get(parts[1]) != null)
-						&&(listIdentificativiCatastali.get(j).getValori().get(parts[1]).isEmpty() == false)) {
+						&& (listIdentificativiCatastali.get(j).getValori().get(parts[1]).isEmpty() == false)) {
 					tmp2.setValore(listIdentificativiCatastali.get(j).getValori().get(parts[1]));
 					listAttributi2.add(tmp2);
 				}
@@ -136,24 +147,22 @@ public class MappingInsertFabIde {
 			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
 			Relazione relPartIdeCat = new Relazione();
 			relPartIdeCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasParticella");
-			relPartIdeCat.setUriDomain(
-					"http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
+			relPartIdeCat
+					.setUriDomain("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
 			relPartIdeCat.setUriRange(relRange);
 			listRelPartIdeCat.add(relPartIdeCat);
 
 			Relazione relUIIdeCat = new Relazione();
 			relUIIdeCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasUnitaImmobiliare");
-			relUIIdeCat.setUriDomain(
-					"http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
-			relUIIdeCat.setUriRange("http://dkm.fbk.eu/georeporter#UI_" + codamm +"_" + ideimm);
+			relUIIdeCat.setUriDomain("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
+			relUIIdeCat.setUriRange("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
 			listRelPartIdeCat.add(relUIIdeCat);
 
 			RigaTabella rigaTIdeCat = new RigaTabella();
 			rigaTIdeCat.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
 			rigaTIdeCat.setListaattributi(listAttributi2);
 			rigaTIdeCat.setListachiave(listChiavi2);
-			rigaTIdeCat.setUririga(
-					"http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
+			rigaTIdeCat.setUririga("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
 
 			rigaTIdeCat.setListarelazioni(listRelPartIdeCat);
 			// controllo relazione particella ide cat

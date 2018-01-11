@@ -1,0 +1,10 @@
+{"attributi":[
+{"mapping":"http://dkm.fbk.eu/georeporter#annoPratica","nome":"http://dkm.fbk.eu/georeporter#annopratica","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codCondominio","nome":"http://dkm.fbk.eu/georeporter#codcondominio","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codTitoloOccupazione","nome":"http://dkm.fbk.eu/georeporter#codtitolooccupazione","tipo":"http://www.w3.org/2001/XMLSchema#integer"},{"mapping":"http://dkm.fbk.eu/georeporter#codiceEcografico","nome":"http://dkm.fbk.eu/georeporter#codiceecografico","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codicePOD","nome":"http://dkm.fbk.eu/georeporter#codicepod","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codicePODPresente","nome":"http://dkm.fbk.eu/georeporter#codicepodpresente","tipo":"http://www.w3.org/2001/XMLSchema#integer"},{"mapping":"http://dkm.fbk.eu/georeporter#codicepratica","nome":"http://dkm.fbk.eu/georeporter#codicepratica","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#oggetto","nome":"http://dkm.fbk.eu/georeporter#oggetto","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#proprieta","nome":"http://dkm.fbk.eu/georeporter#proprieta","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#utenzaCondominiale","nome":"http://dkm.fbk.eu/georeporter#utenzacondominiale","tipo":"http://www.w3.org/2001/XMLSchema#integer"},{"mapping":"http://dkm.fbk.eu/georeporter#categoria","nome":"http://dkm.fbk.eu/georeporter#categoria","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#denominazione","nome":"http://dkm.fbk.eu/georeporter#denominazione","tipo":"http://www.w3.org/2001/XMLSchema#string"}],"idTabella":{"mapping":"Utenza","nome":"Utenza"}}
