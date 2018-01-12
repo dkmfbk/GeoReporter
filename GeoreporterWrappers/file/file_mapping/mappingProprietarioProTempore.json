@@ -1,1 +1,1 @@
-{"attributi":{"mapping":"http://dkm.fbk.eu/georeporter#denominazione","nome":"http://dkm.fbk.eu/georeporter#denominazioneita","tipo":"http://www.w3.org/2001/XMLSchema#string"},"idTabella":{"mapping":"ProprietarioProTempore","nome":"ProprietarioProTempore"}}
+{"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#denominazione","nome":"http://dkm.fbk.eu/georeporter#denominazioneita","tipo":"http://www.w3.org/2001/XMLSchema#string"}],"idTabella":{"mapping":"ProprietarioProTempore","nome":"ProprietarioProTempore"}}

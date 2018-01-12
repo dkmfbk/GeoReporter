@@ -85,12 +85,22 @@ public class WrapperSog {
 						}
 
 						if (((tmpRiga.length) - 1) == 15) {
-							campi.put(headerSog.get(indice)[i].toLowerCase(),
-									ControlloValore.controlloValore(tmpRiga[i]));
-						} else {
-							if ((i > 3) && (i < 9)) {
+							if ((headerSog.get(indice)[i].toLowerCase().equals("datadinascita"))) {
+								campi.put(headerSog.get(indice)[i].toLowerCase(),
+										ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+							} else {
 								campi.put(headerSog.get(indice)[i].toLowerCase(),
 										ControlloValore.controlloValore(tmpRiga[i]));
+							}
+						} else {
+							if ((i > 3) && (i < 9)) {
+								if ((headerSog.get(indice)[i].toLowerCase().equals("datadinascita"))) {
+									campi.put(headerSog.get(indice)[i].toLowerCase(),
+											ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+								} else {
+									campi.put(headerSog.get(indice)[i].toLowerCase(),
+											ControlloValore.controlloValore(tmpRiga[i]));
+								}
 							} else if (i == 9) {
 								campi.put(headerSog.get(indice)[i + 2].toLowerCase(),
 										ControlloValore.controlloValore(tmpRiga[i]));

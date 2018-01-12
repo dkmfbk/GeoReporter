@@ -20,12 +20,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 
 public class WrapperTit {
 
-	//vettore per l'elenco degli HEADER TIT
+	// vettore per l'elenco degli HEADER TIT
 	public static String[] headerTit;
-	//lista di tipo TITOLARITA degli elementi estratti dal file TIT
+	// lista di tipo TITOLARITA degli elementi estratti dal file TIT
 	public static List<Titolarita> listTitolarita = new ArrayList<Titolarita>();
 
-	//estrazione degli HEADER
+	// estrazione degli HEADER
 	public static void estrazioneHeaderFileTit(String pathP) {
 
 		try {
@@ -45,7 +45,7 @@ public class WrapperTit {
 
 	}
 
-	//creazione e SET della LIST degli elementi del file TIT
+	// creazione e SET della LIST degli elementi del file TIT
 	public static void letturaFileTit(String pathP) {
 
 		try {
@@ -75,11 +75,26 @@ public class WrapperTit {
 					campi.put(headerTit[i + var].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
 				}
 				for (int i = 19 - var; i < 25 - var; i++) {
-					notaIniziale.put(headerTit[i + var].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
+					// controllo data e sistemare in formato
+					if ((headerTit[i + var].toLowerCase().equals("datadivalidita"))
+							|| (headerTit[i + var].toLowerCase().equals("datadiregistrazioneinatti"))) {
+						notaIniziale.put(headerTit[i + var].toLowerCase(),
+								ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+					} else {
+						notaIniziale.put(headerTit[i + var].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
+					}
+
 				}
 				campi.put(headerTit[25].toLowerCase(), ControlloValore.controlloValore(tmpRiga[25]));
 				for (int i = 26 - var; i < 31 - var; i++) {
-					notaFinale.put(headerTit[i + var].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
+					if ((headerTit[i + var].toLowerCase().equals("datadivalidita"))
+							|| (headerTit[i + var].toLowerCase().equals("datadiregistrazioneinatti"))) {
+						notaFinale.put(headerTit[i + var].toLowerCase(),
+								ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+					} else {
+						notaFinale.put(headerTit[i + var].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
+					}
+
 				}
 				for (int i = 32 - var; i < 35 - var; i++) {
 					campi.put(headerTit[i + var].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
@@ -111,7 +126,7 @@ public class WrapperTit {
 	}
 
 	public static void main(String[] args) {
-		
+
 	}
 
 }

@@ -26,7 +26,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTit;
 
 public class MappingInsertTit {
@@ -112,27 +111,13 @@ public class MappingInsertTit {
 
 				if ((listTitolarita.get(j).getNotaIniziale().getValori().get(parts[1]) != null)
 						&& (listTitolarita.get(j).getNotaIniziale().getValori().get(parts[1]).isEmpty() == false)) {
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadivalidita")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpNI.setValore(ControlloValore
-								.cambioData(listTitolarita.get(j).getNotaIniziale().getValori().get(parts[1])));
-					} else {
-						tmpNI.setValore(listTitolarita.get(j).getNotaIniziale().getValori().get(parts[1]));
-					}
+					tmpNI.setValore(listTitolarita.get(j).getNotaIniziale().getValori().get(parts[1]));
 					listNoteI.add(tmpNI);
 				}
 
 				if ((listTitolarita.get(j).getNotaFinale().getValori().get(parts[1]) != null)
 						&& (listTitolarita.get(j).getNotaFinale().getValori().get(parts[1]).isEmpty() == false)) {
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadivalidita")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpNF.setValore(ControlloValore
-								.cambioData(listTitolarita.get(j).getNotaFinale().getValori().get(parts[1])));
-					} else {
-						tmpNF.setValore(listTitolarita.get(j).getNotaFinale().getValori().get(parts[1]));
-					}
+					tmpNF.setValore(listTitolarita.get(j).getNotaFinale().getValori().get(parts[1]));
 					listNoteF.add(tmpNF);
 
 				}
@@ -231,11 +216,11 @@ public class MappingInsertTit {
 
 			// creare relazione per il SOG
 			Relazione relTitSOG = new Relazione();
-			relTitIdCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasSoggetto");
-			relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
-			String cod = listTitolarita.get(j).getValori().get("identificativosoggetto");
+			relTitSOG.setNomerelazione("http://dkm.fbk.eu/georeporter#hasSoggetto");
+			relTitSOG.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
+			String cod = listTitolarita.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
 			String codfis = getSOGfromIDESOG(cod);
-			relTitIdCat.setUriRange(codfis);
+			relTitSOG.setUriRange(codfis);
 			listRelTIT.add(relTitSOG);
 
 			// setto relazioni
@@ -250,7 +235,9 @@ public class MappingInsertTit {
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
 	public static String insertRigaReturn(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -305,10 +292,13 @@ public class MappingInsertTit {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
+		System.out.println(json);
 
 		try {
 
@@ -375,12 +365,11 @@ public class MappingInsertTit {
 
 	// metodo che dato UI mi restituisce IDESOG
 	public static String getSOGfromIDESOG(String ui) {
-
 		String result = "FAIL";
 		Client client = Client.create();
 
 		WebResource webResource = client.resource(
-				"http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/urisoggettodaid?identificativoSoggetto="
+				"http://localhost:8080/GeoreporterService/servizio/rest/urisoggettodaid?identificativoSoggetto="
 						+ ui);
 
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
@@ -398,7 +387,7 @@ public class MappingInsertTit {
 	}
 
 	public static void main(String[] args) {
-
+//IDR0000115470_TIPOFACSN_CAMML322
 		String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
 		String pathP = "file/TN_header/headerfiletit.csv";
 

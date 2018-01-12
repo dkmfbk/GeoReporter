@@ -167,8 +167,10 @@ public class MappingInsertIndirizzo {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
+		
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
 		// System.out.println(json);

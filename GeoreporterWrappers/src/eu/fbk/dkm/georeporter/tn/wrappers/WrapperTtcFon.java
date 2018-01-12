@@ -74,13 +74,29 @@ public class WrapperTtcFon {
 					campi.put(headerTtc[i].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
 				}
 				for (int i = 12; i < 17; i++) {
-					intavolazioneIniziale.put(headerTtc[i].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
+					// controllo data e sistemare in formato
+					if ((headerTtc[i].toLowerCase().equals("datadiintavolazione"))
+							|| (headerTtc[i].toLowerCase().equals("datadiregistrazioneinatti"))) {
+						intavolazioneIniziale.put(headerTtc[i].toLowerCase(),
+								ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+					} else {
+						intavolazioneIniziale.put(headerTtc[i].toLowerCase(),
+								ControlloValore.controlloValore(tmpRiga[i]));
+					}
 				}
 				for (int i = 17; i < 21; i++) {
 					campi.put(headerTtc[i].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
 				}
 				for (int i = 21; i < 26; i++) {
-					intavolazioneFinale.put(headerTtc[i].toLowerCase(), ControlloValore.controlloValore(tmpRiga[i]));
+					// controllo data e sistemare in formato
+					if ((headerTtc[i].toLowerCase().equals("datadiintavolazione"))
+							|| (headerTtc[i].toLowerCase().equals("datadiregistrazioneinatti"))) {
+						intavolazioneFinale.put(headerTtc[i].toLowerCase(),
+								ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+					} else {
+						intavolazioneFinale.put(headerTtc[i].toLowerCase(),
+								ControlloValore.controlloValore(tmpRiga[i]));
+					}
 				}
 				campi.put(headerTtc[26].toLowerCase(), ControlloValore.controlloValore(tmpRiga[26]));
 

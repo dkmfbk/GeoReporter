@@ -27,7 +27,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.TitolaritaCompleta;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTit;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTtcFon;
 
@@ -116,15 +115,8 @@ public class MappingInsertTtcFon {
 				if ((listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get(parts[1]) != null)
 						&& (listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get(parts[1])
 								.isEmpty() == false)) {
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadiintavolazione")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpINI.setValore(ControlloValore.cambioData(
-								listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get(parts[1])));
-					} else {
-						tmpINI.setValore(
-								listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get(parts[1]));
-					}
+					tmpINI.setValore(
+							listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get(parts[1]));
 					listIntavolazioneI.add(tmpINI);
 				}
 
@@ -133,13 +125,7 @@ public class MappingInsertTtcFon {
 								.isEmpty() == false)) {
 
 					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadiintavolazione")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpINF.setValore(ControlloValore.cambioData(
-								listTitolaritaCompleta.get(j).getIntavolazioneFinale().getValori().get(parts[1])));
-					} else {
-						tmpINF.setValore(
-								listTitolaritaCompleta.get(j).getIntavolazioneFinale().getValori().get(parts[1]));
-					}
+					tmpINF.setValore(listTitolaritaCompleta.get(j).getIntavolazioneFinale().getValori().get(parts[1]));
 					listIntavolazioneF.add(tmpINF);
 
 				}
@@ -241,11 +227,13 @@ public class MappingInsertTtcFon {
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
 	public static String insertRigaReturn(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		// System.out.println(json);
+	//	System.out.println(json);
 
 		String output = null;
 
@@ -296,7 +284,9 @@ public class MappingInsertTtcFon {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -365,7 +355,6 @@ public class MappingInsertTtcFon {
 	}
 
 	public static void main(String[] args) {
-
 		String pathT = "file/TN_file/404_41097.TTC";
 		String pathP = "file/TN_header/headerfilettcfon.csv";
 

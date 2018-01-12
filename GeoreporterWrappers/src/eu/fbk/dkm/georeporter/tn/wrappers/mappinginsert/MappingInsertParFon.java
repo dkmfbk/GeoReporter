@@ -27,7 +27,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperParFon;
 
 public class MappingInsertParFon {
@@ -114,28 +113,14 @@ public class MappingInsertParFon {
 				if ((listParticella.get(j).getIntavolazioneIniziale().getValori().get(parts[1]) != null)
 						&& (listParticella.get(j).getIntavolazioneIniziale().getValori().get(parts[1])
 								.isEmpty() == false)) {
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadiintavolazione")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpINI.setValore(ControlloValore.cambioData(
-								listParticella.get(j).getIntavolazioneIniziale().getValori().get(parts[1])));
-					} else {
-						tmpINI.setValore(listParticella.get(j).getIntavolazioneIniziale().getValori().get(parts[1]));
-					}
+					tmpINI.setValore(listParticella.get(j).getIntavolazioneIniziale().getValori().get(parts[1]));
 					listIntavolazioneI.add(tmpINI);
 				}
 
 				if ((listParticella.get(j).getIntavolazioneFinale().getValori().get(parts[1]) != null)
 						&& (listParticella.get(j).getIntavolazioneFinale().getValori().get(parts[1])
 								.isEmpty() == false)) {
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadiintavolazione")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpINF.setValore(ControlloValore
-								.cambioData(listParticella.get(j).getIntavolazioneFinale().getValori().get(parts[1])));
-					} else {
-						tmpINF.setValore(listParticella.get(j).getIntavolazioneFinale().getValori().get(parts[1]));
-					}
+					tmpINF.setValore(listParticella.get(j).getIntavolazioneFinale().getValori().get(parts[1]));
 					listIntavolazioneF.add(tmpINF);
 
 				}
@@ -236,7 +221,9 @@ public class MappingInsertParFon {
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
 	public static String insertRigaReturn(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -291,8 +278,10 @@ public class MappingInsertParFon {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+//		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
+		
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
 

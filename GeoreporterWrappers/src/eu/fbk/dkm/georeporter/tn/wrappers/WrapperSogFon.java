@@ -82,8 +82,13 @@ public class WrapperSogFon {
 									ControlloValore.controlloValore(tmpRiga[i]));
 							listaValoriChiave.add(valoriChiave);
 						} else {
-							campi.put(headerSog.get(indice)[i].toLowerCase(),
-									ControlloValore.controlloValore(tmpRiga[i]));
+							if ((headerSog.get(indice)[i].toLowerCase().equals("datadinascita"))) {
+								campi.put(headerSog.get(indice)[i].toLowerCase(),
+										ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+							} else {
+								campi.put(headerSog.get(indice)[i].toLowerCase(),
+										ControlloValore.controlloValore(tmpRiga[i]));
+							}
 						}
 
 					}
@@ -96,8 +101,13 @@ public class WrapperSogFon {
 									ControlloValore.controlloValore(tmpRiga[i]));
 							listaValoriChiave.add(valoriChiave);
 						} else {
-							campi.put(headerSog.get(indice)[i].toLowerCase(),
-									ControlloValore.controlloValore(tmpRiga[i]));
+							if ((headerSog.get(indice)[i].toLowerCase().equals("datadinascita"))) {
+								campi.put(headerSog.get(indice)[i].toLowerCase(),
+										ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+							} else {
+								campi.put(headerSog.get(indice)[i].toLowerCase(),
+										ControlloValore.controlloValore(tmpRiga[i]));
+							}
 						}
 					}
 
@@ -142,7 +152,7 @@ public class WrapperSogFon {
 	}
 
 	public static void main(String[] args) {
-		
+
 	}
 
 }

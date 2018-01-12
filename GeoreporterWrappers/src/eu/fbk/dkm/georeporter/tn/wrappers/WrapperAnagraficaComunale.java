@@ -81,10 +81,10 @@ public class WrapperAnagraficaComunale {
 						}
 					}
 					// composizione data in string
-					campi.put("datadecconiuge", datadecconiuge);
-					campi.put("datafinematrimonio", datafinematrimonio);
-					campi.put("datamatrimonio", datamatrimonio);
-					campi.put("datadinascita", datadinascita);
+					campi.put("datadecconiuge", ControlloValore.dataANACU(datadecconiuge));
+					campi.put("datafinematrimonio",  ControlloValore.dataANACU(datafinematrimonio));
+					campi.put("datamatrimonio",  ControlloValore.dataANACU(datamatrimonio));
+					campi.put("datadinascita",  ControlloValore.dataANACU(datadinascita));
 					// settare elemento della lista e aggiungerlo alla list
 					AnagraficaComunale ac = new AnagraficaComunale();
 					ac.setValori(campi);

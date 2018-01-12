@@ -59,8 +59,14 @@ public class WrapperFamiglia {
 					String[] tmpRiga = rigaCorrente.split(";", -1);
 
 					for (int i = 0; i < header.length; i++) {
-						campi.put(ControlloValore.puliziaHeader(header[i]),
-								ControlloValore.controlloValore(tmpRiga[i]));
+						// controllare data
+						if (ControlloValore.puliziaHeader(header[i]).equals("datanascita")) {
+							campi.put(ControlloValore.puliziaHeader(header[i]),
+									ControlloValore.dataBarrata(ControlloValore.controlloValore(tmpRiga[i])));
+						} else {
+							campi.put(ControlloValore.puliziaHeader(header[i]),
+									ControlloValore.controlloValore(tmpRiga[i]));
+						}
 					}
 					// settare elemento della lista e aggiungerlo alla list
 					Famiglia fm = new Famiglia();

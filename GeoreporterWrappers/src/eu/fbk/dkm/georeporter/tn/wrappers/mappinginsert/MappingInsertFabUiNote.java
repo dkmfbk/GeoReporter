@@ -32,7 +32,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Riserve;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFab;
 
 public class MappingInsertFabUiNote {
@@ -75,7 +74,7 @@ public class MappingInsertFabUiNote {
 		// ciclo la lista degli elementi UI
 		for (int j = 0; j < listUnitaImmobiliari.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
-			List<Attributo> listAttributiI = new ArrayList<Attributo>();
+			//List<Attributo> listAttributiI = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
 
 			List<Attributo> listNoteI = new ArrayList<Attributo>();
@@ -126,27 +125,12 @@ public class MappingInsertFabUiNote {
 				if ((listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(parts[1]) != null)
 						&& (listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(parts[1])
 								.isEmpty() == false)) {
-					// controllo tipo nota
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadiefficacia")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpNI.setValore(ControlloValore
-								.cambioData(listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(parts[1])));
-					} else {
-						tmpNI.setValore(listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(parts[1]));
-					}
+					tmpNI.setValore(listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(parts[1]));
 					listNoteI.add(tmpNI);
 				}
 				if ((listUnitaImmobiliari.get(j).getNotaFinale().getValori().get(parts[1]) != null)
 						&& (listUnitaImmobiliari.get(j).getNotaFinale().getValori().get(parts[1]).isEmpty() == false)) {
-					// controllo tipo nota
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadiefficacia")) || (parts[1].equals("datadiregistrazioneinatti"))) {
-						tmpNF.setValore(ControlloValore
-								.cambioData(listUnitaImmobiliari.get(j).getNotaFinale().getValori().get(parts[1])));
-					} else {
-						tmpNF.setValore(listUnitaImmobiliari.get(j).getNotaFinale().getValori().get(parts[1]));
-					}
+					tmpNF.setValore(listUnitaImmobiliari.get(j).getNotaFinale().getValori().get(parts[1]));
 					listNoteF.add(tmpNF);
 				}
 
@@ -161,17 +145,17 @@ public class MappingInsertFabUiNote {
 			rigaTUI.setUririga("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
 
 			// riga di tipo RIGATABELLA per IND
-			RigaTabella rigaTIND = new RigaTabella();
-			rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+			//RigaTabella rigaTIND = new RigaTabella();
+			//rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			// chiamata funzione gps lat long
-			//?? ha senso inserirlo ??
-			rigaTIND.setListaattributi(listAttributiI);
+			// ?? ha senso inserirlo ??
+			//rigaTIND.setListaattributi(listAttributiI);
 			// creo l'indirizzo univoco grazie dalla data d'inserimento
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			long time = cal.getTimeInMillis();
-			rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
+			//Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			//long time = cal.getTimeInMillis();
+			//rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
 
-			insertRiga(rigaTIND);
+			//insertRiga(rigaTIND);
 
 			// NOTA INIZIALE
 			RigaTabella rigaTNI = new RigaTabella();
@@ -228,11 +212,11 @@ public class MappingInsertFabUiNote {
 				listRelUI.add(relNF);
 			}
 			// rel cin ind
-			Relazione relIND = new Relazione();
+			/*Relazione relIND = new Relazione();
 			relIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzo");
 			relIND.setUriDomain("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
 			relIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
-			listRelUI.add(relIND);
+			listRelUI.add(relIND);*/
 
 			// riga uri rel + inserimento
 			rigaTUI.setListarelazioni(listRelUI);
@@ -244,7 +228,8 @@ public class MappingInsertFabUiNote {
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
 	public static String insertRigaReturn(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -299,11 +284,12 @@ public class MappingInsertFabUiNote {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		// System.out.println(json);
+		//System.out.println(json);
 
 		try {
 
@@ -351,6 +337,22 @@ public class MappingInsertFabUiNote {
 	}
 
 	public static void main(String[] args) {
+
+		// path del file .FAB e del file con gli HEADER inseriti a mano da un utente
+		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
+		String pathP = "file/TN_header/headerfilefab.csv";
+
+		// chiamata per l'estrazione degli header per la composizione della lista HEADER
+		WrapperFab.estrazioneHeaderFileFab(pathP);
+
+		// chiamata per l'analisi del file .FAB
+		WrapperFab.letturaFileFab(pathF);
+
+		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
+		// per l'inserimento
+		// questo grazie ai file di mapping
+		LoadFile(new File("file/file_mapping/mappingUI.json"), new File("file/file_mapping/mappingNota.json"),
+				new File("file/file_mapping/mappingIndirizzo.json"));
 
 	}
 

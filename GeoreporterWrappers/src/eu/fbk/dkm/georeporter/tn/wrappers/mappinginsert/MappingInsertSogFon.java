@@ -28,7 +28,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.PersonaGiuridica;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ProprietarioproTempore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSog;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSogFon;
 
@@ -103,12 +102,7 @@ public class MappingInsertSogFon {
 
 				if ((listPers.get(j).getValori().get(parts[1]) != null)
 						&& (listPers.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-
-					if ((parts[1].equals("datadinascita"))) {
-						tmp.setValore(ControlloValore.cambioData(listPers.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listPers.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listPers.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 
 				}
@@ -132,16 +126,17 @@ public class MappingInsertSogFon {
 				}
 
 			}
-
-			// riga di tipo RIGATABELLA per PF
-			RigaTabella rigaTPF = new RigaTabella();
-			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
-			rigaTPF.setListaattributi(listAttributi);
-			rigaTPF.setListachiave(listChiavi);
-			String codfis = listPers.get(j).getListaValoriChiave().get(0).get("codicefiscale");
-			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
-			// inserimento dell'elemento
-			insertRiga(rigaTPF);
+			String codfis = listPers.get(j).getValori().get("codicefiscale");
+			if (!codfis.isEmpty()) {
+				// riga di tipo RIGATABELLA per PF
+				RigaTabella rigaTPF = new RigaTabella();
+				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+				rigaTPF.setListaattributi(listAttributi);
+				rigaTPF.setListachiave(listChiavi);
+				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+				// inserimento dell'elemento
+				insertRiga(rigaTPF);
+			}
 		}
 
 	}
@@ -166,13 +161,7 @@ public class MappingInsertSogFon {
 
 				if ((listPers.get(j).getValori().get(parts[1]) != null)
 						&& (listPers.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadinascita"))) {
-						tmp.setValore(ControlloValore.cambioData(listPers.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listPers.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listPers.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 
 				}
@@ -198,26 +187,30 @@ public class MappingInsertSogFon {
 			}
 
 			// riga di tipo RIGATABELLA per PG
-			RigaTabella rigaTPF = new RigaTabella();
-			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
-			rigaTPF.setListaattributi(listAttributi);
-			rigaTPF.setListachiave(listChiavi);
-			String codfis = listPers.get(j).getListaValoriChiave().get(0).get("codicefiscale");
-			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
-			// inserimento dell'elemento
-			insertRiga(rigaTPF);
+			String codfis = listPers.get(j).getValori().get("codicefiscale");
+			if (!codfis.isEmpty()) {
+				RigaTabella rigaTPF = new RigaTabella();
+				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+				rigaTPF.setListaattributi(listAttributi);
+				rigaTPF.setListachiave(listChiavi);
+				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
+				// inserimento dell'elemento
+				insertRiga(rigaTPF);
+			}
+
 		}
 
 	}
 
-
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		// System.out.println(json);
+		System.out.println(json);
 
 		try {
 
@@ -276,7 +269,7 @@ public class MappingInsertSogFon {
 		// chiamata per l'analisi del file .SOG FON
 		WrapperSogFon.letturaFileSogFon(pathF);
 
-		// mapping e insert degli elementi PF PG 
+		// mapping e insert degli elementi PF PG
 		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
 				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaFisicaFon);
 		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),

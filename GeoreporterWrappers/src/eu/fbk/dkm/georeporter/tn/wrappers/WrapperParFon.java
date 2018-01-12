@@ -102,13 +102,28 @@ public class WrapperParFon {
 								ControlloValore.controlloValore(tmpRiga[i]));
 					}
 					for (int i = 15; i < 20; i++) {
-						intavolazioneIniziale.put(headerP.get(indice - 1)[i].toLowerCase(),
-								ControlloValore.controlloValore(tmpRiga[i]));
+						// controllo data
+						if ((headerP.get(indice - 1)[i].toLowerCase().equals("datadiintavolazione"))
+								|| (headerP.get(indice - 1)[i].toLowerCase().equals("datadiregistrazioneinatti"))) {
+							intavolazioneIniziale.put(headerP.get(indice - 1)[i].toLowerCase(),
+									ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+						} else {
+							intavolazioneIniziale.put(headerP.get(indice - 1)[i].toLowerCase(),
+									ControlloValore.controlloValore(tmpRiga[i]));
+						}
+
 					}
 					campi.put(headerP.get(indice - 1)[20].toLowerCase(), ControlloValore.controlloValore(tmpRiga[20]));
 					for (int i = 21; i < 26; i++) {
-						intavolazioneFinale.put(headerP.get(indice - 1)[i].toLowerCase(),
-								ControlloValore.controlloValore(tmpRiga[i]));
+						// controllo data
+						if ((headerP.get(indice - 1)[i].toLowerCase().equals("datadiintavolazione"))
+								|| (headerP.get(indice - 1)[i].toLowerCase().equals("datadiregistrazioneinatti"))) {
+							intavolazioneFinale.put(headerP.get(indice - 1)[i].toLowerCase(),
+									ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+						} else {
+							intavolazioneFinale.put(headerP.get(indice - 1)[i].toLowerCase(),
+									ControlloValore.controlloValore(tmpRiga[i]));
+						}
 					}
 					for (int i = 26; i < 32; i++) {
 						campi.put(headerP.get(indice - 1)[i].toLowerCase(),
@@ -130,7 +145,7 @@ public class WrapperParFon {
 					listParticella.add(par);
 
 				} else {
-					//porzione di particella non la utilizziamo
+					// porzione di particella non la utilizziamo
 				}
 
 				rigaCorrente = reader.readLine();
