@@ -114,9 +114,8 @@ public class MappingInsertSog {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
 
-			
-			//for (Attributo attributo : listChiavi) {}
-			
+			// for (Attributo attributo : listChiavi) {}
+
 			// ciclo per creare listaATTRIBUTI richiesti dal mapping
 			for (int i = 0; i < data.getAttributi().size(); i++) {
 
@@ -131,11 +130,7 @@ public class MappingInsertSog {
 				if ((listPers.get(j).getValori().get(parts[1]) != null)
 						&& (listPers.get(j).getValori().get(parts[1]).isEmpty() == false)) {
 
-					if ((parts[1].equals("datadinascita"))) {
-						tmp.setValore(ControlloValore.cambioData(listPers.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listPers.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listPers.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 
 				}
@@ -160,8 +155,12 @@ public class MappingInsertSog {
 
 			}
 			String codfis = listPers.get(j).getValori().get("codicefiscale");
-			if (!codfis.isEmpty()) {
-				//inserire log in caso di assenza COD FIS
+			String idesog = listPers.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
+			if (codfis.isEmpty()) {
+				codfis = idesog;
+			}
+			if ((!codfis.isEmpty()) || (idesog.equals("10000000"))) {
+				// inserire log in caso di assenza COD FIS
 				// riga di tipo RIGATABELLA per PF
 				RigaTabella rigaTPF = new RigaTabella();
 				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
@@ -196,13 +195,7 @@ public class MappingInsertSog {
 
 				if ((listPers.get(j).getValori().get(parts[1]) != null)
 						&& (listPers.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-
-					// controllo data e sistemare in formato
-					if ((parts[1].equals("datadinascita"))) {
-						tmp.setValore(ControlloValore.cambioData(listPers.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listPers.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listPers.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 
 				}
@@ -301,7 +294,9 @@ public class MappingInsertSog {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -353,7 +348,7 @@ public class MappingInsertSog {
 	}
 
 	public static void main(String[] args) {
-
+		// IDR0000115470_TIPOFACSN_CAMML322
 		String pathS = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG";
 		String pathP = "file/TN_header/headerfilesog.csv";
 
@@ -367,9 +362,9 @@ public class MappingInsertSog {
 
 		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
 				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listPersonaGiuridica);
-		// LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
-		// new File("file/file_mapping/mappingSoggetto.json"),
-		// WrapperSog.listProprietarioproTempore);
+
+		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listProprietarioproTempore);
 
 	}
 

@@ -30,7 +30,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperAnagraficaComunale;
 
 public class MappingInsertAnagraficaComunale {
@@ -155,8 +154,8 @@ public class MappingInsertAnagraficaComunale {
 			if (!codfis.isEmpty()) {
 				// riga di tipo RIGATABELLA per PF
 				RigaTabella rigaTPF = new RigaTabella();
-				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
-				rigaTPF.setListaattributi(listAttributi);
+				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#PersonaFisica");
+				rigaTPF.setListaattributi(listAttributi2);
 				// rigaTPF.setListachiave(listChiavi);
 
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
@@ -208,7 +207,9 @@ public class MappingInsertAnagraficaComunale {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);

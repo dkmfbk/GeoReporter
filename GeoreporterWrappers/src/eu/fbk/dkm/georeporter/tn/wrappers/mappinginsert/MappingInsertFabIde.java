@@ -106,15 +106,18 @@ public class MappingInsertFabIde {
 			String num = listIdentificativiCatastali.get(j).getValori().get("numero");
 			String den = listIdentificativiCatastali.get(j).getValori().get("denominatore");
 			String sub = listIdentificativiCatastali.get(j).getValori().get("subalterno");
-			String[] tmpv = num.split("/",-1);
-			if (num.isEmpty()) {
-				num = "";
-				den = "";
-			} else if(tmpv.length == 2) {
-				num = tmpv[0];
-				den = tmpv[1];
-			}
 
+			if (num != null) {
+				String[] tmpv = num.split("/", -1);
+
+				if ((num.isEmpty()) || (num == null)) {
+					num = "";
+					den = "";
+				} else if (tmpv.length == 2) {
+					num = tmpv[0];
+					den = tmpv[1];
+				}
+			}
 			rigaTPar.setUririga("http://dkm.fbk.eu/georeporter#PA_C" + codamm + "_N" + num + "_D" + den);
 
 			String relRange = MappingInsertFabUiNote.insertRigaReturn(rigaTPar);
@@ -173,6 +176,23 @@ public class MappingInsertFabIde {
 	}
 
 	public static void main(String[] args) {
+
+		// path del file .FAB e del file con gli HEADER inseriti a mano da un utente
+		// 
+		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
+		String pathP = "file/TN_header/headerfilefab.csv";
+
+		// chiamata per l'estrazione degli header per la composizione della lista HEADER
+		WrapperFab.estrazioneHeaderFileFab(pathP);
+
+		// chiamata per l'analisi del file .FAB
+		WrapperFab.letturaFileFab(pathF);
+
+		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
+		// per l'inserimento
+		// questo grazie ai file di mapping
+		LoadFileIdentificativi(new File("file/file_mapping/mappingParticella.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
 
 	}
 

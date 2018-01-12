@@ -110,12 +110,27 @@ public class WrapperFab {
 								ControlloValore.controlloValore(tmpRiga[i]));
 					}
 					for (int i = 31; i < 37; i++) {
-						notaIniziale.put(header.get(indice - 1)[i + var].toLowerCase(),
-								ControlloValore.controlloValore(tmpRiga[i]));
+
+						if ((header.get(indice - 1)[i + var].toLowerCase().equals("datadiefficacia"))
+								|| (header.get(indice - 1)[i + var].toLowerCase()
+										.equals("datadiregistrazioneinatti"))) {
+							notaIniziale.put(header.get(indice - 1)[i + var].toLowerCase(),
+									ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+						} else {
+							notaIniziale.put(header.get(indice - 1)[i + var].toLowerCase(),
+									ControlloValore.controlloValore(tmpRiga[i]));
+						}
 					}
 					for (int i = 37; i < 43; i++) {
-						notaFinale.put(header.get(indice - 1)[i + var].toLowerCase(),
-								ControlloValore.controlloValore(tmpRiga[i]));
+						if ((header.get(indice - 1)[i + var].toLowerCase().equals("datadiefficacia"))
+								|| (header.get(indice - 1)[i + var].toLowerCase()
+										.equals("datadiregistrazioneinatti"))) {
+							notaFinale.put(header.get(indice - 1)[i + var].toLowerCase(),
+									ControlloValore.cambioData(ControlloValore.controlloValore(tmpRiga[i])));
+						} else {
+							notaFinale.put(header.get(indice - 1)[i + var].toLowerCase(),
+									ControlloValore.controlloValore(tmpRiga[i]));
+						}
 					}
 					for (int i = 43; i < 47; i++) {
 						campi.put(header.get(indice - 1)[i + var].toLowerCase(),
@@ -148,8 +163,20 @@ public class WrapperFab {
 										ControlloValore.controlloValore(tmpRiga[i]));
 								listaValoriChiave.add(valoriChiave);
 							} else {
-								campi.put(header.get(indice - 1)[i].toLowerCase(),
-										ControlloValore.controlloValore(tmpRiga[i]));
+
+								if ((header.get(indice - 1)[i].toLowerCase().equals("foglio"))
+										|| (header.get(indice - 1)[i].toLowerCase().equals("numero"))
+										|| (header.get(indice - 1)[i].toLowerCase().equals("denominatore"))
+										|| (header.get(indice - 1)[i].toLowerCase().equals("subalterno"))
+												&& (header.get(indice - 1)[i].toLowerCase() != null)) {
+									campi.put(header.get(indice - 1)[i].toLowerCase(),
+											ControlloValore.TolgoZeri(ControlloValore.controlloValore(tmpRiga[i])));
+								} else {
+
+									campi.put(header.get(indice - 1)[i].toLowerCase(),
+											ControlloValore.controlloValore(tmpRiga[i]));
+								}
+
 							}
 						}
 						settareElemento(indice, campi, listaValoriChiave);
@@ -164,8 +191,20 @@ public class WrapperFab {
 								listaValoriChiave.add(valoriChiave);
 							}
 							for (int k = 6; k < ((header.get(indice - 1).length)); k++) {
-								campi2.put(header.get(indice - 1)[k].toLowerCase(), ControlloValore
-										.controlloValore(tmpRiga[k + (((header.get(indice - 1).length) - 7) * j)]));
+
+								if ((header.get(indice - 1)[k].toLowerCase().equals("foglio"))
+										|| (header.get(indice - 1)[k].toLowerCase().equals("numero"))
+										|| (header.get(indice - 1)[k].toLowerCase().equals("denominatore"))
+										|| (header.get(indice - 1)[k].toLowerCase().equals("subalterno"))
+												&& (header.get(indice - 1)[k].toLowerCase() != null)) {
+									campi2.put(header.get(indice - 1)[k].toLowerCase(),
+											ControlloValore.TolgoZeri(ControlloValore.controlloValore(
+													tmpRiga[k + (((header.get(indice - 1).length) - 7) * j)])));
+								} else {
+									campi2.put(header.get(indice - 1)[k].toLowerCase(), ControlloValore
+											.controlloValore(tmpRiga[k + (((header.get(indice - 1).length) - 7) * j)]));
+								}
+
 							}
 							settareElemento(indice, campi2, listaValoriChiave);
 						}
@@ -231,27 +270,6 @@ public class WrapperFab {
 
 	public static void main(String[] args) {
 
-		// path del file .FAB e del file con gli HEADER inseriti a mano da un utente
-		// String pathF =IDR0000115470_TIPOFACSN_CAMML322
-		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
-		String pathP = "file/TN_header/headerfilefab.csv";
-
-		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		estrazioneHeaderFileFab(pathP);
-
-		// chiamata per l'analisi del file .FAB
-		letturaFileFab(pathF);
-
-		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
-		// per l'inserimento
-		// questo grazie ai file di mapping
-		MappingInsertFabUiNote.LoadFile(new File("file/file_mapping/mappingUI.json"),
-				new File("file/file_mapping/mappingNota.json"),
-				new File("file/file_mapping/mappingIndirizzo.json"));
-
-		MappingInsertFabIde.LoadFileIdentificativi(new File("file/file_mapping/mappingParticella.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
-		
 	}
 
 }
