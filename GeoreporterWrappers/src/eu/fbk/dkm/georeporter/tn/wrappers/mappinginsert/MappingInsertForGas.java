@@ -85,13 +85,7 @@ public class MappingInsertForGas {
 
 				if ((listFornituraGas.get(j).getValori().get(parts[1]) != null)
 						&& (listFornituraGas.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-
-					if (parts[1].contains("codice")) {
-						tmp.setValore(listFornituraGas.get(j).getValori().get(parts[1]).trim());
-					} else {
-						tmp.setValore(ControlloValore.controlloVIR(listFornituraGas.get(j).getValori().get(parts[1])));
-					}
-
+					tmp.setValore(listFornituraGas.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
 			}
@@ -109,8 +103,7 @@ public class MappingInsertForGas {
 
 				if ((listFornituraGas.get(j).getValori().get(parts2[1]) != null)
 						&& (listFornituraGas.get(j).getValori().get(parts2[1]).isEmpty() == false)) {
-
-					tmp2.setValore(ControlloValore.controlloVIR(listFornituraGas.get(j).getValori().get(parts2[1])));
+					tmp2.setValore((listFornituraGas.get(j).getValori().get(parts2[1])));
 					listAttributi.add(tmp2);
 				}
 			}
@@ -152,7 +145,9 @@ public class MappingInsertForGas {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);

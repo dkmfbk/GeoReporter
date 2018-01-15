@@ -56,21 +56,24 @@ public class WrapperForLoc {
 			Iterator cells = row.cellIterator();
 			int j = 0;
 			int k = 0;
-			for(int g=0; g<row.getLastCellNum();g++) {
+			for (int g = 0; g < row.getLastCellNum(); g++) {
 
 				if (i == 0) {
 					headerFL[j] = ControlloValore.puliziaHeader(row.getCell(g).toString());
 					j++;
 				} else {
-					//aggiungere controllo in caso di valore null
-					if(row.getCell(g) != null) {
-						if(headerFL[k].contains("codice")) {
+					// aggiungere controllo in caso di valore null
+					if (row.getCell(g) != null) {
+
+						if (headerFL[k].contains("codice")) {
 							campi.put(headerFL[k], row.getCell(g).toString().trim());
-						}else {
-							campi.put(headerFL[k], row.getCell(g).toString());
+						} else if (headerFL[k].contains("data")) {
+							campi.put(headerFL[k], ControlloValore.controlloData(row.getCell(g).toString()));
+						} else {
+							campi.put(headerFL[k], ControlloValore.controlloVIR(row.getCell(g).toString().trim()));
 						}
-					}else {
-						campi.put(headerFL[k],"");
+					} else {
+						campi.put(headerFL[k], "");
 					}
 					k++;
 				}
