@@ -63,12 +63,11 @@ public class WrapperForGas {
 					headerFG[j] = ControlloValore.puliziaHeader(row.getCell(g).toString());
 					j++;
 				} else {
-					// aggiungere controllo in caso di valore null
 					if (row.getCell(g) != null) {
-						if(headerFG[k].contains("codice")) {
+						if (headerFG[k].contains("codice")) {
 							campi.put(headerFG[k], row.getCell(g).toString().trim());
-						}else {
-							campi.put(headerFG[k], row.getCell(g).toString());
+						} else {
+							campi.put(headerFG[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
 						}
 					} else {
 						campi.put(headerFG[k], "");

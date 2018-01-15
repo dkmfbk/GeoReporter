@@ -81,10 +81,10 @@ public class WrapperForEne {
 				} else {
 					// aggiungere controllo in caso di valore null
 					if (row.getCell(g) != null) {
-						if(headerFE[k].contains("codice")) {
+						if (headerFE[k].contains("codice")) {
 							campi.put(headerFE[k], row.getCell(g).toString().trim());
-						}else {
-							campi.put(headerFE[k], row.getCell(g).toString());
+						} else {
+							campi.put(headerFE[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
 						}
 					} else {
 						campi.put(headerFE[k], "");
