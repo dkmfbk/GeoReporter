@@ -35,11 +35,10 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 
 public class WrapperTUUtenzaA {
 
-	// vettore per l'elenco degli HEADER 
+	// vettore per l'elenco degli HEADER
 	public static String[] header = new String[99];
-	// lista di tipo UTENZA ACQUA  degli elementi estratti dal file XLS
+	// lista di tipo UTENZA ACQUA degli elementi estratti dal file XLS
 	public static List<UtenzaAcqua> listUtenzaAcqua = new ArrayList<UtenzaAcqua>();
-	
 
 	// estrazione degli HEADER
 	public static void readXLSFile(String path) throws IOException {
@@ -59,17 +58,21 @@ public class WrapperTUUtenzaA {
 			Iterator cells = row.cellIterator();
 			int j = 0;
 			int k = 0;
-			for(int g=0; g<row.getLastCellNum();g++) {
+			for (int g = 0; g < row.getLastCellNum(); g++) {
 
 				if (i == 0) {
 					header[j] = ControlloValore.puliziaHeader(row.getCell(g).toString());
 					j++;
 				} else {
-					//aggiungere controllo in caso di valore null
-					if(row.getCell(g) != null) {
-						campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()) );
-					}else {
-						campi.put(header[k],"");
+					// aggiungere controllo in caso di valore null
+					if (row.getCell(g) != null) {
+						if (header[k].contains("data")) {
+							campi.put(header[k], ControlloValore.controlloData(row.getCell(g).toString()));
+						} else {
+							campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
+						}
+					} else {
+						campi.put(header[k], "");
 					}
 					k++;
 				}

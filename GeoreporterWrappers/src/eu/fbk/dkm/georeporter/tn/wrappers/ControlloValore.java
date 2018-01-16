@@ -18,23 +18,26 @@ public class ControlloValore {
 	}
 
 	public static String controlloData(String data) {
-		DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
-		Date date = null;
-		try {
-			date = format.parse(data);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		String tmp2 = "";
+		if (!data.isEmpty()) {
+			DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+			Date date = null;
+			try {
+				date = format.parse(data);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			String reportDate = df.format(date);
+			String[] tmp = reportDate.split("[/ ]");
+			tmp2 = tmp[2] + "-" + tmp[0] + "-" + tmp[1];
 		}
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		String reportDate = df.format(date);
-		String[] tmp = reportDate.split("[/ ]");
-		String tmp2 = tmp[2] + "-" + tmp[0] + "-" + tmp[1];
 		return tmp2;
 	}
 
 	public static String TolgoZeri(String valore) {
 		String tmp = valore;
-		if ((!valore.isEmpty())&&( valore.substring(0,1).equals("0") ))  {
+		if ((!valore.isEmpty()) && (valore.substring(0, 1).equals("0"))) {
 			tmp = (Integer.toString(Integer.parseInt(valore)));
 		}
 		return tmp;
@@ -57,11 +60,20 @@ public class ControlloValore {
 	}
 
 	public static String dataANACU(String data) {
-		String newdata=data;
-		if(data.length()==8) {
+		String newdata = data;
+		if (data.length() == 8) {
 			newdata = data.substring(0, 4) + "-" + data.substring(4, 6) + "-" + data.substring(6, 8);
 		}
 		return newdata;
+	}
+
+	public static String dataBarrataOra(String data) {
+		String tmp2 = "";
+		if (!data.isEmpty()) {
+			String[] tmp = data.split("[/ ]");
+			tmp2 = tmp[2] + "-" + tmp[1] + "-" + tmp[0];
+		}
+		return tmp2;
 	}
 
 	public static String dataBarrata(String data) {

@@ -36,7 +36,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 
 public class WrapperTULetturaA {
 
-	// vettore per l'elenco degli HEADER 
+	// vettore per l'elenco degli HEADER
 	public static String[] header;
 	// lista di tipo LATTURA ACQUA degli elementi estratti dal file XLS
 	public static List<LetturaAcqua> listLetturaAcqua = new ArrayList<LetturaAcqua>();
@@ -44,56 +44,61 @@ public class WrapperTULetturaA {
 	// estrazione HEADER
 	public static void estrazioneHeaderFile(String path) {
 
-			try {
-				File file = new File(path);
-				BufferedReader reader = new BufferedReader(new FileReader(file));
-				String rigaCorrente = reader.readLine();
-				if (rigaCorrente != null) {
-					header = rigaCorrente.split(";", -1);
-				}
-				reader.close();
-
-			} catch (IOException e) {
-				e.printStackTrace();
+		try {
+			File file = new File(path);
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String rigaCorrente = reader.readLine();
+			if (rigaCorrente != null) {
+				header = rigaCorrente.split(";", -1);
 			}
+			reader.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		public static void letturaFile(String path) {
-			try {
-				File file = new File(path);
-				BufferedReader reader = new BufferedReader(new FileReader(file));
-				String rigaCorrente = reader.readLine();
-				int prima_rig = 0;
+	public static void letturaFile(String path) {
+		try {
+			File file = new File(path);
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			String rigaCorrente = reader.readLine();
+			int prima_rig = 0;
 
-				while (rigaCorrente != null) {
-					if (prima_rig == 0) {
-						// salto prima riga file
-					} else {
-						Map<String, String> campi = new HashMap<String, String>();
+			while (rigaCorrente != null) {
+				if (prima_rig == 0) {
+					// salto prima riga file
+				} else {
+					Map<String, String> campi = new HashMap<String, String>();
 
-						String[] tmpRiga = rigaCorrente.split(";", -1);
+					String[] tmpRiga = rigaCorrente.split(";", -1);
 
-						for (int i = 0; i < header.length; i++) {
+					for (int i = 0; i < header.length; i++) {
+						if (ControlloValore.puliziaHeader(header[i]).contains("data")) {
+							campi.put(ControlloValore.puliziaHeader(header[i]),
+									ControlloValore.dataBarrataOra(tmpRiga[i]));
+						} else {
 							campi.put(ControlloValore.puliziaHeader(header[i]),
 									ControlloValore.controlloValore(tmpRiga[i]));
 						}
-						// settare elemento della lista e aggiungerlo alla list
-						LetturaAcqua la = new LetturaAcqua();
-						la.setValori(campi);
-						listLetturaAcqua.add(la);
 					}
-					prima_rig++;
-					rigaCorrente = reader.readLine();
+					// settare elemento della lista e aggiungerlo alla list
+					LetturaAcqua la = new LetturaAcqua();
+					la.setValori(campi);
+					listLetturaAcqua.add(la);
 				}
-
-				reader.close();
-
-			} catch (IOException e) {
-				e.printStackTrace();
+				prima_rig++;
+				rigaCorrente = reader.readLine();
 			}
 
+			reader.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-	
+
+	}
+
 	public static void main(String[] args) {
 
 	}

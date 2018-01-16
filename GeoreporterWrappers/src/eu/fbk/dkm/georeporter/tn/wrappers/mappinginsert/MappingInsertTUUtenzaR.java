@@ -23,8 +23,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UtenzaRifiuti;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForLoc;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaR;
 
 public class MappingInsertTUUtenzaR {
@@ -117,12 +115,7 @@ public class MappingInsertTUUtenzaR {
 
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					if (parts[1].contains("data")) {
-						tmp.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listUtenzaRifiuti.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listUtenzaRifiuti.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
 			}
@@ -140,12 +133,7 @@ public class MappingInsertTUUtenzaR {
 
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts2[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts2[1]).isEmpty() == false)) {
-					if (parts2[1].contains("data")) {
-						tmp2.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts2[1])));
-					} else {
-						tmp2.setValore(listUtenzaRifiuti.get(j).getValori().get(parts2[1]));
-					}
+					tmp2.setValore(listUtenzaRifiuti.get(j).getValori().get(parts2[1]));
 					listAttributi.add(tmp2);
 				}
 			}
@@ -163,12 +151,7 @@ public class MappingInsertTUUtenzaR {
 
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts3[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
-					if (parts3[1].contains("data")) {
-						tmp3.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts3[1])));
-					} else {
-						tmp3.setValore(listUtenzaRifiuti.get(j).getValori().get(parts3[1]));
-					}
+					tmp3.setValore(listUtenzaRifiuti.get(j).getValori().get(parts3[1]));
 					listAttributi.add(tmp3);
 				}
 			}
@@ -185,12 +168,7 @@ public class MappingInsertTUUtenzaR {
 
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts4[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts4[1]).isEmpty() == false)) {
-					if (parts4[1].contains("data")) {
-						tmp4.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts4[1])));
-					} else {
-						tmp4.setValore(listUtenzaRifiuti.get(j).getValori().get(parts4[1]));
-					}
+					tmp4.setValore(listUtenzaRifiuti.get(j).getValori().get(parts4[1]));
 					listChiaveSOG.add(tmp4);
 				}
 			}
@@ -206,12 +184,7 @@ public class MappingInsertTUUtenzaR {
 
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts5[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts5[1]).isEmpty() == false)) {
-					if (parts5[1].contains("data")) {
-						tmp5.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts5[1])));
-					} else {
-						tmp5.setValore(listUtenzaRifiuti.get(j).getValori().get(parts5[1]));
-					}
+					tmp5.setValore(listUtenzaRifiuti.get(j).getValori().get(parts5[1]));
 					listAttributiSOG.add(tmp5);
 				}
 			}
@@ -228,22 +201,12 @@ public class MappingInsertTUUtenzaR {
 
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts6[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts6[1])));
-					} else {
-						tmp6.setValore(listUtenzaRifiuti.get(j).getValori().get(parts6[1]));
-					}
+					tmp6.setValore(listUtenzaRifiuti.get(j).getValori().get(parts6[1]));
 					listAttributiIND.add(tmp6);
 				}
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts6[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts6[1])));
-					} else {
-						tmp6.setValore(listUtenzaRifiuti.get(j).getValori().get(parts6[1]));
-					}
+					tmp6.setValore(listUtenzaRifiuti.get(j).getValori().get(parts6[1]));
 					listChiaveIND.add(tmp6);
 				}
 			}
@@ -260,22 +223,12 @@ public class MappingInsertTUUtenzaR {
 
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts7[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts7[1]).isEmpty() == false)) {
-					if (parts7[1].contains("data")) {
-						tmp7.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts7[1])));
-					} else {
-						tmp7.setValore(listUtenzaRifiuti.get(j).getValori().get(parts7[1]));
-					}
+					tmp7.setValore(listUtenzaRifiuti.get(j).getValori().get(parts7[1]));
 					listAttributiIDECAT.add(tmp7);
 				}
 				if ((listUtenzaRifiuti.get(j).getValori().get(parts7[1]) != null)
 						&& (listUtenzaRifiuti.get(j).getValori().get(parts7[1]).isEmpty() == false)) {
-					if (parts7[1].contains("data")) {
-						tmp7.setValore(
-								ControlloValore.controlloData(listUtenzaRifiuti.get(j).getValori().get(parts7[1])));
-					} else {
-						tmp7.setValore(listUtenzaRifiuti.get(j).getValori().get(parts7[1]));
-					}
+					tmp7.setValore(listUtenzaRifiuti.get(j).getValori().get(parts7[1]));
 					listChiaveIDECAT.add(tmp7);
 				}
 			}
@@ -409,7 +362,7 @@ public class MappingInsertTUUtenzaR {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
