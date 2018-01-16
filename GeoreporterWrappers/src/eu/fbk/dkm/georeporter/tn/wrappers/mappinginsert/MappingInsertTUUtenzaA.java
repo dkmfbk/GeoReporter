@@ -23,11 +23,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UtenzaAcqua;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForLoc;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaA;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaR;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTtcFon;
 
 public class MappingInsertTUUtenzaA {
 
@@ -118,11 +114,7 @@ public class MappingInsertTUUtenzaA {
 
 				if ((listUtenzaAcqua.get(j).getValori().get(parts[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					if (parts[1].contains("data")) {
-						tmp.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listUtenzaAcqua.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listUtenzaAcqua.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
 			}
@@ -140,11 +132,7 @@ public class MappingInsertTUUtenzaA {
 
 				if ((listUtenzaAcqua.get(j).getValori().get(parts2[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts2[1]).isEmpty() == false)) {
-					if (parts2[1].contains("data")) {
-						tmp2.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts2[1])));
-					} else {
 						tmp2.setValore(listUtenzaAcqua.get(j).getValori().get(parts2[1]));
-					}
 					listAttributi.add(tmp2);
 				}
 			}
@@ -162,11 +150,7 @@ public class MappingInsertTUUtenzaA {
 
 				if ((listUtenzaAcqua.get(j).getValori().get(parts3[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
-					if (parts3[1].contains("data")) {
-						tmp3.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts3[1])));
-					} else {
 						tmp3.setValore(listUtenzaAcqua.get(j).getValori().get(parts3[1]));
-					}
 					listAttributi.add(tmp3);
 				}
 			}
@@ -184,11 +168,7 @@ public class MappingInsertTUUtenzaA {
 
 				if ((listUtenzaAcqua.get(j).getValori().get(parts4[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts4[1]).isEmpty() == false)) {
-					if (parts4[1].contains("data")) {
-						tmp4.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts4[1])));
-					} else {
 						tmp4.setValore(listUtenzaAcqua.get(j).getValori().get(parts4[1]));
-					}
 					listChiaveSOG.add(tmp4);
 				}
 			}
@@ -204,11 +184,7 @@ public class MappingInsertTUUtenzaA {
 
 				if ((listUtenzaAcqua.get(j).getValori().get(parts5[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts5[1]).isEmpty() == false)) {
-					if (parts5[1].contains("data")) {
-						tmp5.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts5[1])));
-					} else {
 						tmp5.setValore(listUtenzaAcqua.get(j).getValori().get(parts5[1]));
-					}
 					listAttributiSOG.add(tmp5);
 				}
 			}
@@ -226,20 +202,12 @@ public class MappingInsertTUUtenzaA {
 
 				if ((listUtenzaAcqua.get(j).getValori().get(parts6[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts6[1])));
-					} else {
 						tmp6.setValore(listUtenzaAcqua.get(j).getValori().get(parts6[1]));
-					}
 					listAttributiIND.add(tmp6);
 				}
 				if ((listUtenzaAcqua.get(j).getValori().get(parts6[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts6[1])));
-					} else {
 						tmp6.setValore(listUtenzaAcqua.get(j).getValori().get(parts6[1]));
-					}
 					listChiaveIND.add(tmp6);
 				}
 			}
@@ -256,20 +224,12 @@ public class MappingInsertTUUtenzaA {
 
 				if ((listUtenzaAcqua.get(j).getValori().get(parts7[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts7[1]).isEmpty() == false)) {
-					if (parts7[1].contains("data")) {
-						tmp7.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts7[1])));
-					} else {
 						tmp7.setValore(listUtenzaAcqua.get(j).getValori().get(parts7[1]));
-					}
 					listAttributiIDECAT.add(tmp7);
 				}
 				if ((listUtenzaAcqua.get(j).getValori().get(parts7[1]) != null)
 						&& (listUtenzaAcqua.get(j).getValori().get(parts7[1]).isEmpty() == false)) {
-					if (parts7[1].contains("data")) {
-						tmp7.setValore(ControlloValore.controlloData(listUtenzaAcqua.get(j).getValori().get(parts7[1])));
-					} else {
 						tmp7.setValore(listUtenzaAcqua.get(j).getValori().get(parts7[1]));
-					}
 					listChiaveIDECAT.add(tmp7);
 				}
 			}
@@ -403,7 +363,8 @@ public class MappingInsertTUUtenzaA {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);

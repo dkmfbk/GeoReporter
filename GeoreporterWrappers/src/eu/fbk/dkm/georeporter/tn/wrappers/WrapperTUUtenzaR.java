@@ -1,9 +1,6 @@
 package eu.fbk.dkm.georeporter.tn.wrappers;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -17,19 +14,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.AnagraficaComunale;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.FornituraGas;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Intavolazione;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Locazione;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Particella;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.TitolaritaCompleta;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UtenzaRifiuti;
 import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 
@@ -66,7 +50,11 @@ public class WrapperTUUtenzaR {
 				} else {
 					// aggiungere controllo in caso di valore null
 					if (row.getCell(g) != null) {
-						campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
+						if (header[k].contains("data")) {
+							campi.put(header[k], ControlloValore.controlloData(row.getCell(g).toString()));
+						} else {
+							campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
+						}
 					} else {
 						campi.put(header[k], "");
 					}

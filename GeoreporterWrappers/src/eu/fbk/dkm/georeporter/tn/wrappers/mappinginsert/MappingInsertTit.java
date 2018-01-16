@@ -158,7 +158,7 @@ public class MappingInsertTit {
 			RigaTabella rigaTNF = new RigaTabella();
 			rigaTNF.setNometabella("http://dkm.fbk.eu/georeporter#" + dataNote.getIdTabella().getMapping());
 			rigaTNF.setListaattributi(listNoteF);
-			String numnf = listTitolarita.get(j).getNotaIniziale().getValori().get("numeronota");
+			String numnf = listTitolarita.get(j).getNotaFinale().getValori().get("numeronota");
 			rigaTNF.setUririga("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + idetit + "_" + numnf);
 
 			// creare relazione per la nota finale con tipo nota

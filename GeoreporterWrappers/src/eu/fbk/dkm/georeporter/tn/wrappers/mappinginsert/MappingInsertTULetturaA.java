@@ -21,10 +21,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.LetturaAcqua;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForLoc;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTULetturaA;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTtcFon;
 
 public class MappingInsertTULetturaA {
 
@@ -68,11 +65,7 @@ public class MappingInsertTULetturaA {
 
 				if ((listLetturaAcqua.get(j).getValori().get(parts[1]) != null)
 						&& (listLetturaAcqua.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					if (parts[1].contains("data")) {
-						tmp.setValore(ControlloValore.controlloData(listLetturaAcqua.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listLetturaAcqua.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listLetturaAcqua.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
 			}
@@ -107,7 +100,8 @@ public class MappingInsertTULetturaA {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
