@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class ControlloValore {
 
@@ -21,6 +22,7 @@ public class ControlloValore {
 		String tmp2 = "";
 		if (!data.isEmpty()) {
 			DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+			format.setTimeZone(TimeZone.getTimeZone("GMT"));
 			Date date = null;
 			try {
 				date = format.parse(data);

@@ -133,8 +133,14 @@ public class MappingInsertTit {
 			rigaTTIT.setListachiave(listChiavi);
 			String codamm = listTitolarita.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
 			String ideimm = listTitolarita.get(j).getListaValoriChiave().get(0).get("identificativoimmobile");
+			String qnum = listTitolarita.get(j).getListaValoriChiave().get(0).get("quotanumeratore");
+			String qden = listTitolarita.get(j).getListaValoriChiave().get(0).get("quotadenominatore");
+			String qnd = "";
+			if (!qnum.isEmpty()) {
+				qnd = "_" + qnum + qden;
+			}
 			String idetit = listTitolarita.get(j).getValori().get("identificativotitolarita");
-			rigaTTIT.setUririga("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
+			rigaTTIT.setUririga("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 
 			RigaTabella rigaTNI = new RigaTabella();
 			rigaTNI.setNometabella("http://dkm.fbk.eu/georeporter#" + dataNote.getIdTabella().getMapping());
@@ -179,7 +185,7 @@ public class MappingInsertTit {
 				String relNIuri = insertRigaReturn(rigaTNI);
 				Relazione relNI = new Relazione();
 				relNI.setNomerelazione("http://dkm.fbk.eu/georeporter#hasNotaTitolaritaIniziale");
-				relNI.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
+				relNI.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 				relNI.setUriRange(relNIuri);
 				listRelTIT.add(relNI);
 			}
@@ -188,7 +194,7 @@ public class MappingInsertTit {
 				String relNFuri = insertRigaReturn(rigaTNF);
 				Relazione relNF = new Relazione();
 				relNF.setNomerelazione("http://dkm.fbk.eu/georeporter#hasNotaTitolaritaFinale");
-				relNF.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
+				relNF.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 				relNF.setUriRange(relNFuri);
 				listRelTIT.add(relNF);
 			}
@@ -196,7 +202,7 @@ public class MappingInsertTit {
 			if (!listTitolarita.get(j).getValori().get("regime").isEmpty()) {
 				Relazione relRegimeTipo = new Relazione();
 				relRegimeTipo.setNomerelazione("http://dkm.fbk.eu/georeporter#hasRegime");
-				relRegimeTipo.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
+				relRegimeTipo.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 				relRegimeTipo.setUriRange(
 						"http://dkm.fbk.eu/georeporter#" + listTitolarita.get(j).getValori().get("regime"));
 				listRelTIT.add(relRegimeTipo);
@@ -205,7 +211,7 @@ public class MappingInsertTit {
 			// creare relazione per il IDCatastale
 			Relazione relTitIdCat = new Relazione();
 			relTitIdCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIDCatastale");
-			relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
+			relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 			String codammideimm = "UI_" + codamm + "_" + ideimm;
 			String idecat = getICfromUI(codammideimm);
 			if (idecat.equals("FAIL")) {
@@ -217,7 +223,7 @@ public class MappingInsertTit {
 			// creare relazione per il SOG
 			Relazione relTitSOG = new Relazione();
 			relTitSOG.setNomerelazione("http://dkm.fbk.eu/georeporter#hasSoggetto");
-			relTitSOG.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit);
+			relTitSOG.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 			String cod = listTitolarita.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
 			String codfis = getSOGfromIDESOG(cod);
 			relTitSOG.setUriRange(codfis);
@@ -369,8 +375,7 @@ public class MappingInsertTit {
 		Client client = Client.create();
 
 		WebResource webResource = client.resource(
-				"http://localhost:8080/GeoreporterService/servizio/rest/urisoggettodaid?identificativoSoggetto="
-						+ ui);
+				"http://localhost:8080/GeoreporterService/servizio/rest/urisoggettodaid?identificativoSoggetto=" + ui);
 
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
@@ -387,7 +392,7 @@ public class MappingInsertTit {
 	}
 
 	public static void main(String[] args) {
-//IDR0000115470_TIPOFACSN_CAMML322
+		// IDR0000115470_TIPOFACSN_CAMML322
 		String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
 		String pathP = "file/TN_header/headerfiletit.csv";
 

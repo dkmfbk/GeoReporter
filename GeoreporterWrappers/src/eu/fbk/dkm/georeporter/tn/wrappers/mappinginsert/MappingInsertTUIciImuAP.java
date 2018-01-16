@@ -23,7 +23,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForLoc;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUIciImuAP;
 
@@ -110,11 +109,7 @@ public class MappingInsertTUIciImuAP {
 
 				if ((listICIIMU_AP.get(j).getValori().get(parts[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					if (parts[1].contains("data")) {
-						tmp.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listICIIMU_AP.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listICIIMU_AP.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
 			}
@@ -132,11 +127,7 @@ public class MappingInsertTUIciImuAP {
 
 				if ((listICIIMU_AP.get(j).getValori().get(parts2[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts2[1]).isEmpty() == false)) {
-					if (parts2[1].contains("data")) {
-						tmp2.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts2[1])));
-					} else {
-						tmp2.setValore(listICIIMU_AP.get(j).getValori().get(parts2[1]));
-					}
+					tmp2.setValore(listICIIMU_AP.get(j).getValori().get(parts2[1]));
 					listAttributi.add(tmp2);
 				}
 			}
@@ -152,11 +143,7 @@ public class MappingInsertTUIciImuAP {
 
 				if ((listICIIMU_AP.get(j).getValori().get(parts3[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
-					if (parts3[1].contains("data")) {
-						tmp3.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts3[1])));
-					} else {
-						tmp3.setValore(listICIIMU_AP.get(j).getValori().get(parts3[1]));
-					}
+					tmp3.setValore(listICIIMU_AP.get(j).getValori().get(parts3[1]));
 					listChiaveSOG.add(tmp3);
 				}
 			}
@@ -171,11 +158,7 @@ public class MappingInsertTUIciImuAP {
 
 				if ((listICIIMU_AP.get(j).getValori().get(parts4[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts4[1]).isEmpty() == false)) {
-					if (parts4[1].contains("data")) {
-						tmp4.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts4[1])));
-					} else {
-						tmp4.setValore(listICIIMU_AP.get(j).getValori().get(parts4[1]));
-					}
+					tmp4.setValore(listICIIMU_AP.get(j).getValori().get(parts4[1]));
 					listAttributiSOG.add(tmp4);
 				}
 			}
@@ -192,20 +175,12 @@ public class MappingInsertTUIciImuAP {
 
 				if ((listICIIMU_AP.get(j).getValori().get(parts5[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts5[1]).isEmpty() == false)) {
-					if (parts5[1].contains("data")) {
-						tmp5.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts5[1])));
-					} else {
-						tmp5.setValore(listICIIMU_AP.get(j).getValori().get(parts5[1]));
-					}
+					tmp5.setValore(listICIIMU_AP.get(j).getValori().get(parts5[1]));
 					listAttributiIND.add(tmp5);
 				}
 				if ((listICIIMU_AP.get(j).getValori().get(parts5[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts5[1]).isEmpty() == false)) {
-					if (parts5[1].contains("data")) {
-						tmp5.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts5[1])));
-					} else {
-						tmp5.setValore(listICIIMU_AP.get(j).getValori().get(parts5[1]));
-					}
+					tmp5.setValore(listICIIMU_AP.get(j).getValori().get(parts5[1]));
 					listChiaveIND.add(tmp5);
 				}
 			}
@@ -222,20 +197,12 @@ public class MappingInsertTUIciImuAP {
 
 				if ((listICIIMU_AP.get(j).getValori().get(parts6[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts6[1])));
-					} else {
-						tmp6.setValore(listICIIMU_AP.get(j).getValori().get(parts6[1]));
-					}
+					tmp6.setValore(listICIIMU_AP.get(j).getValori().get(parts6[1]));
 					listAttributiIDECAT.add(tmp6);
 				}
 				if ((listICIIMU_AP.get(j).getValori().get(parts6[1]) != null)
 						&& (listICIIMU_AP.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(ControlloValore.controlloData(listICIIMU_AP.get(j).getValori().get(parts6[1])));
-					} else {
-						tmp6.setValore(listICIIMU_AP.get(j).getValori().get(parts6[1]));
-					}
+					tmp6.setValore(listICIIMU_AP.get(j).getValori().get(parts6[1]));
 					listChiaveIDECAT.add(tmp6);
 				}
 			}
@@ -266,27 +233,27 @@ public class MappingInsertTUIciImuAP {
 			}
 
 			// riga di tipo RIGATABELLA per IDE CAT
-				RigaTabella rigaTIDECAT = new RigaTabella();
-				rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data6.getIdTabella().getMapping());
-				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
-				rigaTIDECAT.setListachiave(listChiaveIDECAT);
-				String cc = listICIIMU_AP.get(j).getValori().get("codcomune");
-				String num = listICIIMU_AP.get(j).getValori().get("particellaedificabile");
-				String den = "";
-				String[] numden = num.split("/", -1);
-				if (numden.length == 2) {
-					num = numden[0];
-					den = numden[1];
-				}
-				String sub = listICIIMU_AP.get(j).getValori().get("subalterno");
-				if (listICIIMU_AP.get(j).getValori().get("particellaedificabile").isEmpty()) {
-					num = "";
-					den = "";
-					sub = "";
-				}
-				rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
-				// inserimento dell'elemento
-				insertRiga(rigaTIDECAT);
+			RigaTabella rigaTIDECAT = new RigaTabella();
+			rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data6.getIdTabella().getMapping());
+			rigaTIDECAT.setListaattributi(listAttributiIDECAT);
+			rigaTIDECAT.setListachiave(listChiaveIDECAT);
+			String cc = listICIIMU_AP.get(j).getValori().get("codcomune");
+			String num = listICIIMU_AP.get(j).getValori().get("particellaedificabile");
+			String den = "";
+			String[] numden = num.split("/", -1);
+			if (numden.length == 2) {
+				num = numden[0];
+				den = numden[1];
+			}
+			String sub = listICIIMU_AP.get(j).getValori().get("subalterno");
+			if (listICIIMU_AP.get(j).getValori().get("particellaedificabile").isEmpty()) {
+				num = "";
+				den = "";
+				sub = "";
+			}
+			rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+			// inserimento dell'elemento
+			insertRiga(rigaTIDECAT);
 
 			// riga di tipo RIGATABELLA per AbitazionePrincipale
 
@@ -370,7 +337,8 @@ public class MappingInsertTUIciImuAP {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();

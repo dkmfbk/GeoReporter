@@ -51,7 +51,7 @@ public class WrapperTUUtenzaR {
 					// aggiungere controllo in caso di valore null
 					if (row.getCell(g) != null) {
 						if (header[k].contains("data")) {
-							campi.put(header[k], ControlloValore.dataBarrataOra(row.getCell(g).toString()));
+							campi.put(header[k], ControlloValore.controlloData(row.getCell(g).toString()));
 						} else {
 							campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
 						}
