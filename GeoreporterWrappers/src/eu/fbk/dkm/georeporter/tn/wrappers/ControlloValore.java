@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class ControlloValore {
 
@@ -21,6 +22,7 @@ public class ControlloValore {
 		String tmp2 = "";
 		if (!data.isEmpty()) {
 			DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+			format.setTimeZone(TimeZone.getTimeZone("GMT"));
 			Date date = null;
 			try {
 				date = format.parse(data);
@@ -33,6 +35,16 @@ public class ControlloValore {
 			tmp2 = tmp[2] + "-" + tmp[0] + "-" + tmp[1];
 		}
 		return tmp2;
+	}
+
+	public static String controlloDataEXCEL(Date data) {
+		String reportDate = "";
+		if (data != null) {
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			reportDate = format.format(data);
+		}
+
+		return reportDate;
 	}
 
 	public static String TolgoZeri(String valore) {

@@ -1,0 +1,2 @@
+{"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#identificativoSoggetto","nome":"http://dkm.fbk.eu/georeporter#identificativosoggetto","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codiceAmministrativo","nome":"http://dkm.fbk.eu/georeporter#codiceamministrativo","tipo":"http://www.w3.org/2001/XMLSchema#string"}],"idTabella":{"mapping":"Soggetto","nome":"Soggetto"}}

@@ -23,8 +23,6 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.NudaProprieta;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
-import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForLoc;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUIciImuNP;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaR;
 
@@ -33,7 +31,7 @@ public class MappingInsertTUIciImuNP {
 	public static List<NudaProprieta> listNudaProprieta = WrapperTUIciImuNP.listNudaProprieta;
 
 	private static void LoadFile(File filename, File filename2, File filename3, File filename4, File filename5,
-			File filename6) {
+			File filename6, File filename7, File filename8) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -52,6 +50,12 @@ public class MappingInsertTUIciImuNP {
 
 		Gson gson6 = new Gson();
 		JsonReader reader6;
+
+		Gson gson7 = new Gson();
+		JsonReader reader7;
+
+		Gson gson8 = new Gson();
+		JsonReader reader8;
 
 		try {
 			reader = new JsonReader(new FileReader(filename));
@@ -72,8 +76,14 @@ public class MappingInsertTUIciImuNP {
 			reader6 = new JsonReader(new FileReader(filename6));
 			MappingTabella data6 = gson6.fromJson(reader6, MappingTabella.class);
 
+			reader7 = new JsonReader(new FileReader(filename7));
+			MappingTabella data7 = gson5.fromJson(reader7, MappingTabella.class);
+
+			reader8 = new JsonReader(new FileReader(filename8));
+			MappingTabella data8 = gson8.fromJson(reader8, MappingTabella.class);
+
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, data2, data3, data4, data5, data6);
+			associazioneMappingNomeVal(data, data2, data3, data4, data5, data6, data7, data8);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -83,7 +93,8 @@ public class MappingInsertTUIciImuNP {
 	}
 
 	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3,
-			MappingTabella data4, MappingTabella data5, MappingTabella data6) {
+			MappingTabella data4, MappingTabella data5, MappingTabella data6, MappingTabella data7,
+			MappingTabella data8) {
 		// ciclo la lista degli elementi UtenzaRifiuti
 		for (int j = 0; j < listNudaProprieta.size(); j++) {
 
@@ -92,8 +103,9 @@ public class MappingInsertTUIciImuNP {
 			List<Attributo> listAttributiSOG = new ArrayList<Attributo>();
 			List<Attributo> listChiaveSOG = new ArrayList<Attributo>();
 
-			List<Attributo> listAttributiIND = new ArrayList<Attributo>();
-			List<Attributo> listChiaveIND = new ArrayList<Attributo>();
+			List<Attributo> listAttributiINDU = new ArrayList<Attributo>();
+			List<Attributo> listAttributiINDC = new ArrayList<Attributo>();
+			List<Attributo> listAttributiINDRC = new ArrayList<Attributo>();
 
 			List<Attributo> listAttributiIDECAT = new ArrayList<Attributo>();
 			List<Attributo> listChiaveIDECAT = new ArrayList<Attributo>();
@@ -111,12 +123,7 @@ public class MappingInsertTUIciImuNP {
 
 				if ((listNudaProprieta.get(j).getValori().get(parts[1]) != null)
 						&& (listNudaProprieta.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					if (parts[1].contains("data")) {
-						tmp.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts[1])));
-					} else {
-						tmp.setValore(listNudaProprieta.get(j).getValori().get(parts[1]));
-					}
+					tmp.setValore(listNudaProprieta.get(j).getValori().get(parts[1]));
 					listAttributi.add(tmp);
 				}
 			}
@@ -134,12 +141,7 @@ public class MappingInsertTUIciImuNP {
 
 				if ((listNudaProprieta.get(j).getValori().get(parts2[1]) != null)
 						&& (listNudaProprieta.get(j).getValori().get(parts2[1]).isEmpty() == false)) {
-					if (parts2[1].contains("data")) {
-						tmp2.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts2[1])));
-					} else {
-						tmp2.setValore(listNudaProprieta.get(j).getValori().get(parts2[1]));
-					}
+					tmp2.setValore(listNudaProprieta.get(j).getValori().get(parts2[1]));
 					listAttributi.add(tmp2);
 				}
 			}
@@ -155,12 +157,7 @@ public class MappingInsertTUIciImuNP {
 
 				if ((listNudaProprieta.get(j).getValori().get(parts3[1]) != null)
 						&& (listNudaProprieta.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
-					if (parts3[1].contains("data")) {
-						tmp3.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts3[1])));
-					} else {
-						tmp3.setValore(listNudaProprieta.get(j).getValori().get(parts3[1]));
-					}
+					tmp3.setValore(listNudaProprieta.get(j).getValori().get(parts3[1]));
 					listChiaveSOG.add(tmp3);
 				}
 			}
@@ -175,12 +172,7 @@ public class MappingInsertTUIciImuNP {
 
 				if ((listNudaProprieta.get(j).getValori().get(parts4[1]) != null)
 						&& (listNudaProprieta.get(j).getValori().get(parts4[1]).isEmpty() == false)) {
-					if (parts4[1].contains("data")) {
-						tmp4.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts4[1])));
-					} else {
-						tmp4.setValore(listNudaProprieta.get(j).getValori().get(parts4[1]));
-					}
+					tmp4.setValore(listNudaProprieta.get(j).getValori().get(parts4[1]));
 					listAttributiSOG.add(tmp4);
 				}
 			}
@@ -197,26 +189,11 @@ public class MappingInsertTUIciImuNP {
 
 				if ((listNudaProprieta.get(j).getValori().get(parts5[1]) != null)
 						&& (listNudaProprieta.get(j).getValori().get(parts5[1]).isEmpty() == false)) {
-					if (parts5[1].contains("data")) {
-						tmp5.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts5[1])));
-					} else {
-						tmp5.setValore(listNudaProprieta.get(j).getValori().get(parts5[1]));
-					}
-					listAttributiIND.add(tmp5);
-				}
-				if ((listNudaProprieta.get(j).getValori().get(parts5[1]) != null)
-						&& (listNudaProprieta.get(j).getValori().get(parts5[1]).isEmpty() == false)) {
-					if (parts5[1].contains("data")) {
-						tmp5.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts5[1])));
-					} else {
-						tmp5.setValore(listNudaProprieta.get(j).getValori().get(parts5[1]));
-					}
-					listChiaveIND.add(tmp5);
+					tmp5.setValore(listNudaProprieta.get(j).getValori().get(parts5[1]));
+					listAttributiINDC.add(tmp5);
 				}
 			}
-			// ciclio per creare listaAttributi richiesti dal mapping Utenza Acqua IDE CAT
+
 			for (int i = 0; i < data6.getAttributi().size(); i++) {
 
 				String string6 = data6.getAttributi().get(i).getNome();
@@ -229,25 +206,58 @@ public class MappingInsertTUIciImuNP {
 
 				if ((listNudaProprieta.get(j).getValori().get(parts6[1]) != null)
 						&& (listNudaProprieta.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts6[1])));
-					} else {
-						tmp6.setValore(listNudaProprieta.get(j).getValori().get(parts6[1]));
-					}
+					tmp6.setValore(listNudaProprieta.get(j).getValori().get(parts6[1]));
 					listAttributiIDECAT.add(tmp6);
 				}
 				if ((listNudaProprieta.get(j).getValori().get(parts6[1]) != null)
 						&& (listNudaProprieta.get(j).getValori().get(parts6[1]).isEmpty() == false)) {
-					if (parts6[1].contains("data")) {
-						tmp6.setValore(
-								ControlloValore.controlloData(listNudaProprieta.get(j).getValori().get(parts6[1])));
-					} else {
-						tmp6.setValore(listNudaProprieta.get(j).getValori().get(parts6[1]));
-					}
-					listChiaveIDECAT.add(tmp6);
+					tmp6.setValore(listNudaProprieta.get(j).getValori().get(parts6[1]));
+					listAttributiINDRC.add(tmp6);
 				}
 			}
+			// ciclio per creare listaAttributi richiesti dal mapping Utenza Acqua IDE CAT
+			for (int i = 0; i < data7.getAttributi().size(); i++) {
+
+				String string7 = data7.getAttributi().get(i).getNome();
+				String[] parts7 = string7.split("#");
+
+				Attributo tmp7 = new Attributo();
+				tmp7.setNome(data7.getAttributi().get(i).getNome());
+				tmp7.setMapping(data7.getAttributi().get(i).getMapping());
+				tmp7.setTipo(data7.getAttributi().get(i).getTipo());
+
+				if ((listNudaProprieta.get(j).getValori().get(parts7[1]) != null)
+						&& (listNudaProprieta.get(j).getValori().get(parts7[1]).isEmpty() == false)) {
+					tmp7.setValore(listNudaProprieta.get(j).getValori().get(parts7[1]));
+					listAttributiINDU.add(tmp7);
+				}
+			}
+			// ciclio per creare listaAttributi richiesti dal mapping Utenza Acqua
+			for (int i = 0; i < data8.getAttributi().size(); i++) {
+
+				String string8 = data8.getAttributi().get(i).getNome();
+				String[] parts8 = string8.split("#");
+
+				Attributo tmp8 = new Attributo();
+				tmp8.setNome(data8.getAttributi().get(i).getNome());
+				tmp8.setMapping(data8.getAttributi().get(i).getMapping());
+				tmp8.setTipo(data8.getAttributi().get(i).getTipo());
+
+				if ((listNudaProprieta.get(j).getValori().get(parts8[1]) != null)
+						&& (listNudaProprieta.get(j).getValori().get(parts8[1]).isEmpty() == false)) {
+					tmp8.setValore(listNudaProprieta.get(j).getValori().get(parts8[1]));
+					listAttributiIDECAT.add(tmp8);
+				}
+				if ((listNudaProprieta.get(j).getValori().get(parts8[1]) != null)
+						&& (listNudaProprieta.get(j).getValori().get(parts8[1]).isEmpty() == false)) {
+					tmp8.setValore(listNudaProprieta.get(j).getValori().get(parts8[1]));
+					listChiaveIDECAT.add(tmp8);
+				}
+			}
+			// lista per le relazioni
+			List<Relazione> listRelNP = new ArrayList<Relazione>();
+			// ID UNIVOCO ??
+			String id = listNudaProprieta.get(j).getValori().get("codutenza");
 
 			// riga di tipo RIGATABELLA per PF
 			if (listNudaProprieta.get(j).getValori().get("codfiscale").isEmpty() == false) {
@@ -255,59 +265,95 @@ public class MappingInsertTUIciImuNP {
 				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data4.getIdTabella().getMapping());
 				rigaTPF.setListaattributi(listAttributiSOG);
 				rigaTPF.setListachiave(listChiaveSOG);
-				String codfis = listNudaProprieta.get(j).getValori().get("codicefiscale");
+				String codfis = listNudaProprieta.get(j).getValori().get("codfiscale");
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
 			}
-
-			// riga di tipo RIGATABELLA per IND
-			if (listNudaProprieta.get(j).getValori().get("indirizzo").isEmpty() == false) {
-				RigaTabella rigaTIND = new RigaTabella();
-				rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data5.getIdTabella().getMapping());
-				rigaTIND.setListaattributi(listAttributiIND);
-				rigaTIND.setListachiave(listChiaveIND);
+			// riga di tipo RIGATABELLA per IND C
+			if (listNudaProprieta.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
+				RigaTabella rigaTINDC = new RigaTabella();
+				rigaTINDC.setNometabella("http://dkm.fbk.eu/georeporter#" + data5.getIdTabella().getMapping());
+				rigaTINDC.setListaattributi(listAttributiINDC);
 				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 				long time = cal.getTimeInMillis();
-				rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
+				rigaTINDC.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
 				// inserimento dell'elemento
-				insertRiga(rigaTIND);
-			}
+				insertRiga(rigaTINDC);
 
-			// riga di tipo RIGATABELLA per IDE CAT
-			RigaTabella rigaTIDECAT = new RigaTabella();
-			rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data6.getIdTabella().getMapping());
-			rigaTIDECAT.setListaattributi(listAttributiIDECAT);
-			rigaTIDECAT.setListachiave(listChiaveIDECAT);
-			String cc = listNudaProprieta.get(j).getValori().get("codcomune");
+				Relazione rel = new Relazione();
+				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoContribuente");
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+				listRelNP.add(rel);
+			}
+			// riga di tipo RIGATABELLA per IND R
+			if (listNudaProprieta.get(j).getValori().get("indirizzorecapitocontribuente").isEmpty() == false) {
+				RigaTabella rigaTINDRC = new RigaTabella();
+				rigaTINDRC.setNometabella("http://dkm.fbk.eu/georeporter#" + data6.getIdTabella().getMapping());
+				rigaTINDRC.setListaattributi(listAttributiINDRC);
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+				long time = cal.getTimeInMillis();
+				rigaTINDRC.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
+				// inserimento dell'elemento
+				insertRiga(rigaTINDRC);
+
+				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Recapito Contribuente
+				Relazione rel = new Relazione();
+				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoRecapitoContribuente");
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				// ID
+				// creo l'indirizzo univoco grazie dalla data d'inserimento
+				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+				listRelNP.add(rel);
+			}
+			// riga di tipo RIGATABELLA per IND U
+			if (listNudaProprieta.get(j).getValori().get("indirizzo").isEmpty() == false) {
+				RigaTabella rigaTINDU = new RigaTabella();
+				rigaTINDU.setNometabella("http://dkm.fbk.eu/georeporter#" + data7.getIdTabella().getMapping());
+				rigaTINDU.setListaattributi(listAttributiINDU);
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+				long time = cal.getTimeInMillis();
+				rigaTINDU.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
+				// inserimento dell'elemento
+				insertRiga(rigaTINDU);
+
+				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Utenza
+				Relazione rel = new Relazione();
+				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				// ID conribuente
+				// creo l'indirizzo univoco grazie dalla data d'inserimento
+				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+				listRelNP.add(rel);
+			}
 			String num = listNudaProprieta.get(j).getValori().get("particellaedificabile");
-			String den = "";
-			String[] numden = num.split("/", -1);
-			if (numden.length == 2) {
-				num = numden[0];
-				den = numden[1];
-			}
-			String sub = listNudaProprieta.get(j).getValori().get("subalterno");
-			if (listNudaProprieta.get(j).getValori().get("particellaedificabile").isEmpty()) {
-				num = "";
-				den = "";
-				sub = "";
-			}
-			rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
-			// inserimento dell'elemento
-			insertRiga(rigaTIDECAT);
+			if (!num.isEmpty()) {
+				// riga di tipo RIGATABELLA per IDE CAT
+				RigaTabella rigaTIDECAT = new RigaTabella();
+				rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data8.getIdTabella().getMapping());
+				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
+				rigaTIDECAT.setListachiave(listChiaveIDECAT);
+				String cc = listNudaProprieta.get(j).getValori().get("codcomune");
+				String den = listNudaProprieta.get(j).getValori().get("particellaestensione");
+				String sub = listNudaProprieta.get(j).getValori().get("subalterno");
+				rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				// inserimento dell'elemento
+				insertRiga(rigaTIDECAT);
 
+				Relazione rel = new Relazione();
+				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				// ID
+				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				listRelNP.add(rel);
+			}
+			
 			// riga di tipo RIGATABELLA per NUDA PROPRIETA
-
 			RigaTabella rigaTNP = new RigaTabella();
 			rigaTNP.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTNP.setListaattributi(listAttributi);
-			// ID UNIVOCO ??
-			String id = listNudaProprieta.get(j).getValori().get("codutenza");
 			rigaTNP.setUririga("http://dkm.fbk.eu/georeporter#UTNP_" + id);
-
-			// lista per le relazioni
-			List<Relazione> listRelNP = new ArrayList<Relazione>();
 
 			// relazione TributiUtenza Nuda Proprieta con CONTRIBUENTE
 			if (listNudaProprieta.get(j).getValori().get("codfiscale").isEmpty() == false) {
@@ -320,55 +366,6 @@ public class MappingInsertTUIciImuNP {
 				listRelNP.add(rel);
 			}
 
-			// relazione TributiUtenza Nuda Proprieta con Identificativo Catastale
-			if (listNudaProprieta.get(j).getValori().get("particellaedificabile").isEmpty() == false) {
-				Relazione rel = new Relazione();
-				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
-				// ID
-				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
-				listRelNP.add(rel);
-			}
-
-			// relazione TributiUtenza Nuda Proprieta con Indirizzo Utenza
-			if (listNudaProprieta.get(j).getValori().get("indirizzo").isEmpty() == false) {
-				Relazione rel = new Relazione();
-				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
-				// ID conribuente
-				// creo l'indirizzo univoco grazie dalla data d'inserimento
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-				long time = cal.getTimeInMillis();
-				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
-				listRelNP.add(rel);
-			}
-
-			// relazione TributiUtenza Nuda Proprieta con Indirizzo Recapito Contribuente
-			if (listNudaProprieta.get(j).getValori().get("indirizzo").isEmpty() == false) {
-				Relazione rel = new Relazione();
-				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoRecapitoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
-				// ID
-				// creo l'indirizzo univoco grazie dalla data d'inserimento
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-				long time = cal.getTimeInMillis();
-				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
-				listRelNP.add(rel);
-			}
-
-			// relazione TributiUtenza Nuda Proprieta con Indirizzo Contribuente
-			if (listNudaProprieta.get(j).getValori().get("indirizzo").isEmpty() == false) {
-				Relazione rel = new Relazione();
-				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
-				// ID
-				// creo l'indirizzo univoco grazie dalla data d'inserimento
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-				long time = cal.getTimeInMillis();
-				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
-				listRelNP.add(rel);
-			}
-
 			rigaTNP.setListarelazioni(listRelNP);
 
 			insertRiga(rigaTNP);
@@ -378,7 +375,8 @@ public class MappingInsertTUIciImuNP {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
@@ -444,9 +442,11 @@ public class MappingInsertTUIciImuNP {
 		LoadFile(new File("file/file_mapping/mappingICIIMU.json"),
 				new File("file/file_mapping/mappingTributoOUtenza.json"),
 				new File("file/file_mapping/mappingSoggetto.json"),
-				new File("file/file_mapping/mappingPersonaFisica.json"),
-				new File("file/file_mapping/mappingIndirizzo.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
+				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEua.json"),
+				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
 
 	}
 

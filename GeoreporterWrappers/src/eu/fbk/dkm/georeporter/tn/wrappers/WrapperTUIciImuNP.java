@@ -56,7 +56,6 @@ public class WrapperTUIciImuNP {
 		while (rows.hasNext()) {
 			Map<String, String> campi = new HashMap<String, String>();
 			row = (HSSFRow) rows.next();
-			Iterator cells = row.cellIterator();
 			int j = 0;
 			int k = 0;
 			for (int g = 0; g < row.getLastCellNum(); g++) {
@@ -67,7 +66,11 @@ public class WrapperTUIciImuNP {
 				} else {
 					// aggiungere controllo in caso di valore null
 					if (row.getCell(g) != null) {
-						campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
+						if (header[k].contains("data")) {
+							campi.put(header[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
+						} else {
+							campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
+						}
 					} else {
 						campi.put(header[k], "");
 					}
