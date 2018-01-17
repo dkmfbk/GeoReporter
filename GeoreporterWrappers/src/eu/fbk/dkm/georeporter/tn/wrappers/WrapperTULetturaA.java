@@ -76,7 +76,7 @@ public class WrapperTULetturaA {
 					for (int i = 0; i < header.length; i++) {
 						if (ControlloValore.puliziaHeader(header[i]).contains("data")) {
 							campi.put(ControlloValore.puliziaHeader(header[i]),
-									ControlloValore.controlloData(tmpRiga[i]));
+									ControlloValore.dataBarrataOra(tmpRiga[i]));
 						} else {
 							campi.put(ControlloValore.puliziaHeader(header[i]),
 									ControlloValore.controlloValore(tmpRiga[i]));

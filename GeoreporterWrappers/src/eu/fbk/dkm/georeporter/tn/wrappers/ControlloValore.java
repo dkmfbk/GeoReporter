@@ -37,6 +37,16 @@ public class ControlloValore {
 		return tmp2;
 	}
 
+	public static String controlloDataEXCEL(Date data) {
+		String reportDate = "";
+		if (data != null) {
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			reportDate = format.format(data);
+		}
+
+		return reportDate;
+	}
+
 	public static String TolgoZeri(String valore) {
 		String tmp = valore;
 		if ((!valore.isEmpty()) && (valore.substring(0, 1).equals("0"))) {
