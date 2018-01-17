@@ -25,6 +25,7 @@ import com.google.gson.stream.JsonReader;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.AnagraficaComunale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Famiglia;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Indirizzo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
@@ -33,13 +34,13 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
 import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.GetCoordinates;
+import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFab;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFamiglia;
-import eu.fbk.dkm.georeporter.tn.wrappers.WrapperIndirizzo;
+import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFabIndirizzo;
 
-public class MappingInsertIndirizzo {
+public class MappingInsertFabIndirizzo {
 
-	public static List<AnagraficaComunale> listAnagraficaComunale = WrapperIndirizzo.listAnagraficaComunale;
-	public static List<Famiglia> listFamiglia = WrapperFamiglia.listFamiglia;
+	public static List<Indirizzo> listIndirizzi = WrapperFab.listIndirizzi;
 
 	private static void LoadFile(File filename) {
 
@@ -60,31 +61,11 @@ public class MappingInsertIndirizzo {
 
 	}
 
-	private static void LoadFile2(File filename) {
-
-		Gson gson = new Gson();
-		JsonReader reader;
-
-		try {
-			reader = new JsonReader(new FileReader(filename));
-			MappingTabella data = gson.fromJson(reader, MappingTabella.class);
-
-			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal2(data);
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
 	public static void associazioneMappingNomeVal(MappingTabella data) {
 		// ciclo la lista degli elementi IND
-		for (int j = 0; j < listAnagraficaComunale.size(); j++) {
+		for (int j = 0; j < listIndirizzi.size(); j++) {
 
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
-			List<Attributo> listChiavi = new ArrayList<Attributo>();
 
 			// ciclo per crea la listaCHIAVI e listaATTRIBUTI richiesti dal mapping
 			for (int i = 0; i < data.getAttributi().size(); i++) {
@@ -96,55 +77,24 @@ public class MappingInsertIndirizzo {
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
-
-				if ((listAnagraficaComunale.get(j).getValori().get(parts[1]) != null)
-						&& (listAnagraficaComunale.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					tmp.setValore(listAnagraficaComunale.get(j).getValori().get(parts[1]));
-					listAttributi.add(tmp);
-				}
-
-			}
-
-			// inserimento lat long
-
-			// riga di tipo RIGATABELLA per IND
-			RigaTabella rigaTIND = new RigaTabella();
-
-			rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
-			rigaTIND.setListaattributi(listAttributi);
-			// creo l'indirizzo univoco grazie dalla data d'inserimento
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			long time = cal.getTimeInMillis();
-
-			rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
-
-			insertRiga(rigaTIND);
-
-		}
-	}
-
-	public static void associazioneMappingNomeVal2(MappingTabella data) {
-		// ciclo la lista degli elementi IND
-		for (int j = 0; j < listFamiglia.size(); j++) {
-
-			List<Attributo> listAttributi = new ArrayList<Attributo>();
-			List<Attributo> listChiavi = new ArrayList<Attributo>();
-
-			// ciclo per crea la listaCHIAVI e listaATTRIBUTI richiesti dal mapping
-			for (int i = 0; i < data.getAttributi().size(); i++) {
-
-				String string = data.getAttributi().get(i).getNome();
-				String[] parts = string.split("#");
-
-				Attributo tmp = new Attributo();
-				tmp.setNome(data.getAttributi().get(i).getNome());
-				tmp.setMapping(data.getAttributi().get(i).getMapping());
-				tmp.setTipo(data.getAttributi().get(i).getTipo());
-
-				if ((listFamiglia.get(j).getValori().get(parts[1]) != null)
-						&& (listFamiglia.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					tmp.setValore(listFamiglia.get(j).getValori().get(parts[1]));
-					listAttributi.add(tmp);
+				if ((listIndirizzi.get(j).getValori().get(parts[1]) != null)
+						&& (listIndirizzi.get(j).getValori().get(parts[1]).isEmpty() == false)
+						|| parts[1].equals("civico")) {
+					if (parts[1].equals("civico")) {
+						int v = 1;
+						while ((v <= 3) && !listIndirizzi.get(j).getValori().get("civico" + v).isEmpty()) {
+							Attributo tmp2 = new Attributo();
+							tmp2.setNome(data.getAttributi().get(i).getNome());
+							tmp2.setMapping(data.getAttributi().get(i).getMapping());
+							tmp2.setTipo(data.getAttributi().get(i).getTipo());
+							tmp2.setValore(listIndirizzi.get(j).getValori().get("civico" + v));
+							listAttributi.add(tmp2);
+							v++;
+						}
+					} else {
+						tmp.setValore(listIndirizzi.get(j).getValori().get(parts[1]));
+						listAttributi.add(tmp);
+					}
 				}
 
 			}
@@ -157,23 +107,39 @@ public class MappingInsertIndirizzo {
 			// creo l'indirizzo univoco grazie dalla data d'inserimento
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			long time = cal.getTimeInMillis();
-
 			rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
 
 			insertRiga(rigaTIND);
+
+			// riga tab UI con relazione con indirizzo
+			RigaTabella rigaTUI = new RigaTabella();
+			rigaTUI.setNometabella("http://dkm.fbk.eu/georeporter#UnitaImmobiliare");
+			String codamm = listIndirizzi.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
+			String ideimm = listIndirizzi.get(j).getListaValoriChiave().get(0).get("identificativoimmobile");
+			rigaTUI.setUririga("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
+			List<Relazione> listRelUI = new ArrayList<Relazione>();
+
+			Relazione relUIIND = new Relazione();
+			relUIIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzo");
+			relUIIND.setUriDomain("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
+			relUIIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+			listRelUI.add(relUIIND);
+			rigaTUI.setListarelazioni(listRelUI);
+
+			insertRiga(rigaTUI);
 
 		}
 	}
 
 	public static void insertRiga(RigaTabella riga) {
 
-		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
-		
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		// System.out.println(json);
+		System.out.println(json);
 
 		try {
 
@@ -222,19 +188,16 @@ public class MappingInsertIndirizzo {
 
 	public static void main(String[] args) {
 
-		String path = "file/TN_file/DGASBANN.csv";
-		String path2 = "file/TN_file/DGASBAN2.csv";
-		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		WrapperIndirizzo.estrazioneHeaderFile(path);
-		WrapperIndirizzo.LetturaFile(path);
+		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
+		String pathP = "file/TN_header/headerfilefab.csv";
 
-		WrapperIndirizzo.estrazioneHeaderFile2(path2);
-		WrapperIndirizzo.LetturaFile2(path2);
+		// chiamata per l'estrazione degli header per la composizione della lista HEADER
+		WrapperFab.estrazioneHeaderFileFab(pathP);
 
-		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingIndirizzo.json"));
+		// chiamata per l'analisi del file .FAB
+		WrapperFab.letturaFileFab(pathF);
 
-		LoadFile2(new File("file/file_mapping/mappingIndirizzo2.json"));
+		LoadFile(new File("file/file_mapping/mappingIndirizzoFab.json"));
 
 	}
 

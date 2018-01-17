@@ -139,10 +139,32 @@ public class MappingInsertFabIde {
 					tmp2.setValore(listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]));
 					listChiavi2.add(tmp2);
 				}
+				/*
+				 * if ((listIdentificativiCatastali.get(j).getValori().get(parts[1]) != null) &&
+				 * (listIdentificativiCatastali.get(j).getValori().get(parts[1]).isEmpty() ==
+				 * false)) {
+				 * tmp2.setValore(listIdentificativiCatastali.get(j).getValori().get(parts[1]));
+				 * listAttributi2.add(tmp2); }
+				 */
+
 				if ((listIdentificativiCatastali.get(j).getValori().get(parts[1]) != null)
-						&& (listIdentificativiCatastali.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					tmp2.setValore(listIdentificativiCatastali.get(j).getValori().get(parts[1]));
-					listAttributi2.add(tmp2);
+						&& (listIdentificativiCatastali.get(j).getValori().get(parts[1]).isEmpty() == false)
+						|| parts[1].equals("pm")) {
+					if (parts[1].equals("pm")) {
+						int v = 1;
+						while (((v <= 10) && !listIdentificativiCatastali.get(j).getValori().get("pm" + v).isEmpty())) {
+							Attributo tmp3 = new Attributo();
+							tmp3.setNome(data2.getAttributi().get(i).getNome());
+							tmp3.setMapping(data2.getAttributi().get(i).getMapping());
+							tmp3.setTipo(data2.getAttributi().get(i).getTipo());
+							tmp3.setValore(listIdentificativiCatastali.get(j).getValori().get("pm" + v));
+							listAttributi2.add(tmp3);
+							v++;
+						}
+					} else {
+						tmp2.setValore(listIdentificativiCatastali.get(j).getValori().get(parts[1]));
+						listAttributi2.add(tmp2);
+					}
 				}
 			}
 
@@ -178,7 +200,7 @@ public class MappingInsertFabIde {
 	public static void main(String[] args) {
 
 		// path del file .FAB e del file con gli HEADER inseriti a mano da un utente
-		// 
+		// IDR0000115470_TIPOFACSN_CAMML322
 		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
 		String pathP = "file/TN_header/headerfilefab.csv";
 
