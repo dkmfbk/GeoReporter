@@ -284,7 +284,7 @@ public class MappingInsertTUIciImuAP {
 
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelAP.add(rel);
 			}
@@ -302,7 +302,7 @@ public class MappingInsertTUIciImuAP {
 				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Recapito Contribuente
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoRecapitoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 				// ID
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
@@ -322,7 +322,7 @@ public class MappingInsertTUIciImuAP {
 				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Utenza
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 				// ID conribuente
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
@@ -345,7 +345,7 @@ public class MappingInsertTUIciImuAP {
 
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 				// ID
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelAP.add(rel);
@@ -353,15 +353,15 @@ public class MappingInsertTUIciImuAP {
 
 			// riga di tipo RIGATABELLA per AbitazionePrincipale
 			RigaTabella rigaTUA = new RigaTabella();
-			rigaTUA.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+			rigaTUA.setNometabella("http://dkm.fbk.eu/georeporter#AbitazPrincipale");
 			rigaTUA.setListaattributi(listAttributi);
-			rigaTUA.setUririga("http://dkm.fbk.eu/georeporter#UTAP_" + id);
+			rigaTUA.setUririga("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 
 			// relazione TributiUtenza AbitazionePrincipale con CONTRIBUENTE
 			if (listICIIMU_AP.get(j).getValori().get("codfiscale").isEmpty() == false) {
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 				// ID contribuente
 				String codfisc = listICIIMU_AP.get(j).getValori().get("codfiscale");
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);

@@ -283,7 +283,7 @@ public class MappingInsertTUIciImuNP {
 
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelNP.add(rel);
 			}
@@ -301,7 +301,7 @@ public class MappingInsertTUIciImuNP {
 				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Recapito Contribuente
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoRecapitoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 				// ID
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
@@ -321,7 +321,7 @@ public class MappingInsertTUIciImuNP {
 				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Utenza
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 				// ID conribuente
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
@@ -343,7 +343,7 @@ public class MappingInsertTUIciImuNP {
 
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 				// ID
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelNP.add(rel);
@@ -351,15 +351,15 @@ public class MappingInsertTUIciImuNP {
 			
 			// riga di tipo RIGATABELLA per NUDA PROPRIETA
 			RigaTabella rigaTNP = new RigaTabella();
-			rigaTNP.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+			rigaTNP.setNometabella("http://dkm.fbk.eu/georeporter#NudaProprieta");
 			rigaTNP.setListaattributi(listAttributi);
-			rigaTNP.setUririga("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+			rigaTNP.setUririga("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 
 			// relazione TributiUtenza Nuda Proprieta con CONTRIBUENTE
 			if (listNudaProprieta.get(j).getValori().get("codfiscale").isEmpty() == false) {
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTNP_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 				// ID contribuente
 				String codfisc = listNudaProprieta.get(j).getValori().get("codfiscale");
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);

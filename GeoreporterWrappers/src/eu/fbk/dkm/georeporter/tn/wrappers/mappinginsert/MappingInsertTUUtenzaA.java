@@ -306,7 +306,7 @@ public class MappingInsertTUUtenzaA {
 				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Contribuente
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAC_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
@@ -326,7 +326,7 @@ public class MappingInsertTUUtenzaA {
 				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Recapito Contribuente
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoRecapitoContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAC_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
@@ -346,7 +346,7 @@ public class MappingInsertTUUtenzaA {
 				// relazione TributiUtenza UtenzaRifiuti con Indirizzo Utenza
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAC_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID conribuente
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
@@ -369,7 +369,7 @@ public class MappingInsertTUUtenzaA {
 
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAC_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelUA.add(rel);
@@ -379,13 +379,13 @@ public class MappingInsertTUUtenzaA {
 			RigaTabella rigaTUA = new RigaTabella();
 			rigaTUA.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTUA.setListaattributi(listAttributi);
-			rigaTUA.setUririga("http://dkm.fbk.eu/georeporter#UTAC_" + id);
+			rigaTUA.setUririga("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 
 			// relazione TributiUtenza UtenzaAcqua con CONTRIBUENTE
 			if (listUtenzaAcqua.get(j).getValori().get("codfiscale").isEmpty() == false) {
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasContribuente");
-				rel.setUriDomain("http://dkm.fbk.eu/georeporter#UTAC_" + id);
+				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID contribuente
 				String codfisc = listUtenzaAcqua.get(j).getValori().get("codfiscale");
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
