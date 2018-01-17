@@ -20,7 +20,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
 import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 
-public class WrapperIndirizzo {
+public class WrapperFabIndirizzo {
 
 	// vettore per l'elenco degli HEADER
 	public static String[] header;

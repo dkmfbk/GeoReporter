@@ -39,16 +39,13 @@ public class MappingInsertFabUiNote {
 	public static List<UnitaImmobiliare> listUnitaImmobiliari = WrapperFab.listUnitaImmobiliari;
 
 	// metodo che acquisisce i 2 file di tipo json
-	public static void LoadFile(File filename, File filenameNote, File filenameI) {
+	public static void LoadFile(File filename, File filenameNote) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
 
 		Gson gsonNote = new Gson();
 		JsonReader readerNote;
-
-		Gson gsonI = new Gson();
-		JsonReader readerI;
 
 		try {
 			reader = new JsonReader(new FileReader(filename));
@@ -57,10 +54,9 @@ public class MappingInsertFabUiNote {
 			readerNote = new JsonReader(new FileReader(filenameNote));
 			MappingTabella dataNote = gsonNote.fromJson(readerNote, MappingTabella.class);
 
-			readerI = new JsonReader(new FileReader(filenameI));
-			MappingTabella dataI = gsonNote.fromJson(readerI, MappingTabella.class);
+			
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, dataNote, dataI);
+			associazioneMappingNomeVal(data, dataNote);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -70,11 +66,11 @@ public class MappingInsertFabUiNote {
 	}
 
 	// accoppiamento valore dell'UI a quello di mapping
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote, MappingTabella dataI) {
+	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
 		// ciclo la lista degli elementi UI
 		for (int j = 0; j < listUnitaImmobiliari.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
-			//List<Attributo> listAttributiI = new ArrayList<Attributo>();
+			// List<Attributo> listAttributiI = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
 
 			List<Attributo> listNoteI = new ArrayList<Attributo>();
@@ -86,7 +82,6 @@ public class MappingInsertFabUiNote {
 				String[] parts = string.split("#");
 
 				Attributo tmp = new Attributo();
-				// tmp.setIdDomain(data.getIdTabella().getMapping());
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
@@ -99,9 +94,34 @@ public class MappingInsertFabUiNote {
 				}
 
 				if ((listUnitaImmobiliari.get(j).getValori().get(parts[1]) != null)
-						&& (listUnitaImmobiliari.get(j).getValori().get(parts[1]).isEmpty() == false)) {
-					tmp.setValore(listUnitaImmobiliari.get(j).getValori().get(parts[1]));
-					listAttributi.add(tmp);
+						&& (listUnitaImmobiliari.get(j).getValori().get(parts[1]).isEmpty() == false)
+						|| parts[1].equals("interno") || parts[1].equals("piano")) {
+					if (parts[1].equals("interno")) {
+						int v = 1;
+						while ( (v <= 2) && !listUnitaImmobiliari.get(j).getValori().get("interno" + v).isEmpty()) {
+							Attributo tmp2 = new Attributo();
+							tmp2.setNome(data.getAttributi().get(i).getNome());
+							tmp2.setMapping(data.getAttributi().get(i).getMapping());
+							tmp2.setTipo(data.getAttributi().get(i).getTipo());
+							tmp2.setValore(listUnitaImmobiliari.get(j).getValori().get("interno" + v));
+							listAttributi.add(tmp2);
+							v++;
+						}
+					} else if (parts[1].equals("piano")) {
+						int v = 1;
+						while ( (v <= 12) && !listUnitaImmobiliari.get(j).getValori().get("piano" + v).isEmpty()) {
+							Attributo tmp2 = new Attributo();
+							tmp2.setNome(data.getAttributi().get(i).getNome());
+							tmp2.setMapping(data.getAttributi().get(i).getMapping());
+							tmp2.setTipo(data.getAttributi().get(i).getTipo());
+							tmp2.setValore(listUnitaImmobiliari.get(j).getValori().get("piano" + v));
+							listAttributi.add(tmp2);
+							v++;
+						}
+					} else {
+						tmp.setValore(listUnitaImmobiliari.get(j).getValori().get(parts[1]));
+						listAttributi.add(tmp);
+					}
 				}
 
 			}
@@ -143,19 +163,6 @@ public class MappingInsertFabUiNote {
 			String codamm = listUnitaImmobiliari.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
 			String ideimm = listUnitaImmobiliari.get(j).getListaValoriChiave().get(0).get("identificativoimmobile");
 			rigaTUI.setUririga("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
-
-			// riga di tipo RIGATABELLA per IND
-			//RigaTabella rigaTIND = new RigaTabella();
-			//rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
-			// chiamata funzione gps lat long
-			// ?? ha senso inserirlo ??
-			//rigaTIND.setListaattributi(listAttributiI);
-			// creo l'indirizzo univoco grazie dalla data d'inserimento
-			//Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			//long time = cal.getTimeInMillis();
-			//rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
-
-			//insertRiga(rigaTIND);
 
 			// NOTA INIZIALE
 			RigaTabella rigaTNI = new RigaTabella();
@@ -211,12 +218,6 @@ public class MappingInsertFabUiNote {
 				relNF.setUriRange(relNFuri);
 				listRelUI.add(relNF);
 			}
-			// rel cin ind
-			/*Relazione relIND = new Relazione();
-			relIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzo");
-			relIND.setUriDomain("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
-			relIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
-			listRelUI.add(relIND);*/
 
 			// riga uri rel + inserimento
 			rigaTUI.setListarelazioni(listRelUI);
@@ -228,7 +229,8 @@ public class MappingInsertFabUiNote {
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
 	public static String insertRigaReturn(RigaTabella riga) {
 
-		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
@@ -284,7 +286,8 @@ public class MappingInsertFabUiNote {
 
 	public static void insertRiga(RigaTabella riga) {
 
-		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
@@ -339,6 +342,7 @@ public class MappingInsertFabUiNote {
 	public static void main(String[] args) {
 
 		// path del file .FAB e del file con gli HEADER inseriti a mano da un utente
+		// IDR0000115470_TIPOFACSN_CAMML322
 		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
 		String pathP = "file/TN_header/headerfilefab.csv";
 
@@ -351,8 +355,7 @@ public class MappingInsertFabUiNote {
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
 		// questo grazie ai file di mapping
-		LoadFile(new File("file/file_mapping/mappingUI.json"), new File("file/file_mapping/mappingNota.json"),
-				new File("file/file_mapping/mappingIndirizzo.json"));
+		LoadFile(new File("file/file_mapping/mappingUI.json"), new File("file/file_mapping/mappingNota.json"));
 
 	}
 
