@@ -42,7 +42,7 @@ public class MappingInsertForLocazione {
 
 	public static List<Locazione> listLocazione = WrapperForLoc.listLocazione;
 
-	private static void LoadFile(File filename, File filename2) {
+	private static void LoadFile(File filename, File filename2, File filename3) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -50,15 +50,19 @@ public class MappingInsertForLocazione {
 		Gson gson2 = new Gson();
 		JsonReader reader2;
 
+		Gson gson3 = new Gson();
+		JsonReader reader3;
 		try {
 			reader = new JsonReader(new FileReader(filename));
 			MappingTabella data = gson.fromJson(reader, MappingTabella.class);
 
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
+			reader3 = new JsonReader(new FileReader(filename3));
+			MappingTabella data3 = gson3.fromJson(reader3, MappingTabella.class);
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, data2);
+			associazioneMappingNomeVal(data, data2, data3);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -67,7 +71,7 @@ public class MappingInsertForLocazione {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2) {
+	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3) {
 		// ciclo la lista degli elementi LOC
 		for (int j = 0; j < listLocazione.size(); j++) {
 
@@ -112,6 +116,33 @@ public class MappingInsertForLocazione {
 
 			}
 
+			
+			// ciclo per crea e listaATTRIBUTI richiesti dal mapping Contratto
+						for (int i = 0; i < data3.getAttributi().size(); i++) {
+
+							String string3 = data3.getAttributi().get(i).getNome();
+							String[] parts3 = string3.split("#");
+
+							Attributo tmp3 = new Attributo();
+							tmp3.setNome(data3.getAttributi().get(i).getNome());
+							tmp3.setMapping(data3.getAttributi().get(i).getMapping());
+							tmp3.setTipo(data3.getAttributi().get(i).getTipo());
+
+							if ((listLocazione.get(j).getValori().get(parts3[1]) != null)
+									&& (listLocazione.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
+								tmp3.setValore(listLocazione.get(j).getValori().get(parts3[1]));
+								listAttributi.add(tmp3);
+							}
+
+						}
+			
+			
+			
+			
+			
+			
+			
+			
 			// riga di tipo RIGATABELLA per FOR LOCAZIONE
 			RigaTabella rigaTFL = new RigaTabella();
 			rigaTFL.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
@@ -147,11 +178,12 @@ public class MappingInsertForLocazione {
 			Relazione relCFLIDECAT = new Relazione();
 			relCFLIDECAT.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 			relCFLIDECAT.setUriDomain("http://dkm.fbk.eu/georeporter#CFL_" + time);
-			String codamm = listLocazione.get(j).getValori().get("codicefiscaleinquilino").trim();
-			String sub = listLocazione.get(j).getValori().get("codicefiscaleinquilino").trim();
+			String codamm = listLocazione.get(j).getValori().get("codcomune").trim();
+			String sub = listLocazione.get(j).getValori().get("subalterno").trim();
 			String numden = listLocazione.get(j).getValori().get("particella").trim();
 			// controllo particella
-			String[] tmp = numden.split("[/ ]", -1);
+			numden.replace("/", " ");
+			String[] tmp = numden.split("[ ]", -1);
 			String num, den;
 			if (tmp.length == 2) {
 				num = tmp[0];
@@ -160,10 +192,14 @@ public class MappingInsertForLocazione {
 				num = numden;
 				den = "";
 			}
-			relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
-
+			
+			if (num.equals("")){
+				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C0_N0_D0_S0");
+			}else {
+				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);	
+			}
 			listRelCFL.add(relCFLIDECAT);
-
+			
 			rigaTFL.setListarelazioni(listRelCFL);
 
 			insertRiga(rigaTFL);
@@ -238,7 +274,8 @@ public class MappingInsertForLocazione {
 		}
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingFornituraLocazione.json"),
-				new File("file/file_mapping/mappingContratto2.json"));
+				new File("file/file_mapping/mappingContratto2.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale3.json"));
 
 	}
 
