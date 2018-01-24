@@ -1,0 +1,11 @@
+{"attributi":[
+{"mapping":"http://dkm.fbk.eu/georeporter#comuneCatastale","nome":"http://dkm.fbk.eu/georeporter#codcomune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#edificialita","nome":"http://dkm.fbk.eu/georeporter#edificialita","tipo":"http://www.w3.org/2001/XMLSchema#boolean"},
+{"mapping":"http://dkm.fbk.eu/georeporter#foglio","nome":"http://dkm.fbk.eu/georeporter#foglio","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#hasParticella","nome":"http://dkm.fbk.eu/georeporter#hasParticella","tipo":"http://dkm.fbk.eu/georeporter#Particella"},
+{"mapping":"http://dkm.fbk.eu/georeporter#hasUnitaImmobiliare","nome":"http://dkm.fbk.eu/georeporter#hasUnitaImmobiliare","tipo":"http://dkm.fbk.eu/georeporter#UnitaImmobiliare"},
+{"mapping":"http://dkm.fbk.eu/georeporter#subalterno","nome":"http://dkm.fbk.eu/georeporter#subalterno","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#denominatore","nome":"http://dkm.fbk.eu/georeporter#particellaedificabile","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#numero","nome":"http://dkm.fbk.eu/georeporter#numero","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#porzioneMateriale","nome":"http://dkm.fbk.eu/georeporter#porzionemateriale","tipo":"http://www.w3.org/2001/XMLSchema#integer"}],
+"idTabella":{"mapping":"IdentificativoCatastale","nome":"IdentificativoCatastale"}}
