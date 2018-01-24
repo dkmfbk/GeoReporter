@@ -77,9 +77,17 @@ public class MappingInsertFabIndirizzo {
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
+				if (parts[1].equals("codiceamministrativo")) {
+					tmp.setValore(listIndirizzi.get(j).getListaValoriChiave().get(i).get("codiceamministrativo"));
+					//tmp.setMapping(data.getAttributi().get(i).getMapping());
+					if (tmp.getValore()!=null)
+					listAttributi.add(tmp);
+					continue;
+				}
 				if ((listIndirizzi.get(j).getValori().get(parts[1]) != null)
 						&& (listIndirizzi.get(j).getValori().get(parts[1]).isEmpty() == false)
 						|| parts[1].equals("civico")) {
+					
 					if (parts[1].equals("civico")) {
 						int v = 1;
 						while ((v <= 3) && !listIndirizzi.get(j).getValori().get("civico" + v).isEmpty()) {
@@ -186,6 +194,21 @@ public class MappingInsertFabIndirizzo {
 		// return output;
 	}
 
+
+	public static void run() {
+		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
+		String pathP = "file/TN_header/headerfilefab.csv";
+
+		// chiamata per l'estrazione degli header per la composizione della lista HEADER
+		WrapperFab.estrazioneHeaderFileFab(pathP);
+
+		// chiamata per l'analisi del file .FAB
+		WrapperFab.letturaFileFab(pathF);
+
+		LoadFile(new File("file/file_mapping/mappingIndirizzoFab.json"));
+		
+	}
+	
 	public static void main(String[] args) {
 
 		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
