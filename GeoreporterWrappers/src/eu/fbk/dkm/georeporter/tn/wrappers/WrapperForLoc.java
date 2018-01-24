@@ -68,7 +68,9 @@ public class WrapperForLoc {
 						if (headerFL[k].contains("codice")) {
 							campi.put(headerFL[k], row.getCell(g).toString().trim());
 						} else if (headerFL[k].contains("data")) {
-							campi.put(headerFL[k], ControlloValore.controlloData(row.getCell(g).toString()));
+							//campi.put(headerFL[k], ControlloValore.controlloData(row.getCell(g).toString()));
+							campi.put(headerFL[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
+							
 						} else {
 							campi.put(headerFL[k], ControlloValore.controlloVIR(row.getCell(g).toString().trim()));
 						}
