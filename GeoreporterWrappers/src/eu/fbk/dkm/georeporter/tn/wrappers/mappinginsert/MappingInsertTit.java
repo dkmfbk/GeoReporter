@@ -136,7 +136,7 @@ public class MappingInsertTit {
 			String qnum = listTitolarita.get(j).getListaValoriChiave().get(0).get("quotanumeratore");
 			String qden = listTitolarita.get(j).getListaValoriChiave().get(0).get("quotadenominatore");
 			String qnd = "";
-			if (!qnum.isEmpty()) {
+			if (qnum!=null) {
 				qnd = "_" + qnum + qden;
 			}
 			String idetit = listTitolarita.get(j).getValori().get("identificativotitolarita");
@@ -304,7 +304,7 @@ public class MappingInsertTit {
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		System.out.println(json);
+	//	System.out.println(json);
 
 		try {
 
