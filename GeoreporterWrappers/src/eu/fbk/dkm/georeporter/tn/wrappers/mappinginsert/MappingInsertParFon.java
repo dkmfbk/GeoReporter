@@ -34,10 +34,13 @@ public class MappingInsertParFon {
 	// lista di elementi PARTICELLA del file WRAPPER
 	public static List<Particella> listParticella = WrapperParFon.listParticella;
 
-	private static void LoadFile(File filename, File filenameNote) {
+	private static void LoadFile(File filename, File filenameNote, File filename2) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
 		JsonReader reader;
+
+		Gson gson2 = new Gson();
+		JsonReader reader2;
 
 		Gson gsonNote = new Gson();
 		JsonReader readerNote;
@@ -48,8 +51,11 @@ public class MappingInsertParFon {
 
 			readerNote = new JsonReader(new FileReader(filenameNote));
 			MappingTabella dataNote = gsonNote.fromJson(readerNote, MappingTabella.class);
+
+			reader2 = new JsonReader(new FileReader(filename2));
+			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, dataNote);
+			associazioneMappingNomeVal(data, dataNote, data2);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -58,11 +64,15 @@ public class MappingInsertParFon {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataIntavolazione) {
+	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataIntavolazione,
+			MappingTabella data2) {
 		// ciclo la lista degli elementi PAR
 		for (int j = 0; j < listParticella.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
+
+			List<Attributo> listAttributi2 = new ArrayList<Attributo>();
+			List<Attributo> listChiavi2 = new ArrayList<Attributo>();
 
 			List<Attributo> listIntavolazioneI = new ArrayList<Attributo>();
 			List<Attributo> listIntavolazioneF = new ArrayList<Attributo>();
@@ -122,20 +132,43 @@ public class MappingInsertParFon {
 								.isEmpty() == false)) {
 					tmpINF.setValore(listParticella.get(j).getIntavolazioneFinale().getValori().get(parts[1]));
 					listIntavolazioneF.add(tmpINF);
-
 				}
-
 			}
-			// riga di tipo RIGATABELLA per TTC
+			// ide cat
+			for (int i = 0; i < data2.getAttributi().size(); i++) {
+				String string = data2.getAttributi().get(i).getNome();
+				String[] parts = string.split("#");
+				Attributo tmp2 = new Attributo();
+				tmp2.setNome(data2.getAttributi().get(i).getNome());
+				tmp2.setMapping(data2.getAttributi().get(i).getMapping());
+				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
+
+				if ((listParticella.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
+						&& (listParticella.get(j).getListaValoriChiave().get(0).get(parts[1]).isEmpty() == false)) {
+					tmp2.setValore(listParticella.get(j).getListaValoriChiave().get(0).get(parts[1]));
+					listChiavi2.add(tmp2);
+				}
+				if ((listParticella.get(j).getValori().get(parts[1]) != null)
+						&& (listParticella.get(j).getValori().get(parts[1]).isEmpty() == false)) {
+					tmp2.setValore(listParticella.get(j).getValori().get(parts[1]));
+					listAttributi2.add(tmp2);
+				}
+			}
+			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
+
+			String codamm = listParticella.get(j).getListaValoriChiave().get(0).get("comunecatastale");
+			String num = listParticella.get(j).getValori().get("numero");
+			String den = listParticella.get(j).getValori().get("denominatore");
+			String idepar = listParticella.get(j).getListaValoriChiave().get(0).get("identificativoparticella");
 
 			// Intavolazione INIZIALE
 			RigaTabella rigaTPAR = new RigaTabella();
 
 			rigaTPAR.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTPAR.setListaattributi(listAttributi);
-			rigaTPAR.setListachiave(listChiavi);
-			String codamm = listParticella.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
-			String idepar = listParticella.get(j).getListaValoriChiave().get(0).get("identificativoparticella");
+			if (!listChiavi.isEmpty()) {
+				rigaTPAR.setListachiave(listChiavi);
+			}
 			rigaTPAR.setUririga("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
 
 			RigaTabella rigaTINI = new RigaTabella();
@@ -155,6 +188,7 @@ public class MappingInsertParFon {
 						+ listParticella.get(j).getIntavolazioneIniziale().getValori().get("tipodocumento"));
 				listRelNI.add(relNITipo);
 				rigaTINI.setListarelazioni(listRelNI);
+				insertRiga(rigaTINI);
 			}
 
 			// Intavolazione FINALE
@@ -176,26 +210,27 @@ public class MappingInsertParFon {
 						+ listParticella.get(j).getIntavolazioneFinale().getValori().get("tipodocumento"));
 				listRelNF.add(relNFTipo);
 				rigaTINF.setListarelazioni(listRelNF);
+				insertRiga(rigaTINF);
 			}
 
 			// inserisco IntavolazioneIniziale e Finale resisto per entrambe URI e iserisco
 			// la
 			// relazione nella sua riga TTC
 			if (!listParticella.get(j).getIntavolazioneIniziale().getValori().get("tipodocumento").isEmpty()) {
-				String relNIuri = insertRigaReturn(rigaTINI);
+				// String relNIuri = insertRigaReturn(rigaTINI);
 				Relazione relNI = new Relazione();
 				relNI.setNomerelazione("http://dkm.fbk.eu/georeporter#hasRegistrazioneIniziale");
-				relNI.setUriDomain("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar);
-				relNI.setUriRange(relNIuri);
+				relNI.setUriDomain("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
+				relNI.setUriRange("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar + "_" + numni);
 				listRelPAR.add(relNI);
 			}
 
 			if (!listParticella.get(j).getIntavolazioneFinale().getValori().get("tipodocumento").isEmpty()) {
-				String relNFuri = insertRigaReturn(rigaTINF);
+				// String relNFuri = insertRigaReturn(rigaTINF);
 				Relazione relNF = new Relazione();
 				relNF.setNomerelazione("http://dkm.fbk.eu/georeporter#hasRegistrazioneFinale");
-				relNF.setUriDomain("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar);
-				relNF.setUriRange(relNFuri);
+				relNF.setUriDomain("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
+				relNF.setUriRange("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar + "_" + numnf);
 				listRelPAR.add(relNF);
 			}
 			// relazione tipo particella
@@ -211,19 +246,34 @@ public class MappingInsertParFon {
 			// setto relazioni
 			rigaTPAR.setListarelazioni(listRelPAR);
 			// inserisco l'elemento di RIGATABELLA PAr dopo aver inserito INTAVOLAZIONE e
-			// creato le
-			// relazioni
+			// creato le relazioni
 			insertRiga(rigaTPAR);
 
+			RigaTabella rigaTIdeCat = new RigaTabella();
+			rigaTIdeCat.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
+			rigaTIdeCat.setListaattributi(listAttributi2);
+			rigaTIdeCat.setListachiave(listChiavi2);
+			rigaTIdeCat.setUririga("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den);
+
+			// relazione tra particella fondiaria e ide cat
+			Relazione relPartIdeCat = new Relazione();
+			relPartIdeCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasParticellaFondiaria");
+			relPartIdeCat.setUriDomain("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den);
+			relPartIdeCat.setUriRange("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
+			listRelPartIdeCat.add(relPartIdeCat);
+
+			rigaTIdeCat.setListarelazioni(listRelPartIdeCat);
+			insertRiga(rigaTIdeCat);
+			// test inserimenti
 		}
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
 	public static String insertRigaReturn(RigaTabella riga) {
 
-		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
-
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -278,12 +328,13 @@ public class MappingInsertParFon {
 
 	public static void insertRiga(RigaTabella riga) {
 
-//		String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
-		
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
+		// System.out.println(json);
 
 		try {
 
@@ -300,7 +351,6 @@ public class MappingInsertParFon {
 			OutputStream outputStream = httpConnection.getOutputStream();
 			outputStream.write(input.getBytes());
 			outputStream.flush();
-
 			if (httpConnection.getResponseCode() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + httpConnection.getResponseCode());
 			}
@@ -310,7 +360,7 @@ public class MappingInsertParFon {
 
 			String output;
 			while ((output = responseBuffer.readLine()) != null) {
-
+				 //System.out.println(output);
 			}
 
 			httpConnection.disconnect();
@@ -364,7 +414,8 @@ public class MappingInsertParFon {
 		// per l'inserimento
 		// questo grazie ai file di mapping
 		LoadFile(new File("file/file_mapping/mappingParticella.json"),
-				new File("file/file_mapping/mappingIntavolazione.json"));
+				new File("file/file_mapping/mappingIntavolazione.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
 
 	}
 
