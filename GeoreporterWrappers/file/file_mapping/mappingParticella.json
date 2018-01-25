@@ -7,7 +7,7 @@
 {"mapping":"http://dkm.fbk.eu/georeporter#sezionePartitaTavolare","nome":"http://dkm.fbk.eu/georeporter#sezionepartitatavolare","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#protocolloNotifica","nome":"http://dkm.fbk.eu/georeporter#protocollonotifica","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#superficie","nome":"http://dkm.fbk.eu/georeporter#superficie","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
-{"mapping":"http://dkm.fbk.eu/georeporter#IdMutazioneFinale","nome":"http://dkm.fbk.eu/georeporter#identificativomutazionefFinale","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#IdMutazioneFinale","nome":"http://dkm.fbk.eu/georeporter#identificativomutazionefinale","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#IdMutazioneIniziale","nome":"http://dkm.fbk.eu/georeporter#identificativomutazioneiniziale","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#annotazione","nome":"http://dkm.fbk.eu/georeporter#annotazione","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#codiceAmministrativo","nome":"http://dkm.fbk.eu/georeporter#comunecatastale","tipo":"http://www.w3.org/2001/XMLSchema#string"},

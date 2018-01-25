@@ -1,6 +1,8 @@
 {"attributi":[
-{"mapping":"http://dkm.fbk.eu/georeporter#dataLetturaAcqua","nome":"http://dkm.fbk.eu/georeporter#dataletturaacqua","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},{"mapping":"http://dkm.fbk.eu/georeporter#hasUtenzaAcqua","nome":"http://dkm.fbk.eu/georeporter#hasUtenzaAcqua","tipo":"http://dkm.fbk.eu/georeporter#UtenzaAcqua"},
+{"mapping":"http://dkm.fbk.eu/georeporter#dataLetturaAcqua","nome":"http://dkm.fbk.eu/georeporter#dataletturaacqua","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},
+{"mapping":"http://dkm.fbk.eu/georeporter#hasUtenzaAcqua","nome":"http://dkm.fbk.eu/georeporter#hasUtenzaAcqua","tipo":"http://dkm.fbk.eu/georeporter#UtenzaAcqua"},
 {"mapping":"http://dkm.fbk.eu/georeporter#lettura","nome":"http://dkm.fbk.eu/georeporter#lettura","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#matricola","nome":"http://dkm.fbk.eu/georeporter#matricola","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#numContatori","nome":"http://dkm.fbk.eu/georeporter#numcontatori","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
-{"mapping":"http://dkm.fbk.eu/georeporter#percentualeDiRipartizione","nome":"http://dkm.fbk.eu/georeporter#percentualediripartizione","tipo":"http://www.w3.org/2001/XMLSchema#string"}],"idTabella":{"mapping":"LetturaAcqua","nome":"LetturaAcqua"}}
+{"mapping":"http://dkm.fbk.eu/georeporter#percentualeDiRipartizione","nome":"http://dkm.fbk.eu/georeporter#percentualediripartizione","tipo":"http://www.w3.org/2001/XMLSchema#string"}],
+"idTabella":{"mapping":"LetturaAcqua","nome":"LetturaAcqua"}}

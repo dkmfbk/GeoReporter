@@ -1,4 +1,6 @@
 {"attributi":[
-{"mapping":"http://dkm.fbk.eu/georeporter#codUtenzaComunale","nome":"http://dkm.fbk.eu/georeporter#codutenzacomunale","tipo":"http://www.w3.org/2001/XMLSchema#integer"},{"mapping":"http://dkm.fbk.eu/georeporter#contrattoFirmato","nome":"http://dkm.fbk.eu/georeporter#contrattofirmato","tipo":"http://www.w3.org/2001/XMLSchema#boolean"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codUtenzaComunale","nome":"http://dkm.fbk.eu/georeporter#codutenzacomunale","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#contrattoFirmato","nome":"http://dkm.fbk.eu/georeporter#contrattofirmato","tipo":"http://www.w3.org/2001/XMLSchema#boolean"},
 {"mapping":"http://dkm.fbk.eu/georeporter#note","nome":"http://dkm.fbk.eu/georeporter#note","tipo":"http://www.w3.org/2001/XMLSchema#string"},
-{"mapping":"http://dkm.fbk.eu/georeporter#numeroDipendenze","nome":"http://dkm.fbk.eu/georeporter#numerodipendenze","tipo":"http://www.w3.org/2001/XMLSchema#integer"}],"idTabella":{"mapping":"UtenzaAcqua","nome":"UtenzaAcqua"}}
+{"mapping":"http://dkm.fbk.eu/georeporter#numeroDipendenze","nome":"http://dkm.fbk.eu/georeporter#numerodipendenze","tipo":"http://www.w3.org/2001/XMLSchema#integer"}],
+"idTabella":{"mapping":"UtenzaAcqua","nome":"UtenzaAcqua"}}

@@ -1,4 +1,4 @@
-{"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#codiceLuogoNascita","nome":"http://dkm.fbk.eu/georeporter#codiceLuogoNascita","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#codiceLuogoNascita","nome":"http://dkm.fbk.eu/georeporter#codiceluogonascita","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#cognome","nome":"http://dkm.fbk.eu/georeporter#cognome","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#dataNascita","nome":"http://dkm.fbk.eu/georeporter#datanscita","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},
 {"mapping":"http://dkm.fbk.eu/georeporter#hasAnagrafica","nome":"http://dkm.fbk.eu/georeporter#hasAnagrafica","tipo":"http://dkm.fbk.eu/georeporter#AnagraficaComunale"},

@@ -10,4 +10,5 @@
 {"mapping":"http://dkm.fbk.eu/georeporter#dataFine","nome":"http://dkm.fbk.eu/georeporter#datafine","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},
 {"mapping":"http://dkm.fbk.eu/georeporter#dataInizio","nome":"http://dkm.fbk.eu/georeporter#datainizio","tipo":"http://www.w3.org/2001/XMLSchema#dateTime"},
 {"mapping":"http://dkm.fbk.eu/georeporter#descrizione","nome":"http://dkm.fbk.eu/georeporter#descrizione","tipo":"http://www.w3.org/2001/XMLSchema#string"},
-{"mapping":"http://dkm.fbk.eu/georeporter#numero","nome":"http://dkm.fbk.eu/georeporter#numero","tipo":"http://www.w3.org/2001/XMLSchema#integer"}],"idTabella":{"mapping":"Locazione","nome":"Locazione"}}
+{"mapping":"http://dkm.fbk.eu/georeporter#numero","nome":"http://dkm.fbk.eu/georeporter#numero","tipo":"http://www.w3.org/2001/XMLSchema#integer"}],
+"idTabella":{"mapping":"Locazione","nome":"Locazione"}}
