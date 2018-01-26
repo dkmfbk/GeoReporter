@@ -197,7 +197,21 @@ public class MappingInsertForGas {
 		}
 		// return output;
 	}
-
+	public static void run()
+	{
+		String path = "file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls";
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		try {
+			WrapperForGas.readXLSFile(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// mapping e insert
+		LoadFile(new File("file/file_mapping/mappingFornituraGas.json"),
+				new File("file/file_mapping/mappingContratto.json"));
+		
+	}
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls";

@@ -195,6 +195,28 @@ public class MappingInsertFamiglia {
 		// return output;
 	}
 
+	
+	public static void run() {
+		
+
+			String path = "file/TN_file/DGASBAN2.csv";
+			// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+			WrapperFamiglia.estrazioneHeaderFile(path);
+			WrapperFamiglia.LetturaFile(path);
+			// mapping e insert
+			LoadFile(new File("file/file_mapping/mappingFamiglia.json"),
+					new File("file/file_mapping/mappingIndirizzo.json"));
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/DGASBAN2.csv";

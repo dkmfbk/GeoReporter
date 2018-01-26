@@ -190,7 +190,24 @@ public class MappingInsertForEnergia {
 		}
 		// return output;
 	}
-
+public static void run()
+{
+	
+	String path = "file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls";
+	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+	try {
+		WrapperForEne.readXLSFile(path);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	// mapping e insert
+	LoadFile(new File("file/file_mapping/mappingFornituraEnergia.json"),
+			new File("file/file_mapping/mappingContratto.json"));
+	
+	
+	
+}
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls";
