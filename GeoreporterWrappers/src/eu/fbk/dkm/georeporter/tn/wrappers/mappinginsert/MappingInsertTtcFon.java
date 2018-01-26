@@ -161,7 +161,11 @@ public class MappingInsertTtcFon {
 				relNITipo.setUriDomain("http://dkm.fbk.eu/georeporter#NOT_" + codcat + "_" + idetit + "_" + numni);
 				relNITipo.setUriRange("http://dkm.fbk.eu/georeporter#"
 						+ listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get("tipodocumento"));
-				listRelNI.add(relNITipo);
+				//System.out.println("TDI+"+listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get("tipodocumento"));
+				if(!listTitolaritaCompleta.get(j).getIntavolazioneIniziale().getValori().get("tipodocumento").equals("")) {
+					//System.out.println("NI");
+					listRelNI.add(relNITipo);
+				}
 				rigaTINI.setListarelazioni(listRelNI);
 			}
 
@@ -180,7 +184,11 @@ public class MappingInsertTtcFon {
 				relNFTipo.setUriDomain("http://dkm.fbk.eu/georeporter#NOT_" + codcat + "_" + idetit + "_" + numnf);
 				relNFTipo.setUriRange("http://dkm.fbk.eu/georeporter#"
 						+ listTitolaritaCompleta.get(j).getIntavolazioneFinale().getValori().get("tipodocumento"));
+				//System.out.println("TDF+"+listTitolaritaCompleta.get(j).getIntavolazioneFinale().getValori().get("tipodocumento"));
+				if(!listTitolaritaCompleta.get(j).getIntavolazioneFinale().getValori().get("tipodocumento").equals("")) {
+				//	System.out.println("NF");
 				listRelNF.add(relNFTipo);
+				}
 				rigaTINF.setListarelazioni(listRelNF);
 			}
 
