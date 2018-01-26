@@ -78,6 +78,9 @@ public class MappingInsertTULetturaA {
 			// CODICE UNIVOCO ??
 			String idcodu = listLetturaAcqua.get(j).getValori().get("codutenza");
 			String idmat = listLetturaAcqua.get(j).getValori().get("matricola");
+			idmat=idmat.replaceAll("/", "_");
+			idmat=idmat.replaceAll(" ", "_");
+			
 			rigaTLA.setUririga("http://dkm.fbk.eu/georeporter#LETACQ_" + idcodu + idmat);
 
 			List<Relazione> listRelLA = new ArrayList<Relazione>();
@@ -151,7 +154,17 @@ public class MappingInsertTULetturaA {
 		}
 		// return output;
 	}
+public static void run() {
+	String path = "file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv";
+	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+	WrapperTULetturaA.estrazioneHeaderFile(path);
+	WrapperTULetturaA.letturaFile(path);
+	// mapping e insert
+	LoadFile(new File("file/file_mapping/mappingLetturaAcqua.json"));
 
+	
+	
+}
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv";
