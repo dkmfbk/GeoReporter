@@ -226,9 +226,13 @@ public class MappingInsertTit {
 			relTitSOG.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 			String cod = listTitolarita.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
 			String codfis = getSOGfromIDESOG(cod);
+			
+			if(codfis.equals("FAIL")) {
+			codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
+             System.out.println("Soggetto non presente: "+cod);
+			}
 			relTitSOG.setUriRange(codfis);
 			listRelTIT.add(relTitSOG);
-
 			// setto relazioni
 			rigaTTIT.setListarelazioni(listRelTIT);
 			// inserisco l'elemento di RIGATABELLA TIT dopo aver inserito NOTE e creato le
@@ -391,6 +395,32 @@ public class MappingInsertTit {
 
 	}
 
+
+	public static void run() {
+		
+		
+		String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
+		String pathP = "file/TN_header/headerfiletit.csv";
+
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		// dal file TIT
+		WrapperTit.estrazioneHeaderFileTit(pathP);
+		WrapperTit.letturaFileTit(pathT);
+		// mapping e insert degli elementi TITOLARITA
+		LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
+
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) {
 		// IDR0000115470_TIPOFACSN_CAMML322
 		String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
