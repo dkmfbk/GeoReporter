@@ -260,6 +260,28 @@ public class MappingInsertAnagraficaComunale {
 		// return output;
 	}
 
+public static void run() {
+	
+	
+	
+	
+	String path = "file/TN_file/DGASBANN.csv";
+	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+	WrapperAnagraficaComunale.estrazioneHeaderFile(path);
+	WrapperAnagraficaComunale.LetturaFile(path);
+	// mapping e insert
+	LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
+			new File("file/file_mapping/mappingPersonaFisica2.json"),
+			new File("file/file_mapping/mappingIndirizzo.json"));
+
+}
+	
+	
+	
+	
+	
+
+	
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/DGASBANN.csv";
