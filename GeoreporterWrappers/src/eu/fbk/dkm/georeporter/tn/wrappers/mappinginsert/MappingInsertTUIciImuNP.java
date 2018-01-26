@@ -428,6 +428,27 @@ public class MappingInsertTUIciImuNP {
 		// return output;
 	}
 
+	public static void run() {
+		String path = "file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop.xls";
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		try {
+			WrapperTUIciImuNP.readXLSFile(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// mapping e insert
+		LoadFile(new File("file/file_mapping/mappingICIIMU.json"),
+				new File("file/file_mapping/mappingTributoOUtenza.json"),
+				new File("file/file_mapping/mappingSoggetto.json"),
+				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEua.json"),
+				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
+
+		
+	}
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop.xls";
