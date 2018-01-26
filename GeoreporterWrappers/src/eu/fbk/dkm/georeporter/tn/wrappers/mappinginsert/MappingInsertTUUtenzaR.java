@@ -378,7 +378,8 @@ public class MappingInsertTUUtenzaR {
 			// riga di tipo RIGATABELLA per UTENZA RIFIUTI
 
 			RigaTabella rigaTUR = new RigaTabella();
-			rigaTUR.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+			//rigaTUR.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+			rigaTUR.setNometabella("http://dkm.fbk.eu/georeporter#UtenzaRifiuti" );
 			rigaTUR.setListaattributi(listAttributi);
 			rigaTUR.setUririga("http://dkm.fbk.eu/georeporter#TUUR_" + id);
 
@@ -453,7 +454,30 @@ public class MappingInsertTUUtenzaR {
 		}
 		// return output;
 	}
+	public static void run() {
+		
+		String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		try {
+			WrapperTUUtenzaR.readXLSFile(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// mapping e insert
+		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
+				new File("file/file_mapping/mappingUtenza.json"),
+				new File("file/file_mapping/mappingUtenzaRifiuti.json"),
+				new File("file/file_mapping/mappingSoggetto.json"),
+				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEur.json"),
+				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
 
+	}
+		
+	
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";
