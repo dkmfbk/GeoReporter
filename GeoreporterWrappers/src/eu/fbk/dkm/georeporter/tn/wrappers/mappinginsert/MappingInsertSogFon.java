@@ -210,7 +210,7 @@ public class MappingInsertSogFon {
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		System.out.println(json);
+		//System.out.println(json);
 
 		try {
 
