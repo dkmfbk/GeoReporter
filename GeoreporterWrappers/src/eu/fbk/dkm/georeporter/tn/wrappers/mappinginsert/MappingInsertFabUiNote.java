@@ -169,6 +169,7 @@ public class MappingInsertFabUiNote {
 			rigaTNI.setNometabella("http://dkm.fbk.eu/georeporter#" + dataNote.getIdTabella().getMapping());
 			rigaTNI.setListaattributi(listNoteI);
 			String numni = listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get("numeronota");
+			numni=numni.replaceAll("/", "_");
 			rigaTNI.setUririga("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + ideimm + "_" + numni);
 
 			// creare relazione per la nota iniziale con tipo nota
@@ -186,6 +187,7 @@ public class MappingInsertFabUiNote {
 			rigaTNF.setNometabella("http://dkm.fbk.eu/georeporter#" + dataNote.getIdTabella().getMapping());
 			rigaTNF.setListaattributi(listNoteF);
 			String numnf = listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get("numeronota");
+			numnf=numnf.replaceAll("/", "_");
 			rigaTNF.setUririga("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + ideimm + "_" + numnf);
 
 			// creare relazione per la nota finale con tipo nota
