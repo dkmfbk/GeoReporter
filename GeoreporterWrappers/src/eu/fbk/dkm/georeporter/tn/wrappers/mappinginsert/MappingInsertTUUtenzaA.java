@@ -363,6 +363,13 @@ public class MappingInsertTUUtenzaA {
 				String cc = listUtenzaAcqua.get(j).getValori().get("codcomune");
 				String den = listUtenzaAcqua.get(j).getValori().get("particellaestensione");
 				String sub = listUtenzaAcqua.get(j).getValori().get("subalterno");
+				if (num.contains("/")) {
+					
+					String[] parts=num.split("/");
+					num=parts[0];
+					den=parts[1];
+				}
+				
 				rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				// inserimento dell'elemento
 				insertRiga(rigaTIDECAT);
@@ -453,7 +460,29 @@ public class MappingInsertTUUtenzaA {
 		}
 		// return output;
 	}
+	public static void run() {
+		
+		String path = "file/TN_file/TRAMBILENO_Utenze_H2O_DA GARBAGE.xls";
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		try {
+			WrapperTUUtenzaA.readXLSFile(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		// mapping e insert
+		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
+				new File("file/file_mapping/mappingUtenza.json"), new File("file/file_mapping/mappingUtenzaAcqua.json"),
+				new File("file/file_mapping/mappingSoggetto.json"),
+				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEua.json"),
+				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
+				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
+
+		
+	}
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/TRAMBILENO_Utenze_H2O_DA GARBAGE.xls";
