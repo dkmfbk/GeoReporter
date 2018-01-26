@@ -183,6 +183,8 @@ public class MappingInsertForLocazione {
 			String numden = listLocazione.get(j).getValori().get("particella").trim();
 			// controllo particella
 			numden.replace("/", " ");
+			//tolgo tutti gli spazi doppi
+			numden = numden.replaceAll("\\s+", " ");
 			String[] tmp = numden.split("[ ]", -1);
 			String num, den;
 			if (tmp.length == 2) {
@@ -261,7 +263,21 @@ public class MappingInsertForLocazione {
 		}
 		// return output;
 	}
-
+	public static void run()
+	{
+		String path = "file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls";
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		try {
+			WrapperForLoc.readXLSFile(path);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// mapping e insert
+		LoadFile(new File("file/file_mapping/mappingFornituraLocazione.json"),
+				new File("file/file_mapping/mappingContratto2.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale3.json"));
+	}
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls";
