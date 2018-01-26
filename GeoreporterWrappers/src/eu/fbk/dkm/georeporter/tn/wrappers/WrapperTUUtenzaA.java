@@ -79,7 +79,7 @@ public class WrapperTUUtenzaA {
 				}
 
 			}
-			System.out.println();
+			//System.out.println();
 			i++;
 			if (!campi.isEmpty()) {
 				// settare elemento della lista e aggiungerlo alla list
