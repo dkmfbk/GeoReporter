@@ -347,6 +347,39 @@ public class MappingInsertSog {
 		// return output;
 	}
 
+
+	public static void run() {
+		
+		
+		String pathS = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG";
+		String pathP = "file/TN_header/headerfilesog.csv";
+
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		// dal file SOG
+		WrapperSog.estrazioneHeaderFileSog(pathP);
+		WrapperSog.letturaFileSog(pathS);
+		// mapping e insert degli elementi PF PG PPT
+		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listPersonaFisica);
+
+		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listPersonaGiuridica);
+
+		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSog.listProprietarioproTempore);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 	public static void main(String[] args) {
 		// IDR0000115470_TIPOFACSN_CAMML322
 		String pathS = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG";
