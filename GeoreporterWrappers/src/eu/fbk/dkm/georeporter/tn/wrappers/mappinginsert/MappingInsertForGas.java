@@ -40,7 +40,7 @@ public class MappingInsertForGas {
 
 	public static List<FornituraGas> listFornituraGas = WrapperForGas.listFornituraGas;
 
-	private static void LoadFile(File filename, File filename2) {
+	private static void LoadFile(File filename, File filename2, File mappingIndirizzoContratti) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -48,6 +48,9 @@ public class MappingInsertForGas {
 		Gson gson2 = new Gson();
 		JsonReader reader2;
 
+		Gson gson3 = new Gson();
+		JsonReader reader3;
+		
 		try {
 			reader = new JsonReader(new FileReader(filename));
 			MappingTabella data = gson.fromJson(reader, MappingTabella.class);
@@ -55,8 +58,11 @@ public class MappingInsertForGas {
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
+			reader3 = new JsonReader(new FileReader(mappingIndirizzoContratti));
+			MappingTabella data3 = gson3.fromJson(reader3, MappingTabella.class);
+
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, data2);
+			associazioneMappingNomeVal(data, data2,data3);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -65,7 +71,7 @@ public class MappingInsertForGas {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2) {
+	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2,MappingTabella data3) {
 		// ciclo la lista degli elementi FG
 		for (int j = 0; j < listFornituraGas.size(); j++) {
 
@@ -108,6 +114,28 @@ public class MappingInsertForGas {
 				}
 			}
 
+			List<Attributo> listAttributiI = new ArrayList<Attributo>();
+			for (int i = 0; i < data3.getAttributi().size(); i++) {
+
+				String string3 = data3.getAttributi().get(i).getNome();
+				String[] parts3 = string3.split("#");
+
+				Attributo tmp3 = new Attributo();
+				tmp3.setNome(data3.getAttributi().get(i).getNome());
+				tmp3.setMapping(data3.getAttributi().get(i).getMapping());
+				tmp3.setTipo(data3.getAttributi().get(i).getTipo());
+
+				if ((listFornituraGas.get(j).getValori().get(parts3[1]) != null)
+						&& (listFornituraGas.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
+					tmp3.setValore((listFornituraGas.get(j).getValori().get(parts3[1])));
+					listAttributiI.add(tmp3);
+				}
+			}
+
+			
+			
+			
+			
 			// riga di tipo RIGATABELLA per FOR GAS
 			RigaTabella rigaTFG = new RigaTabella();
 			rigaTFG.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
@@ -125,15 +153,27 @@ public class MappingInsertForGas {
 				relCFGSOG.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfsog);
 				listRelCFG.add(relCFGSOG);
 			}
+			
+			// riga di tipo RIGATABELLA per IND
+			RigaTabella rigaTIND = new RigaTabella();
+			rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data3.getIdTabella().getMapping());
+			rigaTIND.setListaattributi(listAttributiI);
+			// creo l'indirizzo univoco grazie dalla data d'inserimento
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			long time = cal.getTimeInMillis();
+			String uriInd="http://dkm.fbk.eu/georeporter#IND_" + time;
+			rigaTIND.setUririga(uriInd);
+			insertRiga(rigaTIND);
+			
 			// relazione FOR GAS con INDIRIZZO
 			if (listFornituraGas.get(j).getValori().get("indirizzoutenza").isEmpty() == false) {
 				Relazione relCFGIND = new Relazione();
 				relCFGIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
 				relCFGIND.setUriDomain("http://dkm.fbk.eu/georeporter#CFG_" + idcfg);
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-				long time = cal.getTimeInMillis();
-				relCFGIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+				//Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+				//long time = cal.getTimeInMillis();
+				relCFGIND.setUriRange(uriInd);
 				listRelCFG.add(relCFGIND);
 			}
 			rigaTFG.setListarelazioni(listRelCFG);
@@ -209,7 +249,7 @@ public class MappingInsertForGas {
 		}
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingFornituraGas.json"),
-				new File("file/file_mapping/mappingContratto.json"));
+				new File("file/file_mapping/mappingContratto.json"),new File("file/file_mapping/mappingIndirizzoContratti.json"));
 		
 	}
 	public static void main(String[] args) {
@@ -224,7 +264,7 @@ public class MappingInsertForGas {
 		}
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingFornituraGas.json"),
-				new File("file/file_mapping/mappingContratto.json"));
+				new File("file/file_mapping/mappingContratto.json"),new File("file/file_mapping/mappingIndirizzoContratti.json"));
 
 	}
 

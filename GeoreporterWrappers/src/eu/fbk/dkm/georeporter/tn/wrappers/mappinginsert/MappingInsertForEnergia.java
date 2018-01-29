@@ -29,7 +29,7 @@ public class MappingInsertForEnergia {
 
 	public static List<FornituraEnergia> listFornituraEnergia = WrapperForEne.listFornituraEnergia;
 
-	private static void LoadFile(File filename, File filename2) {
+	private static void LoadFile(File filename, File filename2, File mappingIndirizzoContratti) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -37,6 +37,9 @@ public class MappingInsertForEnergia {
 		Gson gson2 = new Gson();
 		JsonReader reader2;
 
+		Gson gson3 = new Gson();
+		JsonReader reader3;
+		
 		try {
 			reader = new JsonReader(new FileReader(filename));
 			MappingTabella data = gson.fromJson(reader, MappingTabella.class);
@@ -44,8 +47,11 @@ public class MappingInsertForEnergia {
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
+			reader3 = new JsonReader(new FileReader(mappingIndirizzoContratti));
+			MappingTabella data3 = gson3.fromJson(reader3, MappingTabella.class);
+
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, data2);
+			associazioneMappingNomeVal(data, data2,data3);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -54,7 +60,7 @@ public class MappingInsertForEnergia {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2) {
+	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3) {
 		// ciclo la lista degli elementi FE
 		for (int j = 0; j < listFornituraEnergia.size(); j++) {
 
@@ -96,7 +102,23 @@ public class MappingInsertForEnergia {
 					tmp2.setValore((listFornituraEnergia.get(j).getValori().get(parts2[1])));
 					listAttributi.add(tmp2);
 				}
+			}
+			List<Attributo> listAttributiI = new ArrayList<Attributo>();
+			for (int i = 0; i < data3.getAttributi().size(); i++) {
 
+				String string3 = data3.getAttributi().get(i).getNome();
+				String[] parts3 = string3.split("#");
+
+				Attributo tmp3 = new Attributo();
+				tmp3.setNome(data3.getAttributi().get(i).getNome());
+				tmp3.setMapping(data3.getAttributi().get(i).getMapping());
+				tmp3.setTipo(data3.getAttributi().get(i).getTipo());
+
+				if ((listFornituraEnergia.get(j).getValori().get(parts3[1]) != null)
+						&& (listFornituraEnergia.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
+					tmp3.setValore((listFornituraEnergia.get(j).getValori().get(parts3[1])));
+					listAttributiI.add(tmp3);
+				}
 			}
 
 			// riga di tipo RIGATABELLA per FOR ENERGIA
@@ -117,16 +139,27 @@ public class MappingInsertForEnergia {
 				relCFESOG.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfsog);
 				listRelCFE.add(relCFESOG);
 			}
-
+			
+			// riga di tipo RIGATABELLA per IND
+			RigaTabella rigaTIND = new RigaTabella();
+			rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data3.getIdTabella().getMapping());
+			rigaTIND.setListaattributi(listAttributiI);
+			// creo l'indirizzo univoco grazie dalla data d'inserimento
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			long time = cal.getTimeInMillis();
+			String uriInd="http://dkm.fbk.eu/georeporter#IND_" + time;
+			rigaTIND.setUririga(uriInd);
+			insertRiga(rigaTIND);
+			
 			// relazione FOR GAS con INDIRIZZO
 			if (listFornituraEnergia.get(j).getValori().get("indirizzoutenza").isEmpty() == false) {
 				Relazione relCFEIND = new Relazione();
 				relCFEIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
 				relCFEIND.setUriDomain("http://dkm.fbk.eu/georeporter#CFE_" + idcfe);
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-				long time = cal.getTimeInMillis();
-				relCFEIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+			//	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			//	long time = cal.getTimeInMillis();
+				relCFEIND.setUriRange(uriInd);
 				listRelCFE.add(relCFEIND);
 			}
 			rigaTFE.setListarelazioni(listRelCFE);
@@ -203,7 +236,7 @@ public static void run()
 	}
 	// mapping e insert
 	LoadFile(new File("file/file_mapping/mappingFornituraEnergia.json"),
-			new File("file/file_mapping/mappingContratto.json"));
+			new File("file/file_mapping/mappingContratto.json"),new File("file/file_mapping/mappingIndirizzoContratti.json"));
 	
 	
 	
@@ -220,7 +253,7 @@ public static void run()
 		}
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingFornituraEnergia.json"),
-				new File("file/file_mapping/mappingContratto.json"));
+				new File("file/file_mapping/mappingContratto.json"),new File("file/file_mapping/mappingIndirizzoContratti.json"));
 
 	}
 

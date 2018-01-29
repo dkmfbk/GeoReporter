@@ -1,4 +1,5 @@
 {"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#barraEsponente","nome":"http://dkm.fbk.eu/georeporter#barr","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codiceComuneCatastale","nome":"http://dkm.fbk.eu/georeporter#codicecomunecatastale","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#cap","nome":"http://dkm.fbk.eu/georeporter#cap","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#civico","nome":"http://dkm.fbk.eu/georeporter#civico","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#codViaFrazione","nome":"http://dkm.fbk.eu/georeporter#codviafraz","tipo":"http://www.w3.org/2001/XMLSchema#integer"},

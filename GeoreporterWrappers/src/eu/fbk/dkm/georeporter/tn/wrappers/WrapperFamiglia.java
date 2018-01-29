@@ -25,7 +25,7 @@ public class WrapperFamiglia {
 	public static String[] header;
 	// lista di tipo FAM degli elementi estratti dal file
 	public static List<Famiglia> listFamiglia = new ArrayList<Famiglia>();
-
+	public static String codiceComunecatastale;
 	// estrazione HEADER
 	public static void estrazioneHeaderFile(String path) {
 

@@ -115,7 +115,8 @@ public class MappingInsertFabIndirizzo {
 			// creo l'indirizzo univoco grazie dalla data d'inserimento
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			long time = cal.getTimeInMillis();
-			rigaTIND.setUririga("http://dkm.fbk.eu/georeporter#IND_" + time);
+			String id_indirizzo="http://dkm.fbk.eu/georeporter#IND_" + time;
+			rigaTIND.setUririga(id_indirizzo);
 
 			insertRiga(rigaTIND);
 
@@ -130,7 +131,8 @@ public class MappingInsertFabIndirizzo {
 			Relazione relUIIND = new Relazione();
 			relUIIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzo");
 			relUIIND.setUriDomain("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
-			relUIIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+			//relUIIND.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
+			relUIIND.setUriRange(id_indirizzo);
 			listRelUI.add(relUIIND);
 			rigaTUI.setListarelazioni(listRelUI);
 
@@ -147,7 +149,7 @@ public class MappingInsertFabIndirizzo {
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		System.out.println(json);
+		//System.out.println(json);
 
 		try {
 

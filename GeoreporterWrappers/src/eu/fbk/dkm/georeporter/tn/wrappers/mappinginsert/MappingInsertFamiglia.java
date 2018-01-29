@@ -106,7 +106,13 @@ public class MappingInsertFamiglia {
 				}
 
 			}
-
+			//aggiunta codice comune catastale
+			Attributo codComune = new Attributo();
+			codComune.setNome("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
+			codComune.setMapping("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
+			codComune.setTipo("http://www.w3.org/2001/XMLSchema#string");
+			codComune.setValore(WrapperFamiglia.codiceComunecatastale);
+			listAttributiI.add(codComune);
 			// riga di tipo RIGATABELLA per FAM
 			RigaTabella rigaTFAM = new RigaTabella();
 
@@ -223,6 +229,7 @@ public class MappingInsertFamiglia {
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		WrapperFamiglia.estrazioneHeaderFile(path);
 		WrapperFamiglia.LetturaFile(path);
+		WrapperFamiglia.codiceComunecatastale="L322";
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingFamiglia.json"),
 				new File("file/file_mapping/mappingIndirizzo.json"));
