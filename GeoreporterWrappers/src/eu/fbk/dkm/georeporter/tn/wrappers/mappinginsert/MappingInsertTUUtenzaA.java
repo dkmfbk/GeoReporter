@@ -287,7 +287,7 @@ public class MappingInsertTUUtenzaA {
 				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data5.getIdTabella().getMapping());
 				rigaTPF.setListaattributi(listAttributiSOG);
 				rigaTPF.setListachiave(listChiaveSOG);
-				String codfis = listUtenzaAcqua.get(j).getValori().get("codicefiscale");
+				String codfis = listUtenzaAcqua.get(j).getValori().get("codfiscale");
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
@@ -384,7 +384,7 @@ public class MappingInsertTUUtenzaA {
 
 			// riga di tipo RIGATABELLA per UTENZA ACUQA
 			RigaTabella rigaTUA = new RigaTabella();
-			rigaTUA.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+			rigaTUA.setNometabella("http://dkm.fbk.eu/georeporter#UtenzaAcqua");
 			rigaTUA.setListaattributi(listAttributi);
 			rigaTUA.setUririga("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 
