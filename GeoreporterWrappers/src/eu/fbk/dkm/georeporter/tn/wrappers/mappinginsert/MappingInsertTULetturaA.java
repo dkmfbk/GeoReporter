@@ -90,7 +90,7 @@ public class MappingInsertTULetturaA {
 				Relazione relLAUA = new Relazione();
 				relLAUA.setNomerelazione("http://dkm.fbk.eu/georeporter#hasUtenzaAcqua");
 				// URI UTENZA ACQUA E LETTURA ACQUA
-				relLAUA.setUriDomain("http://dkm.fbk.eu/georeporter#TULA_" + idcodu + idmat);
+				relLAUA.setUriDomain("http://dkm.fbk.eu/georeporter#LETACQ_" + idcodu + idmat);
 				relLAUA.setUriRange("http://dkm.fbk.eu/georeporter#TUUA_" + idcodu);
 				listRelLA.add(relLAUA);
 			}
