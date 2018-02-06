@@ -151,7 +151,7 @@ public class MappingInsertAnagraficaComunale {
 
 			String codfis = listAnagraficaComunale.get(j).getValori().get("fisc");
 			// controllo codfis
-			if (!codfis.isEmpty()) {
+			if (codfis!=null) {
 				// riga di tipo RIGATABELLA per PF
 				RigaTabella rigaTPF = new RigaTabella();
 				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#PersonaFisica");
@@ -169,11 +169,14 @@ public class MappingInsertAnagraficaComunale {
 				listRelPFAC.add(relPFAC);
 				rigaTPF.setListarelazioni(listRelPFAC);
 				insertRiga(rigaTPF);
+			}else {
+				
+				System.out.println("CodiceFiscaleNullo "+numindiv);
 			}
 
 			// relazione INQUI con AC
 			String resconv = listAnagraficaComunale.get(j).getValori().get("residenteconviv");
-			if (!resconv.isEmpty()) {
+			if (resconv!=null) {
 				Relazione relINQUIAC = new Relazione();
 				relINQUIAC.setNomerelazione("http://dkm.fbk.eu/georeporter#hasResidenteConvivente");
 				relINQUIAC.setUriDomain("http://dkm.fbk.eu/georeporter#SOG_" + resconv);
