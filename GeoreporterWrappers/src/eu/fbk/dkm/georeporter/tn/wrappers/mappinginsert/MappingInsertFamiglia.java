@@ -209,6 +209,8 @@ public class MappingInsertFamiglia {
 			// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 			WrapperFamiglia.estrazioneHeaderFile(path);
 			WrapperFamiglia.LetturaFile(path);
+			WrapperFamiglia.codiceComunecatastale="L322";
+			
 			// mapping e insert
 			LoadFile(new File("file/file_mapping/mappingFamiglia.json"),
 					new File("file/file_mapping/mappingIndirizzo.json"));
