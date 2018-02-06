@@ -25,6 +25,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Comuni;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IdentificativiCatastali;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Indirizzo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
@@ -37,7 +38,7 @@ public class MappingInsertFabIde {
 	public static List<IdentificativiCatastali> listIdentificativiCatastali = WrapperFab.listIdentificativiCatastali;
 
 	// metodo che acquisisce i 2 file di tipo json
-	public static void LoadFileIdentificativi(File fileParticella, File fileIdeCat) {
+	public static void LoadFileIdentificativi_old(File fileParticella, File fileIdeCat) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -62,6 +63,53 @@ public class MappingInsertFabIde {
 
 	}
 
+	
+	
+	
+	public static void LoadFileIdentificativi(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingParticella= new MappingTabella();
+		MappingTabella mappingIdentificativocatastale=new MappingTabella();
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("Particella")){
+					mappingParticella=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("IdentificativoCatastale")){
+					mappingIdentificativocatastale=mappingTabella;
+					
+					
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeValIdentificativo(mappingParticella,mappingIdentificativocatastale);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
 	public static void associazioneMappingNomeValIdentificativo(MappingTabella data, MappingTabella data2) {
 		// ciclo la lista degli elementi IDE CAt
 
@@ -186,7 +234,7 @@ public class MappingInsertFabIde {
 			RigaTabella rigaTIdeCat = new RigaTabella();
 			rigaTIdeCat.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
 			rigaTIdeCat.setListaattributi(listAttributi2);
-			rigaTIdeCat.setListachiave(listChiavi2);
+			//rigaTIdeCat.setListachiave(listChiavi2);
 			rigaTIdeCat.setUririga("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
 
 			rigaTIdeCat.setListarelazioni(listRelPartIdeCat);
@@ -197,22 +245,22 @@ public class MappingInsertFabIde {
 
 	}
 
-	public static void run() {
+	public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {
 
-		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
-		String pathP = "file/TN_header/headerfilefab.csv";
+		
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathP);
+		WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathF);
+		WrapperFab.letturaFileFab(pathFile);
 
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
 		// questo grazie ai file di mapping
-		LoadFileIdentificativi(new File("file/file_mapping/mappingParticella.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
+		LoadFileIdentificativi(new File(pathFileMappings));
+		
+		
 
 	}
 
@@ -232,7 +280,7 @@ public class MappingInsertFabIde {
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
 		// questo grazie ai file di mapping
-		LoadFileIdentificativi(new File("file/file_mapping/mappingParticella.json"),
+		LoadFileIdentificativi_old(new File("file/file_mapping/mappingParticella.json"),
 				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
 
 	}
