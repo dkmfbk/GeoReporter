@@ -27,6 +27,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Comuni;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IdentificativiCatastali;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Indirizzo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
@@ -65,6 +66,49 @@ public class MappingInsertFabUiNote {
 
 	}
 
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingUntaImmobiliare= new MappingTabella();
+		MappingTabella mappingNota=new MappingTabella();
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("UnitaImmobiliare")){
+					mappingUntaImmobiliare=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Nota")){
+					mappingNota=mappingTabella;
+					
+					
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingUntaImmobiliare,mappingNota);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
 	// accoppiamento valore dell'UI a quello di mapping
 	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
 		// ciclo la lista degli elementi UI
@@ -369,7 +413,25 @@ public class MappingInsertFabUiNote {
 		
 	}
 	
+
+public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {
+
 	
+
+	// chiamata per l'estrazione degli header per la composizione della lista HEADER
+	WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
+
+	// chiamata per l'analisi del file .FAB
+	WrapperFab.letturaFileFab(pathFile);
+
+	// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
+	// per l'inserimento
+	// questo grazie ai file di mapping
+	LoadFile(new File(pathFileMappings));
+	
+	
+
+}	
 	
 	
 	
