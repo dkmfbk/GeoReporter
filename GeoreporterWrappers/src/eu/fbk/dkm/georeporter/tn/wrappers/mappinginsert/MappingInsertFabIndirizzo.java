@@ -196,6 +196,24 @@ public class MappingInsertFabIndirizzo {
 		// return output;
 	}
 
+public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {
+
+		
+
+		// chiamata per l'estrazione degli header per la composizione della lista HEADER
+		WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
+
+		// chiamata per l'analisi del file .FAB
+		WrapperFab.letturaFileFab(pathFile);
+
+		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
+		// per l'inserimento
+		// questo grazie ai file di mapping
+		LoadFile(new File(pathFileMappings));
+		
+		
+
+	}
 
 	public static void run() {
 		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
