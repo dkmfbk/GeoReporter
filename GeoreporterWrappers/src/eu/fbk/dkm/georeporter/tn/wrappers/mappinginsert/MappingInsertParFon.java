@@ -398,6 +398,28 @@ public class MappingInsertParFon {
 
 	}
 
+	public static void run() {
+
+		// path del file .PAR e del file con gli HEADER inseriti a mano da un utente
+		String pathF = "file/TN_file/404_41097.PAR";
+		String pathP = "file/TN_header/headerfileparfon.csv";
+
+		// chiamata per l'estrazione degli header per la composizione della lista HEADER
+		WrapperParFon.estrazioneHeaderFilePar(pathP);
+
+		// chiamata per l'analisi del file .PAR
+		WrapperParFon.letturaFilePar(pathF);
+
+		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
+		// per l'inserimento
+		// questo grazie ai file di mapping
+		LoadFile(new File("file/file_mapping/mappingParticella.json"),
+				new File("file/file_mapping/mappingIntavolazione.json"),
+				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
+
+	}
+	
+	
 	public static void main(String[] args) {
 
 		// path del file .PAR e del file con gli HEADER inseriti a mano da un utente
