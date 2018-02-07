@@ -223,6 +223,43 @@ public class MappingInsertTtcFon {
 				listRelTTC.add(relRegimeTipo);
 			}
 
+			String codamm = listTitolaritaCompleta.get(j).getListaValoriChiave().get(0).get("comunecatastale");
+			
+			String idepar = listTitolaritaCompleta.get(j).getListaValoriChiave().get(0).get("identificativoparticella");
+			// creare relazione per il IDCatastale
+						Relazione relTitIdCat = new Relazione();
+						relTitIdCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIDCatastale");
+						//relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
+						relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codcat + "_" + idetit);
+					
+						String codpar = "PAR_" + codamm + "_" + idepar;
+						codpar = codpar.replaceAll("\\s+", "");
+						String idecat = getICfromPAR(codpar);
+						if (idecat.equals("FAIL")) {
+							idecat = "http://dkm.fbk.eu/georeporter#PAR_000000000";
+							 System.out.println("Particella non presente: "+codpar);
+						}
+						relTitIdCat.setUriRange(idecat);
+						listRelTTC.add(relTitIdCat);
+
+						// creare relazione per il SOG
+				Relazione relTitSOG = new Relazione();
+				relTitSOG.setNomerelazione("http://dkm.fbk.eu/georeporter#hasSoggetto");
+				relTitSOG.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codcat + "_" + idetit);
+				String cod = listTitolaritaCompleta.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
+				cod = cod.replaceAll("\\s+", "");
+				String codfis = getSOGfromIDESOG("SOG_"+cod);
+						
+				if(codfis.equals("FAIL")) {
+					codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
+			         System.out.println("Soggetto non presente: "+cod);
+				}
+				relTitSOG.setUriRange(codfis);
+				listRelTTC.add(relTitSOG);
+						// setto relazioni
+					
+			
+			
 			// setto relazioni
 			rigaTTTC.setListarelazioni(listRelTTC);
 			// inserisco l'elemento di RIGATABELLA TIT dopo aver inserito NOTE e creato le
@@ -289,6 +326,27 @@ public class MappingInsertTtcFon {
 		}
 		return output;
 	}
+	// metodo che dato UI mi restituisce IDESOG
+	public static String getSOGfromIDESOG(String ui_) {
+		String result = "FAIL";
+		Client client = Client.create();
+		String ui = ui_.replaceAll("\\s+", "");
+		WebResource webResource = client.resource(
+				"http://localhost:8080/GeoreporterService/servizio/rest/urisoggettodaid?identificativoSoggetto=" + ui);
+
+		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+
+		// Status 200 is successful.
+		if (response.getStatus() != 200) {
+			System.out.println("Failed with HTTP Error code: " + response.getStatus());
+			String error = response.getEntity(String.class);
+			System.out.println("Error: " + error);
+
+			return result;
+		}
+		return response.getEntity(String.class);
+
+	}
 
 	public static void insertRiga(RigaTabella riga) {
 
@@ -341,13 +399,13 @@ public class MappingInsertTtcFon {
 	}
 
 	// metodo che dato UI mi restituisce IDECATASTALE
-	public static String getICfromUI(String ui) {
+	public static String getICfromPAR(String par_) {
 
-		String result = "C0_N0_D0_S0";
+		String result = "FAIL";
 		Client client = Client.create();
-
+String par=par_.replaceAll("\\s+", "");
 		WebResource webResource = client
-				.resource("http://localhost:8080/GeoreporterService/servizio/rest/icfromui?ui=" + ui);
+				.resource("http://localhost:8080/GeoreporterService/servizio/rest/icfromupar?par=" + par);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 		// Status 200 is successful.
@@ -361,7 +419,19 @@ public class MappingInsertTtcFon {
 		return response.getEntity(String.class);
 
 	}
+	public static void run() {
+		String pathT = "file/TN_file/404_41097.TTC";
+		String pathP = "file/TN_header/headerfilettcfon.csv";
 
+		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
+		// dal file TTC
+		WrapperTtcFon.estrazioneHeaderFileTtcFon(pathP);
+		WrapperTtcFon.letturaFileTtcFon(pathT);
+		// mapping e insert degli elementi TITOLARITA
+		LoadFile(new File("file/file_mapping/mappingTitolarita2.json"),
+				new File("file/file_mapping/mappingIntavolazione.json"));
+
+	}
 	public static void main(String[] args) {
 		String pathT = "file/TN_file/404_41097.TTC";
 		String pathP = "file/TN_header/headerfilettcfon.csv";
