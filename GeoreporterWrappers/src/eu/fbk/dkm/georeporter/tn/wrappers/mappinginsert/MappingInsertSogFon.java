@@ -257,6 +257,29 @@ public class MappingInsertSogFon {
 		// return output;
 	}
 
+	
+	public static void run(){
+
+		// path del file .SOG e del file con gli HEADER inseriti a mano da un utente
+		String pathF = "file/TN_file/404_41097.SOG";
+		String pathP = "file/TN_header/headerfilesogfon.csv";
+
+		// chiamata per l'estrazione degli header per la composizione della lista HEADER
+		WrapperSogFon.estrazioneHeaderFileSogFon(pathP);
+
+		// chiamata per l'analisi del file .SOG FON
+		WrapperSogFon.letturaFileSogFon(pathF);
+
+		// mapping e insert degli elementi PF PG
+		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaFisicaFon);
+		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
+				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaGiuridicaFon);
+
+	}
+
+	
+	
 	public static void main(String[] args) {
 
 		// path del file .SOG e del file con gli HEADER inseriti a mano da un utente
