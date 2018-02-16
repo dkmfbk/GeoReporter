@@ -228,7 +228,7 @@ public class MappingInsertTtcFon {
 			String idepar = listTitolaritaCompleta.get(j).getListaValoriChiave().get(0).get("identificativoparticella");
 			// creare relazione per il IDCatastale
 						Relazione relTitIdCat = new Relazione();
-						relTitIdCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIDCatastale");
+						relTitIdCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 						//relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 						relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codcat + "_" + idetit);
 					
@@ -247,8 +247,7 @@ public class MappingInsertTtcFon {
 				relTitSOG.setNomerelazione("http://dkm.fbk.eu/georeporter#hasSoggetto");
 				relTitSOG.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codcat + "_" + idetit);
 				String cod = listTitolaritaCompleta.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
-				cod = cod.replaceAll("\\s+", "");
-				String codfis = getSOGfromIDESOG("SOG_"+cod);
+							String codfis = getSOGfromIDESOG(cod);
 						
 				if(codfis.equals("FAIL")) {
 					codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
@@ -405,7 +404,7 @@ public class MappingInsertTtcFon {
 		Client client = Client.create();
 String par=par_.replaceAll("\\s+", "");
 		WebResource webResource = client
-				.resource("http://localhost:8080/GeoreporterService/servizio/rest/icfromupar?par=" + par);
+				.resource("http://localhost:8080/GeoreporterService/servizio/rest/icfrompar?par=" + par);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 		// Status 200 is successful.
