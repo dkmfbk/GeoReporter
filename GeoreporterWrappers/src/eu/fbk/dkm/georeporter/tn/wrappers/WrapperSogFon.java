@@ -22,12 +22,13 @@ public class WrapperSogFon {
 	// lista di vettori per l'elenco degli HEADER SOG (2 tipi)
 	public static List<String[]> headerSog = new ArrayList<String[]>();
 
-	public static String[] filename = { "P", "G" };
+	public static String[] filename = { "P", "G","M" };
 
 	// lista di tipo P G e T degli elementi estratti dal file SOG
 	public static List<PersonaFisica> listPersonaFisicaFon = new ArrayList<PersonaFisica>();
 	public static List<PersonaGiuridica> listPersonaGiuridicaFon = new ArrayList<PersonaGiuridica>();
-
+	public static List<ProprietarioproTempore> listProprietarioproTempore = new ArrayList<ProprietarioproTempore>();
+	
 	// estrazione delle liste di HEADER
 	public static void estrazioneHeaderFileSogFon(String pathP) {
 
@@ -70,7 +71,7 @@ public class WrapperSogFon {
 
 				String indiceL = tmpRiga[3];
 
-				int indice;
+				int indice=0;
 				// controllo per il TIPO DI SOGGETTO
 				if (indiceL.equals("P")) {
 					indice = 0;
@@ -93,7 +94,7 @@ public class WrapperSogFon {
 
 					}
 
-				} else {
+				} else if (indiceL.equals("P")) {
 					indice = 1;
 					for (int i = 0; i < tmpRiga.length; i++) {
 						if (i < 4) {
@@ -108,6 +109,20 @@ public class WrapperSogFon {
 								campi.put(headerSog.get(indice)[i].toLowerCase(),
 										ControlloValore.controlloValore(tmpRiga[i]));
 							}
+						}
+					}
+
+				} else {
+					indice = 2;
+					// ciclo per 0 a 5 e non per DIMENSIONE RIGA perche' il file arriva' errato
+					for (int i = 0; i < 8; i++) {
+						if (i < 4) {
+							valoriChiave.put(headerSog.get(indice)[i].toLowerCase(),
+									ControlloValore.controlloValore(tmpRiga[i]));
+							listaValoriChiave.add(valoriChiave);
+						} else {
+							campi.put(headerSog.get(indice)[i].toLowerCase(),
+									ControlloValore.controlloValore(tmpRiga[i]));
 						}
 					}
 
@@ -144,12 +159,19 @@ public class WrapperSogFon {
 			pg.setListaValoriChiave(listaValoriChiave);
 			listPersonaGiuridicaFon.add(pg);
 			break;
+		case 2:
+			ProprietarioproTempore pt = new ProprietarioproTempore();
+			pt.setValori(campi);
+			pt.setListaValoriChiave(listaValoriChiave);
+			listProprietarioproTempore.add(pt);
+			break;
 		default:
 			;
 			break;
 		}
 
 	}
+
 
 	public static void main(String[] args) {
 
