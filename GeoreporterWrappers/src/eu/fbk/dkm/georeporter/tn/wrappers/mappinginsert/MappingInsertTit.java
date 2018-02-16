@@ -210,7 +210,7 @@ public class MappingInsertTit {
 
 			// creare relazione per il IDCatastale
 			Relazione relTitIdCat = new Relazione();
-			relTitIdCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIDCatastale");
+			relTitIdCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 			relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 			String codammideimm = "UI_" + codamm + "_" + ideimm;
 			String idecat = getICfromUI(codammideimm);
