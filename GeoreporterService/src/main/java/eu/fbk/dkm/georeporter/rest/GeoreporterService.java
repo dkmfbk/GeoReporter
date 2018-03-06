@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -77,6 +78,7 @@ import com.google.code.geocoder.model.GeocoderRequest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
@@ -102,6 +104,10 @@ import eu.fbk.dkm.georeporter.pojos.FornituraLocazioni;
 import eu.fbk.dkm.georeporter.pojos.Indirizzo;
 import eu.fbk.dkm.georeporter.pojos.MappingTabella;
 import eu.fbk.dkm.georeporter.pojos.Particella;
+import eu.fbk.dkm.georeporter.pojos.QueryJson;
+import eu.fbk.dkm.georeporter.pojos.QueryResult;
+import eu.fbk.dkm.georeporter.pojos.QueryResultItem;
+import eu.fbk.dkm.georeporter.pojos.QueryResultRow;
 import eu.fbk.dkm.georeporter.pojos.Soggetto;
 import eu.fbk.dkm.georeporter.pojos.TributiICI;
 import eu.fbk.dkm.georeporter.pojos.UnitaImmobiliare;
@@ -238,7 +244,7 @@ public class GeoreporterService {
 	 * @return message to a web page
 	 */
 	@GET
-	@Path("/particelle")
+	@Path("/particelle_old")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Particella> getParticelle() {
 
@@ -347,7 +353,7 @@ public class GeoreporterService {
 	 * @return message to a web page
 	 */
 	@GET
-	@Path("/particellenew")
+	@Path("/particelle")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Particella> getParticelleNEW() {
 
@@ -453,7 +459,7 @@ public class GeoreporterService {
 	
 	
 	@GET
-	@Path("/unitaimmobiliari_su_particella")
+	@Path("/unitaimmobiliari_su_particella_old")
 	@Produces(MediaType.APPLICATION_JSON)
 	// @Produces({"application/javascript"})
 
@@ -563,7 +569,7 @@ public class GeoreporterService {
 
 	
 	@GET
-	@Path("/unitaimmobiliari_su_particella2")
+	@Path("/unitaimmobiliari_su_particella")
 	@Produces(MediaType.APPLICATION_JSON)
 	// @Produces({"application/javascript"})
 
@@ -670,7 +676,7 @@ public class GeoreporterService {
 	
 	
 	@GET
-	@Path("/anagraficasoggettoui")
+	@Path("/anagraficasoggettoui_old")
 	// @Produces(MediaType.APPLICATION_JSON)
 	@Produces({ "application/javascript" })
 	// public List<Soggetto> getAnagraficaSoggettoui(@QueryParam("ui") String ui) {
@@ -771,7 +777,7 @@ public class GeoreporterService {
 	}
 
 	@GET
-	@Path("/anagraficasoggettoui2")
+	@Path("/anagraficasoggettoui")
 	// @Produces(MediaType.APPLICATION_JSON)
 	@Produces({ "application/javascript" })
 	// public List<Soggetto> getAnagraficaSoggettoui(@QueryParam("ui") String ui) {
@@ -795,16 +801,19 @@ public class GeoreporterService {
 
 			String queryString = queryStringPrefix
 
-					+ " select    ?soggetto ?tiposoggetto ?codicefiscale ?nome ?cognome ?denominazioneita "
-					+ " where { " + "    ?x a :Titolarita ." + "   ?x :hasSoggetto ?soggetto . "
-					+ "  ?x :hasIdentificativoCatastale :" + ui + " . " + " ?soggetto :tiposoggetto ?tiposoggetto . "
+					+ " select  distinct  ?soggetto  ?codicefiscale ?nome ?cognome ?denominazione "
+					+ " where { " 
+					+ "  ?x a :Titolarita ."
+					+ "  ?x :hasSoggetto ?soggetto . "
+					+ "  ?x :hasIdentificativoCatastale ?ic . "
+					+" ?ic :hasUnitaImmobiliare :"+ui+" ."
 					+ " OPTIONAL{ ?soggetto :codicefiscale ?codicefiscale } . "
-					+ " OPTIONAL{ ?soggetto :denominazioneita ?denominazioneita } . "
+					+ " OPTIONAL{ ?soggetto :denominazione ?denominazione } . "
 					+ " OPTIONAL{ ?soggetto :nome ?nome }. " + " OPTIONAL{ ?soggetto :cognome ?cognome}  "
 
 					+ " }  ";
 
-			//System.out.println(queryString);
+			System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -822,7 +831,7 @@ public class GeoreporterService {
 				Value cognome = bindingSet.getValue("cognome");
 
 				Value tiposoggetto = bindingSet.getValue("tiposoggetto");
-				Value denominazioneita = bindingSet.getValue("denominazioneita");
+				Value denominazioneita = bindingSet.getValue("denominazione");
 
 				Soggetto soggetto = new Soggetto();
 
@@ -991,7 +1000,7 @@ public class GeoreporterService {
 	}
 
 	@GET
-	@Path("/utenzeacquaui")
+	@Path("/utenzeacquaui_old")
 	@Produces({ "application/javascript" })
 	// @Produces(MediaType.APPLICATION_JSON)
 
@@ -1050,7 +1059,7 @@ public class GeoreporterService {
 					+ "   OPTIONAL{  ?acqua :notabreve ?notabreve }. " + "   OPTIONAL{  ?acqua :interno ?interno} . "
 					+ "     ?acqua :subalterno ?subalterno  " + " }";
 
-			System.out.println(queryString);
+			//System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -1123,7 +1132,7 @@ public class GeoreporterService {
 
 	
 	@GET
-	@Path("/utenzeacquauinew")
+	@Path("/utenzeacquaui")
 	@Produces({ "application/javascript" })
 	// @Produces(MediaType.APPLICATION_JSON)
 
@@ -1183,7 +1192,7 @@ public class GeoreporterService {
 					+ "   OPTIONAL{  ?acqua :notaBreve ?notabreve }. " 
 					+"   OPTIONAL{  ?acqua :interno ?interno}.}";
 
-			System.out.println(queryString);
+		//	System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -1266,7 +1275,7 @@ public class GeoreporterService {
 	
 	
 	@GET
-	@Path("/iciimuui")
+	@Path("/iciimuui_old")
 	@Produces({ "application/javascript" })
 	// @Produces(MediaType.APPLICATION_JSON)
 	// public List<TributiICI> getICI_IMU_UI(
@@ -1304,7 +1313,7 @@ public class GeoreporterService {
 					+ "     ?ici :contribuente ?contribuente. " + "     ?ici :rendita ?rendita. "
 					+ "     ?ici :particellaedificabile ?numero . " + "     ?ici :subalterno  ?subalterno  " + " }";
 
-			System.out.println(queryString);
+		//	System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -1368,7 +1377,7 @@ public class GeoreporterService {
 	
 	
 	@GET
-	@Path("/iciimuui2")
+	@Path("/iciimuui")
 	@Produces({ "application/javascript" })
 	// @Produces(MediaType.APPLICATION_JSON)
 	// public List<TributiICI> getICI_IMU_UI(
@@ -1412,7 +1421,7 @@ public class GeoreporterService {
 					
 					+ " }";
 
-			System.out.println(queryString);
+			//System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -1539,7 +1548,7 @@ public class GeoreporterService {
 			URI uriid = new URIImpl(rigatabella.getUririga());
 			URI tabella = new URIImpl(rigatabella.getNometabella());
 		    
-			Esiste esiste= esiste(rigatabella.getUririga(),rigatabella.getNometabella());
+			//Esiste esiste= esiste(rigatabella.getUririga(),rigatabella.getNometabella());
 			
 			
 			
@@ -1668,7 +1677,7 @@ public class GeoreporterService {
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			System.out.println("ERROREzxsss: parametro iduri o idtabella mancante");
+			//System.out.println("ERROREzxsss: parametro iduri o idtabella mancante");
 			// e.printStackTrace();
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
@@ -2008,7 +2017,7 @@ public class GeoreporterService {
 						+ "\" ." + "   " + termURI + " rdf:type :Term;" + "	:hasText 	\"" + topicDescr + "\" .}"
 						+ "}							";
 
-				System.out.println(queryString);
+			//	System.out.println(queryString);
 
 				int i = 0;
 				// conn.prepareUpdate(QueryLanguage.SPARQL, updateQuery);
@@ -2311,7 +2320,7 @@ public class GeoreporterService {
 						+ hasTerm + "\"@it .}" + "	 }";
 				con.begin();
 
-				System.out.println(queryString);
+			//	System.out.println(queryString);
 
 				int i = 0;
 				// conn.prepareUpdate(QueryLanguage.SPARQL, updateQuery);
@@ -2534,7 +2543,7 @@ public class GeoreporterService {
 			+ "	}";
 			
 			
-			System.out.println(queryString);
+			//System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -2591,6 +2600,76 @@ public class GeoreporterService {
 	
 	}
 
+	
+	
+	
+	
+	@GET
+	@Path("/query")
+	@Produces({ "application/javascript" })
+	public JSONWithPadding querybuilder(
+			@QueryParam("callback") String callback ,
+			@QueryParam("json") String json_query
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+	
+	
+	
+String json=
+	"{         "
+	+"	  \"condition\": \"AND\",  "
+	+"	  \"rules\": [    "
+	+"	    {"
+	+"	      \"id\": \"mqCatastali\","
+	+"	      \"field\": \"mqCatastali\","
+	+"	      \"type\": \"integer\","
+	+"	      \"input\": \"number\","
+	+"	      \"operator\": \"equal\","
+	+"	      \"value\": \"1000\""
+	+"	    },"
+	+"	    {"
+	+"	      \"id\": \"mqLocaliPertinenza\","
+	+"	      \"field\": \"mqLocaliPertinenza\","
+	+"	      \"type\": \"integer\","
+	+"	      \"input\": \"number\","
+	+"	      \"operator\": \"equal\","
+	+"	      \"value\": \"50\""
+	+"	    }"
+	+"	  ],"
+	+"	  \"not\": false,"
+	+"	  \"valid\": true,"
+	+"     \"tablename\": UtenzaRifiuti, "
+	+"     \"fields\":[{\"id\", \"cod\", \"cog\"}]              "
+	
+	
+	+"	}";
+	
+
+
+
+
+
+
+
+
+	
+Gson gson = new Gson();
+
+
+
+	QueryJson data = gson.fromJson(json, QueryJson.class);
+
+	
+	
+	return new JSONWithPadding(new GenericEntity<QueryJson>(data) {
+	}, callback);
+
+}
+	
+	
+	
+	
+	
 	@GET
 	@Path("/relazionientita")
 	@Produces({ "application/javascript" })
@@ -2628,7 +2707,7 @@ public class GeoreporterService {
 			+ "	}";
 			
 			
-			System.out.println(queryString);
+		//	System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -2734,7 +2813,7 @@ public class GeoreporterService {
 	
 			
 			
-			System.out.println(queryString);
+			//System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -2810,7 +2889,7 @@ public class GeoreporterService {
 		List<Indirizzo> listaClassi= new ArrayList<Indirizzo>();
 
 		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
-		System.out.println("Limit=" +limit);
+		//System.out.println("Limit=" +limit);
 		int limiteiterazioni=limit.intValue();
 		try {
 			myRepository.initialize();
@@ -2888,7 +2967,7 @@ public class GeoreporterService {
 			for (String key : indirizzi_HM.keySet()) {
 				Map<String,String> attributi_indirizzo = indirizzi_HM.get(key);			
 				String stringa_indirizzo="";
-				System.out.println("INRIRIZZO NORMALIZZATO=="+attributi_indirizzo.get("indirizzoNormalizzato"));
+				//System.out.println("INRIRIZZO NORMALIZZATO=="+attributi_indirizzo.get("indirizzoNormalizzato"));
 				 
                 if (attributi_indirizzo.get("indirizzoNormalizzato")==null||attributi_indirizzo.get("indirizzoNormalizzato").equals("")){
             	
@@ -2905,7 +2984,7 @@ public class GeoreporterService {
                   }
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(getNomeComune(attributi_indirizzo.get("codiceComuneCatastale")));
                   
-                  System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
+               //   System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
 			
 				
 				try {
@@ -2928,7 +3007,7 @@ public class GeoreporterService {
 				  RigaTabella rt= new RigaTabella();
 				  rt.setNometabella("http://dkm.fbk.eu/georeporter#Indirizzo");
 				  rt.setUririga("http://dkm.fbk.eu/georeporter#"+key);
-				  System.out.println("KEY="+key);
+				//  System.out.println("KEY="+key);
 				  List<Attributo> listaattributi= new ArrayList<Attributo>();
 				  Attributo latitudine =new Attributo();
 				  Attributo longitudine =new Attributo();
@@ -2988,18 +3067,18 @@ public class GeoreporterService {
 		Geocoder geocoder;
 		
 		Indirizzo indirizzo_normalizzato= new Indirizzo();
-		indirizzo_normalizzato.setIndirizzoCompleto(indirizzo);
-		indirizzo_normalizzato.setCoordinateLat(Float.valueOf("2222.222"));
-		indirizzo_normalizzato.setCoordinateLong(Float.valueOf("2222.222"));
+	//	indirizzo_normalizzato.setIndirizzoCompleto(indirizzo);
+	//	indirizzo_normalizzato.setCoordinateLat(Float.valueOf("2222.222"));
+	//	indirizzo_normalizzato.setCoordinateLong(Float.valueOf("2222.222"));
 		
-		/*
+		
 			     GeoApiContext context = new GeoApiContext.Builder()
 	        	    .apiKey("AIzaSyC135Qkw2a-S2R7MvGHkcz3aECrXuAk_z4")
 	        	    .build();
 	        	GeocodingResult[] results;
 				try {
 					results = GeocodingApi.geocode(context,
-					    "via De Gasperi,  Trento").await();
+					   indirizzo).await();
 					Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		        //	System.out.println(gson.toJson(results[0].addressComponents));
 					indirizzo_normalizzato.setIndirizzoCompleto(gson.toJson(results[0].formattedAddress));
@@ -3019,14 +3098,14 @@ public class GeoreporterService {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}*/
+				}
 	        	
 	    return indirizzo_normalizzato;
 	    
 	 }
 public String getNomeComune(String codComune) {
 	
-	System.out.println("codicecomune="+ codComune);
+	//System.out.println("codicecomune="+ codComune);
 	
 	return Costanti.comuni_italiani.get(codComune);
 	
@@ -3133,7 +3212,7 @@ String result="";
 		
 		Esiste esiste= esiste("L322627536","UnitaImmobiliare");
 		
-		System.out.println(esiste.checkEsiste("http://dkm.fbk.eu/georeporter#consistenza"));
+	//	System.out.println(esiste.checkEsiste("http://dkm.fbk.eu/georeporter#consistenza"));
 		
 		
 		
@@ -3210,16 +3289,16 @@ String queryString="";
 		} catch (RepositoryException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.err.println(queryString);
+			//System.err.println(queryString);
 
 		} catch (MalformedQueryException e) {
 			// TODO Auto-generated catch block
-			System.err.println(queryString);
+			//System.err.println(queryString);
 
 			e.printStackTrace();
 		} catch (QueryEvaluationException e) {
 			// TODO Auto-generated catch block
-			System.err.println(queryString);
+			//System.err.println(queryString);
 
 			e.printStackTrace();
 		} finally {
@@ -3382,6 +3461,68 @@ String result="";
 	}
 	
 
+	@GET
+	@Path("icfrompar")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getICFromPar(
+
+			@QueryParam("par") String par
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ "SELECT ?ic  WHERE { "
+					+ "    ?ic a :IdentificativoCatastale ." 
+					+ "    ?ic :hasParticellaFondiaria  :"+ par
+					+ " }  ";
+
+			//System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				
+				Value icURI = bindingSet.getValue("ic");
+				result= icURI.stringValue();
+				}
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return result;
+	}
+	
 	
 	
 	@GET
@@ -3413,7 +3554,7 @@ String result="";
 					+ "    ?id :coordinateLong  :"+ longitudine + "."
 					+ " }  ";
 
-			System.out.println(queryString);
+			//System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -3424,8 +3565,6 @@ String result="";
 
 			while (qresult.hasNext()) {
 				BindingSet bindingSet = qresult.next();
-
-				
 				Value idURI = bindingSet.getValue("id");
 				result= idURI.stringValue();
 				}
@@ -3453,8 +3592,7 @@ String result="";
 	@Path("urisoggettodaid")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getUriSoggettoFromID(
-
-			@QueryParam("identificativoSoggetto") String idSoggetto
+		   @QueryParam("identificativoSoggetto") String idSoggetto
 		// @QueryParam("springlesserverURL") String springlesserverURL,
 		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
 		 ) {
@@ -3468,21 +3606,16 @@ String result="";
 			myRepository.initialize();
 
 			RepositoryConnection connection = myRepository.getConnection();
-
+			//idSoggetto=idSoggetto.replaceAll("\t", "");
+			idSoggetto = idSoggetto.replaceAll("(\\r|\\n|\\t)", "");
 			String queryString = queryStringPrefix
-
-				+"	SELECT DISTINCT ?id " 
-
-				+"	WHERE { "
-				+"	  {?id a :PersonaGiuridica .}"
-				+"	  UNION {?id a :PersonaFisica .}"
-				+"	   UNION {?id a :ProprietarioProTempore .}"
-				+"	  ?id :identificativoSoggetto " +idSoggetto
-						    
-				+"	}";
-			
-			
-			//System.out.println(queryString);
+					+ "Select Distinct ?id "
+					+ "where{"
+					+ "?id :identificativoSoggetto  "+idSoggetto +" }";
+				//+"	  {?id a :PersonaGiuridica .}"
+				//+"	  UNION {?id a :PersonaFisica .}"
+				//+"	   UNION {?id a :ProprietarioProTempore .}"
+		//	System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -3614,8 +3747,181 @@ String result="";
 	
 	
 	
+	@POST
+	@Path("/sparqlquery2")
+	//@Produces({ "application/javascript" })
 	
+	@Produces(MediaType.APPLICATION_JSON)
+
+	// public List<UtenzaAcqua> getUtenzeAcquaUI(
+	public JSONWithPadding sparqlQueryManager2(@QueryParam("callback") String callback,
+			 QueryJson queryJson
+	// @QueryParam("particella") String particella,
+	// @QueryParam("subalterno") String subalterno
+
+	) {
+
+
+
+		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		
+		QueryResult queryResult = new QueryResult();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix +queryJson.printString();
+			
+		
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+             List<String> campiSelect = queryJson.getCampiSelect();
+         	List<QueryResultRow> listQueryresultrow = new ArrayList <QueryResultRow>();
+         			/// Soggetto soggetto =new Soggetto();
+        
+             while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				
+				QueryResultRow queryResultRow = new QueryResultRow();
+				List<QueryResultItem> listQueryResultItems = new ArrayList<QueryResultItem>();
+				for (String campo : campiSelect) {
+					QueryResultItem resultItem= new QueryResultItem();
+					Value value = bindingSet.getValue(campo);
+					if (value!=null) {
+						resultItem.setItemName(campo);
+					    resultItem.setItemValue(value.stringValue());
+					    listQueryResultItems.add(resultItem);  
+					}
+					
+					queryResultRow.setListQueryResultItem(listQueryResultItems);
+				}
+				
+				listQueryresultrow.add(queryResultRow);
+			
+			}
+             
+             queryResult.setListQueryResultRow(listQueryresultrow);
+			// qresult.close();
+			// connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		// return listaUtenzaAcqua;
+		return new JSONWithPadding(new GenericEntity<QueryResult>(queryResult) {
+		}, callback);
+	}	
 	
+	@POST
+	@Path("/sparqlquery")
+	@Produces({ "application/javascript" })
+	
+	//@Produces(MediaType.APPLICATION_JSON)
+
+	// public List<UtenzaAcqua> getUtenzeAcquaUI(
+	public JSONWithPadding sparqlQueryManager(@QueryParam("callback") String callback,
+			 String jsonquery
+	// @QueryParam("particella") String particella,
+	// @QueryParam("subalterno") String subalterno
+
+	) {
+System.out.println("data= "+jsonquery);
+		Gson gson = new Gson();
+
+		QueryJson queryJson = gson.fromJson(jsonquery, QueryJson.class);
+
+		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		
+		QueryResult queryResult = new QueryResult();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix +queryJson.printString();
+			
+		
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+             List<String> campiSelect = queryJson.getCampiSelect();
+         	List<QueryResultRow> listQueryresultrow = new ArrayList <QueryResultRow>();
+         			/// Soggetto soggetto =new Soggetto();
+        
+             while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				
+				QueryResultRow queryResultRow = new QueryResultRow();
+				List<QueryResultItem> listQueryResultItems = new ArrayList<QueryResultItem>();
+				for (String campo : campiSelect) {
+					QueryResultItem resultItem= new QueryResultItem();
+					Value value = bindingSet.getValue(campo);
+					if (value!=null) {
+						resultItem.setItemName(campo);
+					    resultItem.setItemValue(value.stringValue());
+					    listQueryResultItems.add(resultItem);  
+					}
+					
+					queryResultRow.setListQueryResultItem(listQueryResultItems);
+				}
+				
+				listQueryresultrow.add(queryResultRow);
+			
+			}
+             
+             queryResult.setListQueryResultRow(listQueryresultrow);
+			// qresult.close();
+			// connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		// return listaUtenzaAcqua;
+		return new JSONWithPadding(new GenericEntity<QueryResult>(queryResult) {
+		}, callback);
+	}	
 	
 	
 	public static HashMap<String, String> jsonToMap(JSONObject jObject) throws JSONException {
