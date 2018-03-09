@@ -1548,7 +1548,7 @@ public class GeoreporterService {
 			URI uriid = new URIImpl(rigatabella.getUririga());
 			URI tabella = new URIImpl(rigatabella.getNometabella());
 		    
-			//Esiste esiste= esiste(rigatabella.getUririga(),rigatabella.getNometabella());
+			Esiste esiste= esiste(rigatabella.getUririga(),rigatabella.getNometabella());
 			
 			
 			
@@ -1561,33 +1561,33 @@ public class GeoreporterService {
 
 			if (tableAttributiChiave_List!=null) {
 			for (Attributo attributoChiave : tableAttributiChiave_List) {
-				//if (!esiste.checkEsiste(attributoChiave.getMapping())){
+				if (attributoChiave.isMultiplo()||!esiste.checkEsiste(attributoChiave.getMapping())){
 				//Literal lit = factory.createLiteral(attributoChiave.getValore());
 				//Statemtent stmt = new StatementImpl(subject, predicate, object);
 				Value literal = new LiteralImpl(attributoChiave.getValore(),new URIImpl( attributoChiave.getTipo()));
 				con.add(uriid, new URIImpl(attributoChiave.getMapping()), literal);
 			//	System.out.println(uriid + " " + factory.createURI(attributoChiave.getMapping()) + " " + literal + " " );
-			//	}
+				}
 			}
 			}
 			if (tableAttributi_List!=null) {
 			for (Attributo attributo : tableAttributi_List) {
-				///if (!esiste.checkEsiste(attributo.getMapping())){
+				if (attributo.isMultiplo()||!esiste.checkEsiste(attributo.getMapping())){
 				Value literal = new LiteralImpl(attributo.getValore(),new URIImpl( attributo.getTipo()));
 				con.add(uriid, new URIImpl(attributo.getMapping()), literal);
 			//	System.out.println(uriid + " " + factory.createURI(attributo.getMapping()) + " " + literal + " " );
-			//	}
+				}
 			}
 			}
 			if (tableRelazioni_List!=null) {
 			for (Relazione relazione : tableRelazioni_List) {
-				//if (!esiste.checkEsiste(relazione.getNomerelazione())){
+				if (!esiste.checkEsiste(relazione.getNomerelazione())){
 				//Literal lit = getLiteral(attributo, factory);
 				//System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
 				con.add( factory.createURI(relazione.getUriDomain()), factory.createURI(relazione.getNomerelazione()), factory.createURI(relazione.getUriRange()));
 				
-				//System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
-			//	}
+				System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
+				}
 			}
 			}
 
@@ -3801,19 +3801,19 @@ String result="";
 					QueryResultItem resultItem= new QueryResultItem();
 					Value value = bindingSet.getValue(campo);
 					if (value!=null) {
-						resultItem.setItemName(campo);
-					    resultItem.setItemValue(value.stringValue());
+						resultItem.setColonna(campo);
+					    resultItem.setValore(value.stringValue());
 					    listQueryResultItems.add(resultItem);  
 					}
 					
-					queryResultRow.setListQueryResultItem(listQueryResultItems);
+					queryResultRow.setListacelle(listQueryResultItems);
 				}
 				
 				listQueryresultrow.add(queryResultRow);
 			
 			}
              
-             queryResult.setListQueryResultRow(listQueryresultrow);
+             queryResult.setRighe(listQueryresultrow);
 			// qresult.close();
 			// connection.close();
 		} catch (RepositoryException e) {
@@ -3890,19 +3890,22 @@ System.out.println("data= "+jsonquery);
 					QueryResultItem resultItem= new QueryResultItem();
 					Value value = bindingSet.getValue(campo);
 					if (value!=null) {
-						resultItem.setItemName(campo);
-					    resultItem.setItemValue(value.stringValue());
+						resultItem.setColonna(campo);
+					    resultItem.setValore(value.stringValue());
 					    listQueryResultItems.add(resultItem);  
 					}
 					
-					queryResultRow.setListQueryResultItem(listQueryResultItems);
+					queryResultRow.setListacelle(listQueryResultItems);
 				}
 				
 				listQueryresultrow.add(queryResultRow);
 			
 			}
              
-             queryResult.setListQueryResultRow(listQueryresultrow);
+             queryResult.setRighe(listQueryresultrow);
+             
+             
+             queryResult.setColonne(campiSelect.toArray(new String[campiSelect.size()]));
 			// qresult.close();
 			// connection.close();
 		} catch (RepositoryException e) {
