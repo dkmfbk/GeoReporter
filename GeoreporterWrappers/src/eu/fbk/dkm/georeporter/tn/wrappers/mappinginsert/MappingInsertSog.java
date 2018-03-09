@@ -146,7 +146,14 @@ public class MappingInsertSog {
 				tmp2.setNome(data2.getAttributi().get(i).getNome());
 				tmp2.setMapping(data2.getAttributi().get(i).getMapping());
 				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
-
+    
+				System.out.println(tmp2.getNome());
+				if(tmp2.getNome().equals("http://dkm.fbk.eu/georeporter#identificativosoggetto")) {
+					System.out.println(tmp2.getNome());
+	              tmp2.setMultiplo(true);
+	
+	
+                }
 				if ((listPers.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
 						&& (listPers.get(j).getListaValoriChiave().get(0).get(parts[1]).isEmpty() == false)) {
 					tmp2.setValore(listPers.get(j).getListaValoriChiave().get(0).get(parts[1]));
