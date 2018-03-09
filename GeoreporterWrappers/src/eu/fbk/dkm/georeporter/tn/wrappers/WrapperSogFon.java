@@ -62,8 +62,10 @@ public class WrapperSogFon {
 			File file = new File(pathP);
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String rigaCorrente = reader.readLine();
-
+			
 			while (rigaCorrente != null) {
+				rigaCorrente=rigaCorrente.toUpperCase();
+				System.out.println(rigaCorrente);
 				Map<String, String> campi = new HashMap<String, String>();
 				Map<String, String> valoriChiave = new HashMap<String, String>();
 				List<Map<String, String>> listaValoriChiave = new ArrayList<Map<String, String>>();
@@ -130,6 +132,7 @@ public class WrapperSogFon {
 				settareElementoSog(indice, campi, listaValoriChiave);
 
 				rigaCorrente = reader.readLine();
+			
 			}
 
 			reader.close();
