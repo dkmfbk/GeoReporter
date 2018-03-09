@@ -9,11 +9,19 @@ package eu.fbk.dkm.georeporter.interfaces;
 	//@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
 	public class Attributo {
 
+		public String getIdDomain() {
+			return idDomain;
+		}
+		public void setIdDomain(String idDomain) {
+			this.idDomain = idDomain;
+		}
 		String idDomain;
 		String nome;
 		String tipo;
 		String valore;
 		String mapping;
+		boolean multiplo=false;
+		
 		public String getNome() {
 			return nome;
 		}
@@ -37,6 +45,12 @@ package eu.fbk.dkm.georeporter.interfaces;
 		}
 		public void setMapping(String mapping) {
 			this.mapping = mapping;
+		}
+		public boolean isMultiplo() {
+			return multiplo;
+		}
+		public void setMultiplo(boolean multiplo) {
+			this.multiplo = multiplo;
 		}
 
 		
