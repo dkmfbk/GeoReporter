@@ -144,6 +144,7 @@ public class MappingInsertFabUiNote {
 						int v = 1;
 						while ( (v <= 2) && !listUnitaImmobiliari.get(j).getValori().get("interno" + v).isEmpty()) {
 							Attributo tmp2 = new Attributo();
+							tmp.setMultiplo(true);
 							tmp2.setNome(data.getAttributi().get(i).getNome());
 							tmp2.setMapping(data.getAttributi().get(i).getMapping());
 							tmp2.setTipo(data.getAttributi().get(i).getTipo());
@@ -155,6 +156,7 @@ public class MappingInsertFabUiNote {
 						int v = 1;
 						while ( (v <= 12) && !listUnitaImmobiliari.get(j).getValori().get("piano" + v).isEmpty()) {
 							Attributo tmp2 = new Attributo();
+							tmp.setMultiplo(true);
 							tmp2.setNome(data.getAttributi().get(i).getNome());
 							tmp2.setMapping(data.getAttributi().get(i).getMapping());
 							tmp2.setTipo(data.getAttributi().get(i).getTipo());
