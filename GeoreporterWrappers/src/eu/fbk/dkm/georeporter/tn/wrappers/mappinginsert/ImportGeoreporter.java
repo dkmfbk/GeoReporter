@@ -20,24 +20,24 @@ public class ImportGeoreporter {
 		Date date = new Date();
 		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
 
-		System.out.println("1-Inserimento UnitaImmobiliari e Note. "+date);
+		System.out.println("1-Inserimento UnitaImmobiliari e Note. 7min"+date);
 //        MappingInsertFabUiNote.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingUI_Nota.json");
 		// file di import, file header, file di mappings
         date = new Date();
-        System.out.println("2-Inserimento Identificativi Catastali.."+date);
+        System.out.println("2-Inserimento Identificativi Catastali..6min"+date);
 //		MappingInsertFabIde.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingCatastoFabbricati.json");
 		
 		date = new Date();
-		System.out.println("3-Inserimento UI..Indirizzi "+date);
-//    	MappingInsertFabIndirizzo.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingIndirizzoFab.json");
+		System.out.println("3-Inserimento UI..Indirizzi 3min"+date);
+     	//MappingInsertFabIndirizzo.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingIndirizzoFab.json");
 		
 		date = new Date();
 		System.out.println("4-Inserimento Fabbricati..Soggetti "+dateFormat.format(date));
-//		MappingInsertSog.run();
+	//	MappingInsertSog.run();
 		
 		date = new Date();
 		System.out.println("5-Inserimento Fabbricati..Titolarita "+date);
-//		MappingInsertTit.run();
+	MappingInsertTit.run();
 			
 		//anagrafica
 		date = new Date();
@@ -83,16 +83,16 @@ public class ImportGeoreporter {
 //		MappingInsertTUUtenzaR.run();
 		
 		date = new Date();
-		System.out.println("16-Inserimento Particelle fondiarie "+date);
+		System.out.println("16-Inserimento Particelle fondiarie 20min"+date);
 //		MappingInsertParFon.run();
 		
 		date = new Date();
 		System.out.println("17-Inserimento Soggetti Particelle fondiarie "+date);
-//       MappingInsertSogFon.run();
+ //      MappingInsertSogFon.run();
         
         date = new Date();
 	    System.out.println("18-Inserimento Titolarita Particelle fondiarie 2 ore!!"+date);
-		MappingInsertTtcFon.run();
+//		MappingInsertTtcFon.run();
 		
 		date = new Date();
 		System.out.println("FINE"+date);
