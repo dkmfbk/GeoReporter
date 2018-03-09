@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -68,6 +69,23 @@ public class WrapperTUIciImuNP {
 					if (row.getCell(g) != null) {
 						if (header[k].contains("data")) {
 							campi.put(header[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
+						} else if (header[k].equals("contribuente")) {
+							String contribuente=row.getCell(g).getStringCellValue();
+							int count = StringUtils.countMatches(contribuente, " ");
+							if (count ==1){
+							System.out.println("contribuente="+ contribuente);
+							 int start = contribuente.indexOf(' ');
+						   if (start>0) {   
+						String cognome=contribuente.substring(0, start);
+						String nome=contribuente.substring(start+1, contribuente.length());
+
+									//campi.put(header[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
+						System.out.println("nome="+nome);
+						System.out.println("cognome="+cognome);
+						campi.put("cognome_split", cognome);
+								campi.put("nome_split", nome);
+							
+						   }}
 						} else {
 							campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
 						}
