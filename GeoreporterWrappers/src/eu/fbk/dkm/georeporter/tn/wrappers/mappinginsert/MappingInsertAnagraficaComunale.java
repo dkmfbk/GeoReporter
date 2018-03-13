@@ -123,8 +123,14 @@ public class MappingInsertAnagraficaComunale {
 				tmpI.setNome(dataI.getAttributi().get(i).getNome());
 				tmpI.setMapping(dataI.getAttributi().get(i).getMapping());
 				tmpI.setTipo(dataI.getAttributi().get(i).getTipo());
-
-				if ((listAnagraficaComunale.get(j).getValori().get(partsI[1]) != null)
+                if ("viafraz".equals(partsI[1])) {
+	
+	               String via=listAnagraficaComunale.get(j).getValori().get("descvia");
+	               String frazione=listAnagraficaComunale.get(j).getValori().get("descfraz");
+	
+	               tmpI.setValore(via+" "+frazione);
+	               listAttributiI.add(tmpI);
+                  }else if ((listAnagraficaComunale.get(j).getValori().get(partsI[1]) != null)
 						&& (listAnagraficaComunale.get(j).getValori().get(partsI[1]).isEmpty() == false)) {
 					tmpI.setValore(listAnagraficaComunale.get(j).getValori().get(partsI[1]));
 					listAttributiI.add(tmpI);
@@ -213,7 +219,19 @@ public class MappingInsertAnagraficaComunale {
 		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
+if (true) {
+	System.out.println(riga.getNometabella());
+	
+	for (Attributo attr : riga.getListaattributi()) {
+		System.out.println(attr.getNome());	
+		System.out.println(attr.getValore());
+	}
+	
 
+	
+	System.out.println(riga.getNometabella());
+	return;
+}
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
 		// System.out.println(json);
@@ -299,3 +317,4 @@ public static void run() {
 	}
 
 }
+
