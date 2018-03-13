@@ -1586,7 +1586,7 @@ public class GeoreporterService {
 				//System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
 				con.add( factory.createURI(relazione.getUriDomain()), factory.createURI(relazione.getNomerelazione()), factory.createURI(relazione.getUriRange()));
 				
-				System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
+				//System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
 				}
 			}
 			}
@@ -2913,7 +2913,7 @@ Gson gson = new Gson();
 	
 			
 			
-		///	System.out.println(queryString);
+			System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -2973,10 +2973,11 @@ Gson gson = new Gson();
             	
         
                 	  stringa_indirizzo = safeToString(attributi_indirizzo.get("indirizzoCompleto"));
+                	  stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("civico"));
                 if 	 (stringa_indirizzo.equals("")) { 
-                	  System.out.println("Indirizzo completo ="+ stringa_indirizzo);
+                	 // System.out.println("Indirizzo completo ="+ stringa_indirizzo);
                   
-            	stringa_indirizzo=safeToString(attributi_indirizzo.get("viaFrazione"));
+            	stringa_indirizzo=safeToStringFrazione(attributi_indirizzo.get("viaFrazione"));
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("civico"));
 				stringa_indirizzo = stringa_indirizzo + safeToString(attributi_indirizzo.get("lettera"));
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("localita"));
@@ -2984,7 +2985,7 @@ Gson gson = new Gson();
                   }
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(getNomeComune(attributi_indirizzo.get("codiceComuneCatastale")));
                   
-               //   System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
+                  System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
 			
 				
 				try {
@@ -3003,7 +3004,8 @@ Gson gson = new Gson();
 				
 		    	 Indirizzo indirizzoGeoDecoded= geoDecode(stringa_indirizzo);
 						
-				  limiteiterazioni--;			
+				  limiteiterazioni--;
+				 if(!indirizzoGeoDecoded.getIndirizzoCompleto().equals("NULLO")) {
 				  RigaTabella rt= new RigaTabella();
 				  rt.setNometabella("http://dkm.fbk.eu/georeporter#Indirizzo");
 				  rt.setUririga("http://dkm.fbk.eu/georeporter#"+key);
@@ -3029,6 +3031,7 @@ Gson gson = new Gson();
 				  listaattributi.add(indirizzoNormalizzato);
 				  rt.setListaattributi(listaattributi);
 				  insertTable(rt);
+				 }
 				  }else {
 				         break;
 					  }
@@ -3059,9 +3062,27 @@ Gson gson = new Gson();
 		
 		return returno;
 	
+		
 	}
+	
+	
 	static String safeToString(Object obj) {
-		  return obj == null ? "" : obj.toString();
+		 
+		return   obj == null ? "" : obj.toString();
+		
+		
+}
+	
+	
+	static String safeToStringFrazione(Object obj) {
+		 
+				String result=  obj == null ? "" : obj.toString();
+				System.out.println("Frazione via="+result);
+				if (result.contains("FR.")) {
+					result=result.replace("FRAZ.", "FRAZIONE");
+					result=result.replace("FR.", "FRAZIONE");
+				}
+				return result;
 		}
 	private Indirizzo geoDecode(String indirizzo){	
 		Geocoder geocoder;
@@ -3081,6 +3102,7 @@ Gson gson = new Gson();
 					   indirizzo).await();
 					Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		        //	System.out.println(gson.toJson(results[0].addressComponents));
+					if (results.length >0) {
 					indirizzo_normalizzato.setIndirizzoCompleto(gson.toJson(results[0].formattedAddress));
 					indirizzo_normalizzato.setCoordinateLat(Float.valueOf(gson.toJson(results[0].geometry.location.lat)));
 					indirizzo_normalizzato.setCoordinateLong(Float.valueOf(gson.toJson(results[0].geometry.location.lng)));
@@ -3088,7 +3110,10 @@ Gson gson = new Gson();
 					System.out.println(gson.toJson(results[0].formattedAddress));
 		        	System.out.println(gson.toJson(results[0].geometry.location.lat));
 		        	System.out.println(gson.toJson(results[0].geometry.location.lng));
-		        	
+					}else {
+						indirizzo_normalizzato.setIndirizzoCompleto("NULLO");
+						System.out.println("INDIRIZZO NON TROVATO="+indirizzo);
+					}
 				} catch (ApiException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
