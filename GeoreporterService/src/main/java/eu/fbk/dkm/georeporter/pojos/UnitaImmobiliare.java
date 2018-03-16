@@ -16,6 +16,8 @@ public class UnitaImmobiliare {
 	String categoria;
 	String titolare;
 	String superficie;
+	String renditaEuro;
+	String valoreIMIS;
 	
 	Soggetto stitolare;
 	public String getUri() {
@@ -71,6 +73,18 @@ public class UnitaImmobiliare {
 	}
 	public void setUi(String ui) {
 		this.ui = ui;
+	}
+	public String getRenditaEuro() {
+		return renditaEuro;
+	}
+	public void setRenditaEuro(String renditaEuro) {
+		this.renditaEuro = renditaEuro;
+	}
+	public String getValoreIMIS() {
+		return valoreIMIS;
+	}
+	public void setValoreIMIS(String valoreIMIS) {
+		this.valoreIMIS = valoreIMIS;
 	}
 	
 }
