@@ -31,6 +31,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperAnagraficaComunale;
+import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFamiglia;
 
 public class MappingInsertAnagraficaComunale {
 
@@ -189,7 +190,12 @@ public class MappingInsertAnagraficaComunale {
 				relINQUIAC.setUriRange("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
 				listRelAC.add(relINQUIAC);
 			}
-
+			Attributo codComune = new Attributo();
+			codComune.setNome("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
+			codComune.setMapping("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
+			codComune.setTipo("http://www.w3.org/2001/XMLSchema#string");
+			codComune.setValore(WrapperAnagraficaComunale.codiceComunecatastale);
+			listAttributiI.add(codComune);
 			// riga di tipo RIGATABELLA per IND
 			RigaTabella rigaTIND = new RigaTabella();
 			rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + dataI.getIdTabella().getMapping());
@@ -290,6 +296,7 @@ public static void run() {
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 	WrapperAnagraficaComunale.estrazioneHeaderFile(path);
 	WrapperAnagraficaComunale.LetturaFile(path);
+	WrapperAnagraficaComunale.codiceComunecatastale="L322";
 	// mapping e insert
 	LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
 			new File("file/file_mapping/mappingPersonaFisica2.json"),
@@ -309,6 +316,7 @@ public static void run() {
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		WrapperAnagraficaComunale.estrazioneHeaderFile(path);
 		WrapperAnagraficaComunale.LetturaFile(path);
+		WrapperAnagraficaComunale.codiceComunecatastale="L322";
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
 				new File("file/file_mapping/mappingPersonaFisica2.json"),
