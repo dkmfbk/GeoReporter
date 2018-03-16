@@ -18,7 +18,7 @@ public class Soggetto {
 	String denominazioneita;
 	String nome;
 	String cognome;
-	Date dataNascita;
+	String dataNascita;
 	String codiceComuneDiNascita;
 	String Sesso;
 	Famiglia famiglia;
@@ -49,10 +49,10 @@ public class Soggetto {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	public Date getDataNascita() {
+	public String getDataNascita() {
 		return dataNascita;
 	}
-	public void setDataNascita(Date dataNascita) {
+	public void setDataNascita(String dataNascita) {
 		this.dataNascita = dataNascita;
 	}
 	public String getCodiceComuneDiNascita() {
