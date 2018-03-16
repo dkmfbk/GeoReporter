@@ -8,26 +8,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 //@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
 public class QueryResultItem {
 
-String itemName;
-String itemValue;
-String ItemType;
-public String getItemName() {
-	return itemName;
+String colonna;
+String valore;
+String tipo;
+public String getColonna() {
+	return colonna;
 }
-public void setItemName(String itemName) {
-	this.itemName = itemName;
+public void setColonna(String colonna) {
+	this.colonna = colonna;
 }
-public String getItemValue() {
-	return itemValue;
+public String getValore() {
+	return valore;
 }
-public void setItemValue(String itemValue) {
-	this.itemValue = itemValue;
+public void setValore(String valore) {
+	this.valore = valore;
 }
-public String getItemType() {
-	return ItemType;
+public String getTipo() {
+	return tipo;
 }
-public void setItemType(String itemType) {
-	ItemType = itemType;
+public void setTipo(String tipo) {
+	this.tipo = tipo;
 }
 
 

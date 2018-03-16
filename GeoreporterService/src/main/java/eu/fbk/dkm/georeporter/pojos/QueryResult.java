@@ -9,14 +9,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 //@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
 public class QueryResult {
 
-	List<QueryResultRow>  listQueryResultRow;
+	String[] colonne;
+	
+	List<QueryResultRow>  righe;
 
-	public List<QueryResultRow> getListQueryResultRow() {
-		return listQueryResultRow;
+	
+
+	public String[] getColonne() {
+		return colonne;
 	}
 
-	public void setListQueryResultRow(List<QueryResultRow> listQueryResultRow) {
-		this.listQueryResultRow = listQueryResultRow;
+	public void setColonne(String[] colonne) {
+		this.colonne = colonne;
+	}
+
+	public List<QueryResultRow> getRighe() {
+		return righe;
+	}
+
+	public void setRighe(List<QueryResultRow> righe) {
+		this.righe = righe;
 	}
 
 	

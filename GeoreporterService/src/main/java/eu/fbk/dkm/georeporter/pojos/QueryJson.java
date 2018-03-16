@@ -64,7 +64,7 @@ public class QueryJson {
 	
 	
 	public String printString() {
-		String result="Select ";
+		String result="Select DISTINCT ";
 		String select=printSelect();
 		String where=" where{ ";
 		

@@ -91,7 +91,7 @@ public String printWhereConditons() {
 	String joinCondition=printJoin();
 	String rulestring="";
 	for (Rule rule : rules) {
-		rulestring= rulestring+" OPTIONAL{ ?"+getObject()+ " :" +rule.getId()+ " ?"+getObject() + "_"+rule.getId()+" . FILTER (?"+getObject() + "_"+rule.getId()+" "+rule.getOperator()+" "+rule.getValue()+" ) }.";
+		rulestring= rulestring+"  ?"+getObject()+ " :" +rule.getId()+ " ?"+getObject() + "_"+rule.getId()+" . FILTER (?"+getObject() + "_"+rule.getId()+" "+rule.getOperator()+" "+rule.getValue()+" ) . ";
 		
 	}
 	return whereConditions +selectCondition+rulestring + joinCondition;

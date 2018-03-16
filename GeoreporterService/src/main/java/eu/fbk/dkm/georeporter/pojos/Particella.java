@@ -11,7 +11,7 @@ public class Particella {
 	String comuneCatastale;
 	String foglio;
 	String numero;
-	String denomintore;
+	String denominatore;
 	String subalterno;
 	String porzionemateriale;
 	String ui;
@@ -39,12 +39,7 @@ public class Particella {
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
-	public String getDenomintore() {
-		return denomintore;
-	}
-	public void setDenomintore(String denomintore) {
-		this.denomintore = denomintore;
-	}
+
 	public String getSubalterno() {
 		return subalterno;
 	}
@@ -62,6 +57,12 @@ public class Particella {
 	}
 	public void setUi(String ui) {
 		this.ui = ui;
+	}
+	public String getDenominatore() {
+		return denominatore;
+	}
+	public void setDenominatore(String denominatore) {
+		this.denominatore = denominatore;
 	}
 	
 	
