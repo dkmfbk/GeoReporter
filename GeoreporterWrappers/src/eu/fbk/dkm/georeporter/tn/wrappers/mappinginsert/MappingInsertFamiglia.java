@@ -98,7 +98,33 @@ public class MappingInsertFamiglia {
 				tmpI.setNome(dataI.getAttributi().get(i).getNome());
 				tmpI.setMapping(dataI.getAttributi().get(i).getMapping());
 				tmpI.setTipo(dataI.getAttributi().get(i).getTipo());
+				 
+				 if ("civico".equals(partsI[1])) {
+						
+		               String civico=listFamiglia.get(j).getValori().get("civico");
+		               String barrato=listFamiglia.get(j).getValori().get("barrato");
+		               if (!barrato.equals("")) {
+		               tmpI.setValore(civico+"/"+barrato);
+		               }else {
+		            	   tmpI.setValore(civico);
+		               }
+		               listAttributiI.add(tmpI);
+	                  }else 
+				
+				if ("descrfrazione".equals(partsI[1])) {
+						
+		               String via=listFamiglia.get(j).getValori().get("descrvia");
+		               String frazione=listFamiglia.get(j).getValori().get("descrfrazione");
 
+
+ if (via.equals("")) {
+	 tmpI.setValore(frazione);
+}else {
+	tmpI.setValore(via+" "+frazione);
+}
+		               
+		               listAttributiI.add(tmpI);
+	                  }else 
 				if ((listFamiglia.get(j).getValori().get(partsI[1]) != null)
 						&& (listFamiglia.get(j).getValori().get(partsI[1]).isEmpty() == false)) {
 					tmpI.setValore(listFamiglia.get(j).getValori().get(partsI[1]));
@@ -213,7 +239,7 @@ public class MappingInsertFamiglia {
 			
 			// mapping e insert
 			LoadFile(new File("file/file_mapping/mappingFamiglia.json"),
-					new File("file/file_mapping/mappingIndirizzo.json"));
+					new File("file/file_mapping/mappingIndirizzoFamiglia.json"));
 		
 		
 	}
@@ -234,7 +260,7 @@ public class MappingInsertFamiglia {
 		WrapperFamiglia.codiceComunecatastale="L322";
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingFamiglia.json"),
-				new File("file/file_mapping/mappingIndirizzo.json"));
+				new File("file/file_mapping/mappingIndirizzoFamiglia.json"));
 
 	}
 
