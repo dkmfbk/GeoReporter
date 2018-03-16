@@ -311,7 +311,7 @@ public class GeoreporterService {
 					particella.setNumero(numero.stringValue());
 				}
 				if (denominatore != null) {
-					particella.setDenomintore(denominatore.stringValue());
+					particella.setDenominatore(denominatore.stringValue());
 				}
 				if (comunecatastale != null) {
 					particella.setComuneCatastale(comunecatastale.stringValue());
@@ -420,7 +420,7 @@ public class GeoreporterService {
 					particella.setNumero(numero.stringValue());
 				}
 				if (denominatore != null) {
-					particella.setDenomintore(denominatore.stringValue());
+					particella.setDenominatore(denominatore.stringValue());
 				}
 				if (comunecatastale != null) {
 					particella.setComuneCatastale(comunecatastale.stringValue());
@@ -487,11 +487,16 @@ public class GeoreporterService {
 			String queryString = queryStringPrefix
 
 					+ " select   ?ui ?classe ?piano ?interno ?scala ?categoria ?titolare ?superficie" + " where { "
-					+ "    ?x a :IdentificativoCatastale. " + "    ?x :hasParticella :" + particella + " . "
-					+ "    ?x :hasUnitaImmobiliare ?ui ." + "     OPTIONAL{ ?ui :classe ?classe }."
-					+ "     OPTIONAL{ ?ui :piano1 ?piano}. " + "    OPTIONAL{  ?ui :superficie ?superficie}. "
-					+ "   OPTIONAL{  ?ui :interno ?interno}. " + "   OPTIONAL{    ?ui :scala ?scala}. "
-					+ "    OPTIONAL{   ?ui :categoria ?categoria}. " + "     OPTIONAL{  ?ui :titolare ?titolare}. "
+					+ "    ?x a :IdentificativoCatastale. " 
+					+ "    ?x :hasParticella :" + particella + " . "
+					+ "    ?x :hasUnitaImmobiliare ?ui ." 
+					+ "     OPTIONAL{ ?ui :classe ?classe }."
+					+ "     OPTIONAL{ ?ui :piano1 ?piano}. " 
+					+ "    OPTIONAL{  ?ui :superficie ?superficie}. "
+					+ "   OPTIONAL{  ?ui :interno ?interno}. " 
+					+ "   OPTIONAL{    ?ui :scala ?scala}. "
+					+ "    OPTIONAL{   ?ui :categoria ?categoria}. " 
+					+ "     OPTIONAL{  ?ui :titolare ?titolare}. "
 
 					+ "	} ";
 
@@ -596,12 +601,19 @@ public class GeoreporterService {
 
 			String queryString = queryStringPrefix
 
-					+ " select   ?ui ?classe ?piano ?interno ?scala ?categoria ?superficie" + " where { "
-					+ "    ?x a :IdentificativoCatastale. " + "    ?x :hasParticella :" + particella + " . "
-					+ "    ?x :hasUnitaImmobiliare ?ui ." + "     OPTIONAL{ ?ui :classe ?classe }."
-					+ "     OPTIONAL{ ?ui :piano ?piano}. " + "    OPTIONAL{  ?ui :superficie ?superficie}. "
-					+ "   OPTIONAL{  ?ui :interno ?interno}. " + "   OPTIONAL{    ?ui :scala ?scala}. "
-					+ "    OPTIONAL{   ?ui :categoria ?categoria}. " + "     "
+					+ " select   ?ui ?classe ?piano ?interno ?scala ?categoria ?superficie ?renditaeuro ?valoreimis" 
+					+ " where { "
+					+ "    ?x a :IdentificativoCatastale. " 
+					+ "    ?x :hasParticella :" + particella + " . "
+					+ "    ?x :hasUnitaImmobiliare ?ui ." 
+					+ "    OPTIONAL{ ?ui :classe ?classe }."
+					+ "    OPTIONAL{ ?ui :piano ?piano}. " 
+					+ "    OPTIONAL{  ?ui :superficie ?superficie}. "
+					+ "    OPTIONAL{  ?ui :interno ?interno}. " 
+					+ "    OPTIONAL{   ?ui :scala ?scala}. "
+					+ "    OPTIONAL{   ?ui :categoria ?categoria}. "
+					+ "    OPTIONAL{   ?ui :renditaEuro ?renditaeuro}. " 
+					+ "    OPTIONAL{   ?ui :valoreIMIS ?valoreimis}. " + "     "
 				+ "	} ";
 
 			//System.out.println(queryString);
@@ -623,7 +635,9 @@ public class GeoreporterService {
 				Value categoria = bindingSet.getValue("categoria");
 			//	Value titolare = bindingSet.getValue("titolare");
 				Value superficie = bindingSet.getValue("superficie");
-
+				Value renditaeuro = bindingSet.getValue("renditaeuro");
+				Value valoreimis = bindingSet.getValue("valoreimis");
+				
 				UnitaImmobiliare ui = new UnitaImmobiliare();
 
 				if (uiuri != null) {
@@ -650,6 +664,20 @@ public class GeoreporterService {
 					ui.setSuperficie((superficie.stringValue()));
 				}
 
+				if (renditaeuro != null) {
+					ui.setRenditaEuro((renditaeuro.stringValue()));
+				}
+				
+
+				if (valoreimis != null) {
+					ui.setValoreIMIS((valoreimis.stringValue()));
+				}
+				
+				
+				
+				
+				
+				
 				listaUnitaImmobiliari.add(ui);
 			}
 			// qresult.close();
@@ -801,15 +829,19 @@ public class GeoreporterService {
 
 			String queryString = queryStringPrefix
 
-					+ " select  distinct  ?soggetto  ?codicefiscale ?nome ?cognome ?denominazione "
+					+ " select  distinct  ?soggetto  ?codicefiscale ?nome ?cognome ?denominazione ?datanascita ?sesso ?luogonascita"
 					+ " where { " 
 					+ "  ?x a :Titolarita ."
 					+ "  ?x :hasSoggetto ?soggetto . "
 					+ "  ?x :hasIdentificativoCatastale ?ic . "
 					+" ?ic :hasUnitaImmobiliare :"+ui+" ."
-					+ " OPTIONAL{ ?soggetto :codicefiscale ?codicefiscale } . "
+					+ " OPTIONAL{ ?soggetto :codiceFiscale ?codicefiscale } . "
 					+ " OPTIONAL{ ?soggetto :denominazione ?denominazione } . "
-					+ " OPTIONAL{ ?soggetto :nome ?nome }. " + " OPTIONAL{ ?soggetto :cognome ?cognome}  "
+					+ " OPTIONAL{ ?soggetto :nome ?nome }. " 
+					+ " OPTIONAL{ ?soggetto :cognome ?cognome}  "
+					+ " OPTIONAL{ ?soggetto :dataNascita ?datanascita}  "
+					+ " OPTIONAL{ ?soggetto :sesso ?sesso}  "
+					+ " OPTIONAL{ ?soggetto :luogoNascita ?luogonascita}  "
 
 					+ " }  ";
 
@@ -832,6 +864,10 @@ public class GeoreporterService {
 
 				Value tiposoggetto = bindingSet.getValue("tiposoggetto");
 				Value denominazioneita = bindingSet.getValue("denominazione");
+				Value datanascita = bindingSet.getValue("datanascita");
+				Value sesso = bindingSet.getValue("sesso");
+				Value luogonascita = bindingSet.getValue("luogonascita");
+	
 
 				Soggetto soggetto = new Soggetto();
 
@@ -856,8 +892,15 @@ public class GeoreporterService {
 				if (cognome != null) {
 					soggetto.setCognome(cognome.stringValue());
 				}
-
-				listaSoggetto.add(soggetto);
+				if (datanascita != null) {
+					System.out.println(datanascita.stringValue());
+					soggetto.setDataNascita(datanascita.stringValue());
+				}
+				if (sesso != null) {
+					soggetto.setSesso(sesso.stringValue());
+				}
+				
+			listaSoggetto.add(soggetto);
 			}
 			qresult.close();
 			connection.close();
