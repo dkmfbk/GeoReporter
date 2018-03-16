@@ -29,58 +29,58 @@ public class ImportGeoreporter {
 		
 		date = new Date();
 		System.out.println("3-Inserimento UI..Indirizzi 3min"+date);
-     	//MappingInsertFabIndirizzo.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingIndirizzoFab.json");
+//     	MappingInsertFabIndirizzo.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingIndirizzoFab.json");
 		
 		date = new Date();
 		System.out.println("4-Inserimento Fabbricati..Soggetti "+dateFormat.format(date));
-	//	MappingInsertSog.run();
+//		MappingInsertSog.run();
 		
 		date = new Date();
 		System.out.println("5-Inserimento Fabbricati..Titolarita "+date);
-	MappingInsertTit.run();
+//	    MappingInsertTit.run();
 			
 		//anagrafica
 		date = new Date();
 		System.out.println("6-Inserimento Anagrafica.. "+date);
-//	    MappingInsertAnagraficaComunale.run();
+	//    MappingInsertAnagraficaComunale.run();
 	    
 	    date = new Date();
 	    System.out.println("7-Inserimento Anagrafica..famiglie "+date);
-//		MappingInsertFamiglia.run();
+		MappingInsertFamiglia.run();
 
 		//Contratti/
 		date = new Date();
-    	System.out.println("8-Inserimento Fornitura Energia "+date);
-//		MappingInsertForEnergia.run();
+ //   	System.out.println("8-Inserimento Fornitura Energia "+date);
+//	    MappingInsertForEnergia.run();
 		
 		date = new Date();
-		System.out.println("9-Inserimento Fornitura Gas "+date);
+	//	System.out.println("9-Inserimento Fornitura Gas "+date);
 //		MappingInsertForGas.run();
 		
 		date = new Date();
-		System.out.println("10-Inserimento Fornitura Locazione "+date);
-//		MappingInsertForLocazione.run();
+//		System.out.println("10-Inserimento Fornitura Locazione "+date);
+//    	MappingInsertForLocazione.run();
 		
 		//Utenze
 		date = new Date();
-   	    System.out.println("11-Inserimento ICI AP "+date);
+ //  	    System.out.println("11-Inserimento ICI AP "+date);
 //		MappingInsertTUIciImuAP.run();
 		
 		date = new Date();
-		System.out.println("12-Inserimento ICI NP "+date);
+//		System.out.println("12-Inserimento ICI NP "+date);
 //		MappingInsertTUIciImuNP.run();
 		
 		date = new Date();
-		System.out.println("13-Inserimento Acqua "+date);
+//		System.out.println("13-Inserimento Acqua "+date);
 //	    MappingInsertTUUtenzaA.run();
 	    
 	    date = new Date();
-		System.out.println("14-Inserimento Lettura Acqua "+date);		
+//		System.out.println("14-Inserimento Lettura Acqua "+date);		
 //	    MappingInsertTULetturaA.run();
 	    
 	    date = new Date();
 		System.out.println("15-Inserimento Rifiuti "+date);
-//		MappingInsertTUUtenzaR.run();
+	//	MappingInsertTUUtenzaR.run();
 		
 		date = new Date();
 		System.out.println("16-Inserimento Particelle fondiarie 20min"+date);
