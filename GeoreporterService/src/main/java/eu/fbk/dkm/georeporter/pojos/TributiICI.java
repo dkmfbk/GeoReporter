@@ -17,6 +17,7 @@ public class TributiICI {
 	String contribuente;
 	String indirizzo;
 	String rendita;
+
 	public String getCodiceUtenza() {
 		return codiceUtenza;
 	}
