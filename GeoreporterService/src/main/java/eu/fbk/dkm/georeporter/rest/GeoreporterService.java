@@ -102,6 +102,7 @@ import eu.fbk.dkm.georeporter.pojos.FornituraEnergia;
 import eu.fbk.dkm.georeporter.pojos.FornituraGas;
 import eu.fbk.dkm.georeporter.pojos.FornituraLocazioni;
 import eu.fbk.dkm.georeporter.pojos.Indirizzo;
+import eu.fbk.dkm.georeporter.pojos.Locazione;
 import eu.fbk.dkm.georeporter.pojos.MappingTabella;
 import eu.fbk.dkm.georeporter.pojos.Particella;
 import eu.fbk.dkm.georeporter.pojos.QueryJson;
@@ -845,7 +846,7 @@ public class GeoreporterService {
 
 					+ " }  ";
 
-			System.out.println(queryString);
+			//System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -893,7 +894,7 @@ public class GeoreporterService {
 					soggetto.setCognome(cognome.stringValue());
 				}
 				if (datanascita != null) {
-					System.out.println(datanascita.stringValue());
+				//	System.out.println(datanascita.stringValue());
 					soggetto.setDataNascita(datanascita.stringValue());
 				}
 				if (sesso != null) {
@@ -1226,7 +1227,7 @@ public class GeoreporterService {
 				//	+ "     ?idcat :numero ?numero ."
 				//	+ "    OPTIONAL{ ?idcat :denominatore ?denominatore .}"
 					+ "     ?acqua a :UtenzaAcqua .   "
-					+ "     ?acqua :hasIdentifCatastale ?idcat .   "
+					+ "     ?acqua :hasIdentificativoCatastale ?idcat .   "
 					+ "     ?acqua :dataInizio ?datainizio . "
 					+ "     ?acqua :categoriaDescrizione ?categoriadescrizione . "
 					+ "     ?acqua :codiceContribuente ?contribuente . "
@@ -1454,10 +1455,11 @@ public class GeoreporterService {
 					+ " ." 
 					//+ "     ?idcat :Subalterno ?subalterno ." + "     ?idcat :Numero ?numero ."
 
-					+ "     ?ici a :AbitazPrincipale .   "
-					     +" ?ici :hasIdentifCatastale ?idcat. "
+					+ "     ?ici a :ICI_IMU_AbitazionePrincipale .   "
+					     +" ?ici :hasIdentificativoCatastale ?idcat. "
 					// +" ?ici :codcomune \""+codcomunecatastale+"\" . "
-					+ "     ?ici :hasIndirizzoContribuente ?indirizzo. " 
+					+ "     ?ici :hasIndirizzoContribuente ?idindirizzo. " 
+					+ " OPTIONAL{    ?idindirizzo :indirizzoCompleto ?indirizzo}. "
 					+ "     ?ici :categoriaDescrizione ?categoriadescrizione. "
 					+ "     ?ici :hasContribuente ?contribuente. " 
 					+ "     ?ici :rendita ?rendita. "
@@ -1526,8 +1528,217 @@ public class GeoreporterService {
 
 	
 	
+	@GET
+	@Path("/rifiutiui")
+	@Produces({ "application/javascript" })
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public List<TributiICI> getICI_IMU_UI(
+
+	public JSONWithPadding getUtenzeRifiutiSuUI(@QueryParam("callback") String callback, @QueryParam("codui") String codUI
+
+	) {
+
+		
+		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<UtenzaRifiuti> listaUtenzaRifiuti = new ArrayList<UtenzaRifiuti>();
+
+		/// Soggetto soggetto =new Soggetto(); 
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ " select    ?ur  ?categoria ?tipoUtenza ?mqLocali ?occupante ?categoriaDescrizione ?indirizzoCompleto" 
+					+ " where{ "
+
+					+ "     ?idcat a :IdentificativoCatastale .   "
+					+ "     ?idcat :hasUnitaImmobiliare :"+codUI+ " ." 
+					+ "     ?ur a :UtenzaRifiuti .   "
+					+ "     ?ur :hasIdentificativoCatastale ?idcat. "
+					+ "     ?ur :hasIndirizzoContribuente ?indirizzo. " 
+								
+					+ "   OPTIONAL{   ?ur :categoria ?categoria }. "
+					+ "   OPTIONAL{   ?ur :tipoUtenza ?tipoUtenza }. "
+					+ "   OPTIONAL{   ?ur :mqLocali ?mqLocali }. "
+					+ "   OPTIONAL{   ?ur :occupante ?occupante }. "
+					+ "   OPTIONAL{   ?ur :categoriaDescrizione ?categoriaDescrizione }. "			
+					+ "   OPTIONAL{   ?indirizzo :indirizzoCompleto ?indirizzoCompleto }. "
+					
+					+ " }";
+
+			//System.out.println(queryString);
+			TupleQuery tupleQuery;
+			int i = 0;
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value urURI = bindingSet.getValue("ur");
+				Value categoria = bindingSet.getValue("categoria");
+				Value tipoUtenza = bindingSet.getValue("tipoUtenza");
+				Value mqLocali = bindingSet.getValue("mqLocali");
+				Value occupante = bindingSet.getValue("occupante");
+				Value categoriaDescrizione = bindingSet.getValue("categoriaDescrizione");
+				Value indirizzoCompleto = bindingSet.getValue("indirizzoCompleto");
+				
+				UtenzaRifiuti utenzaRifiuti = new UtenzaRifiuti();
+
+				if (urURI != null) {
+					utenzaRifiuti.setUri(urURI.stringValue());
+				}
+				if (categoria != null) {
+					utenzaRifiuti.setCategoria((categoria.stringValue()));
+				}
+				if (tipoUtenza != null) {
+					utenzaRifiuti.setTipoUtenza((tipoUtenza.stringValue()));
+				}
+				if (mqLocali != null) {
+					utenzaRifiuti.setMqLocali(new Integer(mqLocali.stringValue()));
+				}
+				if (occupante != null) {
+					utenzaRifiuti.setOccupante((occupante.stringValue()));
+				}
+				if (indirizzoCompleto != null) {
+					utenzaRifiuti.setIndirizzoCompleto((indirizzoCompleto.stringValue()));
+				}
+				if (categoriaDescrizione != null) {
+					utenzaRifiuti.setCategoriaDescrizione((categoriaDescrizione.stringValue()));
+				}
+
+				listaUtenzaRifiuti.add(utenzaRifiuti);
+			}
+			// qresult.close();
+			// connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		return new JSONWithPadding(new GenericEntity<List<UtenzaRifiuti>>(listaUtenzaRifiuti) {
+		}, callback);
+		// return listaTributiICI;
+
+	}
+
 	
 	
+	@GET
+	@Path("/locazioniui")
+	@Produces({ "application/javascript" })
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public List<TributiICI> getICI_IMU_UI(
+
+	public JSONWithPadding getContrattoLocazioniSuUI(@QueryParam("callback") String callback, @QueryParam("codui") String codUI
+
+	) {
+
+		
+		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<Locazione> listaLocazioni = new ArrayList<Locazione>();
+
+		/// Soggetto soggetto =new Soggetto(); 
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ " select    ?locaz  ?tipoCanone ?importoCanone ?denominazione ?denominazioneFile  " 
+					+ " where{ "
+
+					+ "     ?idcat a :IdentificativoCatastale .   "
+					+ "     ?idcat :hasUnitaImmobiliare :"+codUI+ " ." 
+					+ "     ?locaz a :Locazione .   "
+					+ "     ?locaz :hasIdentificativoCatastale ?idcat. "
+					//+ "     ?locaz :hasIndirizzoContribuente ?indirizzo. " 
+								
+					+ "   OPTIONAL{   ?locaz :tipoCanone ?tipoCanone }. "
+					+ "   OPTIONAL{   ?locaz :importoCanone ?importoCanone }. "
+					+ "   OPTIONAL{   ?locaz :denominazione ?denominazione }. "
+					+ "   OPTIONAL{   ?locaz :denominazioneFile ?denominazioneFile }. "
+						
+					
+					
+					+ " }";
+
+			//System.out.println(queryString);
+			TupleQuery tupleQuery;
+			int i = 0;
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value urLocaz = bindingSet.getValue("locaz");
+				Value tipoCanone = bindingSet.getValue("tipoCanone");
+				Value importoCanone = bindingSet.getValue("importoCanone");
+				Value denominazione = bindingSet.getValue("denominazione");
+				Value denominazioneFile = bindingSet.getValue("denominazioneFile");
+				
+				
+				Locazione locazione = new Locazione();
+
+				if (urLocaz != null) {
+					locazione.setUri(urLocaz.stringValue());
+				}
+				if (tipoCanone != null) {
+					locazione.setTipoCanone((tipoCanone.stringValue()));
+				}
+				if (importoCanone != null) {
+					locazione.setImportoCanone(new Float((importoCanone.stringValue())));
+				}
+				if (denominazione != null) {
+					locazione.setDenominazioneFile(denominazioneFile.stringValue());
+				}
+				
+				
+				listaLocazioni.add(locazione);
+			}
+			// qresult.close();
+			// connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		return new JSONWithPadding(new GenericEntity<List<Locazione>>(listaLocazioni) {
+		}, callback);
+		// return listaTributiICI;
+
+	}
+
 	
 	
 	
@@ -2576,14 +2787,35 @@ public class GeoreporterService {
 				//	+ "  ?property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + entita + " ."
 				//	+ " ?property rdfs:range ?range " + "}";
 
-			+ "			SELECT DISTINCT ?domain ?property  ?range  ?label"
+					
+					
+			//+ "			SELECT DISTINCT ?domain ?property  ?range  ?label"
+			//+ "		WHERE { "
+			//+ "		  ?property a owl:DatatypeProperty ;"
+			//+ "	            rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + idEntita + ";"
+			//+ "	            rdfs:range ?range ;"
+		    //+ "             rdfs:label ?label ."
+			////+ "			  FILTER (!isBlank(?domain))"
+			//+ "	}";
+			
+			
+			
+			+ "			SELECT DISTINCT ?domain ?property  ?range  ?label "
 			+ "		WHERE { "
 			+ "		  ?property a owl:DatatypeProperty ;"
-			+ "	            rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + idEntita + ";"
+			+ "	            rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* ?y;"
 			+ "	            rdfs:range ?range ;"
-		    + "             rdfs:label ?label ."
+		   + "             rdfs:label ?label ."
 			//+ "			  FILTER (!isBlank(?domain))"
+			+ "	            :" + idEntita + " rdfs:subClassOf* ?y ."
+			
 			+ "	}";
+			
+			
+			
+			
+			
+			
 			
 			
 			//System.out.println(queryString);
@@ -2739,14 +2971,23 @@ Gson gson = new Gson();
 				//	+ "  ?property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + entita + " ."
 				//	+ " ?property rdfs:range ?range " + "}";
 
+					
+					
+					
+					
+					
+					
+					
 			+ "			SELECT DISTINCT ?domain ?property  ?range  ?label ?rangelabel"
 			+ "		WHERE { "
 			+ "		  ?property a owl:ObjectProperty ;"
-			+ "	            rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + idEntita + ";"
+			+ "	            rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* ?y;"
+	
 			+ "	            rdfs:range ?range ;"
-		    + "             rdfs:label ?label ."
+		   + "             rdfs:label ?label ."
 		    + "            ?range rdfs:label ?rangelabel ."
 			//+ "			  FILTER (!isBlank(?domain))"
+			+ "	            :" + idEntita + " rdfs:subClassOf* ?y ."
 			+ "	}";
 			
 			
@@ -2956,7 +3197,7 @@ Gson gson = new Gson();
 	
 			
 			
-			System.out.println(queryString);
+		//	System.out.println(queryString);
 			TupleQuery tupleQuery;
 
 			int i = 0;
@@ -3028,7 +3269,7 @@ Gson gson = new Gson();
                   }
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(getNomeComune(attributi_indirizzo.get("codiceComuneCatastale")));
                   
-                  System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
+                //  System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
 			
 				
 				try {
@@ -3045,7 +3286,7 @@ Gson gson = new Gson();
 					
 						
 				
-		    	 Indirizzo indirizzoGeoDecoded= geoDecode(stringa_indirizzo);
+		    	 Indirizzo indirizzoGeoDecoded= geoDecode(safeToStringFrazione(stringa_indirizzo));
 						
 				  limiteiterazioni--;
 				 if(!indirizzoGeoDecoded.getIndirizzoCompleto().equals("NULLO")) {
@@ -3120,11 +3361,12 @@ Gson gson = new Gson();
 	static String safeToStringFrazione(Object obj) {
 		 
 				String result=  obj == null ? "" : obj.toString();
-				System.out.println("Frazione via="+result);
-				if (result.contains("FR.")) {
+			//	System.out.println("Frazione via="+result);
+				//if (result.contains("FR.")) {
 					result=result.replace("FRAZ.", "FRAZIONE");
 					result=result.replace("FR.", "FRAZIONE");
-				}
+					result=result.replace("-", " ");
+				//}
 				return result;
 		}
 	private Indirizzo geoDecode(String indirizzo){	
@@ -3150,12 +3392,12 @@ Gson gson = new Gson();
 					indirizzo_normalizzato.setCoordinateLat(Float.valueOf(gson.toJson(results[0].geometry.location.lat)));
 					indirizzo_normalizzato.setCoordinateLong(Float.valueOf(gson.toJson(results[0].geometry.location.lng)));
 		        	
-					System.out.println(gson.toJson(results[0].formattedAddress));
-		        	System.out.println(gson.toJson(results[0].geometry.location.lat));
-		        	System.out.println(gson.toJson(results[0].geometry.location.lng));
+				//	System.out.println(gson.toJson(results[0].formattedAddress));
+		        //	System.out.println(gson.toJson(results[0].geometry.location.lat));
+		        //	System.out.println(gson.toJson(results[0].geometry.location.lng));
 					}else {
 						indirizzo_normalizzato.setIndirizzoCompleto("NULLO");
-						System.out.println("INDIRIZZO NON TROVATO="+indirizzo);
+						//System.out.println("INDIRIZZO NON TROVATO="+indirizzo);
 					}
 				} catch (ApiException e) {
 					// TODO Auto-generated catch block
@@ -3754,9 +3996,9 @@ String result="";
 			+"	?classe2 a owl:Class .  "
 				 
 			+"	    ?p rdfs:domain ?classe1 . "
-			+"	    ?p  rdfs:range ?classe2   "
+			+"	    ?p  rdfs:range ?classe2 .  "
 				 
-			+"	  FILTER NOT EXISTS  { ?classe1 rdfs:subClassOf ?super} " 
+			+"	  FILTER NOT EXISTS  { ?classe1 rdfs:subClassOf ?classe2} " 
 			+"	 FILTER (!isBlank(?classe1))} ";
 
 		//	System.out.println(queryString);
@@ -3779,7 +4021,7 @@ String result="";
 				Relazione rel = new Relazione();
 
 				if (classe1 != null) {
-					rel.setUriDomain(classe1.stringValue().substring(classe1.stringValue().lastIndexOf('#') + 1));
+				rel.setUriDomain(classe1.stringValue().substring(classe1.stringValue().lastIndexOf('#') + 1));
 				}
 				
 			
@@ -3915,7 +4157,7 @@ String result="";
 	// @QueryParam("subalterno") String subalterno
 
 	) {
-System.out.println("data= "+jsonquery);
+//System.out.println("data= "+jsonquery);
 		Gson gson = new Gson();
 
 		QueryJson queryJson = gson.fromJson(jsonquery, QueryJson.class);
@@ -3945,21 +4187,27 @@ System.out.println("data= "+jsonquery);
 
 			TupleQueryResult qresult = tupleQuery.evaluate();
              List<String> campiSelect = queryJson.getCampiSelect();
-         	List<QueryResultRow> listQueryresultrow = new ArrayList <QueryResultRow>();
+         	campiSelect.add("ui");
+			campiSelect.add("pa");
+			campiSelect.add("ic");
+			
+             List<QueryResultRow> listQueryresultrow = new ArrayList <QueryResultRow>();
          			/// Soggetto soggetto =new Soggetto();
         
              while (qresult.hasNext()) {
 				BindingSet bindingSet = qresult.next();
 
-				
+			
 				QueryResultRow queryResultRow = new QueryResultRow();
 				List<QueryResultItem> listQueryResultItems = new ArrayList<QueryResultItem>();
 				for (String campo : campiSelect) {
 					QueryResultItem resultItem= new QueryResultItem();
 					Value value = bindingSet.getValue(campo);
+					
 					if (value!=null) {
 						resultItem.setColonna(campo);
-					    resultItem.setValore(value.stringValue());
+					    resultItem.setValore(value.stringValue().substring(value.stringValue().lastIndexOf('#') + 1));
+					   
 					    listQueryResultItems.add(resultItem);  
 					}
 					
