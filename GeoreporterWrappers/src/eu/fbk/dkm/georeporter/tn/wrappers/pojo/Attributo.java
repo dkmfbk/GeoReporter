@@ -20,6 +20,8 @@ package eu.fbk.dkm.georeporter.tn.wrappers.pojo;
 		String tipo;
 		String valore;
 		String mapping;
+		boolean multiplo=false;
+		
 		public String getNome() {
 			return nome;
 		}
@@ -43,6 +45,12 @@ package eu.fbk.dkm.georeporter.tn.wrappers.pojo;
 		}
 		public void setMapping(String mapping) {
 			this.mapping = mapping;
+		}
+		public boolean isMultiplo() {
+			return multiplo;
+		}
+		public void setMultiplo(boolean multiplo) {
+			this.multiplo = multiplo;
 		}
 
 		
