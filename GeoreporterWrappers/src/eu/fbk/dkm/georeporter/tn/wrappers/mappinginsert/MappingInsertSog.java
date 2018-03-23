@@ -147,7 +147,7 @@ public class MappingInsertSog {
 				tmp2.setMapping(data2.getAttributi().get(i).getMapping());
 				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
     
-				System.out.println(tmp2.getNome());
+			//	System.out.println(tmp2.getNome());
 				if(tmp2.getNome().equals("http://dkm.fbk.eu/georeporter#identificativosoggetto")) {
 					System.out.println(tmp2.getNome());
 	              tmp2.setMultiplo(true);
