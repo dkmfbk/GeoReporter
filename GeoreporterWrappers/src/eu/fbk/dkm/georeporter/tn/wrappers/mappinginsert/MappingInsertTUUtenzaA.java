@@ -375,7 +375,7 @@ public class MappingInsertTUUtenzaA {
 				insertRiga(rigaTIDECAT);
 
 				Relazione rel = new Relazione();
-				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
+				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);

@@ -342,7 +342,7 @@ public class MappingInsertTUIciImuNP {
 				insertRiga(rigaTIDECAT);
 
 				Relazione rel = new Relazione();
-				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
+				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 				// ID
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
@@ -351,7 +351,7 @@ public class MappingInsertTUIciImuNP {
 			
 			// riga di tipo RIGATABELLA per NUDA PROPRIETA
 			RigaTabella rigaTNP = new RigaTabella();
-			rigaTNP.setNometabella("http://dkm.fbk.eu/georeporter#NudaProprieta");
+			rigaTNP.setNometabella("http://dkm.fbk.eu/georeporter#ICI_IMU_NudaProprieta");
 			rigaTNP.setListaattributi(listAttributi);
 			rigaTNP.setUririga("http://dkm.fbk.eu/georeporter#TUNP_" + id);
 

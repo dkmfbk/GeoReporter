@@ -344,7 +344,7 @@ public class MappingInsertTUIciImuAP {
 				insertRiga(rigaTIDECAT);
 
 				Relazione rel = new Relazione();
-				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentifCatastale");
+				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 				// ID
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
@@ -353,7 +353,7 @@ public class MappingInsertTUIciImuAP {
 
 			// riga di tipo RIGATABELLA per AbitazionePrincipale
 			RigaTabella rigaTUA = new RigaTabella();
-			rigaTUA.setNometabella("http://dkm.fbk.eu/georeporter#AbitazPrincipale");
+			rigaTUA.setNometabella("http://dkm.fbk.eu/georeporter#ICI_IMU_AbitazionePrincipale");
 			rigaTUA.setListaattributi(listAttributi);
 			rigaTUA.setUririga("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 
