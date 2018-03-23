@@ -17,7 +17,7 @@ public class QueryObject {
 	List<Rule> rules;
 	String[]  select;
 	
-	Join joinwith;
+	Join joinWith;
 	
 
 	public String getCondition() {
@@ -50,11 +50,11 @@ public class QueryObject {
 	public void setSelect(String[] select) {
 		this.select = select;
 	}
-	public Join getJoinwith() {
-		return joinwith;
+	public Join getJoinWith() {
+		return joinWith;
 	}
-	public void setJoinwith(Join joinwith) {
-		this.joinwith = joinwith;
+	public void setJoinWith(Join joinWith) {
+		this.joinWith = joinWith;
 	}
 
 public String printSelectParams() {
@@ -73,7 +73,8 @@ public String printSelectCondition() {
 	//String selectString="Select ";
 	String selectvars="";
 	for (int i = 0; i < select.length; i++) {
-		selectvars=selectvars+ "OPTIONAL{ ?"+getObject()+ " :"+select[i]+ " ?"+select[i]+" }.";
+		selectvars=selectvars+ "  OPTIONAL{ ?"+getObject()+ " :"+select[i]+ " ?"+select[i]+" }.";
+	//	selectvars=selectvars+ " ?"+getObject()+ " :"+select[i]+ " ?"+select[i]+" .";
 	}
 	
 	return selectvars;
@@ -100,11 +101,12 @@ public String printWhereConditons() {
 public String printJoin() {
 	
 	String join="";
-	if (joinwith!=null) {
-	if(!joinwith.printJoin().equals(null)) {
-	 join="?"+getObject()+" "+joinwith.printJoin();
+	if (joinWith!=null) {
+	if(!joinWith.getJoin().equals(null)) {
+	 join="?"+getObject()+" "+joinWith.getJoin();
 	}
 	}
+	System.out.println("QUERYOBJECTJOIN= "+join);
 	return join;
 }
 

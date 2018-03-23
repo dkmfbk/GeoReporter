@@ -51,20 +51,40 @@ public class QueryJson {
 
 	private String printWhereConditions() {
 		String whereconditions="";
+		String gestioneUI="";
            for (QueryObject queryObject : Query) {
 			
         	   whereconditions=whereconditions+queryObject.printWhereConditons();
-			
-		  }
-		
-		
-		
-		return whereconditions;
+         if (queryObject.getObject().equals("object1")){
+        	   if (queryObject.getType().equals("IdentificativoCatastale")){
+        		   gestioneUI= "OPTIONAL { ?object1 "
+							+ " :hasUnitaImmobiliare ?ui. "
+							+ " ?object1 :hasParticella ?pa  } ";
+        	   	
+		         }else  if (queryObject.getType().equals("Particella")){
+			  
+		        	  gestioneUI= "OPTIONAL { ?ic a IdentificativoCatastale  ."
+								+ "?ic :hasUnitaImmobiliare ?ui . "
+								+ "?ic :hasParticella ?object1  } ";
+		        	  
+		         } else  if (queryObject.getType().equals("UnitaImmobiliare")){
+		        	  gestioneUI= "OPTIONAL { ?ic a IdentificativoCatastale . "
+								+ "?ic :hasUnitaImmobiliare ?object1. "
+								+ "?ic :hasParticella ?pa  } ";
+			    }else {
+				  
+				  gestioneUI= "OPTIONAL { ?object1 :hasIdentificativoCatastale ?ic.  "
+							+ "?ic :hasUnitaImmobiliare ?ui. "
+							+ "?ic :hasParticella ?pa  } ";
+			    }
+              }
+           }
+		return whereconditions + gestioneUI;
 	}
 	
 	
 	public String printString() {
-		String result="Select DISTINCT ";
+		String result="Select DISTINCT ?ic ?pa ?ui";
 		String select=printSelect();
 		String where=" where{ ";
 		
@@ -72,7 +92,7 @@ public class QueryJson {
 		String join="";
 		String close=" }";
 		result=result+ select+ where + condition + join +close;
-		System.out.println(result);
+		System.out.println("QUERY+"+result);
 	return 	result;
 
 
