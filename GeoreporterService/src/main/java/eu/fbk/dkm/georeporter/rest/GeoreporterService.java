@@ -3991,16 +3991,39 @@ String result="";
 
 			String queryString = queryStringPrefix
 
+//			+"		SELECT DISTINCT ?classe1 ?p ?classe2 WHERE {"
+//			+"	?classe1  a owl:Class . "
+//			+"	?classe2 a owl:Class .  "
+				 
+//			+"	    ?p rdfs:domain ?classe1 . "
+//			+"	    ?p  rdfs:range ?classe2 .  "
+				 
+//			+"	  FILTER NOT EXISTS  { ?classe1 rdfs:subClassOf ?classe2} " 
+//			+"	 FILTER (!isBlank(?classe1))} ";
+
+			
+			
+			
+			
+			
 			+"		SELECT DISTINCT ?classe1 ?p ?classe2 WHERE {"
-			+"	?classe1  a owl:Class . "
+			+"	?y  a owl:Class . "
 			+"	?classe2 a owl:Class .  "
 				 
-			+"	    ?p rdfs:domain ?classe1 . "
-			+"	    ?p  rdfs:range ?classe2 .  "
-				 
-			+"	  FILTER NOT EXISTS  { ?classe1 rdfs:subClassOf ?classe2} " 
-			+"	 FILTER (!isBlank(?classe1))} ";
-
+		//	+"	    ?p rdfs:domain ?classe1 . "
+			+ "?p  rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* ?y."
+			+ "?p  rdfs:range/(owl:unionOf/rdf:rest*/rdf:first)* ?classe2."
+			//+"	    ?p  rdfs:range ?classe2 .  "
+			+"  ?classe1 rdfs:subClassOf* ?y ."	 
+			+"	  FILTER NOT EXISTS  { ?y rdfs:subClassOf ?classe2} " 
+			+"	 FILTER (!isBlank(?classe1))}";
+			
+			
+			
+			
+			
+			
+			
 		//	System.out.println(queryString);
 			TupleQuery tupleQuery;
 
