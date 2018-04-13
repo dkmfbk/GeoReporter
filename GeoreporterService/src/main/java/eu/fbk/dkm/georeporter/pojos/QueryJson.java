@@ -55,30 +55,47 @@ public class QueryJson {
            for (QueryObject queryObject : Query) {
 			
         	   whereconditions=whereconditions+queryObject.printWhereConditons();
-         if (queryObject.getObject().equals("object1")){
+        
         	   if (queryObject.getType().equals("IdentificativoCatastale")){
-        		   gestioneUI= "OPTIONAL { ?object1 "
-							+ " :hasUnitaImmobiliare ?ui. "
-							+ " ?object1 :hasParticella ?pa  } ";
+        		   gestioneUI= "OPTIONAL { ?object1  :hasUnitaImmobiliare ?ui. "							 
+							+ " ?"+queryObject.getObject()+" :hasParticella ?pa."
+							 +" BIND(?"+queryObject.getObject()+" AS ?ic) "
+							
+							+ "  } ";
         	   	
 		         }else  if (queryObject.getType().equals("Particella")){
 			  
-		        	  gestioneUI= "OPTIONAL { ?ic a IdentificativoCatastale  ."
+		        	  gestioneUI= "OPTIONAL { ?ic a :IdentificativoCatastale  ."
 								+ "?ic :hasUnitaImmobiliare ?ui . "
-								+ "?ic :hasParticella ?object1  } ";
+								+ "?ic :hasParticella ?"+queryObject.getObject()+"."
+								//+" ?"+queryObject.getObject()+ " a ?pa. "
+										+" BIND(?"+queryObject.getObject()+" AS ?pa) "
+	        				    +"   FILTER (?pa not in( owl:NamedIndividual))"
+								+ "  } ";
 		        	  
 		         } else  if (queryObject.getType().equals("UnitaImmobiliare")){
-		        	  gestioneUI= "OPTIONAL { ?ic a IdentificativoCatastale . "
-								+ "?ic :hasUnitaImmobiliare ?object1. "
+		        	  gestioneUI= "OPTIONAL { ?ic a :IdentificativoCatastale . "
+								+ "?ic :hasUnitaImmobiliare ?"+queryObject.getObject()+" . "
+								//+"?"+queryObject.getObject()+" a ?ui . "
+										+" BIND(?"+queryObject.getObject()+" AS ?ui) "
+	        				    +"   FILTER (?ui not in( owl:NamedIndividual))"
 								+ "?ic :hasParticella ?pa  } ";
-			    }else {
+			    }else if(queryObject.getType().equals("Locazione")||
+			    		queryObject.getType().equals("UtenzaRifiuti")||
+			    		queryObject.getType().equals("UtenzaAcqua")||
+			    		queryObject.getType().equals("ICI_IMU_AbitazionePrincipale")||
+			    		queryObject.getType().equals("Titolarita")||
+			    		queryObject.getType().equals("ICI_IMU_NudaProprieta")
+			    		){
 				  
-				  gestioneUI= "OPTIONAL { ?object1 :hasIdentificativoCatastale ?ic.  "
+				  gestioneUI= "OPTIONAL { ?"+queryObject.getObject()+" :hasIdentificativoCatastale ?ic.  "
 							+ "?ic :hasUnitaImmobiliare ?ui. "
 							+ "?ic :hasParticella ?pa  } ";
 			    }
+        	 
               }
-           }
+           
+           
 		return whereconditions + gestioneUI;
 	}
 	

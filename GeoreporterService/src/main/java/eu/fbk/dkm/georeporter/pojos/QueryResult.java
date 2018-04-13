@@ -1,5 +1,6 @@
 package eu.fbk.dkm.georeporter.pojos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class QueryResult {
 
 	String[] colonne;
 	
-	List<QueryResultRow>  righe;
+	List<QueryResultRow>  righe =new ArrayList<QueryResultRow>();
 
 	
 

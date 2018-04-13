@@ -92,8 +92,11 @@ public String printWhereConditons() {
 	String joinCondition=printJoin();
 	String rulestring="";
 	for (Rule rule : rules) {
+		if (rule.getOperator().equals("between")) {
+			rulestring= rulestring+"  ?"+getObject()+ " :" +rule.getId()+ " ?"+getObject() + "_"+rule.getId()+" . FILTER (?"+getObject() + "_"+rule.getId()+" >  "+rule.getValues().get(0)+" &&  ?"+getObject() + "_"+rule.getId()+" <  "+rule.getValues().get(1)+ " ) . ";
+		}else {
 		rulestring= rulestring+"  ?"+getObject()+ " :" +rule.getId()+ " ?"+getObject() + "_"+rule.getId()+" . FILTER (?"+getObject() + "_"+rule.getId()+" "+rule.getOperator()+" "+rule.getValue()+" ) . ";
-		
+		}
 	}
 	return whereConditions +selectCondition+rulestring + joinCondition;
 }
@@ -103,7 +106,13 @@ public String printJoin() {
 	String join="";
 	if (joinWith!=null) {
 	if(!joinWith.getJoin().equals(null)) {
-	 join="?"+getObject()+" "+joinWith.getJoin();
+		if(joinWith.getJoin().contains("$$$")) {
+			//gestione inversa
+			 join=joinWith.getJoin().replace("$$$",getObject());
+			
+		}else{
+	         join="?"+getObject()+" "+joinWith.getJoin();
+	 }
 	}
 	}
 	System.out.println("QUERYOBJECTJOIN= "+join);

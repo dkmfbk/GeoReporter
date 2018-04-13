@@ -1,5 +1,6 @@
 package eu.fbk.dkm.georeporter.pojos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
 public class QueryResultRow {
 
-	List<QueryResultItem> listacelle;
+	List<QueryResultItem> listacelle=new ArrayList<QueryResultItem>();
 
 	public List<QueryResultItem> getListacelle() {
 		return listacelle;
