@@ -26,7 +26,7 @@ public class WrapperAnagraficaComunale {
 	public static String[] header;
 	// lista di tipo AC degli elementi estratti dal file
 	public static List<AnagraficaComunale> listAnagraficaComunale = new ArrayList<AnagraficaComunale>();
-
+	public static String codiceComunecatastale;
 	// estrazione HEADER
 	public static void estrazioneHeaderFile(String path) {
 

@@ -68,6 +68,7 @@ public class WrapperTUIciImuAP {
 					//aggiungere controllo in caso di valore null
 					if(row.getCell(g) != null) {
 						if (header[k].contains("data")) {
+							campi.put(header[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
 						} else if (header[k].equals("contribuente")) {
 							String contribuente=row.getCell(g).getStringCellValue();
 							int count = StringUtils.countMatches(contribuente, " ");
@@ -85,7 +86,7 @@ public class WrapperTUIciImuAP {
 								campi.put("nome_split", nome);
 							
 						   }}
-							campi.put(header[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
+							
 						} else {
 							campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
 						}
