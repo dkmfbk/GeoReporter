@@ -1289,7 +1289,7 @@ public class GeoreporterService {
 					if (nome !=null) {
 						soggetto =soggetto+" "+nome.stringValue();	
 					}
-					System.out.println("SOGGETTO="+ soggetto);
+					//System.out.println("SOGGETTO="+ soggetto);
 					utenzaacqua.setContribuente(soggetto);
 					
 				}
@@ -1521,7 +1521,7 @@ public class GeoreporterService {
 					if (nome !=null) {
 						soggetto =soggetto+" "+nome.stringValue();	
 					}
-					System.out.println("SOGGETTO="+ soggetto);
+				//	System.out.println("SOGGETTO="+ soggetto);
 					tributiici.setContribuente(soggetto);
 				}
 				if (categoriadescrizione != null) {
