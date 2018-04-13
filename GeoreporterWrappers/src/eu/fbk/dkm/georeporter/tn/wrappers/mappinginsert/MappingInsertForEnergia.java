@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonReader;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.FornituraEnergia;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForEne;
@@ -29,7 +30,62 @@ public class MappingInsertForEnergia {
 
 	public static List<FornituraEnergia> listFornituraEnergia = WrapperForEne.listFornituraEnergia;
 
-	private static void LoadFile(File filename, File filename2, File mappingIndirizzoContratti) {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingFornituraEnergia= new MappingTabella();
+		MappingTabella mappingContratto=new MappingTabella();
+		MappingTabella mappingIndirizzo=new MappingTabella();
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("FornituraEnergia")){
+					mappingFornituraEnergia=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Contratto")){
+					mappingContratto=mappingTabella;
+					
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Indirizzo")){
+					mappingIndirizzo=mappingTabella;
+					
+					
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingFornituraEnergia,mappingContratto,mappingIndirizzo);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	private static void LoadFile_old (File filename, File filename2, File mappingIndirizzoContratti) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -223,20 +279,19 @@ public class MappingInsertForEnergia {
 		}
 		// return output;
 	}
-public static void run()
+public static void run(String filepath, String fileMappings)
 {
 	
-	String path = "file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls";
+///	String path = "file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls";
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 	try {
-		WrapperForEne.readXLSFile(path);
+		WrapperForEne.readXLSFile(filepath);
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	// mapping e insert
-	LoadFile(new File("file/file_mapping/mappingFornituraEnergia.json"),
-			new File("file/file_mapping/mappingContratto.json"),new File("file/file_mapping/mappingIndirizzoContratti.json"));
+	LoadFile(new File(fileMappings));
 	
 	
 	
@@ -252,8 +307,9 @@ public static void run()
 			e.printStackTrace();
 		}
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingFornituraEnergia.json"),
-				new File("file/file_mapping/mappingContratto.json"),new File("file/file_mapping/mappingIndirizzoContratti.json"));
+		//LoadFile(new File("file/file_mapping/mappingFornituraEnergia.json"),
+		//		new File("file/file_mapping/mappingContratto.json"),
+		//		new File("file/file_mapping/mappingIndirizzoContratti.json"));
 
 	}
 

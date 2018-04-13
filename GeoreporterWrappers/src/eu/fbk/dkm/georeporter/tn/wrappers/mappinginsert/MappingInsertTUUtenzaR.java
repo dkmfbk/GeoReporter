@@ -20,6 +20,7 @@ import com.google.gson.stream.JsonReader;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UtenzaRifiuti;
@@ -29,6 +30,90 @@ public class MappingInsertTUUtenzaR {
 
 	public static List<UtenzaRifiuti> listUtenzaRifiuti = WrapperTUUtenzaR.listUtenzaRifiuti;
 
+
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingUtenzaRifiuti= new MappingTabella();
+		MappingTabella mappingTributo_o_Utenza=new MappingTabella();
+		MappingTabella mappingUtenza=new MappingTabella();
+		MappingTabella mappingSoggetto=new MappingTabella();
+		MappingTabella mappingPersonaFisica=new MappingTabella();
+		MappingTabella mappingIndirizzoContribuente=new MappingTabella();
+		MappingTabella mappingIndirizzoRecapitoContribuente=new MappingTabella();
+		MappingTabella mappingIndirizzoUtenza=new MappingTabella();
+		MappingTabella mappingIdentificativoCatastale=new MappingTabella();
+	
+		
+		
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getNome().equals("UtenzaRifiuti")){
+					mappingUtenzaRifiuti=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("Tributo_o_Utenza")){
+					mappingTributo_o_Utenza=mappingTabella;
+					
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("Soggetto")){
+					mappingSoggetto=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("PersonaFisica")){
+					mappingPersonaFisica=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IndirizzoContribuente")){
+					mappingIndirizzoContribuente=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IndirizzoRecapitoContribuente")){
+					mappingIndirizzoRecapitoContribuente=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IndirizzoUtenza")){
+					mappingIndirizzoUtenza=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IdentificativoCatastale")){
+					mappingIdentificativoCatastale=mappingTabella;
+							
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingTributo_o_Utenza,mappingUtenza,mappingUtenzaRifiuti,mappingSoggetto,mappingPersonaFisica,
+					mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private static void LoadFile(File filename, File filename2, File filename3, File filename4, File filename5,
 			File filename6, File filename7, File filename8, File filename9) {
 
@@ -363,6 +448,9 @@ public class MappingInsertTUUtenzaR {
 				String cc = listUtenzaRifiuti.get(j).getValori().get("codcomune");
 				String den = listUtenzaRifiuti.get(j).getValori().get("particellaestensione");
 				String sub = listUtenzaRifiuti.get(j).getValori().get("subalterno");
+				if (sub.equals("0")){
+					sub="";
+				}
 				rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				// inserimento dell'elemento
 				insertRiga(rigaTIDECAT);
@@ -371,6 +459,9 @@ public class MappingInsertTUUtenzaR {
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUR_" + id);
 				// ID
+				if (sub.equals("0")){
+					sub="";
+				}
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelUR.add(rel);
 			}
@@ -454,26 +545,28 @@ public class MappingInsertTUUtenzaR {
 		}
 		// return output;
 	}
-	public static void run() {
+	public static void run(String filePath, String fileMappings) {
 		
 		String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperTUUtenzaR.readXLSFile(path);
+			WrapperTUUtenzaR.readXLSFile(filePath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
-				new File("file/file_mapping/mappingUtenza.json"),
-				new File("file/file_mapping/mappingUtenzaRifiuti.json"),
-				new File("file/file_mapping/mappingSoggetto.json"),
-				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEur.json"),
-				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
-				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
-				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
+		LoadFile(new File(fileMappings));
+		
+//		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
+//				new File("file/file_mapping/mappingUtenza.json"),
+//				new File("file/file_mapping/mappingUtenzaRifiuti.json"),
+//			new File("file/file_mapping/mappingSoggetto.json"),
+//				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEur.json"),
+//				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
+//				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
+//				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
+//				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
 
 	}
 		

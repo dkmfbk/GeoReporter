@@ -25,6 +25,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.AnagraficaComunale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Famiglia;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
@@ -37,7 +38,58 @@ public class MappingInsertAnagraficaComunale {
 
 	public static List<AnagraficaComunale> listAnagraficaComunale = WrapperAnagraficaComunale.listAnagraficaComunale;
 
-	private static void LoadFile(File filename, File filename2, File filenameI) {
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingAnagraficaComunale= new MappingTabella();
+		MappingTabella mappingPersonaFisica=new MappingTabella();
+		MappingTabella mappingIndirizzo=new MappingTabella();
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("AnagraficaComunale")){
+					mappingAnagraficaComunale=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("PersonaFisica")){
+					mappingPersonaFisica=mappingTabella;
+					
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Indirizzo")){
+					mappingIndirizzo=mappingTabella;
+					
+					
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingAnagraficaComunale,mappingPersonaFisica,mappingIndirizzo);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	private static void LoadFile_old(File filename, File filename2, File filenameI) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -225,19 +277,19 @@ public class MappingInsertAnagraficaComunale {
 		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
-if (true) {
-	System.out.println(riga.getNometabella());
+///if (true) {
+//	System.out.println(riga.getNometabella());
 	
-	for (Attributo attr : riga.getListaattributi()) {
-		System.out.println(attr.getNome());	
-		System.out.println(attr.getValore());
-	}
+//	for (Attributo attr : riga.getListaattributi()) {
+//		System.out.println(attr.getNome());	
+//		System.out.println(attr.getValore());
+//	}
 	
 
 	
-	System.out.println(riga.getNometabella());
-	return;
-}
+//	System.out.println(riga.getNometabella());
+//	return;
+//}
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
 		// System.out.println(json);
@@ -287,20 +339,18 @@ if (true) {
 		// return output;
 	}
 
-public static void run() {
+public static void run(String filePath, String fileMappings,String codicecomunecatastale) {
 	
 	
 	
 	
-	String path = "file/TN_file/DGASBANN.csv";
+//	String path = "file/TN_file/DGASBANN.csv";
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-	WrapperAnagraficaComunale.estrazioneHeaderFile(path);
-	WrapperAnagraficaComunale.LetturaFile(path);
-	WrapperAnagraficaComunale.codiceComunecatastale="L322";
+	WrapperAnagraficaComunale.estrazioneHeaderFile(filePath);
+	WrapperAnagraficaComunale.LetturaFile(filePath);
+	WrapperAnagraficaComunale.codiceComunecatastale=codicecomunecatastale;
 	// mapping e insert
-	LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
-			new File("file/file_mapping/mappingPersonaFisica2.json"),
-			new File("file/file_mapping/mappingIndirizzo.json"));
+	LoadFile(new File(fileMappings));
 
 }
 	
@@ -318,9 +368,9 @@ public static void run() {
 		WrapperAnagraficaComunale.LetturaFile(path);
 		WrapperAnagraficaComunale.codiceComunecatastale="L322";
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
-				new File("file/file_mapping/mappingPersonaFisica2.json"),
-				new File("file/file_mapping/mappingIndirizzo.json"));
+	//	LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
+	//			new File("file/file_mapping/mappingPersonaFisica2.json"),
+	//			new File("file/file_mapping/mappingIndirizzo.json"));
 
 	}
 

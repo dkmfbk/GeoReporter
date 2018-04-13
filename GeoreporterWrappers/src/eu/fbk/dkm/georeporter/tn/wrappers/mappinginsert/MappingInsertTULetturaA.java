@@ -154,13 +154,14 @@ public class MappingInsertTULetturaA {
 		}
 		// return output;
 	}
-public static void run() {
-	String path = "file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv";
+public static void run(String filePath, String fileMappings) {
+	//String path = "file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv";
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-	WrapperTULetturaA.estrazioneHeaderFile(path);
-	WrapperTULetturaA.letturaFile(path);
+	WrapperTULetturaA.estrazioneHeaderFile(filePath);
+	WrapperTULetturaA.letturaFile(filePath);
 	// mapping e insert
-	LoadFile(new File("file/file_mapping/mappingLetturaAcqua.json"));
+//	LoadFile(new File("file/file_mapping/mappingLetturaAcqua.json"));
+	LoadFile(new File(fileMappings));
 
 	
 	

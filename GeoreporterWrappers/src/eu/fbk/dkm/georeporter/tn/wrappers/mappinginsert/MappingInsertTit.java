@@ -409,11 +409,7 @@ public class MappingInsertTit {
 		// mapping e insert degli elementi TITOLARITA
 		LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
 
-		
-		
-		
-		
-		
+			
 	}
 	
 	

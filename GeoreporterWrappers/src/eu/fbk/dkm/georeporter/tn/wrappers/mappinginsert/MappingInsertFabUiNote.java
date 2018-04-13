@@ -269,7 +269,26 @@ public class MappingInsertFabUiNote {
 
 			// riga uri rel + inserimento
 			rigaTUI.setListarelazioni(listRelUI);
+			List<Attributo> tmp = rigaTUI.getListaattributi();
+			boolean cancellato=false;
+			String codice="";
+			for (Attributo attributo : tmp) {
+		//	System.out.println(attributo.getNome());
+		//	System.out.println(	attributo.getValore());
+		
+				if ( attributo.getNome().equals("http://dkm.fbk.eu/georeporter#partita")&&attributo.getValore().equals("C")) {
+				cancellato=true;
+				//System.out.println("UI cancellata ="+attributo.getValore());
+				//System.out.println(attributo.getNome());
+				System.out.println(ideimm);
+				}
+					
+			}
+			
+			if (!cancellato) {
+			//	System.out.println("UI inserita");	
 			insertRiga(rigaTUI);
+			}
 		}
 
 	}

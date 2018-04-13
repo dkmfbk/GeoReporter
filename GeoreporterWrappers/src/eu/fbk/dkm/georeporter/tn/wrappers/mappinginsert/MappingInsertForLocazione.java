@@ -28,6 +28,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.FornituraEnergia;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.FornituraGas;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Locazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
@@ -42,6 +43,67 @@ public class MappingInsertForLocazione {
 
 	public static List<Locazione> listLocazione = WrapperForLoc.listLocazione;
 
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingFornituraLocazione= new MappingTabella();
+		MappingTabella mappingContratto=new MappingTabella();
+		MappingTabella mappingIdentificativoCatastale=new MappingTabella();
+		MappingTabella mappingIndirizzo=new MappingTabella();
+		
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("Locazione")){
+					mappingFornituraLocazione=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Contratto")){
+					mappingContratto=mappingTabella;
+				}else if(mappingTabella.getIdTabella().getMapping().equals("IdentificativoCatastale")){
+					mappingIdentificativoCatastale=mappingTabella;
+					
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Indirizzo")){
+					mappingIndirizzo=mappingTabella;
+					
+					
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingFornituraLocazione,mappingContratto,mappingIdentificativoCatastale,mappingIndirizzo);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private static void LoadFile(File filename, File filename2, File filename3, File mappingIndirizzoContratti) {
 
 		Gson gson = new Gson();
@@ -250,7 +312,9 @@ public class MappingInsertForLocazione {
 				num = numden;
 				den = "";
 			}
-			
+			if (sub.equals("0")){
+				sub="";
+			}
 			if (num.equals("")){
 				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C0_N0_D0_S0");
 			}else {
@@ -319,20 +383,18 @@ public class MappingInsertForLocazione {
 		}
 		// return output;
 	}
-	public static void run()
+	public static void run(String filePath, String fileMappings)
 	{
 		String path = "file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperForLoc.readXLSFile(path);
+			WrapperForLoc.readXLSFile(filePath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingFornituraLocazione.json"),
-				new File("file/file_mapping/mappingContratto2.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale3.json"),new File("file/file_mapping/mappingIndirizzoLocazioni.json"));
+		LoadFile(new File(fileMappings));
 	}
 	public static void main(String[] args) {
 
@@ -347,7 +409,8 @@ public class MappingInsertForLocazione {
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingFornituraLocazione.json"),
 				new File("file/file_mapping/mappingContratto2.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale3.json"),new File("file/file_mapping/mappingIndirizzoLocazioni.json"));
+				new File("file/file_mapping/mappingIdentificativoCatastale3.json"),
+				new File("file/file_mapping/mappingIndirizzoLocazioni.json"));
 
 	}
 

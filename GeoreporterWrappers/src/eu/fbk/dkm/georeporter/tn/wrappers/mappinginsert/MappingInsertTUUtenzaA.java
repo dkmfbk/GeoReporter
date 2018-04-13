@@ -20,6 +20,7 @@ import com.google.gson.stream.JsonReader;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UtenzaAcqua;
@@ -29,6 +30,85 @@ public class MappingInsertTUUtenzaA {
 
 	public static List<UtenzaAcqua> listUtenzaAcqua = WrapperTUUtenzaA.listUtenzaAcqua;
 
+	
+	
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingUtenzaAcqua= new MappingTabella();
+		MappingTabella mappingTributo_o_Utenza=new MappingTabella();
+		MappingTabella mappingUtenza=new MappingTabella();
+		MappingTabella mappingSoggetto=new MappingTabella();
+		MappingTabella mappingPersonaFisica=new MappingTabella();
+		MappingTabella mappingIndirizzoContribuente=new MappingTabella();
+		MappingTabella mappingIndirizzoRecapitoContribuente=new MappingTabella();
+		MappingTabella mappingIndirizzoUtenza=new MappingTabella();
+		MappingTabella mappingIdentificativoCatastale=new MappingTabella();
+	
+		
+		
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getNome().equals("UtenzaAcqua")){
+					mappingUtenzaAcqua=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("Tributo_o_Utenza")){
+					mappingTributo_o_Utenza=mappingTabella;
+					
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("Soggetto")){
+					mappingSoggetto=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("PersonaFisica")){
+					mappingPersonaFisica=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IndirizzoContribuente")){
+					mappingIndirizzoContribuente=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IndirizzoRecapitoContribuente")){
+					mappingIndirizzoRecapitoContribuente=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IndirizzoUtenza")){
+					mappingIndirizzoUtenza=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getNome().equals("IdentificativoCatastale")){
+					mappingIdentificativoCatastale=mappingTabella;
+							
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingTributo_o_Utenza,mappingUtenza,mappingUtenzaAcqua,mappingSoggetto,mappingPersonaFisica,
+					mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
 	private static void LoadFile(File filename, File filename2, File filename3, File filename4, File filename5,
 			File filename6, File filename7, File filename8, File filename9) {
 
@@ -284,10 +364,15 @@ public class MappingInsertTUUtenzaA {
 			// riga di tipo RIGATABELLA per PF
 			if (listUtenzaAcqua.get(j).getValori().get("codfiscale").isEmpty() == false) {
 				RigaTabella rigaTPF = new RigaTabella();
-				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data5.getIdTabella().getMapping());
+				
 				rigaTPF.setListaattributi(listAttributiSOG);
 				rigaTPF.setListachiave(listChiaveSOG);
 				String codfis = listUtenzaAcqua.get(j).getValori().get("codfiscale");
+				if (codfis.matches("[0-9]+")){
+					rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#PersonaGiuridica");
+				}else {
+					rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data5.getIdTabella().getMapping());
+				}
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
@@ -369,7 +454,9 @@ public class MappingInsertTUUtenzaA {
 					num=parts[0];
 					den=parts[1];
 				}
-				
+				if (sub.equals("0")){
+					sub="";
+				}
 				rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				// inserimento dell'elemento
 				insertRiga(rigaTIDECAT);
@@ -378,6 +465,9 @@ public class MappingInsertTUUtenzaA {
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID
+				if (sub.equals("0")){
+					sub="";
+				}
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelUA.add(rel);
 			}
@@ -460,26 +550,21 @@ public class MappingInsertTUUtenzaA {
 		}
 		// return output;
 	}
-	public static void run() {
+	public static void run(String filePath, String fileMappings) {
+
 		
-		String path = "file/TN_file/TRAMBILENO_Utenze_H2O_DA GARBAGE.xls";
+	//	String path = "file/TN_file/TRAMBILENO_Utenze_H2O_DA GARBAGE.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperTUUtenzaA.readXLSFile(path);
+			WrapperTUUtenzaA.readXLSFile(filePath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
-				new File("file/file_mapping/mappingUtenza.json"), new File("file/file_mapping/mappingUtenzaAcqua.json"),
-				new File("file/file_mapping/mappingSoggetto.json"),
-				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEua.json"),
-				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
-				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
-				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
+		LoadFile(new File(fileMappings) );
+			
 
 		
 	}
@@ -496,7 +581,8 @@ public class MappingInsertTUUtenzaA {
 
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
-				new File("file/file_mapping/mappingUtenza.json"), new File("file/file_mapping/mappingUtenzaAcqua.json"),
+				new File("file/file_mapping/mappingUtenza.json"),
+				new File("file/file_mapping/mappingUtenzaAcqua.json"),
 				new File("file/file_mapping/mappingSoggetto.json"),
 				new File("file/file_mapping/mappingPersonaFisicaCONTRIBUENTEua.json"),
 				new File("file/file_mapping/mappingIndirizzoCONTRIBUENTE.json"),
@@ -504,6 +590,8 @@ public class MappingInsertTUUtenzaA {
 				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
 				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
 
+		
+		
 	}
 
 }
