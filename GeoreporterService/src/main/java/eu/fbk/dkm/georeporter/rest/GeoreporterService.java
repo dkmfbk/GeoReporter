@@ -885,7 +885,7 @@ public class GeoreporterService {
 				}
 
 				if (urisoggetto != null) {
-					soggetto.setUri(urisoggetto.stringValue());
+			//		soggetto.setUri(urisoggetto.stringValue());
 				}
 				if (nome != null) {
 					soggetto.setNome(nome.stringValue());
@@ -1219,7 +1219,7 @@ public class GeoreporterService {
 					 * 
 					 */
 
-					+ " select    ?acqua ?datainizio ?contribuente ?categoriadescrizione ?notabreve  ?interno"
+					+ " select    ?acqua ?datainizio ?cognome ?nome ?contribuente ?categoriadescrizione ?notabreve  ?interno"
 					+ " where{ "
 
 					+ "     ?idcat a :IdentificativoCatastale .   " + "     ?idcat :hasUnitaImmobiliare :" + codUI +" ."
@@ -1230,9 +1230,11 @@ public class GeoreporterService {
 					+ "     ?acqua :hasIdentificativoCatastale ?idcat .   "
 					+ "     ?acqua :dataInizio ?datainizio . "
 					+ "     ?acqua :categoriaDescrizione ?categoriadescrizione . "
-					+ "     ?acqua :codiceContribuente ?contribuente . "
+					+ "     ?acqua :codiceContribuente ?codcontribuente . "
 
 					+ "   OPTIONAL{   ?acqua :hasContribuente ?contribuente }. "
+					+ "   OPTIONAL{   ?contribuente :cognome ?cognome }. "
+					+ "   OPTIONAL{   ?contribuente :nome ?nome }. "
 					+ "   OPTIONAL{  ?acqua :notaBreve ?notabreve }. " 
 					+"   OPTIONAL{  ?acqua :interno ?interno}.}";
 
@@ -1254,12 +1256,14 @@ public class GeoreporterService {
 				Value notabreve = bindingSet.getValue("notabreve");
 				Value codicefiscale = bindingSet.getValue("codicefiscale");
 				Value contribuente = bindingSet.getValue("contribuente");
+				Value cognome = bindingSet.getValue("cognome");
+				Value nome = bindingSet.getValue("nome");
 				Value categoriadescrizione = bindingSet.getValue("categoriadescrizione");
 
 				UtenzaAcqua utenzaacqua = new UtenzaAcqua();
 
 				if (acquaURI != null) {
-					utenzaacqua.setUri(acquaURI.stringValue());
+				//	utenzaacqua.setUri(acquaURI.stringValue());
 				}
 				if (datainizio != null) {
 					utenzaacqua.setDataInizio(datainizio.stringValue());
@@ -1278,7 +1282,16 @@ public class GeoreporterService {
 				}
 
 				if (contribuente != null) {
-					utenzaacqua.setContribuente((contribuente.stringValue()));
+					String soggetto="";
+					if (cognome !=null) {
+						soggetto =soggetto+cognome.stringValue();	
+					}
+					if (nome !=null) {
+						soggetto =soggetto+" "+nome.stringValue();	
+					}
+					System.out.println("SOGGETTO="+ soggetto);
+					utenzaacqua.setContribuente(soggetto);
+					
 				}
 				if (categoriadescrizione != null) {
 					utenzaacqua.setCategoriaDescrizione((categoriadescrizione.stringValue()));
@@ -1448,7 +1461,7 @@ public class GeoreporterService {
 
 			String queryString = queryStringPrefix
 
-					+ " select    ?ici  ?contribuente ?indirizzo ?categoriadescrizione ?rendita" + " where{ "
+					+ " select    ?ici  ?cognome ?nome ?contribuente ?indirizzo ?categoriadescrizione ?rendita" + " where{ "
 
 					+ "     ?idcat a :IdentificativoCatastale .   "
 					+ "     ?idcat :hasUnitaImmobiliare :" + codUI
@@ -1462,6 +1475,8 @@ public class GeoreporterService {
 					+ " OPTIONAL{    ?idindirizzo :indirizzoCompleto ?indirizzo}. "
 					+ "     ?ici :categoriaDescrizione ?categoriadescrizione. "
 					+ "     ?ici :hasContribuente ?contribuente. " 
+					+  "OPTIONAL { ?contribuente :cognome ?cognome} ."
+					+  "OPTIONAL { ?contribuente :nome ?nome} ."
 					+ "     ?ici :rendita ?rendita. "
 					
 					+ " }";
@@ -1480,6 +1495,8 @@ public class GeoreporterService {
 
 				Value iciURI = bindingSet.getValue("ici");
 				Value indirizzo = bindingSet.getValue("indirizzo");
+				Value cognome = bindingSet.getValue("cognome");
+				Value nome = bindingSet.getValue("nome");
 				Value rendita = bindingSet.getValue("rendita");
 				Value contribuente = bindingSet.getValue("contribuente");
 				Value categoriadescrizione = bindingSet.getValue("categoriadescrizione");
@@ -1487,7 +1504,7 @@ public class GeoreporterService {
 				TributiICI tributiici = new TributiICI();
 
 				if (iciURI != null) {
-					tributiici.setUri(iciURI.stringValue());
+			//		tributiici.setUri(iciURI.stringValue());
 				}
 
 				if (indirizzo != null) {
@@ -1497,7 +1514,15 @@ public class GeoreporterService {
 					tributiici.setRendita(rendita.stringValue());
 				}
 				if (contribuente != null) {
-					tributiici.setContribuente((contribuente.stringValue()));
+					String soggetto="";
+					if (cognome !=null) {
+						soggetto =soggetto+cognome.stringValue();	
+					}
+					if (nome !=null) {
+						soggetto =soggetto+" "+nome.stringValue();	
+					}
+					System.out.println("SOGGETTO="+ soggetto);
+					tributiici.setContribuente(soggetto);
 				}
 				if (categoriadescrizione != null) {
 					tributiici.setCategoriadescrizione((categoriadescrizione.stringValue()));
@@ -1593,7 +1618,7 @@ public class GeoreporterService {
 				UtenzaRifiuti utenzaRifiuti = new UtenzaRifiuti();
 
 				if (urURI != null) {
-					utenzaRifiuti.setUri(urURI.stringValue());
+				//	utenzaRifiuti.setUri(urURI.stringValue());
 				}
 				if (categoria != null) {
 					utenzaRifiuti.setCategoria((categoria.stringValue()));
@@ -1703,7 +1728,7 @@ public class GeoreporterService {
 				Locazione locazione = new Locazione();
 
 				if (urLocaz != null) {
-					locazione.setUri(urLocaz.stringValue());
+				//	locazione.setUri(urLocaz.stringValue());
 				}
 				if (tipoCanone != null) {
 					locazione.setTipoCanone((tipoCanone.stringValue()));
@@ -3991,31 +4016,35 @@ String result="";
 
 			String queryString = queryStringPrefix
 
-//			+"		SELECT DISTINCT ?classe1 ?p ?classe2 WHERE {"
-//			+"	?classe1  a owl:Class . "
-//			+"	?classe2 a owl:Class .  "
+/*			+"		SELECT DISTINCT ?classe1 ?p ?classe2 WHERE {"
+			+"	?classe1  a owl:Class . "
+			+"	?classe2 a owl:Class .  "
 				 
-//			+"	    ?p rdfs:domain ?classe1 . "
-//			+"	    ?p  rdfs:range ?classe2 .  "
-				 
-//			+"	  FILTER NOT EXISTS  { ?classe1 rdfs:subClassOf ?classe2} " 
-//			+"	 FILTER (!isBlank(?classe1))} ";
-
+			+"	    ?p rdfs:domain ?classe1 . "
+			+"	    ?p  rdfs:range ?classe2 .  "
+			 
+			+"	  FILTER NOT EXISTS  { ?classe1 rdfs:subClassOf ?classe2} " 
+			+"	 FILTER (!isBlank(?classe1))} ";
+*/
 			
 			
 			
 			
 			
-			+"		SELECT DISTINCT ?classe1 ?p ?classe2 WHERE {"
-			+"	?y  a owl:Class . "
+			+"		SELECT DISTINCT ?classe1 ?p ?classe2 ?label WHERE {"
+			+"	?classe1 a owl:Class . "
 			+"	?classe2 a owl:Class .  "
 				 
 		//	+"	    ?p rdfs:domain ?classe1 . "
-			+ "?p  rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* ?y."
-			+ "?p  rdfs:range/(owl:unionOf/rdf:rest*/rdf:first)* ?classe2."
+			+ "?p  rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* ?x."
+			+ "?p  rdfs:range/(owl:unionOf/rdf:rest*/rdf:first)* ?y."
+			+ " ?p rdfs:label ?label ."
 			//+"	    ?p  rdfs:range ?classe2 .  "
-			+"  ?classe1 rdfs:subClassOf* ?y ."	 
-			+"	  FILTER NOT EXISTS  { ?y rdfs:subClassOf ?classe2} " 
+			+"  ?classe1 rdfs:subClassOf* ?x ."	
+			+"  ?classe2 rdfs:subClassOf* ?y ."	 
+			+"	  FILTER NOT EXISTS  { ?x rdfs:subClassOf ?y} " 
+			+"	  FILTER  NOT EXISTS  { ?z rdfs:subClassOf ?classe1} "
+			+"	  FILTER  NOT EXISTS  { ?k rdfs:subClassOf ?classe2} " 
 			+"	 FILTER (!isBlank(?classe1))}";
 			
 			
@@ -4038,25 +4067,43 @@ String result="";
 
 				Value classe1 = bindingSet.getValue("classe1");
 				Value relazione = bindingSet.getValue("p");
+				Value label = bindingSet.getValue("label");
 				Value classe2 = bindingSet.getValue("classe2");
 				
 
 				Relazione rel = new Relazione();
+				Relazione relinv = new Relazione();
 
 				if (classe1 != null) {
 				rel.setUriDomain(classe1.stringValue().substring(classe1.stringValue().lastIndexOf('#') + 1));
+				relinv.setUriRange(classe1.stringValue().substring(classe1.stringValue().lastIndexOf('#') + 1));
 				}
 				
 			
 				if (classe2 != null) {
 					rel.setUriRange((classe2.stringValue().substring(classe2.stringValue().lastIndexOf('#') + 1)));
+					relinv.setUriDomain((classe2.stringValue().substring(classe2.stringValue().lastIndexOf('#') + 1)));
 				}
 
 				if (relazione != null) {
 					rel.setNomerelazione((relazione.stringValue().substring(relazione.stringValue().lastIndexOf('#') + 1)));
+					relinv.setNomerelazione(("inversa_"+relazione.stringValue().substring(relazione.stringValue().lastIndexOf('#') + 1)));
+				
 				}
+				
+				if (label != null) {
+					rel.setLabel((relazione.stringValue()).substring(relazione.stringValue().lastIndexOf('#') + 1));
+					relinv.setLabel( (relazione.stringValue().substring(relazione.stringValue().lastIndexOf('#') + 1).replaceFirst("has", "is")+"Of"));
+				
+				}
+				
+				
+				
+				
+				
 
 				listaRelazioni.add(rel);
+				listaRelazioni.add(relinv);
 			}
 			// qresult.close();
 			// connection.close();
