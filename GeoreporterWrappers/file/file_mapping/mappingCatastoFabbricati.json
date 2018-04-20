@@ -24,7 +24,7 @@
 {"mapping":"http://dkm.fbk.eu/georeporter#codiceAmministrativo","nome":"http://dkm.fbk.eu/georeporter#comunecatastale","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#codiceComuneCatastale","nome":"http://dkm.fbk.eu/georeporter#codicecomunecatastale","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#denominatore","nome":"http://dkm.fbk.eu/georeporter#denominatore","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
-{"mapping":"http://dkm.fbk.eu/georeporter#identificativoParticella","nome":"http://dkm.fbk.eu/georeporter#identificativoimmobile","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#identificativoParticella","nome":"http://dkm.fbk.eu/georeporter#identificativoParticella","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#numero","nome":"http://dkm.fbk.eu/georeporter#numero","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#partita","nome":"http://dkm.fbk.eu/georeporter#partita","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#progressivo","nome":"http://dkm.fbk.eu/georeporter#progressivo","tipo":"http://www.w3.org/2001/XMLSchema#integer"}],
