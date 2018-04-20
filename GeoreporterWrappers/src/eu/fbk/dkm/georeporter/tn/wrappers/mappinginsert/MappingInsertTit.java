@@ -21,6 +21,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
@@ -33,6 +34,54 @@ public class MappingInsertTit {
 	// lista di elementi TITOLARITA del file WRAPPER
 	public static List<Titolarita> listTitolarita = WrapperTit.listTitolarita;
 
+	
+	
+	
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingTitolarita= new MappingTabella();
+		MappingTabella mappingNota=new MappingTabella();
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("Titolarita")){
+					mappingTitolarita=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Nota")){
+					mappingNota=mappingTabella;
+					
+					
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingTitolarita,mappingNota);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
 	private static void LoadFile(File filename, File filenameNote) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
@@ -396,20 +445,21 @@ public class MappingInsertTit {
 	}
 
 
-	public static void run() {
+	public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {
 		
 		
-		String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
-		String pathP = "file/TN_header/headerfiletit.csv";
+	//	String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
+	//	String pathP = "file/TN_header/headerfiletit.csv";
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file TIT
-		WrapperTit.estrazioneHeaderFileTit(pathP);
-		WrapperTit.letturaFileTit(pathT);
+		WrapperTit.estrazioneHeaderFileTit(pathFileHeader);
+		WrapperTit.letturaFileTit(pathFile);
 		// mapping e insert degli elementi TITOLARITA
-		LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
-
-			
+		
+		LoadFile(new File(pathFileMappings));
+	//	LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
+		
 	}
 	
 	

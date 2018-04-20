@@ -23,6 +23,7 @@ import com.google.gson.stream.JsonReader;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.PersonaFisica;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.PersonaGiuridica;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ProprietarioproTempore;
@@ -33,7 +34,77 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSogFon;
 
 public class MappingInsertSogFon {
 
-	private static void LoadFile1(File filename, File filename2, List<PersonaFisica> listPers) {
+
+	public static List<PersonaFisica> listPersFisica = WrapperSogFon.listPersonaFisicaFon;
+	public static List<PersonaGiuridica> listPersGiuridica= WrapperSogFon.listPersonaGiuridicaFon;
+	public static List<ProprietarioproTempore> listProprietarioProTempore= WrapperSogFon.listProprietarioproTempore;
+	
+
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingSoggetto= new MappingTabella();
+		MappingTabella mappingPersonaFisica=new MappingTabella();
+		MappingTabella mappingPersonaGiuridica=new MappingTabella();
+		MappingTabella mappingProprietarioProtempore=new MappingTabella();
+		
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("Soggetto")){
+					mappingSoggetto=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("PersonaFisica")){
+					mappingPersonaFisica=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("PersonaGiuridica")){
+					mappingPersonaGiuridica=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("ProprietarioProTempore")){
+					mappingProprietarioProtempore=mappingTabella;
+						
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			
+			associazioneMappingNomeVal(mappingSoggetto, mappingSoggetto, listPersFisica);
+			associazioneMappingNomeVal2(mappingSoggetto, mappingSoggetto, listPersGiuridica);
+			associazioneMappingNomeVal3(mappingSoggetto, mappingSoggetto, listProprietarioProTempore);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private static void LoadFile1(File filename, File filename2) {
 		// lettura fai JSON per mappatura persona Fisica
 		//input json personafisica, soggetto
 		Gson gson = new Gson();
@@ -50,7 +121,7 @@ public class MappingInsertSogFon {
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, data2, listPers);
+			associazioneMappingNomeVal(data, data2, listPersFisica);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -59,7 +130,7 @@ public class MappingInsertSogFon {
 
 	}
 
-	private static void LoadFile2(File filename, File filename2, List<PersonaGiuridica> listPers) {
+	private static void LoadFile2(File filename, File filename2) {
 		// lettura fai JSON per mappatura persona Giuridica
 		//input json personagiuridica, soggetto
 		
@@ -76,7 +147,7 @@ public class MappingInsertSogFon {
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
-			associazioneMappingNomeVal2(data, data2, listPers);
+			associazioneMappingNomeVal2(data, data2, listPersGiuridica);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -84,7 +155,7 @@ public class MappingInsertSogFon {
 		}
 
 	}
-	private static void LoadFile3(File filename, File filename2, List<ProprietarioproTempore> listPers) {
+	private static void LoadFile3(File filename, File filename2) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -100,7 +171,7 @@ public class MappingInsertSogFon {
 			reader2 = new JsonReader(new FileReader(filename2));
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
-			associazioneMappingNomeVal3(data, data2, listPers);
+			associazioneMappingNomeVal3(data, data2, listProprietarioProTempore);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -380,25 +451,27 @@ public class MappingInsertSogFon {
 	}
 
 	
-	public static void run(){
+	public static void run(String filePath,String fileHeaderPath ,String fileMappings){
 
 		// path del file .SOG e del file con gli HEADER inseriti a mano da un utente
-		String pathF = "file/TN_file/404_41097.SOG";
-		String pathP = "file/TN_header/headerfilesogfon.csv";
+//		String pathF = "file/TN_file/404_41097.SOG";
+//		String pathP = "file/TN_header/headerfilesogfon.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperSogFon.estrazioneHeaderFileSogFon(pathP);
+		WrapperSogFon.estrazioneHeaderFileSogFon(fileHeaderPath);
 
 		// chiamata per l'analisi del file .SOG FON
-		WrapperSogFon.letturaFileSogFon(pathF);
+		WrapperSogFon.letturaFileSogFon(filePath);
 
 		// mapping e insert degli elementi PF PG
-		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
-				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaFisicaFon);
-		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
-				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaGiuridicaFon);
-		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
-				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listProprietarioproTempore);
+		LoadFile(new File(fileMappings));
+		
+//		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
+//				new File("file/file_mapping/mappingSoggetto.json"));
+//		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
+//				new File("file/file_mapping/mappingSoggetto.json"));
+//		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
+//				new File("file/file_mapping/mappingSoggetto.json"));
 	}
 
 	
@@ -416,12 +489,12 @@ public class MappingInsertSogFon {
 		WrapperSogFon.letturaFileSogFon(pathF);
 
 		// mapping e insert degli elementi PF PG
-		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
-				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaFisicaFon);
-		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
-				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaGiuridicaFon);
-		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
-				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listProprietarioproTempore);
+//		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
+//				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaFisicaFon);
+//		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
+//				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listPersonaGiuridicaFon);
+//		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
+//				new File("file/file_mapping/mappingSoggetto.json"), WrapperSogFon.listProprietarioproTempore);
 
 	}
 

@@ -27,6 +27,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Famiglia;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Indirizzo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
@@ -42,7 +43,54 @@ public class MappingInsertFabIndirizzo {
 
 	public static List<Indirizzo> listIndirizzi = WrapperFab.listIndirizzi;
 
-	private static void LoadFile(File filename) {
+
+	
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingIndirizzo= new MappingTabella();
+		
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("Indirizzo")){
+					mappingIndirizzo=mappingTabella;				
+					
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingIndirizzo);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private static void LoadFile_old(File filename) {
 
 		Gson gson = new Gson();
 		JsonReader reader;

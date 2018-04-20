@@ -141,6 +141,13 @@ public class MappingInsertFabIde {
 				}
 
 			}
+			//aggiungo il tipo particella = E edificiale
+			Attributo tmp = new Attributo();
+			tmp.setNome("tipoparticella");
+			tmp.setMapping("tipoParticella");
+			tmp.setTipo("http://www.w3.org/2001/XMLSchema#string");
+			listAttributi.add(tmp);
+			
 			// riga di tipo RIGATABELLA per Particella
 			RigaTabella rigaTPar = new RigaTabella();
 			rigaTPar.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());

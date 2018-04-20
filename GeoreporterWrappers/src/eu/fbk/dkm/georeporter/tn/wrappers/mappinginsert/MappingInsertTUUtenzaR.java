@@ -61,6 +61,8 @@ public class MappingInsertTUUtenzaR {
 				System.out.println(mappingTabella.getIdTabella().getNome());	
 				if (mappingTabella.getIdTabella().getNome().equals("UtenzaRifiuti")){
 					mappingUtenzaRifiuti=mappingTabella;
+				}else if(mappingTabella.getIdTabella().getNome().equals("Utenza")){
+					mappingUtenza=mappingTabella;
 					
 				}else if(mappingTabella.getIdTabella().getNome().equals("Tributo_o_Utenza")){
 					mappingTributo_o_Utenza=mappingTabella;

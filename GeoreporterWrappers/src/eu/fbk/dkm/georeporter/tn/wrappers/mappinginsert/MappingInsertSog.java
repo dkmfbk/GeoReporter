@@ -81,9 +81,9 @@ public class MappingInsertSog {
 			
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(mappingSoggetto,mappingPersonaFisica);
-			associazioneMappingNomeVal2(mappingSoggetto,mappingPersonaGiuridica);
-			associazioneMappingNomeVal3(mappingSoggetto,mappingProprietarioProtempore);
+			associazioneMappingNomeVal(mappingPersonaFisica,mappingSoggetto);
+			associazioneMappingNomeVal2(mappingPersonaGiuridica,mappingSoggetto);
+			associazioneMappingNomeVal3(mappingProprietarioProtempore,mappingSoggetto);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

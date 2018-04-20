@@ -21,6 +21,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Particella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
@@ -34,6 +35,64 @@ public class MappingInsertParFon {
 	// lista di elementi PARTICELLA del file WRAPPER
 	public static List<Particella> listParticella = WrapperParFon.listParticella;
 
+
+	
+	
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingParticella= new MappingTabella();
+		MappingTabella mappingIdentificativocatastale=new MappingTabella();
+		MappingTabella mappingIntavolazione=new MappingTabella();
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("Particella")){
+					mappingParticella=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("IdentificativoCatastale")){
+					mappingIdentificativocatastale=mappingTabella;
+					
+					
+				
+			}else if(mappingTabella.getIdTabella().getMapping().equals("Intavolazione")){
+				mappingIntavolazione=mappingTabella;
+				
+				
+			}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingParticella,mappingIntavolazione,mappingIdentificativocatastale);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private static void LoadFile(File filename, File filenameNote, File filename2) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
@@ -156,7 +215,9 @@ public class MappingInsertParFon {
 			}
 			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
 
-			String codamm = listParticella.get(j).getListaValoriChiave().get(0).get("comunecatastale");
+		//	String codamm = listParticella.get(j).getListaValoriChiave().get(0).get("comunecatastale");
+			String tipoparticella = listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticella");
+			String codamm = WrapperParFon.codiceComunecatastale;
 			String num = listParticella.get(j).getValori().get("numero");
 			String den = listParticella.get(j).getValori().get("denominatore");
 			String idepar = listParticella.get(j).getListaValoriChiave().get(0).get("identificativoparticella");
@@ -169,6 +230,7 @@ public class MappingInsertParFon {
 			if (!listChiavi.isEmpty()) {
 				rigaTPAR.setListachiave(listChiavi);
 			}
+			
 			rigaTPAR.setUririga("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
 
 			RigaTabella rigaTINI = new RigaTabella();
@@ -234,14 +296,14 @@ public class MappingInsertParFon {
 				listRelPAR.add(relNF);
 			}
 			// relazione tipo particella
-			if (!listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticella").isEmpty()) {
-				Relazione relParTipo = new Relazione();
-				relParTipo.setNomerelazione("http://dkm.fbk.eu/georeporter#hasTipoParticella");
-				relParTipo.setUriDomain("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
-				relParTipo.setUriRange("http://dkm.fbk.eu/georeporter#"
-						+ listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticella"));
-				listRelPAR.add(relParTipo);
-			}
+//			if (!listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticella").isEmpty()) {
+//				Relazione relParTipo = new Relazione();
+//				relParTipo.setNomerelazione("http://dkm.fbk.eu/georeporter#hasTipoParticella");
+//				relParTipo.setUriDomain("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
+//				relParTipo.setUriRange("http://dkm.fbk.eu/georeporter#"
+//						+ listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticella"));
+//				listRelPAR.add(relParTipo);
+//			}
 
 			// setto relazioni
 			rigaTPAR.setListarelazioni(listRelPAR);
@@ -398,24 +460,25 @@ public class MappingInsertParFon {
 
 	}
 
-	public static void run() {
+	public static void run(String filePath, String fileHeaderPath, String fileMappings, String codicecomunecatastale) {
 
 		// path del file .PAR e del file con gli HEADER inseriti a mano da un utente
-		String pathF = "file/TN_file/404_41097.PAR";
-		String pathP = "file/TN_header/headerfileparfon.csv";
+	//	String pathF = "file/TN_file/404_41097.PAR";
+	//	String pathP = "file/TN_header/headerfileparfon.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperParFon.estrazioneHeaderFilePar(pathP);
+		WrapperParFon.estrazioneHeaderFilePar(fileHeaderPath);
 
 		// chiamata per l'analisi del file .PAR
-		WrapperParFon.letturaFilePar(pathF);
-
+		WrapperParFon.letturaFilePar(filePath);
+		WrapperParFon.codiceComunecatastale=codicecomunecatastale;
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
 		// questo grazie ai file di mapping
-		LoadFile(new File("file/file_mapping/mappingParticella.json"),
-				new File("file/file_mapping/mappingIntavolazione.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
+		LoadFile(new File(fileMappings));
+	//	LoadFile(new File("file/file_mapping/mappingParticella.json"),
+	//			new File("file/file_mapping/mappingIntavolazione.json"),
+	//			new File("file/file_mapping/mappingIdentificativoCatastale.json"));
 
 	}
 	

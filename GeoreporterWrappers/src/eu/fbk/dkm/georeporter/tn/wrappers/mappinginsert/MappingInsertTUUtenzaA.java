@@ -64,6 +64,10 @@ public class MappingInsertTUUtenzaA {
 				if (mappingTabella.getIdTabella().getNome().equals("UtenzaAcqua")){
 					mappingUtenzaAcqua=mappingTabella;
 					
+				}else if(mappingTabella.getIdTabella().getNome().equals("Utenza")){
+					mappingUtenza=mappingTabella;
+						
+					
 				}else if(mappingTabella.getIdTabella().getNome().equals("Tributo_o_Utenza")){
 					mappingTributo_o_Utenza=mappingTabella;
 					

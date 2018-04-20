@@ -21,6 +21,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
@@ -35,6 +36,56 @@ public class MappingInsertTtcFon {
 	// lista di elementi TITOLARITA del file WRAPPER
 	public static List<TitolaritaCompleta> listTitolaritaCompleta = WrapperTtcFon.listTitolaritaCompleta;
 
+	
+	
+	
+	
+	public static void LoadFile(File fileMappings) {
+
+		Gson gson = new Gson();
+		JsonReader reader;
+
+		MappingTabella mappingTitolarita= new MappingTabella();
+		MappingTabella mappingIntavolazione=new MappingTabella();
+	
+
+		try {
+			reader = new JsonReader(new FileReader(fileMappings));
+			MappingTabelle mappings = gson.fromJson(reader, MappingTabelle.class);
+
+			
+			List<MappingTabella> listofMappings= mappings.getMappings();
+
+			for (MappingTabella mappingTabella : listofMappings) {
+				System.out.println(mappingTabella.getIdTabella().getNome());	
+				if (mappingTabella.getIdTabella().getMapping().equals("Titolarita")){
+					mappingTitolarita=mappingTabella;
+					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("Intavolazione")){
+					mappingIntavolazione=mappingTabella;
+					
+				
+				}
+			}
+			
+
+			// chiamata al metodo per l'accoppiamento effettivo
+			associazioneMappingNomeVal(mappingTitolarita, mappingIntavolazione);
+		
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
 	private static void LoadFile(File filename, File filename2) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
@@ -418,17 +469,18 @@ String par=par_.replaceAll("\\s+", "");
 		return response.getEntity(String.class);
 
 	}
-	public static void run() {
-		String pathT = "file/TN_file/404_41097.TTC";
-		String pathP = "file/TN_header/headerfilettcfon.csv";
+	public static void run(String filePath,String fileHeaderPath ,String fileMappings){
+	//	String pathT = "file/TN_file/404_41097.TTC";
+	//	String pathP = "file/TN_header/headerfilettcfon.csv";
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file TTC
-		WrapperTtcFon.estrazioneHeaderFileTtcFon(pathP);
-		WrapperTtcFon.letturaFileTtcFon(pathT);
+		WrapperTtcFon.estrazioneHeaderFileTtcFon(fileHeaderPath);
+		WrapperTtcFon.letturaFileTtcFon(filePath);
 		// mapping e insert degli elementi TITOLARITA
-		LoadFile(new File("file/file_mapping/mappingTitolarita2.json"),
-				new File("file/file_mapping/mappingIntavolazione.json"));
+		LoadFile(new File(fileMappings));
+	//	LoadFile(new File("file/file_mapping/mappingTitolarita2.json"),
+	//			new File("file/file_mapping/mappingIntavolazione.json"));
 
 	}
 	public static void main(String[] args) {
@@ -437,11 +489,11 @@ String par=par_.replaceAll("\\s+", "");
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file TTC
-		WrapperTtcFon.estrazioneHeaderFileTtcFon(pathP);
-		WrapperTtcFon.letturaFileTtcFon(pathT);
+	//	WrapperTtcFon.estrazioneHeaderFileTtcFon(pathP);
+	//	WrapperTtcFon.letturaFileTtcFon(pathT);
 		// mapping e insert degli elementi TITOLARITA
-		LoadFile(new File("file/file_mapping/mappingTitolarita2.json"),
-				new File("file/file_mapping/mappingIntavolazione.json"));
+	//	LoadFile(new File("file/file_mapping/mappingTitolarita2.json"),
+	//			new File("file/file_mapping/mappingIntavolazione.json"));
 
 	}
 
