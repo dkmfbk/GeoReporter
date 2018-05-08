@@ -85,8 +85,10 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.sun.jersey.api.client.ClientResponse.Status;
 import com.sun.jersey.api.json.JSONWithPadding;
+import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
 import com.sun.jersey.multipart.BodyPartEntity;
+import com.sun.jersey.multipart.FormDataParam;
 import com.sun.jersey.multipart.MultiPart;
 
 import eu.fbk.dkm.georeporter.ExceptionHandlingRelated.CustomerDataNotFoundException;
@@ -114,6 +116,8 @@ import eu.fbk.dkm.georeporter.pojos.TributiICI;
 import eu.fbk.dkm.georeporter.pojos.UnitaImmobiliare;
 import eu.fbk.dkm.georeporter.pojos.UtenzaAcqua;
 import eu.fbk.dkm.georeporter.pojos.UtenzaRifiuti;
+import eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert.ImportGeoreporter;
+//import eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert.ImportGeoreporter;
 import eu.fbk.dkm.georeporter.utils.Costanti;
 
 
@@ -813,7 +817,7 @@ public class GeoreporterService {
 	public JSONWithPadding getAnagraficaSoggettoui_new(@QueryParam("callback") String callback,
 			@QueryParam("ui") String ui) {
 
-		Soggetto sog = new Soggetto();
+	//	Soggetto sog = new Soggetto();
 		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
 
 		// String springlesrepositoryID ="georeporter";
@@ -900,8 +904,11 @@ public class GeoreporterService {
 				if (sesso != null) {
 					soggetto.setSesso(sesso.stringValue());
 				}
-				
-			listaSoggetto.add(soggetto);
+				if (urisoggetto != null) {
+					//		soggetto.setUri(urisoggetto.stringValue());
+					listaSoggetto.add(soggetto);
+						}
+			
 			}
 			qresult.close();
 			connection.close();
@@ -2011,26 +2018,213 @@ public class GeoreporterService {
 		return listaUtenzaRifiuti;
 
 	}
+	
 
 	
+
+	 
+	
 	@POST
-	@Path("/uploadunitaimmobiliari")
-	@Consumes("multipart/mixed")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String uploadUnitaImmobiliari (MultiPart multiPart) {
-        String result="fail";
+	@Path("/importaunitaimmobiliari")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	//public String uploadUnitaImmobiliari (MultiPart multiPart,MultiPart multiPart2) {
+	public String  uploadUnitaImmobiliari (
+      
+	
+	@FormDataParam("file") InputStream uploadedInputStream,
+	@FormDataParam("file") FormDataContentDisposition fileDetail) {
+	
+	
+	
+	
+	String result="fail";
        
+	String uploadedFileLocation =  fileDetail.getFileName();
 
-            BodyPartEntity bpe = (BodyPartEntity) multiPart.getBodyParts().get(0)
+	// save it
+	writeToFile(uploadedInputStream, uploadedFileLocation);
+
+	String output = "File uploaded to : " + uploadedFileLocation;
+
+	return output;
+
+	
+
+	}
+	
+	
+	@POST
+	@Path("/importadati")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	//public String uploadUnitaImmobiliari (MultiPart multiPart,MultiPart multiPart2) {
+	public String  importaDati (
+			@FormDataParam("tipodati") String tipodati,
+		
+			@FormDataParam("fileheader") InputStream fileHeader,
+			
+		
+   @FormDataParam("fileheader") FormDataContentDisposition fileHeaderDetail,		
+	@FormDataParam("filedati") InputStream fileDati,
+	@FormDataParam("filedati") FormDataContentDisposition fileDatiDetail,
+	@FormDataParam("filemappings") InputStream fileMappingInputSream,
+	@FormDataParam("filemappings") FormDataContentDisposition fileMappingsDetail) 
+	
+	{
+		String uploadedFileMappingsLocation =  fileMappingsDetail.getFileName();
+		String output = "File uploaded to : " + uploadedFileMappingsLocation;
+		System.out.println(output);
+		
+		
+		
+		
+		
+		
+		
+		
+		System.out.println("filedati="+fileDatiDetail.getFileName());
+		System.out.println("fileMappings="+fileMappingsDetail.getFileName());
+		
+	
+		
+
+		// save it
+		writeToFile(fileDati, fileDatiDetail.getFileName());
+		writeToFile(fileMappingInputSream, fileMappingsDetail.getFileName());
+		
+
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	String result="fail";
+	ImportGeoreporter.importaTributiUtenzeRifiuti(fileDatiDetail.getFileName(), fileMappingsDetail.getFileName());
+	
+/*	switch (tipodati) {
+    case "fabbricati": 
+    	ImportGeoreporter.importaUnitaImmobiliari(filePath, fileHeader, fileMappings);
+             break;
+    case "soggettifabbricati": 
+    	ImportGeoreporter.importaSoggettiFabbricati(filePath, fileHeader, fileMappings);    
+    		break;
+    case "titolaritafabbricati": 
+    	ImportGeoreporter.importaTitolaritaFabbricati(filePath, fileHeader, fileMappings);
+            break;
+    case "anagraficacomunale": 
+    	ImportGeoreporter.importaAnagraficaComunale(filePath, fileMappings);
+            break;
+    case "anagraficafamiglie": 
+    	ImportGeoreporter.importaAnagraficaFamiglie(filePath, fileMappings);
+            break;
+    case "fornitureelettriche": 
+    	ImportGeoreporter.importaFornitureElettriche(filePath, fileMappings);
+            break;
+    case "fornituregas": 
+    	ImportGeoreporter.importaFornitureGas(filePath, fileMappings);
+            break;  
+    case "contrattilocazione": 
+    	ImportGeoreporter.importaContrattiLocazione(filePath, fileMappings);
+            break;   
+    case "utenzerifiuti": 
+    	ImportGeoreporter.importaTributiUtenzeRifiuti(filePath, fileMappings);
+            break;
+    case "utenzeacqua": 
+    	ImportGeoreporter.importaTributiUtenzaAcqua(filePath, fileMappings);
+            break; 
+    case "lettureacqua": 
+    	ImportGeoreporter.importaTributiLetturaAcqua(filePath, fileMappings);
+            break;   
+    case "iciimuabitazioneprincipale": 
+    	ImportGeoreporter.importaTributiUtenzaICI_IMU_AbitazionePrincipale(filePath, fileMappings);
+            break;   
+	
+    case "iciimunudaproprieta": 
+    	ImportGeoreporter.importaTributiUtenzaICI_IMU_NudaProprieta(filePath, fileMappings);
+            break;   
+
+    case "particellefondiarie": 
+    	ImportGeoreporter.importaParticelleFondiarie(filePath, fileHeader, fileMappings);
+             break;
+    case "soggettiparticellefondiarie": 
+    	ImportGeoreporter.importaSoggettiParticelleFondiarie(filePath, fileHeader, fileMappings);    
+    		break;
+    case "titolaritaparticellefondiare": 
+    	ImportGeoreporter.importaTitolaritaParticelleFondiarie(filePath, fileHeader, fileMappings);
+            break;            
+             
+             
+	}    */        
+             
+//	String uploadedFileLocation =  fileDetail.getFileName();
+
+	// save it
+//	writeToFile(uploadedInputStream, uploadedFileLocation);
+
+//	String output = "File uploaded to : " + uploadedFileLocation;
+
+	return result;
+
+	
+
+	
+	
+	
+	
+	
+	
+
+	}
+	
+
+	
+	
+	
+	
+	
+	private void writeToFile(InputStream uploadedInputStream,
+			String uploadedFileLocation) {
+
+			try {
+				OutputStream out = new FileOutputStream(new File(
+						uploadedFileLocation));
+				int read = 0;
+				byte[] bytes = new byte[1024];
+
+				out = new FileOutputStream(new File(uploadedFileLocation));
+				while ((read = uploadedInputStream.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+	
+	
+	
+	
+	
+ /*           BodyPartEntity bpe = (BodyPartEntity) multiPart.getBodyParts().get(0)
                     .getEntity();
-
+            BodyPartEntity bpe2 = (BodyPartEntity) multiPart2.getBodyParts().get(0)
+                    .getEntity();
+            
             boolean isProcessed = false;
             String message = null;
          
           InputStream source = bpe.getInputStream();
           try {
 			String sresult = IOUtils.toString(source, StandardCharsets.UTF_8);
-			//System.out.println(sresult);
+			System.out.println(sresult);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2038,7 +2232,7 @@ public class GeoreporterService {
 		return result;
 	}
 
-
+*/
 	
 	
 	
@@ -3580,7 +3774,7 @@ String result="";
 		classe=classepart[1];
 		Esiste risposta=new Esiste();
 		List<String> listaProprieta = new ArrayList<String>();
-String queryString="";
+        String queryString="";
 		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
 		try {
 			myRepository.initialize();
@@ -3633,7 +3827,8 @@ String queryString="";
 			e.printStackTrace();
 		} catch (QueryEvaluationException e) {
 			// TODO Auto-generated catch block
-			//System.err.println(queryString);
+			System.err.println("QueryEvaluationException");
+			System.err.println(queryString);
 
 			e.printStackTrace();
 		} finally {
@@ -4256,10 +4451,12 @@ String result="";
 			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 
 			TupleQueryResult qresult = tupleQuery.evaluate();
-             List<String> campiSelect = queryJson.getCampiSelect();
+             List<String> campiSelect =new ArrayList<String>();
          	campiSelect.add("ui");
 			campiSelect.add("pa");
 			campiSelect.add("ic");
+			campiSelect.addAll(queryJson.getCampiSelect());
+			
 			
              List<QueryResultRow> listQueryresultrow = new ArrayList <QueryResultRow>();
          			/// Soggetto soggetto =new Soggetto();
