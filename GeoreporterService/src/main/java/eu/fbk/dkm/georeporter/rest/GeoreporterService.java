@@ -2060,14 +2060,15 @@ public class GeoreporterService {
 	public String  importaDati (
 			@FormDataParam("tipodati") String tipodati,
 		
-			@FormDataParam("fileheader") InputStream fileHeader,
+			@FormDataParam("fileheader") InputStream fileHeaderIS,
 			
 		
-   @FormDataParam("fileheader") FormDataContentDisposition fileHeaderDetail,		
-	@FormDataParam("filedati") InputStream fileDati,
+   @FormDataParam("fileheader") FormDataContentDisposition fileHeaderDetail,
+   
+	@FormDataParam("filedati") InputStream fileDatiIS,
 	@FormDataParam("filedati") FormDataContentDisposition fileDatiDetail,
-	@FormDataParam("filemappings") InputStream fileMappingInputSream,
-	@FormDataParam("filemappings") FormDataContentDisposition fileMappingsDetail) 
+	@FormDataParam("filemappings") InputStream fileMappingIS,
+	@FormDataParam("filemappings") FormDataContentDisposition fileMappingsDetail) throws IOException 
 	
 	{
 		String uploadedFileMappingsLocation =  fileMappingsDetail.getFileName();
@@ -2086,27 +2087,22 @@ public class GeoreporterService {
 		
 	
 		
-
+		String fileHeader="";
 		// save it
-		writeToFile(fileDati, fileDatiDetail.getFileName());
-		writeToFile(fileMappingInputSream, fileMappingsDetail.getFileName());
-		
+		writeToFile(fileDatiIS, fileDatiDetail.getFileName());
+		writeToFile(fileMappingIS, fileMappingsDetail.getFileName());
+		if (fileHeaderIS!=null) {
+		writeToFile(fileHeaderIS, fileHeaderDetail.getFileName());
+		 fileHeader=fileHeaderDetail.getFileName();
+		}
 
-		
-	
-		
-		
-		
-		
-		
-		
-		
+String filePath=fileDatiDetail.getFileName();
+String fileMappings=fileMappingsDetail.getFileName();
 		
 	
 	String result="fail";
-	ImportGeoreporter.importaTributiUtenzeRifiuti(fileDatiDetail.getFileName(), fileMappingsDetail.getFileName());
-	
-/*	switch (tipodati) {
+	//ImportGeoreporter.importaContrattiLocazione(fileDatiDetail.getFileName(), fileMappingsDetail.getFileName());
+	switch (tipodati) {
     case "fabbricati": 
     	ImportGeoreporter.importaUnitaImmobiliari(filePath, fileHeader, fileMappings);
              break;
@@ -2159,8 +2155,8 @@ public class GeoreporterService {
             break;            
              
              
-	}    */        
-             
+	}
+        result="Import effettuato";     
 //	String uploadedFileLocation =  fileDetail.getFileName();
 
 	// save it
