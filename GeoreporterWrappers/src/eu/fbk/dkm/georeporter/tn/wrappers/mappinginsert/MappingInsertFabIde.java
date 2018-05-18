@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.WebApplicationException;
+
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -17,7 +20,12 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Annotazioni;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
@@ -143,9 +151,10 @@ public class MappingInsertFabIde {
 			}
 			//aggiungo il tipo particella = E edificiale
 			Attributo tmp = new Attributo();
-			tmp.setNome("tipoparticella");
-			tmp.setMapping("tipoParticella");
+			tmp.setNome("http://dkm.fbk.eu/georeporter#tipoparticella");
+			tmp.setMapping("http://dkm.fbk.eu/georeporter#tipoParticella");
 			tmp.setTipo("http://www.w3.org/2001/XMLSchema#string");
+			tmp.setValore("E");
 			listAttributi.add(tmp);
 			
 			// riga di tipo RIGATABELLA per Particella
@@ -175,7 +184,7 @@ public class MappingInsertFabIde {
 			}
 			rigaTPar.setUririga("http://dkm.fbk.eu/georeporter#PA_C" + codamm + "_N" + num + "_D" + den);
 
-			String relRange = MappingInsertFabUiNote.insertRigaReturn(rigaTPar);
+			String relRange = insertRigaReturn(rigaTPar);
 
 			// ciclo per crea la listaCHIAVI e listaATTRIBUTI richiesti dal mapping
 			List<Attributo> listAttributi2 = new ArrayList<Attributo>();
@@ -247,9 +256,164 @@ public class MappingInsertFabIde {
 			rigaTIdeCat.setListarelazioni(listRelPartIdeCat);
 			// controllo relazione particella ide cat
 			// String relRange2 = MappingInsertFABUINoteFab.insertRigaReturn(rigaTIdeCat);
-			MappingInsertFabUiNote.insertRiga(rigaTIdeCat);
+			insertRiga(rigaTIdeCat);
 		}
 
+	}
+	
+	
+	// metodo per l'inserimento dell'elemento pronto dopo il mapping
+	public static String insertRigaReturn(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+		// System.out.println(json);
+
+		String output = null;
+
+		try {
+
+			URL targetUrl = new URL(targetURL);
+
+			HttpURLConnection httpConnection = (HttpURLConnection) targetUrl.openConnection();
+			httpConnection.setDoOutput(true);
+			httpConnection.setRequestMethod("POST");
+			httpConnection.setRequestProperty("Content-Type", "application/json");
+			httpConnection.setRequestProperty("Accept", "application/json");
+
+			String input = json;
+
+			OutputStream outputStream = httpConnection.getOutputStream();
+			outputStream.write(input.getBytes());
+			outputStream.flush();
+
+			if (httpConnection.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + httpConnection.getResponseCode());
+			}
+
+			BufferedReader responseBuffer = new BufferedReader(
+					new InputStreamReader((httpConnection.getInputStream())));
+
+			// String output;
+			// System.out.println("Output from Server:\n");
+			while ((output = responseBuffer.readLine()) != null) {
+				// System.out.println(output);
+				// output = responseBuffer.readLine();
+				return output;
+			}
+
+			httpConnection.disconnect();
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		}
+		return output;
+	}
+
+	
+	
+	public static void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	
+	
+	
+	public static void insertRiga2(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+		//System.out.println(json);
+
+		try {
+
+			URL targetUrl = new URL(targetURL);
+
+			HttpURLConnection httpConnection = (HttpURLConnection) targetUrl.openConnection();
+			httpConnection.setDoOutput(true);
+			httpConnection.setRequestMethod("POST");
+			httpConnection.setRequestProperty("Content-Type", "application/json");
+			httpConnection.setRequestProperty("Accept", "application/json");
+
+			String input = json;
+
+			OutputStream outputStream = httpConnection.getOutputStream();
+			outputStream.write(input.getBytes());
+			outputStream.flush();
+
+			if (httpConnection.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + httpConnection.getResponseCode());
+			}
+
+			BufferedReader responseBuffer = new BufferedReader(
+					new InputStreamReader((httpConnection.getInputStream())));
+
+			String output;
+			// System.out.println("Output from Server:\n");
+			while ((output = responseBuffer.readLine()) != null) {
+				// System.out.println(output);
+				// output = responseBuffer.readLine();
+
+			}
+
+			httpConnection.disconnect();
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		}
+		// return output;
 	}
 
 	public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {

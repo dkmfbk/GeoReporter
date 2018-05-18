@@ -19,8 +19,16 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import javax.ws.rs.WebApplicationException;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.AnagraficaComunale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
@@ -189,7 +197,52 @@ public class MappingInsertFabIndirizzo {
 		}
 	}
 
+	
+	
+	
+	
 	public static void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	
+	
+	
+	
+	
+	public static void insertRiga2(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";

@@ -445,7 +445,7 @@ public class MappingInsertTit {
 	}
 
 
-	public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {
+	public static void run(String filePath,String fileHeader, String fileMappings) {
 		
 		
 	//	String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
@@ -453,11 +453,11 @@ public class MappingInsertTit {
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file TIT
-		WrapperTit.estrazioneHeaderFileTit(pathFileHeader);
-		WrapperTit.letturaFileTit(pathFile);
+		WrapperTit.estrazioneHeaderFileTit(fileHeader);
+		WrapperTit.letturaFileTit(filePath);
 		// mapping e insert degli elementi TITOLARITA
 		
-		LoadFile(new File(pathFileMappings));
+		LoadFile(new File(fileMappings));
 	//	LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
 		
 	}
