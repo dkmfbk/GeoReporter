@@ -43,11 +43,11 @@ public class WrapperParFon {
 	// liste che raccolgono tutti gli elementi del file PAR divisi per TIPO
 	public static List<Particella> listParticella = new ArrayList<Particella>();
 	public static List<PorzioneParticella> listPorzioneParticella = new ArrayList<PorzioneParticella>();
-
+	public static String codiceComunecatastale;
 	// metodo che analizza il file (che deve esser caricato) degli HEADER e crea la
 	// lista dei 6 header
 	public static void estrazioneHeaderFilePar(String pathP) {
-		String[] tmp = new String[99];
+		String[] tmp;
 
 		try {
 			File file = new File(pathP);

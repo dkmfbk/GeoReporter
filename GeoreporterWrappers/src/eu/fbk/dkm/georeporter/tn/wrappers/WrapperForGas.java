@@ -35,7 +35,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperForGas {
 
 	// vettore per l'elenco degli HEADER GAS
-	public static String[] headerFG = new String[99];
+	public static String[] headerFG ;
 	// lista di tipo FORNITURA GAS degli elementi estratti dal file XLS
 	public static List<FornituraGas> listFornituraGas = new ArrayList<FornituraGas>();
 
@@ -47,7 +47,8 @@ public class WrapperForGas {
 		HSSFSheet sheet = wb.getSheetAt(0);
 		HSSFRow row;
 		HSSFCell cell;
-
+		int noOfColumns = sheet.getRow(0).getLastCellNum();
+		headerFG= new String[noOfColumns];
 		Iterator rows = sheet.rowIterator();
 		int i = 0;
 

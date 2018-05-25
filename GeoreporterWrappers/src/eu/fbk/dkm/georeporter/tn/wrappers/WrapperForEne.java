@@ -51,7 +51,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperForEne {
 
 	// vettore per l'elenco degli HEADER ENERGIA
-	public static String[] headerFE = new String[99];
+	public static String[] headerFE ;
 	// lista di tipo FORNITURA ENERGIA degli elementi estratti dal file XLS
 	public static List<FornituraEnergia> listFornituraEnergia = new ArrayList<FornituraEnergia>();
 
@@ -63,7 +63,8 @@ public class WrapperForEne {
 		HSSFSheet sheet = wb.getSheetAt(0);
 		HSSFRow row;
 		HSSFCell cell;
-
+		int noOfColumns = sheet.getRow(0).getLastCellNum();
+		headerFE= new String[noOfColumns];
 		Iterator rows = sheet.rowIterator();
 		int i = 0;
 

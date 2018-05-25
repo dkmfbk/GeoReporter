@@ -34,7 +34,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperForLoc {
 
 	// vettore per l'elenco degli HEADER LOCAZIONE
-	public static String[] headerFL = new String[99];
+	public static String[] headerFL;
 	// lista di tipo FLOCAZIONE degli elementi estratti dal file XLS
 	public static List<Locazione> listLocazione = new ArrayList<Locazione>();
 
@@ -46,7 +46,8 @@ public class WrapperForLoc {
 		HSSFSheet sheet = wb.getSheetAt(0);
 		HSSFRow row;
 		HSSFCell cell;
-
+		int noOfColumns = sheet.getRow(0).getLastCellNum();
+		headerFL= new String[noOfColumns];
 		Iterator rows = sheet.rowIterator();
 		int i = 0;
 
