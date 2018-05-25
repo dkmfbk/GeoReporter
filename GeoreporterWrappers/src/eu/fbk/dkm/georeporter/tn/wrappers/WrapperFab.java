@@ -49,7 +49,7 @@ public class WrapperFab {
 	// metodo che analizza il file (che deve esser caricato) degli HEADER e crea la
 	// lista dei 6 header
 	public static void estrazioneHeaderFileFab(String pathP) {
-		String[] tmp = new String[99];
+		String[] tmp;
 
 		try {
 			File file = new File(pathP);
