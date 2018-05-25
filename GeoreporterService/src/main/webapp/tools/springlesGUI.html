@@ -1,0 +1,431 @@
+<html>
+<head>
+<title>SPRINGLES GUI</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link href='css/yasqe.css' rel='stylesheet' type='text/css'/>
+    
+
+    
+<style type="text/css">
+.json-key {
+	color: brown;
+}
+
+.json-value {
+	color: navy;
+}
+
+.json-string {
+	color: olive;
+}
+.graph, .o, .p, .s{
+    cursor: pointer;
+}
+a, .delete{
+    cursor: pointer;
+}
+    
+</style>
+
+</head>
+<body style="padding: 20px">
+	<div class="row">
+	
+	<div class="col-md-10">
+  	<!--img src="http://www.toolisse.com/immagini/toolisse-logo.png" class="pull-left">
+  			<img src="https://dkm.fbk.eu/skins/dkmfbk/images/it.gif" class="pull-left"-->
+  			<span class="pull-left"> 
+  				<h1>SPRINGLES GUI<small>  Service Testing Interface</small></h1>
+  			</span>
+  			
+  			
+  		</div>
+	
+	
+		<div class="col-md-3" >
+		        
+	       <div class="panel-body" >
+                        
+                <label style="padding-top: 20px" for="repoChoice">Select Repositories</label>
+                <select id="repoChoice" class="springlesrepositoryID form-control"></select> 
+                                    
+           </div>
+			<div class="panel-group" id="accordion">
+	           
+	            <div class="panel panel-default hide-repo" id="summaryPanel" style="display:none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a  href="#collapse18" >Summary</a>
+                        </h4>
+                    </div>
+                    
+                </div>
+		
+				<div class="panel panel-default  hide-repo" style="display:none;">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a  href="#collapse11"> Create Repository</a>
+						</h4>
+					</div>
+					
+				</div>	
+					
+
+                <div class="panel panel-default  hide-repo"  style="display:none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a  href="#collapse16 ">Delete Repository</a>
+                        </h4>
+                    </div>
+                    
+                </div>	
+
+
+			<div class="panel panel-default hide-repo" style="display:none;">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a href="#collapse12" >Upload Data</a>
+						</h4>
+					</div>
+					
+                </div>	
+
+                <div class="panel panel-default hide-repo" style="display:none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="#collapse17" >Graphs</a>
+                        </h4>
+                    </div>
+                    
+                </div>	
+
+                
+                
+                <div class="panel panel-default hide-repo" style="display:none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="#collapse13"  >Export</a>
+                        </h4>
+                    </div>
+                    
+                </div>	
+
+
+                 <div class="panel panel-default hide-repo" style="display:none;">
+                     <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="#collapse14" >Closure</a>
+                        </h4>
+                    </div>
+                   
+                </div>	
+
+
+
+                <div class="panel panel-default hide-repo" style="display:none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="#collapse15" >Delete Statements</a>
+                        </h4>
+                    </div>
+                    
+                </div>	
+
+
+
+				
+			
+                <div class="panel panel-default hide-repo" style="display:none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="#collapse10">Query SPARQL</a>
+                        </h4>
+                    </div>
+                    
+                </div>	
+			 
+
+            <div class="panel panel-default hide-repo" style="display:none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="#collapse19" onclick="load_rulesets()">Ruleset</a>
+                        </h4>
+                    </div>
+                    
+                </div>	
+			
+			
+				   
+			</div>
+		</div>
+        
+		<div class="col-md-9">
+                <div id="collapse11" class="panel-collapse collapse col-md-12">
+						<h4>Create Repository</h4>
+                        <div class="panel-body">
+						
+							<form id="form11" role="form" method="GET">
+				
+								<div class="form-group">	
+			                        <label style="padding-top: 20px" for="springlesrepositoryID">Springles Repository ID</label>
+                                    <input type="text" class="form-control" value="test-springles-5" id="springlesrepositoryID" >
+	    	                        <label style="padding-top: 20px" for="springlesrepositorytitle">Springles Repository TITLE</label>
+				                    <input type="text" class="form-control" value="test-springles-5" id="springlesrepositorytitle" >
+                                </div>		
+                                <button type="submit" class="btn btn-default btn-primary">Create</button>
+                            </form>
+
+                        </div>
+					</div>
+                    <div id="collapse16" class="panel-collapse col-md-12 collapse">
+                                <h4>Delete Repository</h4>
+                                <div class="panel-body">
+                                    <form id="form16" role="form" method="GET">				
+                                        <div class="form-group">		
+                                             <label style="padding-top: 20px" for="springlesrepositoryID">Springles Repository ID</label>						
+                                            <select class="springlesrepositoryID form-control"></select> 
+                                          </div>		
+                                        <button type="submit" class="btn btn-default btn-primary">Delete</button>
+                                    </form>
+
+                                </div>
+                            </div>
+            
+                    <div id="collapse12" class="panel-collapse col-md-12 collapse">
+						<div class="panel-body">
+                            <h4>Upload Data</h4>
+							<form id="form12" role="form" method="GET"  enctype="multipart/form-data">
+				
+							     <div class="form-group">	
+                                    <label style="padding-top: 20px" for="filetoupload">File to upload</label>
+                                    <input type="file" class="form-control" value="toolisse-kb-test-with-synonyms-finale-nolocation.trig" id="filetoupload" >		
+                                    <p class="help-block">toolisse-kb-test-with-synonyms-finale-nolocation.trig</p>	
+                                </div>		
+                                <button type="submit" class="btn btn-default btn-primary">Upload</button>
+                            </form>
+
+                        </div>
+                    </div>
+                        <div id="collapse17" class="panel-collapse col-md-12 collapse">
+                            
+                                <div class="panel-body">
+                                    <h4>Graphs</h4>
+                                    <form id="form17" role="form" method="GET">				
+                                        <div class="form-group">
+                                            <label style="padding-top: 20px" for="includeinferred">
+                                                <input type="checkbox" style="background-color: #fff;background-image: none;border: 1px solid #ccc;" id="includeinferred" value="Includi contexts inferiti" checked></input>
+                                                Include inferred graphs
+                                            </label>
+                                          </div>		
+                                        <button type="submit" class="btn btn-default btn-primary">Get graphs</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div id="collapse13" class="panel-collapse col-md-12 collapse">
+                        <div class="panel-body">
+                            <h4>Export</h4>
+                            <form id="form13" role="form" method="GET"  enctype="multipart/form-data">
+                                <div class="form-group">	
+			                         
+                                    <label style="padding-top: 20px" for="exportformat">Export Format</label>
+                                    <select class="form-control"  id="exportformat" >
+                                        <option value="trig">trig</option> 
+                                        <option value="xml">xml</option>
+                                        <option value="ttl">ttl</option>
+                                    </select>
+                                    <label style="padding-top: 20px" for="includeinferred">
+                                        <input type="checkbox" style="background-color: #fff;background-image: none;border: 1px solid #ccc;" id="includeinferred" value="Includi statements inferiti" checked></input>
+                                        Include inferred statements
+                                    </label>
+                                </div>		
+                                <button type="submit" class="btn btn-default btn-primary">Export</button>
+                            </form> 
+                        </div>
+                    </div>
+                    <div id="collapse14" class="panel-collapse col-md-12 collapse">
+                        <div class="panel-body">
+                            <h4>Closure</h4>
+                            <form id="form14" role="form" method="GET"   enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label style="padding-top: 20px" for="closure_inferencer">Inferencer</label>
+                                    <select class="form-control"  id="closure_inferencer" >
+                                            <option value="NaiveInferencer">NaiveInferencer</option> 
+                                            <option value="RDFProInferencer">RDFProInferencer</option>
+                                    </select>
+                                    <label style="padding-top: 20px" for="closure_inferencer">Ruleset</label>
+                                    <select class="form-control"  id="closure_ruleset" >
+
+                                    </select>
+                                    <label style="padding-top: 20px" for="bindings">Binding</label>
+                                    <input type="text" class="form-control" value="global_inf=springles:inf:global" id="bindings" >
+                                    <label style="padding-top: 20px" for="inferred_context_prefix">Inferred Context Prefix</label>
+                                    <input type="text" class="form-control" value="springles:inf*" id="inferred_context_prefix" >
+                                </div>
+                                <button type="button" id="update_cl" class="btn btn-default btn-primary">Update</button>
+                                <button type="button" id="clear_cl" class="btn btn-default btn-primary">Clear</button>
+                            </form> 
+                        </div>
+                    </div>
+                    <div id="collapse15" class="panel-collapse col-md-12 collapse">
+                        <div class="panel-body">
+                            <h4>Delete Statements</h4>
+                            <form id="form15" role="form" method="GET"   enctype="multipart/form-data">
+                                <div class="form-group">	
+                                </div>		
+                                <button type="submit" class="btn btn-default btn-primary">Delete</button>
+                            </form> 
+                        </div>
+                    </div>
+                    <div id="collapse10" class="panel-collapse col-md-12 collapse">
+                        <div class="panel-body">
+                            <h4>Query SPARQL</h4>
+                            <form id="form10" role="form" method="POST">
+                                <div class="form-group">	
+                                        <label for="querySPARQL">query SPARQL</label>
+                                        <!--<input type="text" class="form-control" value="SELECT ?s ?p ?o WHERE { ?s ?p ?o }" id="querySPARQL" >-->
+                                        <div id="yasqe" ></div>
+                                        <label style="padding-top: 20px" for="includeinferred">
+                                            <input type="checkbox" style="background-color: #fff;background-image: none;border: 1px solid #ccc;" id="includeinferred" value="Includi statements inferiti" checked></input>
+                                            Include inferred statements
+                                        </label>
+                                </div>
+                                <button type="submit" class="btn btn-default btn-primary">Execute</button>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div id="collapse19" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <h4>Manage Ruleset</h4>
+                            <select class="form-control col-md-12"  id="inferencer" >
+                                        <option value="NaiveInferencer">NaiveInferencer</option> 
+                                        <option value="RDFProInferencer">RDFProInferencer</option>
+                            </select>
+                            <div class="col-md-12" id="list_of_rulesets" style="margin-top: 5%;"></div>
+                            <form class="col-md-12" id="form19" role="form" method="GET" >
+                                <div class="form-group">
+                                    <label style="padding-top: 20px" for="file_ruleset">File path to Upload</label>
+                                    <input type="file" class="form-control" value="ruleset.ttl" id="file_ruleset" >
+                                </div>
+                                <button type="submit" class="btn btn-default btn-primary">Create</button>
+                            </form>
+
+                        </div>
+                    </div>
+				<pre class="col-md-12" >
+                    
+					<div id="result" class="text-left col-md-12" style="max-height:60%;overflow-y:scroll;">
+                    
+                    </div>
+                    
+				</pre>
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		/*INSERT THE CORRECT URL*/
+		
+        var rulesets = new Array();
+        var springlesserverURL = "http://localhost:8080/openrdf-sesame";
+     
+		$("#repoChoice").on("change",function(){
+            $(".panel-collapse").hide();
+            $(".springlesrepositoryID").each(function(){
+                $(this).val($("#repoChoice").val())
+            });
+            $("#summaryPanel").click();
+            if($(this).val() == undefined)
+            {
+                $(".hide-repo").each(function(){
+                    $(this).hide();
+                });
+            }
+            else{
+                $(".hide-repo").each(function(){
+                    $(this).show();
+                });
+            }
+        });
+        
+		var url = ":http://localhost:8081/SpringlesREST/rest/rest/";
+    	var url2 = ":8080/ToolisseSemanticQueryAnswering/toolisse/sqa/";
+    	
+		if($.isEmptyObject(url))
+			alert("Insert correct url at line 106");
+
+		if (!library)
+			var library = {};
+        
+		library.json = {
+			replacer : function(match, pIndent, pKey, pVal, pEnd) {
+				var key = '<span class=json-key>';
+				var val = '<span class=json-value>';
+				var str = '<span class=json-string>';
+				var r = pIndent || '';
+				if (pKey)
+					r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
+				if (pVal)
+					r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+				return r + (pEnd || '');
+			},
+			prettyPrint : function(obj) {
+				var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
+				return JSON.stringify(obj, null, 3).replace(/&/g, '&amp;')
+						.replace(/\\"/g, '&quot;').replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;').replace(jsonLine,
+								library.json.replacer);
+			}
+		};
+	</script>
+	   <script src="loadRepositories.js"></script>
+        <script src="load_rulesets.js"></script>
+        <script src="utilities.js"></script>
+  	 	<script src="function9.js"></script>
+  	 	<script src="function10.js"></script>
+  	 	<script src="function11.js"></script>
+  	     <script src="function12.js"></script>
+  	     <script src="function13.js"></script>
+  	     <script src="function14.js"></script>
+        <script src="function15.js"></script>
+        <script src="function16.js"></script>
+  	 	<script src="function17.js"></script>
+        <script src="function18.js"></script>
+        <script src="function19.js"></script>
+        <script type="text/javascript">
+		
+        var rulesets = new Array();
+        
+            
+        $("#loadRepo").click(function(){
+            $("#result").show();
+            $("#result").empty();
+            $(".panel-collapse").hide();
+        });
+            
+        $(".panel-heading").click(function(){
+            $("#result").show();
+            $("#result").empty();
+            $(".panel-collapse").hide();
+            showPanel($(this).find('h4 a').attr("href"));
+            if($(this).find('h4 a').attr("href") == "#collapse14")
+            {
+                load_rulesets_closure();
+               
+            }
+        });
+            
+            
+        
+        </script>
+        <script src="js/yasqr.min.js"></script>
+        <script src="js/yasqe.min.js"></script> 
+        <script src="init_yasqe.js"></script>
+        <script type="text/javascript" src="js/jsapi.js"></script>
+</body>
+</body>
+</html>

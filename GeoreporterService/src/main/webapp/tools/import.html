@@ -1,0 +1,745 @@
+<html>
+<head>
+<title>GeoReporter - Importazione Dati</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+<style type="text/css">
+.json-key {
+	color: brown;
+}
+
+.json-value {
+	color: navy;
+}
+
+.json-string {
+	color: olive;
+}
+</style>
+
+</head>
+<body style="padding: 20px">
+	<div class="row">
+	
+	   <div class="col-md-10">
+  			<!-- <img src="https://dkm.fbk.eu/skins/dkmfbk/images/it.gif" class="pull-left"> -->
+  			<span class="pull-left"> 
+  				<h1>GeoReporter Importazione dati<small>  </small></h1>
+  			</span>
+  		</div>
+	
+	
+		<div class="col-md-4">
+			<!-- <label style="padding: 20px" for="serverChoice">Select Server </label>
+									<select id="serverChoice" class="form-control">
+										<option value="http://dkmlab.fbk.eu">DkmLab</option>
+										<option value="http://localhost">Localhost</option>
+									</select>  -->
+
+
+		    <div class="panel-group" id="accordion">
+	
+	
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> #1 - Fabbricati </a>
+						</h4>
+					</div>
+					<div id="collapse1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="formfabbricati" role="form" method="POST">
+						
+								<div class="form-group">
+									<label for="filedati">File Dati</label>
+									<input type="file" class="form-control" id="filedati" >
+									
+								</div>
+								<div class="form-group">
+									<label for="filemappings">File Mappings </label>
+									<input type="file" class="form-control" id="filemappings" >
+									
+								</div>
+								<div class="form-group">
+									<label for="fileheader">File Header </label>
+									<input type="file" class="form-control" id="fileheader" >
+									
+								</div>
+								<div class="form-group">
+									
+									<input type="hidden" class="form-control" id="tipodati" value="fabbricati">
+									
+								</div>
+								
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+			
+			
+
+
+
+	
+	
+	
+			
+
+
+
+
+
+
+
+
+				
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse2"> #2 - Soggetti dei Fabbricati </a>
+						</h4>
+					</div>
+					<div id="collapse2" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="formsoggettifabbricati" role="form" method="POST">
+						
+								<div class="form-group">
+									<label for="filedati">File Dati</label>
+									<input type="file" class="form-control" id="filedati" >
+									
+								</div>
+								<div class="form-group">
+									<label for="filemappings">File Mappings </label>
+									<input type="file" class="form-control" id="filemappings" >
+									
+								</div>
+								<div class="form-group">
+									<label for="fileheader">File Header </label>
+									<input type="file" class="form-control" id="fileheader" >
+									<input type="hidden" class="form-control" id="tipodati" value="soggettifabbricati">
+								</div>
+												
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+					
+				</div>
+			
+
+
+
+
+			<!--inizio blocco	-->
+	
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse3"> #3 - Titolarita Fabbricati </a>
+						</h4>
+					</div>
+					<div id="collapse3" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="formtitolaritafabbricati" role="form" method="POST">
+						
+								<div class="form-group">
+									<label for="filedati">File Dati</label>
+									<input type="file" class="form-control" id="filedati" >
+									
+								</div>
+								<div class="form-group">
+									<label for="filemappings">File Mappings Fabbricati</label>
+									<input type="file" class="form-control" id="filemappings" >
+									
+								</div>
+								<div class="form-group">
+									<label for="fileheader">File Header Fabbricati</label>
+									<input type="file" class="form-control" id="fileheader" >
+									<input type="hidden" class="form-control" id="tipodati" value="titolaritafabbricati">
+								</div>
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+	
+
+       <!--fine blocco	-->
+
+	   <div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse4"> #4 - Particelle Fondiarie </a>
+			</h4>
+		</div>
+		<div id="collapse4" class="panel-collapse collapse">
+			<div class="panel-body">
+				<form id="formparticellefondiarie" role="form" method="POST">
+			
+					<div class="form-group">
+						<label for="filedati">File Dati</label>
+						<input type="file" class="form-control" id="filedati" >
+						
+					</div>
+					<div class="form-group">
+						<label for="filemappings">File Mappings </label>
+						<input type="file" class="form-control" id="filemappings" >
+						
+					</div>
+					<div class="form-group">
+						<label for="fileheader">File Header </label>
+						<input type="file" class="form-control" id="fileheader" >
+						
+					</div>
+					<div class="form-group">
+						
+						<input type="hidden" class="form-control" id="tipodati" value="particellefondiarie">
+						
+					</div>
+					
+					
+					<button type="submit" class="btn btn-default btn-primary">Submit</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse5"> #5 - Soggetti Particelle Fondiarie </a>
+			</h4>
+		</div>
+		<div id="collapse5" class="panel-collapse collapse">
+			<div class="panel-body">
+				<form id="formsoggettiparticelle" role="form" method="POST">
+			
+					<div class="form-group">
+						<label for="filedati">File Dati</label>
+						<input type="file" class="form-control" id="filedati" >
+						
+					</div>
+					<div class="form-group">
+						<label for="filemappings">File Mappings </label>
+						<input type="file" class="form-control" id="filemappings" >
+						
+					</div>
+					<div class="form-group">
+						<label for="fileheader">File Header </label>
+						<input type="file" class="form-control" id="fileheader" >
+						<input type="hidden" class="form-control" id="tipodati" value="soggettiparticelle">
+					</div>
+									
+					
+					<button type="submit" class="btn btn-default btn-primary">Submit</button>
+				</form>
+
+			</div>
+		</div>
+		
+	</div>
+
+
+
+
+
+<!--inizio blocco	-->
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse6"> #6 - Titolarita Particelle Fondiarie </a>
+			</h4>
+		</div>
+		<div id="collapse6" class="panel-collapse collapse">
+			<div class="panel-body">
+				<form id="formtitolaritaparticelle" role="form" method="POST">
+			
+					<div class="form-group">
+						<label for="filedati">File Dati</label>
+						<input type="file" class="form-control" id="filedati" >
+						
+					</div>
+					<div class="form-group">
+						<label for="filemappings">File Mappings Fabbricati</label>
+						<input type="file" class="form-control" id="filemappings" >
+						
+					</div>
+					<div class="form-group">
+						<label for="fileheader">File Header Fabbricati</label>
+						<input type="file" class="form-control" id="fileheader" >
+						<input type="hidden" class="form-control" id="tipodati" value="titolaritaparticelle">
+					</div>
+					
+					<button type="submit" class="btn btn-default btn-primary">Submit</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+
+<!--fine blocco	-->
+
+			<!--inizio blocco	-->
+	
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapse7"> #7 - Anagrafica Comunale</a>
+					</h4>
+				</div>
+				<div id="collapse7" class="panel-collapse collapse">
+					<div class="panel-body">
+						<form id="formanagraficacomunale" role="form" method="POST">
+					
+							<div class="form-group">
+								<label for="filedati">File Dati</label>
+								<input type="file" class="form-control" id="filedati" >
+								
+							</div>
+							<div class="form-group">
+								<label for="filemappings">File Mappings</label>
+								<input type="file" class="form-control" id="filemappings" >
+								<input type="hidden" class="form-control" id="tipodati" value="anagraficacomunale">
+							</div>
+						
+							
+							<button type="submit" class="btn btn-default btn-primary">Submit</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+
+   <!--fine blocco	-->
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse8"> #8 - Anagrafica Famiglie</a>
+		</h4>
+	</div>
+	<div id="collapse8" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formanagraficafamiglie" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="anagraficafamiglie">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse9"> #9- Forniture Elettriche</a>
+		</h4>
+	</div>
+	<div id="collapse9" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formfornitureelettriche" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="fornitureelettriche">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse10"> #10- Forniture Gas</a>
+		</h4>
+	</div>
+	<div id="collapse10" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formfornituregas" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="fornituregas">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse11"> #11- Locazioni</a>
+		</h4>
+	</div>
+	<div id="collapse11" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formcontrattilocazione" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="contrattilocazione">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse12"> #12- Utenza Rifiuti</a>
+		</h4>
+	</div>
+	<div id="collapse12" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formutenzerifiuti" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="utenzerifiuti">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+
+
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse13"> #13- Utenze Acqua</a>
+		</h4>
+	</div>
+	<div id="collapse13" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formutenzeacqua" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="utenzeacqua">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse14"> #14- Letture Acqua</a>
+		</h4>
+	</div>
+	<div id="collapse14" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formlettureacqua" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="lettureacqua">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse15"> #15- ICI IMU Abitazione Principale</a>
+		</h4>
+	</div>
+	<div id="collapse15" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formiciimuabitazioneprincipale" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="iciimuabitazioneprincipale">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+<!--inizio blocco	-->
+	
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse16"> #16- ICI IMU Nuda Proprieta</a>
+		</h4>
+	</div>
+	<div id="collapse16" class="panel-collapse collapse">
+		<div class="panel-body">
+			<form id="formiciimunudaproprieta" role="form" method="POST">
+		
+				<div class="form-group">
+					<label for="filedati">File Dati</label>
+					<input type="file" class="form-control" id="filedati" >
+					
+				</div>
+				<div class="form-group">
+					<label for="filemappings">File Mappings</label>
+					<input type="file" class="form-control" id="filemappings" >
+					<input type="hidden" class="form-control" id="tipodati" value="iciimunudaproprieta">
+				</div>
+			
+				
+				<button type="submit" class="btn btn-default btn-primary">Submit</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!--fine blocco	-->
+
+
+			
+			</div>
+
+
+
+
+			
+				
+
+		</div>
+		
+		<div class="col-md-8">
+			<div>
+				<pre>
+					<h3 class="center text-center">Request</h3>
+					<div id="request" class="text-left">
+					</div>
+					<hr />
+					<h3 class="center text-center">Response</h3>
+					<div id="result" class="text-left">
+						
+					</div>
+				</pre>
+				<pre>
+					<div class="panel panel-default hide-repo" id="summaryPanel" >
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a  href="#collation18" >Summary</a>
+							</h4>
+						</div>
+						
+					</div>
+					<div id="summaryresponse" class="text-left">
+					</div>
+				</pre>
+			</div>
+		</div>
+	</div>
+
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		/*INSERT THE CORRECT URL*/
+		
+		
+		//var server="http://dkmlab.fbk.eu";
+		
+		var url = "http://localhost:8080/GeoreporterService/servizio/rest/";
+    //	var url2 = ":8080/SemanticQueryAnswering/trentour/sqa/";
+    	
+	//	if($.isEmptyObject(url))
+	///		alert("Insert correct url at line 106");
+
+		if (!library)
+			var library = {};
+
+		library.json = {
+			replacer : function(match, pIndent, pKey, pVal, pEnd) {
+				var key = '<span class=json-key>';
+				var val = '<span class=json-value>';
+				var str = '<span class=json-string>';
+				var r = pIndent || '';
+				if (pKey)
+					r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
+				if (pVal)
+					r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+				return r + (pEnd || '');
+			},
+			prettyPrint : function(obj) {
+				var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
+				return JSON.stringify(obj, null, 3).replace(/&/g, '&amp;')
+						.replace(/\\"/g, '&quot;').replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;').replace(jsonLine,
+								library.json.replacer);
+				}
+			};
+	</script>
+	<script src="function1.js"></script>
+
+</body>
+</html>

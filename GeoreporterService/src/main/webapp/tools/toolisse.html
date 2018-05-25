@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>Demo Toolisse API Rest</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+<style type="text/css">
+.json-key {
+	color: brown;
+}
+
+.json-value {
+	color: navy;
+}
+
+.json-string {
+	color: olive;
+}
+</style>
+
+</head>
+<body style="padding: 20px">
+	<div class="row">
+	
+	<div class="col-md-10">
+  	<img src="http://www.toolisse.com/immagini/toolisse-logo.png" class="pull-left">
+  			<img src="https://dkm.fbk.eu/skins/dkmfbk/images/it.gif" class="pull-left">
+  			<span class="pull-left"> 
+  				<h1>-FBK 4 TOOLISSE<small>  Service Testing Interface</small></h1>
+  			</span>
+  			
+  			
+  		</div>
+	
+	
+		<div class="col-md-4">
+			<label style="padding: 20px for="serverChoice">Select Server </label>
+									<select id="serverChoice" class="form-control">
+										<option value="http://dkmlab.fbk.eu">DkmLab</option>
+										<option value="http://localhost">Localhost</option>
+										
+									</select> 
+			<div class="panel-group" id="accordion">
+	
+	
+					
+ 
+			
+        
+					
+				
+					
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse8"> Demo #1 - Get Curator's Sources</a>
+						</h4>
+					</div>
+					<div id="collapse8" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form8" role="form" method="GET">
+						
+								<div class="form-group">
+									<label for="curatorID">Curator ID</label>
+									<input type="text" class="form-control" value=":curatorAlice " id="curatorID" >
+									<p class="help-block">Example curatorID: :curatorAlice </p>
+								</div>
+								
+								
+								
+						
+							
+								
+								
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>	
+				
+				
+							
+				   
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div>
+				<pre>
+					<h3 class="center text-center">Request</h3>
+					<div id="request" class="text-left">
+					</div>
+					<hr />
+					<h3 class="center text-center">Response</h3>
+					<div id="result" class="text-left">
+						
+					</div>
+				</pre>
+			</div>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		/*INSERT THE CORRECT URL*/
+		
+		
+		//var server="http://dkmlab.fbk.eu";
+		
+		var url = ":8080/ToolisseSemanticQueryAnswering/toolisse/gate/querymanager/";
+    	var url2 = ":8080/ToolisseSemanticQueryAnswering/toolisse/sqa/";
+    	
+		if($.isEmptyObject(url))
+			alert("Insert correct url at line 106");
+
+		if (!library)
+			var library = {};
+
+		library.json = {
+			replacer : function(match, pIndent, pKey, pVal, pEnd) {
+				var key = '<span class=json-key>';
+				var val = '<span class=json-value>';
+				var str = '<span class=json-string>';
+				var r = pIndent || '';
+				if (pKey)
+					r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
+				if (pVal)
+					r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+				return r + (pEnd || '');
+			},
+			prettyPrint : function(obj) {
+				var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
+				return JSON.stringify(obj, null, 3).replace(/&/g, '&amp;')
+						.replace(/\\"/g, '&quot;').replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;').replace(jsonLine,
+								library.json.replacer);
+			}
+		};
+	</script>
+	<script src="function1.js"></script>
+	<script src="function2.js"></script>
+	<script src="function3.js"></script>
+	<script src="function4.js"></script>
+  	<script src="function5.js"></script>
+  	 	<script src="function6.js"></script>
+  	 	<script src="function61.js"></script>
+  	 	<script src="function7.js"></script>
+  	 	<script src="function8.js"></script>
+</body>
+</body>
+</html>

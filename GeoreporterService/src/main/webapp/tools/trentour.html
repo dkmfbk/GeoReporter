@@ -1,0 +1,417 @@
+<html>
+<head>
+<title>Demo Trentour API Rest</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+<style type="text/css">
+.json-key {
+	color: brown;
+}
+
+.json-value {
+	color: navy;
+}
+
+.json-string {
+	color: olive;
+}
+</style>
+
+</head>
+<body style="padding: 20px">
+	<div class="row">
+	
+	<div class="col-md-10">
+  			<img src="https://dkm.fbk.eu/skins/dkmfbk/images/it.gif" class="pull-left">
+  			<span class="pull-left"> 
+  				<h1>-FBK 4 TRENTOUR<small>  Service Testing Interface</small></h1>
+  			</span>
+  		</div>
+	
+	
+		<div class="col-md-4">
+			<label style="padding: 20px for="serverChoice">Select Server </label>
+									<select id="serverChoice" class="form-control">
+										<option value="http://dkmlab.fbk.eu">DkmLab</option>
+										<option value="http://localhost">Localhost</option>
+										
+									</select> 
+			<div class="panel-group" id="accordion">
+	
+	
+					<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse61"> Demo #1 - Find Event </a>
+						</h4>
+					</div>
+					<div id="collapse61" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form61" role="form" method="GET">
+						
+								<div class="form-group">
+									<label for="dimension">Dimension</label>
+									<input type="text" class="form-control" value=":MacroEvent" id="dimension" >
+									<p class="help-block">Example dimension: :MacroEvent </p>
+								</div>
+								<div class="form-group">
+									<label for="officiality">Officiality</label>
+									<input type="text" class="form-control" id="officiality" value=":Event" >
+									<p class="help-block">Example Type URI: :Event  </p>
+								</div>
+								<div class="form-group">
+									<label for="beginDate">BeginDate</label>
+									<input type="text" class="form-control" id="beginDate" value="2013-11-11T00:00:00">
+									<p class="help-block">Example beginDateTime 2013-01-11T00:00:00</p>
+								</div>
+								<div class="form-group">
+									<label for="endDate">EndDate</label>
+									<input type="text" class="form-control" id="endDate" value="2013-12-31T00:00:00">
+									<p class="help-block">Example endDate 2014-12-21T00:00:00</p>
+								</div>
+						
+								<div class="form-group">
+									<label for="poi">POI</label>
+									<input type="text" class="form-control" id="poi" >
+									<p class="help-block">Example POI :castello_buonconsiglio</p>
+								</div>
+								
+								
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>
+	
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> Demo #2 - Insert element in KB </a>
+						</h4>
+					</div>
+					<div id="collapse1" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form1" role="form" method="GET">
+								<div class="form-group">
+									<label for="semanticInsertQuery">Select element to insert</label>
+									<select id="semanticInsertQuery" class="form-control">
+										<option value="">-- Select --</option>
+										<option value="insertkbelementpoi">POI</option>
+										<option value="insertkbelementperson">PERSON</option>
+									</select>
+								</div>
+								<div id="inputPrint" class="form-group">
+									<label for="exampleInputPassword1">Input Parameter</label>
+								</div>
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>  
+ 
+        				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse5"> Demo #3 - Insert Event </a>
+						</h4>
+					</div>
+					<div id="collapse5" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form5" role="form" method="GET">
+						
+								<div class="form-group">
+									<label for="title">Title</label>
+									<input type="text" class="form-control" value="Concerto Max Gazze" id="title" >
+									<p class="help-block">Example title URI: Max Gazze</p>
+								</div>
+								<div class="form-group">
+									<label for="type">Type</label>
+									<input type="text" class="form-control" id="type" value=":Event, :MacroEvent , :OfficialEvent , :Concert" >
+									<p class="help-block">Example Type URI: :MacroEvent , :OfficialEvent , :Concert </p>
+								</div>
+								<div class="form-group">
+									<label for="beginDateTime">BeginDateTime</label>
+									<input type="text" class="form-control" id="beginDateTime" value="2013-11-29T21:00:00">
+									<p class="help-block">Example beginDateTime 2013-11-29T21:00:00</p>
+								</div>
+								<div class="form-group">
+									<label for="endDateTime">EndDateTime</label>
+									<input type="text" class="form-control" id="endDateTime" value="2013-11-29T23:00:00">
+									<p class="help-block">Example beginDateTime 2013-11-29T21:00:00</p>
+								</div>
+								<div class="form-group">
+									<label for="eventDBID">eventDBID</label>
+									<input type="text" class="form-control" id="eventDBID" value="0011">
+									<p class="help-block">Example eventDBID 0011</p>
+								</div>
+								<div class="form-group">
+									<label for="webPage">webPage</label>
+									<input type="text" class="form-control" id="webPage" value="http://www.maxgazze.com/">
+									<p class="help-block">Example webPage http://www.elliottmurphy.com/</p>
+								</div>
+								<div class="form-group">
+									<label for="location">location</label>
+									<input type="text" class="form-control" id="location" value=":trento ">
+									<p class="help-block">Example location :borgo_valsugana </p>
+								</div>
+								<div class="form-group">
+									<label for="poi">POI</label>
+									<input type="text" class="form-control" id="poi" value=":centro_servizi_culturali_schiara">
+									<p class="help-block">Example POI :auditorium_borgo_valsugana</p>
+								</div>
+								<div class="form-group">
+									<label for="topic">Topic</label>
+									<input type="text" class="form-control" id="topic" value=":topic_musica">
+									<p class="help-block">Example Topic :topic_musica_t</p>
+								</div>
+								<div class="form-group">
+									<label for="owner">Owner</label>
+									<input type="text" class="form-control" id="owner" value=":user_admin" placeholder=":user_admin">
+									<p class="help-block">Example owner :user_admin</p>
+								</div>
+								
+								<div class="form-group">
+									<label for="participant">Participant</label>
+									<input type="text" class="form-control" id="participant" value=":max_gazze">
+									<p class="help-block">Example participant :elliott_murphy</p>
+								</div>
+								<div class="form-group">
+									<label for="genre">Genre</label>
+									<input type="text" class="form-control" id="genre" value=":topic_musica_pop_rock">
+									<p class="help-block">Example Genre :topic_musica_pop_rock</p>
+								</div>
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>				
+        
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"> Demo #4 - Insert semantic relation  </a>
+						</h4>
+					</div>
+					<div id="collapseFour" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form4" role="form" method="GET">
+								<div class="form-group">
+									<label for="subject">Subject  URI</label>
+									<input type="text" class="form-control" value=":concerto_max_gazze" id="subject" placeholder="Enter subject URI">
+									<p class="help-block">Example subject URI: :concerto_max_gazze</p>
+								</div>
+								<div class="form-group">
+									<label for="relation">Relation  URI</label>
+									<input type="text" class="form-control" id="relation" value=":hasRelatedEvent" placeholder="Enter relation URI">
+									<p class="help-block">Example relation URI: :hasRelatedEvent</p>
+								</div>
+								<div class="form-group">
+									<label for="object">Object URI</label>
+									<input type="text" class="form-control" id="object" value=":concerto_mario_biondi_trento_2013" placeholder="Enter object URI">
+									<p class="help-block">Example object URI: :concerto_mario_biondi_trento_2013</p>
+								</div>
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>				
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse6"> Demo #6 - Find Event </a>
+						</h4>
+					</div>
+					<div id="collapse6" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form6" role="form" method="GET">
+						
+								<div class="form-group">
+									<label for="dimension">Dimension</label>
+									<input type="text" class="form-control" value=":MacroEvent" id="dimension" >
+									<p class="help-block">Example dimension: :MacroEvent </p>
+								</div>
+								<div class="form-group">
+									<label for="officiality">Officiality</label>
+									<input type="text" class="form-control" id="officiality" value=":Event" >
+									<p class="help-block">Example Type URI: :OfficialEvent  </p>
+								</div>
+								<div class="form-group">
+									<label for="beginDate">BeginDate</label>
+									<input type="text" class="form-control" id="beginDate" value="2013-11-11T00:00:00">
+									<p class="help-block">Example beginDateTime 2013-01-11T00:00:00</p>
+								</div>
+								<div class="form-group">
+									<label for="endDate">EndDate</label>
+									<input type="text" class="form-control" id="endDate" value="2013-12-31T00:00:00">
+									<p class="help-block">Example endDate 2014-12-21T00:00:00</p>
+								</div>
+						
+								<div class="form-group">
+									<label for="poi">POI</label>
+									<input type="text" class="form-control" id="poi" >
+									<p class="help-block">Example POI :castello_buonconsiglio</p>
+								</div>
+								
+								
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>				
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse7"> Demo #7 - Get Related Event </a>
+						</h4>
+					</div>
+					<div id="collapse7" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form7" role="form" method="GET">
+						
+								<div class="form-group">
+									<label for="dimension">Dimension</label>
+									<input type="text" class="form-control" value=":MacroEvent " id="dimension" >
+									<p class="help-block">Example dimension: :MacroEvent </p>
+								</div>
+								<div class="form-group">
+									<label for="officiality">Officiality</label>
+									<input type="text" class="form-control" id="officiality" value=":OfficialEvent" >
+									<p class="help-block">Example Type URI: :OfficialEvent  </p>
+								</div>
+								
+								
+						
+								<div class="form-group">
+									<label for="eventname">Event Name</label>
+									<input type="text" class="form-control" id="eventname" value=":concerto_max_gazze">
+									<p class="help-block">Example Event :concerto_max_gazze</p>
+								</div>
+								
+								
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+
+						</div>
+					</div>
+				</div>	
+				
+				
+				       <div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">  Query KBase</a>
+						</h4>
+					</div>
+					<div id="collapse2" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form2" role="form" method="GET">
+								<div class="form-group">
+									<label for="kbInsertQuery">Select element to query</label>
+									<select id="kbInsertQuery" class="form-control">
+										<option value="">-- Select --</option>
+										<option value=":POI">POI</option>
+										<option value=":Location">Location</option>
+										<option value=":Person">Person</option>
+									</select>
+								</div>
+								<div id="inputPrint" class="form-group">
+									<label for="exampleInputPassword1">Input Parameter</label>
+								</div>
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>  
+   
+							
+				   <div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">  - Get BGKnowledge </a>
+						</h4>
+					</div>
+					<div id="collapse3" class="panel-collapse collapse">
+						<div class="panel-body">
+							<form id="form3" role="form" method="GET">
+								
+								<button type="submit" class="btn btn-default btn-primary">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>  
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div>
+				<pre>
+					<h3 class="center text-center">Request</h3>
+					<div id="request" class="text-left">
+					</div>
+					<hr />
+					<h3 class="center text-center">Response</h3>
+					<div id="result" class="text-left">
+						
+					</div>
+				</pre>
+			</div>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		/*INSERT THE CORRECT URL*/
+		
+		
+		//var server="http://dkmlab.fbk.eu";
+		
+		var url = ":8080/SemanticQueryAnswering/trentour/gate/querymanager/";
+    	var url2 = ":8080/SemanticQueryAnswering/trentour/sqa/";
+    	
+		if($.isEmptyObject(url))
+			alert("Insert correct url at line 106");
+
+		if (!library)
+			var library = {};
+
+		library.json = {
+			replacer : function(match, pIndent, pKey, pVal, pEnd) {
+				var key = '<span class=json-key>';
+				var val = '<span class=json-value>';
+				var str = '<span class=json-string>';
+				var r = pIndent || '';
+				if (pKey)
+					r = r + key + pKey.replace(/[": ]/g, '') + '</span>: ';
+				if (pVal)
+					r = r + (pVal[0] == '"' ? str : val) + pVal + '</span>';
+				return r + (pEnd || '');
+			},
+			prettyPrint : function(obj) {
+				var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
+				return JSON.stringify(obj, null, 3).replace(/&/g, '&amp;')
+						.replace(/\\"/g, '&quot;').replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;').replace(jsonLine,
+								library.json.replacer);
+			}
+		};
+	</script>
+	<script src="function1.js"></script>
+	<script src="function2.js"></script>
+	<script src="function3.js"></script>
+	<script src="function4.js"></script>
+  	<script src="function5.js"></script>
+  	 	<script src="function6.js"></script>
+  	 	<script src="function61.js"></script>
+  	 	<script src="function7.js"></script>
+</body>
+</html>
