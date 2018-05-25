@@ -37,7 +37,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperTUIciImuAP {
 
 	// vettore per l'elenco degli HEADER 
-	public static String[] header = new String[99];
+	public static String[] header ;
 	// lista di tipo ABITAZIONE PRINCIPALE di TRIBUTO UTENZA di ICI IMU degli elementi estratti dal file XLS
 	public static List<AbitazionePrincipale> listICIIMU_AP = new ArrayList<AbitazionePrincipale>();
 
@@ -50,7 +50,8 @@ public class WrapperTUIciImuAP {
 		HSSFSheet sheet = wb.getSheetAt(0);
 		HSSFRow row;
 		HSSFCell cell;
-
+		int noOfColumns = sheet.getRow(0).getLastCellNum();
+		header= new String[noOfColumns];
 		Iterator rows = sheet.rowIterator();
 		int i = 0;
 

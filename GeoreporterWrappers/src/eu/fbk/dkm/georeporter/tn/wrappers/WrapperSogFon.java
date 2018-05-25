@@ -32,7 +32,7 @@ public class WrapperSogFon {
 	// estrazione delle liste di HEADER
 	public static void estrazioneHeaderFileSogFon(String pathP) {
 
-		String[] tmp = new String[99];
+		String[] tmp;
 
 		try {
 			File file = new File(pathP);

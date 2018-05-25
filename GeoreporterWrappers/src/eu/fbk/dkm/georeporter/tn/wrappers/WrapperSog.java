@@ -32,7 +32,7 @@ public class WrapperSog {
 	// estrazione delle liste di HEADER
 	public static void estrazioneHeaderFileSog(String pathP) {
 
-		String[] tmp = new String[99];
+		String[] tmp ;
 
 		try {
 			File file = new File(pathP);
