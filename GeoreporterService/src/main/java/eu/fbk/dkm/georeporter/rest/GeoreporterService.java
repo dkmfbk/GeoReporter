@@ -2075,18 +2075,8 @@ public class GeoreporterService {
 		String output = "File uploaded to : " + uploadedFileMappingsLocation;
 		System.out.println(output);
 		
-		
-		
-		
-		
-		
-		
-		
 		System.out.println("filedati="+fileDatiDetail.getFileName());
-		System.out.println("fileMappings="+fileMappingsDetail.getFileName());
-		
-	
-		
+		System.out.println("fileMappings="+fileMappingsDetail.getFileName());		
 		String fileHeader="";
 		// save it
 		writeToFile(fileDatiIS, fileDatiDetail.getFileName());
@@ -2096,62 +2086,65 @@ public class GeoreporterService {
 		 fileHeader=fileHeaderDetail.getFileName();
 		}
 
-String filePath=fileDatiDetail.getFileName();
-String fileMappings=fileMappingsDetail.getFileName();
+     String filePath=fileDatiDetail.getFileName();
+     String fileMappings=fileMappingsDetail.getFileName();
 		
 	
 	String result="fail";
+	 String serviceURL="http://localhost:8080/GeoreporterService/servizio/rest/";
+		ImportGeoreporter importgr= new ImportGeoreporter(serviceURL);
+		
 	//ImportGeoreporter.importaContrattiLocazione(fileDatiDetail.getFileName(), fileMappingsDetail.getFileName());
 	switch (tipodati) {
     case "fabbricati": 
-    	ImportGeoreporter.importaUnitaImmobiliari(filePath, fileHeader, fileMappings);
+    	importgr.importaUnitaImmobiliari(filePath, fileHeader, fileMappings);
              break;
     case "soggettifabbricati": 
-    	ImportGeoreporter.importaSoggettiFabbricati(filePath, fileHeader, fileMappings);    
+    	importgr.importaSoggettiFabbricati(filePath, fileHeader, fileMappings);    
     		break;
     case "titolaritafabbricati": 
-    	ImportGeoreporter.importaTitolaritaFabbricati(filePath, fileHeader, fileMappings);
+    	importgr.importaTitolaritaFabbricati(filePath, fileHeader, fileMappings);
             break;
     case "anagraficacomunale": 
-    	ImportGeoreporter.importaAnagraficaComunale(filePath, fileMappings);
+    	importgr.importaAnagraficaComunale(filePath, fileMappings);
             break;
     case "anagraficafamiglie": 
-    	ImportGeoreporter.importaAnagraficaFamiglie(filePath, fileMappings);
+    	importgr.importaAnagraficaFamiglie(filePath, fileMappings);
             break;
     case "fornitureelettriche": 
-    	ImportGeoreporter.importaFornitureElettriche(filePath, fileMappings);
+    	importgr.importaFornitureElettriche(filePath, fileMappings);
             break;
     case "fornituregas": 
-    	ImportGeoreporter.importaFornitureGas(filePath, fileMappings);
+    	importgr.importaFornitureGas(filePath, fileMappings);
             break;  
     case "contrattilocazione": 
-    	ImportGeoreporter.importaContrattiLocazione(filePath, fileMappings);
+    	importgr.importaContrattiLocazione(filePath, fileMappings);
             break;   
     case "utenzerifiuti": 
-    	ImportGeoreporter.importaTributiUtenzeRifiuti(filePath, fileMappings);
+    	importgr.importaTributiUtenzeRifiuti(filePath, fileMappings);
             break;
     case "utenzeacqua": 
-    	ImportGeoreporter.importaTributiUtenzaAcqua(filePath, fileMappings);
+    	importgr.importaTributiUtenzaAcqua(filePath, fileMappings);
             break; 
     case "lettureacqua": 
-    	ImportGeoreporter.importaTributiLetturaAcqua(filePath, fileMappings);
+    	importgr.importaTributiLetturaAcqua(filePath, fileMappings);
             break;   
     case "iciimuabitazioneprincipale": 
-    	ImportGeoreporter.importaTributiUtenzaICI_IMU_AbitazionePrincipale(filePath, fileMappings);
+    	importgr.importaTributiUtenzaICI_IMU_AbitazionePrincipale(filePath, fileMappings);
             break;   
-	
+            
     case "iciimunudaproprieta": 
-    	ImportGeoreporter.importaTributiUtenzaICI_IMU_NudaProprieta(filePath, fileMappings);
+    	importgr.importaTributiUtenzaICI_IMU_NudaProprieta(filePath, fileMappings);
             break;   
 
     case "particellefondiarie": 
-    	ImportGeoreporter.importaParticelleFondiarie(filePath, fileHeader, fileMappings);
+    	importgr.importaParticelleFondiarie(filePath, fileHeader, fileMappings);
              break;
     case "soggettiparticellefondiarie": 
-    	ImportGeoreporter.importaSoggettiParticelleFondiarie(filePath, fileHeader, fileMappings);    
+    	importgr.importaSoggettiParticelleFondiarie(filePath, fileHeader, fileMappings);    
     		break;
     case "titolaritaparticellefondiare": 
-    	ImportGeoreporter.importaTitolaritaParticelleFondiarie(filePath, fileHeader, fileMappings);
+    	importgr.importaTitolaritaParticelleFondiarie(filePath, fileHeader, fileMappings);
             break;            
              
              
