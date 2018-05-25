@@ -13,11 +13,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
@@ -32,15 +37,20 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTit;
 public class MappingInsertTit {
 
 	// lista di elementi TITOLARITA del file WRAPPER
-	public static List<Titolarita> listTitolarita = WrapperTit.listTitolarita;
-
+	public  List<Titolarita> listTitolarita = WrapperTit.listTitolarita;
+	public  String targetURL;
+	public String serviceURL;
+	public MappingInsertTit(String targetURL_) {
+		
+		targetURL=  targetURL_+"inserttable";
+		serviceURL=targetURL_;
+	}
 	
 	
 	
 	
 	
-	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -82,7 +92,7 @@ public class MappingInsertTit {
 	
 	
 	
-	private static void LoadFile(File filename, File filenameNote) {
+	private  void LoadFile(File filename, File filenameNote) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -106,7 +116,7 @@ public class MappingInsertTit {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
 		// ciclo la lista degli elementi TIT
 		for (int j = 0; j < listTitolarita.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -292,11 +302,11 @@ public class MappingInsertTit {
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
-	public static String insertRigaReturn(RigaTabella riga) {
+	public  String insertRigaReturn(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -349,7 +359,47 @@ public class MappingInsertTit {
 		return output;
 	}
 
-	public static void insertRiga(RigaTabella riga) {
+	
+	
+	public  void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+	//	String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	
+	
+	public  void insertRiga_old(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -401,13 +451,13 @@ public class MappingInsertTit {
 	}
 
 	// metodo che dato UI mi restituisce IDECATASTALE
-	public static String getICfromUI(String ui) {
+	public  String getICfromUI(String ui) {
 
-		String result = "C0_N0_D0_S0";
+		String result = "FAIL";
 		Client client = Client.create();
 
 		WebResource webResource = client
-				.resource("http://localhost:8080/GeoreporterService/servizio/rest/icfromui?ui=" + ui);
+				.resource(serviceURL+"icfromui?ui=" + ui);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 		// Status 200 is successful.
@@ -423,12 +473,12 @@ public class MappingInsertTit {
 	}
 
 	// metodo che dato UI mi restituisce IDESOG
-	public static String getSOGfromIDESOG(String ui) {
+	public  String getSOGfromIDESOG(String ui) {
 		String result = "FAIL";
 		Client client = Client.create();
 
 		WebResource webResource = client.resource(
-				"http://localhost:8080/GeoreporterService/servizio/rest/urisoggettodaid?identificativoSoggetto=" + ui);
+				serviceURL+"urisoggettodaid?identificativoSoggetto=" + ui);
 
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
@@ -445,7 +495,7 @@ public class MappingInsertTit {
 	}
 
 
-	public static void run(String filePath,String fileHeader, String fileMappings) {
+	public  void run(String filePath,String fileHeader, String fileMappings) {
 		
 		
 	//	String pathT = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT";
@@ -477,7 +527,7 @@ public class MappingInsertTit {
 		WrapperTit.estrazioneHeaderFileTit(pathP);
 		WrapperTit.letturaFileTit(pathT);
 		// mapping e insert degli elementi TITOLARITA
-		LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
+	//	LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
 
 	}
 

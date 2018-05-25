@@ -4,110 +4,136 @@ package eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
+
+import eu.fbk.dkm.georeporter.config.ConfigurationManager;
 
 
 
 public class ImportGeoreporter {
 
 	
-	public static void importaUnitaImmobiliari(String filePath,String fileHeader, String fileMappings) {
+	public ImportGeoreporter(String inserServiceURL) {
+		
+		targetURL=inserServiceURL;
+		
+	}
+	
+	public  String targetURL ;
+	
+	
+
+	
+	
+	public  void importaUnitaImmobiliari(String filePath,String fileHeader, String fileMappings) {
 		
 	//	 MappingInsertFabUiNote.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
 	//	 MappingInsertFabIde.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
 	//	 MappingInsertFabIndirizzo.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");	 	   
 	
-	
-		 MappingInsertFabUiNote.run(filePath,fileHeader,fileMappings);
-	     MappingInsertFabIde.run(filePath,fileHeader,fileMappings);
-	     MappingInsertFabIndirizzo.run(filePath,fileHeader,fileMappings);	 	   
-	}
-	
-	
-	
-	public static void importaSoggettiFabbricati(String filePath,String fileHeader, String fileMappings) {
-               MappingInsertSog.run(filePath, fileHeader, fileMappings);
-	}
-	
-	
-	public static void importaTitolaritaFabbricati(String filePath,String fileHeader, String fileMappings) {
+		MappingInsertFabUiNote fabui=new MappingInsertFabUiNote(targetURL);
+		fabui.run(filePath,fileHeader,fileMappings);
+		MappingInsertFabIde fabIDE=new MappingInsertFabIde(targetURL);
+		fabIDE.run(filePath,fileHeader,fileMappings);
 		
-		MappingInsertTit.run(filePath, fileHeader, fileMappings);
+		MappingInsertFabIndirizzo fabind=new MappingInsertFabIndirizzo(targetURL);
+		fabind.run(filePath,fileHeader,fileMappings);
+		
+		//MappingInsertFabUiNote.run(targetURL,filePath,fileHeader,fileMappings);
+	    //MappingInsertFabIde.run(filePath,fileHeader,fileMappings);
+	    //MappingInsertFabIndirizzo.run(filePath,fileHeader,fileMappings);	 	   
 	}
 	
-    public static void importaAnagraficaComunale(String filePath, String fileMappings) {
-		
-		MappingInsertAnagraficaComunale.run(filePath, fileMappings, "L322");
+	
+	
+	public  void importaSoggettiFabbricati(String filePath,String fileHeader, String fileMappings) {
+		MappingInsertSog inssog= new MappingInsertSog(targetURL);
+		inssog.run(filePath, fileHeader, fileMappings);
+	}
+	
+	
+	public  void importaTitolaritaFabbricati(String filePath,String fileHeader, String fileMappings) {
+		MappingInsertTit instit=new MappingInsertTit(targetURL);
+		instit.run(filePath, fileHeader, fileMappings);
+	}
+	
+    public  void importaAnagraficaComunale(String filePath, String fileMappings) {
+    	MappingInsertAnagraficaComunale insanagcom = new MappingInsertAnagraficaComunale(targetURL);
+    	insanagcom.run(filePath, fileMappings, "L322");
 	}
 	
       
     
-   public static void importaAnagraficaFamiglie(String filePath, String fileMappings) {
-		
-	   MappingInsertFamiglia.run(filePath, fileMappings, "L322");
+   public void importaAnagraficaFamiglie(String filePath, String fileMappings) {
+	   MappingInsertFamiglia insfamiglia = new MappingInsertFamiglia(targetURL);
+	   insfamiglia.run(filePath, fileMappings, "L322");
 	}
 
-   public static void importaFornitureGas(String filePath, String fileMappings) {
-	
-	   MappingInsertForGas.run(filePath, fileMappings);
+   
+   public  void importaFornitureGas(String filePath, String fileMappings) {
+	   MappingInsertForGas insgas = new MappingInsertForGas(targetURL);
+	   insgas.run(filePath, fileMappings);
    }
     
-  public static void importaFornitureElettriche(String filePath, String fileMappings) {
+  public  void importaFornitureElettriche(String filePath, String fileMappings) {
 	
-	  MappingInsertForEnergia.run(filePath, fileMappings);
+	  MappingInsertForEnergia insenergia = new MappingInsertForEnergia(targetURL);
+	  insenergia.run(filePath, fileMappings);
   }
     
      
-  public static void importaContrattiLocazione(String filePath, String fileMappings) {
-	
-	  MappingInsertForLocazione.run(filePath,fileMappings);
+  public  void importaContrattiLocazione(String filePath, String fileMappings) {
+	  MappingInsertForLocazione insLocaz = new MappingInsertForLocazione(targetURL);
+	  insLocaz.run(filePath,fileMappings);
 }
     
     
   
-public static void importaTributiUtenzeRifiuti(String filePath, String fileMappings) {
-		
-	  MappingInsertTUUtenzaR.run(filePath, fileMappings);
+public  void importaTributiUtenzeRifiuti(String filePath, String fileMappings) {
+	MappingInsertTUUtenzaR insrifiuti = new MappingInsertTUUtenzaR(targetURL);	
+	insrifiuti.run(filePath, fileMappings);
 } 
   
   
-public static void importaTributiUtenzaAcqua(String filePath, String fileMappings) {
-		
-	  MappingInsertTUUtenzaA.run(filePath, fileMappings);
+public  void importaTributiUtenzaAcqua(String filePath, String fileMappings) {
+	MappingInsertTUUtenzaA insacqua= new MappingInsertTUUtenzaA(targetURL);
+	insacqua.run(filePath, fileMappings);
 }  
   
   
  
-public static void importaTributiLetturaAcqua(String filePath, String fileMappings) {
+public  void importaTributiLetturaAcqua(String filePath, String fileMappings) {
 	
-	  MappingInsertTULetturaA.run(filePath, fileMappings);
+	MappingInsertTULetturaA insletturaacqua = new MappingInsertTULetturaA(targetURL);
+	insletturaacqua.run(filePath, fileMappings);
 }  
 
 
-public static void importaTributiUtenzaICI_IMU_AbitazionePrincipale(String filePath, String fileMappings) {
-	
-	  MappingInsertTUIciImuAP.run(filePath, fileMappings);
+public  void importaTributiUtenzaICI_IMU_AbitazionePrincipale(String filePath, String fileMappings) {
+	MappingInsertTUIciImuAP insiciap= new MappingInsertTUIciImuAP(targetURL);
+	insiciap.run(filePath, fileMappings);
 }  
 
-public static void importaTributiUtenzaICI_IMU_NudaProprieta(String filePath, String fileMappings) {
-	
-	  MappingInsertTUIciImuNP.run(filePath, fileMappings);
+public  void importaTributiUtenzaICI_IMU_NudaProprieta(String filePath, String fileMappings) {
+	MappingInsertTUIciImuNP insicinp = new MappingInsertTUIciImuNP(targetURL); 
+	insicinp.run(filePath, fileMappings);
 }  
   
-public static void importaParticelleFondiarie(String filePath,String fileHeader, String fileMappings){
-	
-	  MappingInsertParFon.run(filePath, fileHeader, fileMappings,"L322");
+public  void importaParticelleFondiarie(String filePath,String fileHeader, String fileMappings){
+	MappingInsertParFon inppartfon=new MappingInsertParFon(targetURL); 
+	inppartfon.run(filePath, fileHeader, fileMappings,"L322");
 }    
   
   
-public static void importaSoggettiParticelleFondiarie(String filePath,String fileHeader, String fileMappings){
-	
-	  MappingInsertSogFon.run(filePath, fileHeader, fileMappings);
+public  void importaSoggettiParticelleFondiarie(String filePath,String fileHeader, String fileMappings){
+	MappingInsertSogFon inssogfond= new MappingInsertSogFon(targetURL); 
+	inssogfond.run(filePath, fileHeader, fileMappings);
 }   
   
   
-public static void importaTitolaritaParticelleFondiarie(String filePath,String fileHeader, String fileMappings){
-	
-	  MappingInsertTtcFon.run(filePath, fileHeader, fileMappings);
+public  void importaTitolaritaParticelleFondiarie(String filePath,String fileHeader, String fileMappings){
+	MappingInsertTtcFon insTitfon= new MappingInsertTtcFon(targetURL); 
+	insTitfon.run(filePath, fileHeader, fileMappings);
 }
 
 
@@ -123,17 +149,25 @@ public static void main(String[] args) {
 	
 	
 
+
 	
 	
 		//Fabbricati
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
-
+        String serviceURL="http://localhost:8080/GeoreporterService/servizio/rest/";
+		ImportGeoreporter importgr= new ImportGeoreporter(serviceURL);
+	//	importgr.importaUnitaImmobiliari("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
+		importgr.importaTributiUtenzaICI_IMU_NudaProprieta("file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop.xls","file/file_mapping/mappingICIIMU.json");
+		
+		
+		
+		
 		System.out.println("1-Inserimento UnitaImmobiliari e Note. 7min"+date);
         //MappingInsertFabUiNote.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingUI_Nota.json");
-		MappingInsertFabUiNote mifuin=new MappingInsertFabUiNote();
-	    mifuin.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");	
+//		MappingInsertFabUiNote mifuin=new MappingInsertFabUiNote();
+//	    mifuin.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");	
 	
 	//	MappingInsertFabUiNote.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
 		// file di import, file header, file di mappings

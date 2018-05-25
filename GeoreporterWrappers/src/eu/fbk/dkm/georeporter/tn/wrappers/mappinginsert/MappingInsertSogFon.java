@@ -15,11 +15,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.WebApplicationException;
+
 import java.util.Date;
 import java.util.Calendar;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
@@ -35,15 +44,22 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSogFon;
 public class MappingInsertSogFon {
 
 
-	public static List<PersonaFisica> listPersFisica = WrapperSogFon.listPersonaFisicaFon;
-	public static List<PersonaGiuridica> listPersGiuridica= WrapperSogFon.listPersonaGiuridicaFon;
-	public static List<ProprietarioproTempore> listProprietarioProTempore= WrapperSogFon.listProprietarioproTempore;
+	public  List<PersonaFisica> listPersFisica = WrapperSogFon.listPersonaFisicaFon;
+	public  List<PersonaGiuridica> listPersGiuridica= WrapperSogFon.listPersonaGiuridicaFon;
+	public  List<ProprietarioproTempore> listProprietarioProTempore= WrapperSogFon.listProprietarioproTempore;
 	
 
 	
+public  String targetURL;
 	
+MappingInsertSogFon(String targetURL_){
+		
+		targetURL=  targetURL_+"inserttable";
+		
+		
+	}
 	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -104,7 +120,7 @@ public class MappingInsertSogFon {
 	
 	
 	
-	private static void LoadFile1(File filename, File filename2) {
+	private  void LoadFile1(File filename, File filename2) {
 		// lettura fai JSON per mappatura persona Fisica
 		//input json personafisica, soggetto
 		Gson gson = new Gson();
@@ -130,7 +146,7 @@ public class MappingInsertSogFon {
 
 	}
 
-	private static void LoadFile2(File filename, File filename2) {
+	private  void LoadFile2(File filename, File filename2) {
 		// lettura fai JSON per mappatura persona Giuridica
 		//input json personagiuridica, soggetto
 		
@@ -155,7 +171,7 @@ public class MappingInsertSogFon {
 		}
 
 	}
-	private static void LoadFile3(File filename, File filename2) {
+	private  void LoadFile3(File filename, File filename2) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -181,7 +197,7 @@ public class MappingInsertSogFon {
 	}
 
 	
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2,
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2,
 			List<PersonaFisica> listPers) {
 		//input json perso, soggetto
 		// ciclo la lista degli elementi P
@@ -255,7 +271,7 @@ public class MappingInsertSogFon {
 
 	}
 
-	public static void associazioneMappingNomeVal2(MappingTabella data, MappingTabella data2,
+	public  void associazioneMappingNomeVal2(MappingTabella data, MappingTabella data2,
 			List<PersonaGiuridica> listPers) {
 		// ciclo la lista degli elementi PG
 		for (int j = 0; j < listPers.size(); j++) {
@@ -335,7 +351,7 @@ public class MappingInsertSogFon {
 
 	}
 	
-	public static void associazioneMappingNomeVal3(MappingTabella data, MappingTabella data2,
+	public  void associazioneMappingNomeVal3(MappingTabella data, MappingTabella data2,
 			List<ProprietarioproTempore> listPers) {
 		// ciclo la lista degli elementi PPT
 		for (int j = 0; j < listPers.size(); j++) {
@@ -394,8 +410,43 @@ public class MappingInsertSogFon {
 
 	}
 
+	public  void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+	//	String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
 	
-	public static void insertRiga(RigaTabella riga) {
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	public  void insertRiga_old(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -451,7 +502,7 @@ public class MappingInsertSogFon {
 	}
 
 	
-	public static void run(String filePath,String fileHeaderPath ,String fileMappings){
+	public  void run(String filePath,String fileHeaderPath ,String fileMappings){
 
 		// path del file .SOG e del file con gli HEADER inseriti a mano da un utente
 //		String pathF = "file/TN_file/404_41097.SOG";

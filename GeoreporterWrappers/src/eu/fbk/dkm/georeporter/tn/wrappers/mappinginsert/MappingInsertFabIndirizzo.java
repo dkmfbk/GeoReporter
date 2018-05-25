@@ -49,14 +49,17 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFabIndirizzo;
 
 public class MappingInsertFabIndirizzo {
 
-	public static List<Indirizzo> listIndirizzi = WrapperFab.listIndirizzi;
+	public  List<Indirizzo> listIndirizzi = WrapperFab.listIndirizzi;
 
-
+	public  String targetURL;
+	
+	public MappingInsertFabIndirizzo( String targetURL_) {
+		
+		targetURL=  targetURL_+"inserttable";
+	}
 	
 	
-	
-	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -98,7 +101,7 @@ public class MappingInsertFabIndirizzo {
 	
 	
 	
-	private static void LoadFile_old(File filename) {
+	private  void LoadFile_old(File filename) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -117,7 +120,7 @@ public class MappingInsertFabIndirizzo {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data) {
+	public  void associazioneMappingNomeVal(MappingTabella data) {
 		// ciclo la lista degli elementi IND
 		for (int j = 0; j < listIndirizzi.size(); j++) {
 
@@ -201,11 +204,11 @@ public class MappingInsertFabIndirizzo {
 	
 	
 	
-	public static void insertRiga(RigaTabella riga) {
+	public  void insertRiga(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
 	
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -242,7 +245,7 @@ public class MappingInsertFabIndirizzo {
 	
 	
 	
-	public static void insertRiga2(RigaTabella riga) {
+	public  void insertRiga2(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -297,10 +300,10 @@ public class MappingInsertFabIndirizzo {
 		// return output;
 	}
 
-public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {
+public  void run(String pathFile,String pathFileHeader, String pathFileMappings) {
 
 		
-
+	
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
 		WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
 
@@ -316,7 +319,7 @@ public static void run(String pathFile,String pathFileHeader, String pathFileMap
 
 	}
 
-	public static void run() {
+	public  void run() {
 		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
 		String pathP = "file/TN_header/headerfilefab.csv";
 
@@ -330,7 +333,7 @@ public static void run(String pathFile,String pathFileHeader, String pathFileMap
 		
 	}
 	
-	public static void main(String[] args) {
+	public  void main(String[] args) {
 
 		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
 		String pathP = "file/TN_header/headerfilefab.csv";

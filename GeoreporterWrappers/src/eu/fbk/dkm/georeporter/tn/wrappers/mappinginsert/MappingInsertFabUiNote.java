@@ -46,10 +46,18 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFab;
 
 public class MappingInsertFabUiNote {
 
-	public static List<UnitaImmobiliare> listUnitaImmobiliari = WrapperFab.listUnitaImmobiliari;
-
+	public  List<UnitaImmobiliare> listUnitaImmobiliari = WrapperFab.listUnitaImmobiliari;
+	public  String targetURL;
+	
+	
+	MappingInsertFabUiNote( String targetURL_){
+		
+		  targetURL=  targetURL_+"inserttable";
+		
+		
+	}
 	// metodo che acquisisce i 2 file di tipo json
-	public static void LoadFile(File filename, File filenameNote) {
+	public  void LoadFile(File filename, File filenameNote) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -76,7 +84,7 @@ public class MappingInsertFabUiNote {
 	}
 
 	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -119,7 +127,7 @@ public class MappingInsertFabUiNote {
 	
 	
 	// accoppiamento valore dell'UI a quello di mapping
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
 		// ciclo la lista degli elementi UI
 		for (int j = 0; j < listUnitaImmobiliari.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -303,11 +311,11 @@ public class MappingInsertFabUiNote {
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
-	public static String insertRigaReturn(RigaTabella riga) {
+	public  String insertRigaReturn(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -368,11 +376,11 @@ public class MappingInsertFabUiNote {
 	
 	
 	
-	public static void insertRiga(RigaTabella riga) {
+	public  void insertRiga(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+			
 	
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -417,7 +425,7 @@ public class MappingInsertFabUiNote {
 	
 	
 	
-	public static void insertRiga2(RigaTabella riga) {
+	public  void insertRiga_old(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -475,7 +483,7 @@ public class MappingInsertFabUiNote {
 
 	
 	
-	public static void run() {
+	public  void run() {
 		
 		
 		
@@ -501,10 +509,10 @@ public class MappingInsertFabUiNote {
 	}
 	
 
-public static void run(String pathFile,String pathFileHeader, String pathFileMappings) {
+public  void run(String pathFile,String pathFileHeader, String pathFileMappings) {
 
 	
-
+   
 	// chiamata per l'estrazione degli header per la composizione della lista HEADER
 	WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
 
@@ -522,7 +530,7 @@ public static void run(String pathFile,String pathFileHeader, String pathFileMap
 	
 	
 	
-	public static void main(String[] args) {
+	public  void main(String[] args) {
 
 		// path del file .FAB e del file con gli HEADER inseriti a mano da un utente
 		// IDR0000115470_TIPOFACSN_CAMML322

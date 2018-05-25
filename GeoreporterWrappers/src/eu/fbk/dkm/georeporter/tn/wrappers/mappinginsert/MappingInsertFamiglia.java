@@ -18,8 +18,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import javax.ws.rs.WebApplicationException;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Famiglia;
@@ -34,13 +42,19 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFamiglia;
 
 public class MappingInsertFamiglia {
 
-	public static String[] header;
+	public  String[] header;
 
-	public static List<Famiglia> listFamiglia = WrapperFamiglia.listFamiglia;
+	public  List<Famiglia> listFamiglia = WrapperFamiglia.listFamiglia;
 
+	public  String targetURL;
+	
+	public MappingInsertFamiglia( String targetURL_) {
+		
+		targetURL=  targetURL_+"inserttable";
+	}
 	
 	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -81,7 +95,7 @@ public class MappingInsertFamiglia {
 	
 	
 	
-	private static void LoadFile_old(File filename, File filenameI) {
+	private  void LoadFile_old(File filename, File filenameI) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -106,7 +120,7 @@ public class MappingInsertFamiglia {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataI) {
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataI) {
 		// ciclo la lista degli elementi FAM
 
 		for (int j = 0; j < listFamiglia.size(); j++) {
@@ -216,10 +230,46 @@ public class MappingInsertFamiglia {
 		}
 	}
 
-	public static void insertRiga(RigaTabella riga) {
+	public  void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+	//	String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	public  void insertRiga_old(RigaTabella riga) {
 
 		//String targetURL = "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+	//	String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		
 		Gson gson = new Gson();
@@ -272,7 +322,7 @@ public class MappingInsertFamiglia {
 	}
 
 	
-	public static void run(String filePath, String fileMappings,String codicecomunecatastale) {
+	public  void run(String filePath, String fileMappings,String codicecomunecatastale) {
 
 		//	String path = "file/TN_file/DGASBAN2.csv";
 			// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
@@ -281,7 +331,7 @@ public class MappingInsertFamiglia {
 			WrapperFamiglia.codiceComunecatastale=codicecomunecatastale;
 			
 			// mapping e insert
-			LoadFile(new File("file/file_mapping/mappingFamiglia.json"));
+			LoadFile(new File(fileMappings));
 		
 		
 	}
@@ -301,7 +351,7 @@ public class MappingInsertFamiglia {
 		WrapperFamiglia.LetturaFile(path);
 		WrapperFamiglia.codiceComunecatastale="L322";
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingFamiglia.json"));
+	//	LoadFile(new File("file/file_mapping/mappingFamiglia.json"));
 
 	}
 

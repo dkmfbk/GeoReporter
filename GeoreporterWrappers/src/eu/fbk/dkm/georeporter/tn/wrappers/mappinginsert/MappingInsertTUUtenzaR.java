@@ -15,8 +15,16 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.ws.rs.WebApplicationException;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
@@ -28,12 +36,17 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaR;
 
 public class MappingInsertTUUtenzaR {
 
-	public static List<UtenzaRifiuti> listUtenzaRifiuti = WrapperTUUtenzaR.listUtenzaRifiuti;
+	public  List<UtenzaRifiuti> listUtenzaRifiuti = WrapperTUUtenzaR.listUtenzaRifiuti;
 
 
+	public  String targetURL;
+	public MappingInsertTUUtenzaR(String targetURL_) {
+		
+		targetURL=  targetURL_+"inserttable";
+		
+	}
 	
-	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -116,7 +129,7 @@ public class MappingInsertTUUtenzaR {
 	
 	
 	
-	private static void LoadFile(File filename, File filename2, File filename3, File filename4, File filename5,
+	private  void LoadFile(File filename, File filename2, File filename3, File filename4, File filename5,
 			File filename6, File filename7, File filename8, File filename9) {
 
 		Gson gson = new Gson();
@@ -184,7 +197,7 @@ public class MappingInsertTUUtenzaR {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3,
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3,
 			MappingTabella data4, MappingTabella data5, MappingTabella data6, MappingTabella data7,
 			MappingTabella data8, MappingTabella data9) {
 
@@ -495,9 +508,50 @@ public class MappingInsertTUUtenzaR {
 		}
 	}
 
-	public static void insertRiga(RigaTabella riga) {
+	
+	
+	
+	public  void insertRiga(RigaTabella riga) {
 
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	
+	
+	public  void insertRiga_old(RigaTabella riga) {
+
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -547,7 +601,7 @@ public class MappingInsertTUUtenzaR {
 		}
 		// return output;
 	}
-	public static void run(String filePath, String fileMappings) {
+	public  void run(String filePath, String fileMappings) {
 		
 		String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
@@ -584,7 +638,7 @@ public class MappingInsertTUUtenzaR {
 			e.printStackTrace();
 		}
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
+	/*	LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
 				new File("file/file_mapping/mappingUtenza.json"),
 				new File("file/file_mapping/mappingUtenzaRifiuti.json"),
 				new File("file/file_mapping/mappingSoggetto.json"),
@@ -593,7 +647,7 @@ public class MappingInsertTUUtenzaR {
 				new File("file/file_mapping/mappingIndirizzoRECAPITOCONTRIBUENTE.json"),
 				new File("file/file_mapping/mappingIndirizzoUTENZA.json"),
 				new File("file/file_mapping/mappingIdentificativoCatastale2.json"));
-
+*/
 	}
 
 }

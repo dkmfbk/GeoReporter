@@ -13,11 +13,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
@@ -33,15 +38,23 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperParFon;
 public class MappingInsertParFon {
 
 	// lista di elementi PARTICELLA del file WRAPPER
-	public static List<Particella> listParticella = WrapperParFon.listParticella;
+	public  List<Particella> listParticella = WrapperParFon.listParticella;
 
 
+public  String targetURL;
+public  String serviceURL;
+	
+public MappingInsertParFon(String targetURL_){
+		
+		targetURL=  targetURL_+"inserttable";
+		
+		serviceURL=targetURL_;
+	}
 	
 	
 	
 	
-	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -93,7 +106,7 @@ public class MappingInsertParFon {
 	
 	
 	
-	private static void LoadFile(File filename, File filenameNote, File filename2) {
+	private  void LoadFile(File filename, File filenameNote, File filename2) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -123,7 +136,7 @@ public class MappingInsertParFon {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataIntavolazione,
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataIntavolazione,
 			MappingTabella data2) {
 		// ciclo la lista degli elementi PAR
 		for (int j = 0; j < listParticella.size(); j++) {
@@ -331,11 +344,11 @@ public class MappingInsertParFon {
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
-	public static String insertRigaReturn(RigaTabella riga) {
+	public  String insertRigaReturn(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -388,7 +401,46 @@ public class MappingInsertParFon {
 		return output;
 	}
 
-	public static void insertRiga(RigaTabella riga) {
+	
+	
+	public  void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+	//	String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	
+	public static void insertRiga_old(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -439,16 +491,18 @@ public class MappingInsertParFon {
 	}
 
 	// metodo che dato UI mi restituisce IDECATASTALE
-	public static String getICfromUI(String ui) {
+	public  String getICfromUI(String ui) {
 
 		String result = "C0_N0_D0_S0";
 		Client client = Client.create();
 
 		WebResource webResource = client
-				.resource("http://localhost:8080/GeoreporterService/servizio/rest/icfromui?ui=" + ui);
+				.resource(serviceURL+"icfromui?ui=" + ui);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 		// Status 200 is successful.
+		
+		client.destroy();
 		if (response.getStatus() != 200) {
 			System.out.println("Failed with HTTP Error code: " + response.getStatus());
 			String error = response.getEntity(String.class);
@@ -460,7 +514,7 @@ public class MappingInsertParFon {
 
 	}
 
-	public static void run(String filePath, String fileHeaderPath, String fileMappings, String codicecomunecatastale) {
+	public  void run(String filePath, String fileHeaderPath, String fileMappings, String codicecomunecatastale) {
 
 		// path del file .PAR e del file con gli HEADER inseriti a mano da un utente
 	//	String pathF = "file/TN_file/404_41097.PAR";
@@ -498,9 +552,9 @@ public class MappingInsertParFon {
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
 		// questo grazie ai file di mapping
-		LoadFile(new File("file/file_mapping/mappingParticella.json"),
-				new File("file/file_mapping/mappingIntavolazione.json"),
-				new File("file/file_mapping/mappingIdentificativoCatastale.json"));
+	//	LoadFile(new File("file/file_mapping/mappingParticella.json"),
+	//			new File("file/file_mapping/mappingIntavolazione.json"),
+	//			new File("file/file_mapping/mappingIdentificativoCatastale.json"));
 
 	}
 

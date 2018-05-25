@@ -13,11 +13,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
@@ -34,13 +39,23 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTtcFon;
 public class MappingInsertTtcFon {
 
 	// lista di elementi TITOLARITA del file WRAPPER
-	public static List<TitolaritaCompleta> listTitolaritaCompleta = WrapperTtcFon.listTitolaritaCompleta;
+	public  List<TitolaritaCompleta> listTitolaritaCompleta = WrapperTtcFon.listTitolaritaCompleta;
 
 	
+
+	
+public  String targetURL;
+public  String serviceURL;
+	
+public MappingInsertTtcFon(String targetURL_){
+		
+		targetURL=  targetURL_+"inserttable";
+		
+		serviceURL=targetURL_;
+	}
 	
 	
-	
-	public static void LoadFile(File fileMappings) {
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -86,7 +101,7 @@ public class MappingInsertTtcFon {
 	
 	
 	
-	private static void LoadFile(File filename, File filename2) {
+	private  void LoadFile(File filename, File filename2) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -110,7 +125,7 @@ public class MappingInsertTtcFon {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataIntavolazione) {
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataIntavolazione) {
 		// ciclo la lista degli elementi TTC
 		for (int j = 0; j < listTitolaritaCompleta.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -320,11 +335,11 @@ public class MappingInsertTtcFon {
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
-	public static String insertRigaReturn(RigaTabella riga) {
+	public  String insertRigaReturn(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
@@ -377,12 +392,12 @@ public class MappingInsertTtcFon {
 		return output;
 	}
 	// metodo che dato UI mi restituisce IDESOG
-	public static String getSOGfromIDESOG(String ui_) {
+	public  String getSOGfromIDESOG(String ui_) {
 		String result = "FAIL";
 		Client client = Client.create();
 		String ui = ui_.replaceAll("\\s+", "");
 		WebResource webResource = client.resource(
-				"http://localhost:8080/GeoreporterService/servizio/rest/urisoggettodaid?identificativoSoggetto=" + ui);
+				serviceURL+"urisoggettodaid?identificativoSoggetto=" + ui);
 
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
@@ -398,7 +413,50 @@ public class MappingInsertTtcFon {
 
 	}
 
-	public static void insertRiga(RigaTabella riga) {
+	
+	
+	public  void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+           try {
+			URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+           } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   			e1.printStackTrace();
+   		}
+           
+	   }
+    
+	
+	
+	
+	
+	
+	
+	public  void insertRiga_old(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -449,13 +507,13 @@ public class MappingInsertTtcFon {
 	}
 
 	// metodo che dato UI mi restituisce IDECATASTALE
-	public static String getICfromPAR(String par_) {
+	public  String getICfromPAR(String par_) {
 
 		String result = "FAIL";
 		Client client = Client.create();
-String par=par_.replaceAll("\\s+", "");
+        String par=par_.replaceAll("\\s+", "");
 		WebResource webResource = client
-				.resource("http://localhost:8080/GeoreporterService/servizio/rest/icfrompar?par=" + par);
+				.resource(serviceURL+"icfrompar?par=" + par);
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 		// Status 200 is successful.
@@ -469,7 +527,7 @@ String par=par_.replaceAll("\\s+", "");
 		return response.getEntity(String.class);
 
 	}
-	public static void run(String filePath,String fileHeaderPath ,String fileMappings){
+	public  void run(String filePath,String fileHeaderPath ,String fileMappings){
 	//	String pathT = "file/TN_file/404_41097.TTC";
 	//	String pathP = "file/TN_header/headerfilettcfon.csv";
 

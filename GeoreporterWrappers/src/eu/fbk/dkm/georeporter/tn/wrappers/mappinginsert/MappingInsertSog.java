@@ -15,11 +15,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
+
 import java.util.Date;
 import java.util.Calendar;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
@@ -35,14 +43,19 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSog;
 public class MappingInsertSog {
 
 	
-	private static List<PersonaFisica> listPersfis =WrapperSog.listPersonaFisica;
-	private static List<PersonaGiuridica> listPersgiu= WrapperSog.listPersonaGiuridica; 
-	private static List<ProprietarioproTempore> listPersprot= WrapperSog.listProprietarioproTempore;
+	private  List<PersonaFisica> listPersfis =WrapperSog.listPersonaFisica;
+	private  List<PersonaGiuridica> listPersgiu= WrapperSog.listPersonaGiuridica; 
+	private  List<ProprietarioproTempore> listPersprot= WrapperSog.listProprietarioproTempore;
 	 
+	public  String targetURL;
 	
-	
-	
-	public static void LoadFile(File fileMappings) {
+	MappingInsertSog(String targetURL_){
+		
+		targetURL=  targetURL_+"inserttable";
+		
+		
+	}
+	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -101,7 +114,7 @@ public class MappingInsertSog {
 	
 	
 	
-	private static void LoadFile1(File filename, File filename2) {
+	private  void LoadFile1(File filename, File filename2) {
 		// lettura fai JSON per mappatura
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -126,7 +139,7 @@ public class MappingInsertSog {
 
 	}
 
-	private static void LoadFile2(File filename, File filename2) {
+	private  void LoadFile2(File filename, File filename2) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -150,7 +163,7 @@ public class MappingInsertSog {
 
 	}
 
-	private static void LoadFile3(File filename, File filename2 ) {
+	private  void LoadFile3(File filename, File filename2 ) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -175,7 +188,7 @@ public class MappingInsertSog {
 
 	}
 
-	public static void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2) {
+	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2) {
 		// ciclo la lista degli elementi P
 		for (int j = 0; j < listPersfis.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -249,7 +262,7 @@ public class MappingInsertSog {
 
 	}
 
-	public static void associazioneMappingNomeVal2(MappingTabella data, MappingTabella data2) {
+	public  void associazioneMappingNomeVal2(MappingTabella data, MappingTabella data2) {
 		// ciclo la lista degli elementi PG
 		for (int j = 0; j < listPersgiu.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -308,7 +321,7 @@ public class MappingInsertSog {
 
 	}
 
-	public static void associazioneMappingNomeVal3(MappingTabella data, MappingTabella data2) {
+	public  void associazioneMappingNomeVal3(MappingTabella data, MappingTabella data2) {
 		// ciclo la lista degli elementi PPT
 		for (int j = 0; j < listPersprot.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -364,7 +377,47 @@ public class MappingInsertSog {
 
 	}
 
-	public static void insertRiga(RigaTabella riga) {
+	
+	
+	
+	
+	
+	public  void insertRiga(RigaTabella riga) {
+
+		// String targetURL =
+		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
+	
+		Gson gson = new Gson();
+		String json = gson.toJson(riga);
+      //     try {
+		//	URL targetUrl = new URL(targetURL);
+		
+           ClientConfig clientConfig = new DefaultClientConfig();
+           clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+           Client client = Client.create(clientConfig);
+
+           WebResource webResourcePost = client.resource(targetURL);
+           ClientResponse  response = webResourcePost.type("application/json").post(ClientResponse.class, json);
+         
+           if (response.getStatus() != 200) {
+           	 WebApplicationException e = response.getEntity(WebApplicationException.class);
+           	 System.out.println(e.toString());
+          }
+           String responseEntity = response.getEntity(String.class);
+           
+          
+          // System.out.println(responseEntity.toString());
+           
+           client.destroy();
+          // } catch (MalformedURLException e1) {
+   			// TODO Auto-generated catch block
+   		//	e1.printStackTrace();
+   		//}
+           
+	   }
+    
+	public  void insertRiga_old(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -420,9 +473,9 @@ public class MappingInsertSog {
 	}
 
 
-	public static void run(String filePath, String fileHeaderPath, String fileMappings) {
-		
-		
+public  void run(String filePath, String fileHeaderPath, String fileMappings) {
+									
+		  
 	//	String pathS = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG";
 	//	String pathP = "file/TN_header/headerfilesog.csv";
 
@@ -461,14 +514,14 @@ public class MappingInsertSog {
 		WrapperSog.estrazioneHeaderFileSog(pathP);
 		WrapperSog.letturaFileSog(pathS);
 		// mapping e insert degli elementi PF PG PPT
-		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
-				new File("file/file_mapping/mappingSoggetto.json"));
+	//	LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
+	//			new File("file/file_mapping/mappingSoggetto.json"));
 
-		LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
-				new File("file/file_mapping/mappingSoggetto.json"));
+	//	LoadFile2(new File("file/file_mapping/mappingPersonaGiuridica.json"),
+	//			new File("file/file_mapping/mappingSoggetto.json"));
 
-		LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
-				new File("file/file_mapping/mappingSoggetto.json"));
+	//	LoadFile3(new File("file/file_mapping/mappingProprietarioProTempore.json"),
+//				new File("file/file_mapping/mappingSoggetto.json"));
 
 	}
 
