@@ -97,9 +97,9 @@ MappingInsertSogFon(String targetURL_){
 
 			// chiamata al metodo per l'accoppiamento effettivo
 			
-			associazioneMappingNomeVal(mappingSoggetto, mappingSoggetto, listPersFisica);
-			associazioneMappingNomeVal2(mappingSoggetto, mappingSoggetto, listPersGiuridica);
-			associazioneMappingNomeVal3(mappingSoggetto, mappingSoggetto, listProprietarioProTempore);
+			associazioneMappingNomeVal(mappingPersonaFisica, mappingSoggetto, listPersFisica);
+			associazioneMappingNomeVal2(mappingPersonaGiuridica, mappingSoggetto, listPersGiuridica);
+			associazioneMappingNomeVal3(mappingProprietarioProtempore, mappingSoggetto, listProprietarioProTempore);
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
