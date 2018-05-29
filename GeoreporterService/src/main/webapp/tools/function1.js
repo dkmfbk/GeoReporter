@@ -737,8 +737,9 @@ $(function() {
 $(function() {	
 	$("#summaryPanel").on("click",function() {
 		//var queryType = "curatorsources";
-		var springlesserverURL = "http://localhost:8080/openrdf-sesame";
-		var restURL = "http://localhost:8080/SpringlesREST/rest/rest/";
+		var springlesserverURL = currenturl+"/openrdf-sesame";
+		var springlesserverURL = currenturl+"/openrdf-sesame";
+		var restURL = currenturl+"/SpringlesREST/rest/rest/";
 		var springlesrepositoryID= "georeporter";
 		var url_=restURL+"summary";
         
