@@ -18,6 +18,8 @@ import java.util.Map;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import java.util.Date;
 import java.util.Calendar;
 
@@ -43,10 +45,10 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSogFon;
 
 public class MappingInsertSogFon {
 
-
-	public  List<PersonaFisica> listPersFisica = WrapperSogFon.listPersonaFisicaFon;
-	public  List<PersonaGiuridica> listPersGiuridica= WrapperSogFon.listPersonaGiuridicaFon;
-	public  List<ProprietarioproTempore> listProprietarioProTempore= WrapperSogFon.listProprietarioproTempore;
+ public WrapperSogFon wsogfond = new WrapperSogFon();
+	public  List<PersonaFisica> listPersFisica ;
+	public  List<PersonaGiuridica> listPersGiuridica;
+	public  List<ProprietarioproTempore> listProprietarioProTempore;
 	
 
 	
@@ -58,7 +60,8 @@ MappingInsertSogFon(String targetURL_){
 		
 		
 	}
-	
+private Logger log = Logger.getLogger(MappingInsertSogFon.class);
+
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -509,11 +512,13 @@ MappingInsertSogFon(String targetURL_){
 //		String pathP = "file/TN_header/headerfilesogfon.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperSogFon.estrazioneHeaderFileSogFon(fileHeaderPath);
+		wsogfond.estrazioneHeaderFileSogFon(fileHeaderPath);
 
 		// chiamata per l'analisi del file .SOG FON
-		WrapperSogFon.letturaFileSogFon(filePath);
-
+		wsogfond.letturaFileSogFon(filePath);
+		 listPersFisica = wsogfond.listPersonaFisicaFon;
+	     listPersGiuridica= wsogfond.listPersonaGiuridicaFon;
+	     listProprietarioProTempore= wsogfond.listProprietarioproTempore;
 		// mapping e insert degli elementi PF PG
 		LoadFile(new File(fileMappings));
 		
@@ -534,10 +539,10 @@ MappingInsertSogFon(String targetURL_){
 		String pathP = "file/TN_header/headerfilesogfon.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperSogFon.estrazioneHeaderFileSogFon(pathP);
+	//	WrapperSogFon.estrazioneHeaderFileSogFon(pathP);
 
 		// chiamata per l'analisi del file .SOG FON
-		WrapperSogFon.letturaFileSogFon(pathF);
+	//	WrapperSogFon.letturaFileSogFon(pathF);
 
 		// mapping e insert degli elementi PF PG
 //		LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),

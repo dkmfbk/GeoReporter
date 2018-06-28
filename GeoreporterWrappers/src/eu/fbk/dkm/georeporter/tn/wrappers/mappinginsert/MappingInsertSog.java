@@ -17,6 +17,8 @@ import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import java.util.Date;
 import java.util.Calendar;
 
@@ -42,19 +44,22 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperSog;
 
 public class MappingInsertSog {
 
-	
-	private  List<PersonaFisica> listPersfis =WrapperSog.listPersonaFisica;
-	private  List<PersonaGiuridica> listPersgiu= WrapperSog.listPersonaGiuridica; 
-	private  List<ProprietarioproTempore> listPersprot= WrapperSog.listProprietarioproTempore;
+	private WrapperSog wsog = new WrapperSog();
+	private  List<PersonaFisica> listPersfis ;
+	private  List<PersonaGiuridica> listPersgiu; 
+	private  List<ProprietarioproTempore> listPersprot;
 	 
 	public  String targetURL;
-	
+	 
 	MappingInsertSog(String targetURL_){
 		
 		targetURL=  targetURL_+"inserttable";
 		
 		
 	}
+	
+	private Logger log = Logger.getLogger(MappingInsertSog.class);
+	
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -244,6 +249,7 @@ public class MappingInsertSog {
 			String codfis = listPersfis.get(j).getValori().get("codicefiscale");
 			String idesog = listPersfis.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
 			if (codfis.isEmpty()) {
+				log.info("Soggetto senza codice fiscale ="+idesog);
 				codfis = idesog;
 			}
 			if ((!codfis.isEmpty()) || (idesog.equals("10000000"))) {
@@ -481,8 +487,13 @@ public  void run(String filePath, String fileHeaderPath, String fileMappings) {
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file SOG
-		WrapperSog.estrazioneHeaderFileSog(fileHeaderPath);
-		WrapperSog.letturaFileSog(filePath);
+	    
+		wsog.estrazioneHeaderFileSog(fileHeaderPath);
+		wsog.letturaFileSog(filePath);
+		listPersfis =wsog.listPersonaFisica;
+		listPersgiu= wsog.listPersonaGiuridica; 
+		listPersprot= wsog.listProprietarioproTempore;
+		
 		// mapping e insert degli elementi PF PG PPT
 		
 		
@@ -511,8 +522,8 @@ public  void run(String filePath, String fileHeaderPath, String fileMappings) {
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file SOG
-		WrapperSog.estrazioneHeaderFileSog(pathP);
-		WrapperSog.letturaFileSog(pathS);
+	//	WrapperSog.estrazioneHeaderFileSog(pathP);
+	//	WrapperSog.letturaFileSog(pathS);
 		// mapping e insert degli elementi PF PG PPT
 	//	LoadFile1(new File("file/file_mapping/mappingPersonaFisica.json"),
 	//			new File("file/file_mapping/mappingSoggetto.json"));

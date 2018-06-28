@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -39,14 +41,17 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTtcFon;
 public class MappingInsertTtcFon {
 
 	// lista di elementi TITOLARITA del file WRAPPER
-	public  List<TitolaritaCompleta> listTitolaritaCompleta = WrapperTtcFon.listTitolaritaCompleta;
+	
+	public WrapperTtcFon wtittpartfond = new WrapperTtcFon();
+	public  List<TitolaritaCompleta> listTitolaritaCompleta;
 
 	
 
 	
 public  String targetURL;
 public  String serviceURL;
-	
+private Logger log = Logger.getLogger(MappingInsertTtcFon.class);
+
 public MappingInsertTtcFon(String targetURL_){
 		
 		targetURL=  targetURL_+"inserttable";
@@ -298,12 +303,12 @@ public MappingInsertTtcFon(String targetURL_){
 						//relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codamm + "_" + idetit + qnd);
 						relTitIdCat.setUriDomain("http://dkm.fbk.eu/georeporter#TIT_" + codcat + "_" + idetit);
 					
-						String codpar = "PAR_" + codamm + "_" + idepar;
-						codpar = codpar.replaceAll("\\s+", "");
-						String idecat = getICfromPAR(codpar);
+					//	String codpar = "PAR_" + codamm + "_" + idepar;
+					//	codpar = codpar.replaceAll("\\s+", "");
+						String idecat = getICfromPAR(idepar);
 						if (idecat.equals("FAIL")) {
 							idecat = "http://dkm.fbk.eu/georeporter#PAR_000000000";
-							 System.out.println("Particella non presente: "+codpar);
+							log.info("Particella non presente: "+idepar);
 						}
 						relTitIdCat.setUriRange(idecat);
 						listRelTTC.add(relTitIdCat);
@@ -317,7 +322,7 @@ public MappingInsertTtcFon(String targetURL_){
 						
 				if(codfis.equals("FAIL")) {
 					codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
-			         System.out.println("Soggetto non presente: "+cod);
+			         log.info("Soggetto non presente: "+cod);
 				}
 				relTitSOG.setUriRange(codfis);
 				listRelTTC.add(relTitSOG);
@@ -513,7 +518,9 @@ public MappingInsertTtcFon(String targetURL_){
 		Client client = Client.create();
         String par=par_.replaceAll("\\s+", "");
 		WebResource webResource = client
-				.resource(serviceURL+"icfrompar?par=" + par);
+			//	.resource(serviceURL+"icfrompar?par=" + par);
+				.resource(serviceURL+"icfromparid?parid=" + par);
+				
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 
 		// Status 200 is successful.
@@ -533,8 +540,9 @@ public MappingInsertTtcFon(String targetURL_){
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file TTC
-		WrapperTtcFon.estrazioneHeaderFileTtcFon(fileHeaderPath);
-		WrapperTtcFon.letturaFileTtcFon(filePath);
+		wtittpartfond.estrazioneHeaderFileTtcFon(fileHeaderPath);
+		wtittpartfond.letturaFileTtcFon(filePath);
+		 listTitolaritaCompleta = wtittpartfond.listTitolaritaCompleta;
 		// mapping e insert degli elementi TITOLARITA
 		LoadFile(new File(fileMappings));
 	//	LoadFile(new File("file/file_mapping/mappingTitolarita2.json"),
