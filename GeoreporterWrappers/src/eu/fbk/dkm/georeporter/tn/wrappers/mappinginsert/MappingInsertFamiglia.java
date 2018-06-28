@@ -43,8 +43,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFamiglia;
 public class MappingInsertFamiglia {
 
 	public  String[] header;
-
-	public  List<Famiglia> listFamiglia = WrapperFamiglia.listFamiglia;
+	public WrapperFamiglia wfam = new WrapperFamiglia();
+	public  List<Famiglia> listFamiglia ;
 
 	public  String targetURL;
 	
@@ -195,7 +195,7 @@ public class MappingInsertFamiglia {
 			codComune.setNome("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
 			codComune.setMapping("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
 			codComune.setTipo("http://www.w3.org/2001/XMLSchema#string");
-			codComune.setValore(WrapperFamiglia.codiceComunecatastale);
+			codComune.setValore(wfam.codiceComunecatastale);
 			listAttributiI.add(codComune);
 			// riga di tipo RIGATABELLA per FAM
 			RigaTabella rigaTFAM = new RigaTabella();
@@ -326,9 +326,11 @@ public class MappingInsertFamiglia {
 
 		//	String path = "file/TN_file/DGASBAN2.csv";
 			// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-			WrapperFamiglia.estrazioneHeaderFile(filePath);
-			WrapperFamiglia.LetturaFile(filePath);
-			WrapperFamiglia.codiceComunecatastale=codicecomunecatastale;
+			wfam.estrazioneHeaderFile(filePath);
+			wfam.LetturaFile(filePath);
+			wfam.codiceComunecatastale=codicecomunecatastale;
+			listFamiglia = wfam.listFamiglia;
+
 			
 			// mapping e insert
 			LoadFile(new File(fileMappings));
@@ -347,9 +349,9 @@ public class MappingInsertFamiglia {
 
 		String path = "file/TN_file/DGASBAN2.csv";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		WrapperFamiglia.estrazioneHeaderFile(path);
-		WrapperFamiglia.LetturaFile(path);
-		WrapperFamiglia.codiceComunecatastale="L322";
+	//	WrapperFamiglia.estrazioneHeaderFile(path);
+	//	WrapperFamiglia.LetturaFile(path);
+	//	WrapperFamiglia.codiceComunecatastale="L322";
 		// mapping e insert
 	//	LoadFile(new File("file/file_mapping/mappingFamiglia.json"));
 

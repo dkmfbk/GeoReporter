@@ -44,7 +44,9 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFamiglia;
 
 public class MappingInsertAnagraficaComunale {
 
-	public  List<AnagraficaComunale> listAnagraficaComunale = WrapperAnagraficaComunale.listAnagraficaComunale;
+	
+	public WrapperAnagraficaComunale wanag = new WrapperAnagraficaComunale();
+	public  List<AnagraficaComunale> listAnagraficaComunale;
 
 	
 	public  String targetURL;
@@ -259,7 +261,7 @@ public class MappingInsertAnagraficaComunale {
 			codComune.setNome("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
 			codComune.setMapping("http://dkm.fbk.eu/georeporter#codiceComuneCatastale");
 			codComune.setTipo("http://www.w3.org/2001/XMLSchema#string");
-			codComune.setValore(WrapperAnagraficaComunale.codiceComunecatastale);
+			codComune.setValore(wanag.codiceComunecatastale);
 			listAttributiI.add(codComune);
 			// riga di tipo RIGATABELLA per IND
 			RigaTabella rigaTIND = new RigaTabella();
@@ -395,9 +397,10 @@ public  void run(String filePath, String fileMappings,String codicecomunecatasta
 	
 //	String path = "file/TN_file/DGASBANN.csv";
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-	WrapperAnagraficaComunale.estrazioneHeaderFile(filePath);
-	WrapperAnagraficaComunale.LetturaFile(filePath);
-	WrapperAnagraficaComunale.codiceComunecatastale=codicecomunecatastale;
+	wanag.estrazioneHeaderFile(filePath);
+	wanag.LetturaFile(filePath);
+	wanag.codiceComunecatastale=codicecomunecatastale;
+	listAnagraficaComunale = wanag.listAnagraficaComunale;
 	// mapping e insert
 	LoadFile(new File(fileMappings));
 
@@ -413,9 +416,9 @@ public  void run(String filePath, String fileMappings,String codicecomunecatasta
 
 		String path = "file/TN_file/DGASBANN.csv";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		WrapperAnagraficaComunale.estrazioneHeaderFile(path);
-		WrapperAnagraficaComunale.LetturaFile(path);
-		WrapperAnagraficaComunale.codiceComunecatastale="L322";
+	//	WrapperAnagraficaComunale.estrazioneHeaderFile(path);
+	//	WrapperAnagraficaComunale.LetturaFile(path);
+	//	WrapperAnagraficaComunale.codiceComunecatastale="L322";
 		// mapping e insert
 	//	LoadFile(new File("file/file_mapping/mappingAnagraficaComunale.json"),
 	//			new File("file/file_mapping/mappingPersonaFisica2.json"),

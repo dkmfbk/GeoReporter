@@ -49,8 +49,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFabIndirizzo;
 
 public class MappingInsertFabIndirizzo {
 
-	public  List<Indirizzo> listIndirizzi = WrapperFab.listIndirizzi;
-
+	public  List<Indirizzo> listIndirizzi;
+	public WrapperFab wf = new WrapperFab();
 	public  String targetURL;
 	
 	public MappingInsertFabIndirizzo( String targetURL_) {
@@ -305,11 +305,15 @@ public  void run(String pathFile,String pathFileHeader, String pathFileMappings)
 		
 	
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
+	//	WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathFile);
+	//	WrapperFab.letturaFileFab(pathFile);
+	wf.estrazioneHeaderFileFab(pathFileHeader);
 
+	// chiamata per l'analisi del file .FAB
+	wf.letturaFileFab(pathFile);
+	listIndirizzi = wf.listIndirizzi;
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
 		// questo grazie ai file di mapping
@@ -324,10 +328,10 @@ public  void run(String pathFile,String pathFileHeader, String pathFileMappings)
 		String pathP = "file/TN_header/headerfilefab.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathP);
+	//	WrapperFab.estrazioneHeaderFileFab(pathP);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathF);
+	//	WrapperFab.letturaFileFab(pathF);
 
 		LoadFile(new File("file/file_mapping/mappingIndirizzoFab.json"));
 		
@@ -339,10 +343,10 @@ public  void run(String pathFile,String pathFileHeader, String pathFileMappings)
 		String pathP = "file/TN_header/headerfilefab.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathP);
+	//	WrapperFab.estrazioneHeaderFileFab(pathP);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathF);
+	//	WrapperFab.letturaFileFab(pathF);
 
 		LoadFile(new File("file/file_mapping/mappingIndirizzoFab.json"));
 

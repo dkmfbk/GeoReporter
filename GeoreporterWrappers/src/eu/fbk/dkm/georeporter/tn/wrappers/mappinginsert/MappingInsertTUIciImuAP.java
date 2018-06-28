@@ -17,6 +17,8 @@ import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -37,7 +39,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUIciImuAP;
 
 public class MappingInsertTUIciImuAP {
 
-	public  List<AbitazionePrincipale> listICIIMU_AP = WrapperTUIciImuAP.listICIIMU_AP;
+	public WrapperTUIciImuAP wiciAP = new WrapperTUIciImuAP();
+	public  List<AbitazionePrincipale> listICIIMU_AP;
 
 	public  String targetURL;
 	public MappingInsertTUIciImuAP(String targetURL_) {
@@ -45,7 +48,7 @@ public class MappingInsertTUIciImuAP {
 		targetURL=  targetURL_+"inserttable";
 		
 	}
-	
+	private Logger log = Logger.getLogger(MappingInsertTUIciImuAP.class);
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -359,8 +362,9 @@ public class MappingInsertTUIciImuAP {
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
+			}else {
+			log.info("manca codice fiscale titolare contratto="+id);
 			}
-
 			// riga di tipo RIGATABELLA per IND C
 			if (listICIIMU_AP.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
 				RigaTabella rigaTINDC = new RigaTabella();
@@ -445,7 +449,11 @@ public class MappingInsertTUIciImuAP {
 				}
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelAP.add(rel);
-			}
+			 }else {
+					
+					log.info("manca riferimento a identificativo catastale= "+id);
+				
+				}
 
 			// riga di tipo RIGATABELLA per AbitazionePrincipale
 			RigaTabella rigaTUA = new RigaTabella();
@@ -462,7 +470,10 @@ public class MappingInsertTUIciImuAP {
 				String codfisc = listICIIMU_AP.get(j).getValori().get("codfiscale");
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
 				listRelAP.add(rel);
-			}
+			 }else {
+					
+					log.info("manca codice fiscale contribuente ="+id);
+				}
 
 			rigaTUA.setListarelazioni(listRelAP);
 
@@ -575,7 +586,8 @@ public  void run(String filePath, String fileMappings) {
 	//String path = "file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_ABPRINCIPALE.xls";
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 	try {
-		WrapperTUIciImuAP.readXLSFile(filePath);
+		wiciAP.readXLSFile(filePath);
+		listICIIMU_AP = wiciAP.listICIIMU_AP;
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -602,12 +614,12 @@ public  void run(String filePath, String fileMappings) {
 
 		String path = "file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_ABPRINCIPALE.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperTUIciImuAP.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+	//		WrapperTUIciImuAP.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//		e.printStackTrace();
+	//	}
 		// mapping e insert
 	//	LoadFile(new File("file/file_mapping/mappingICIIMU.json"),
 	//			new File("file/file_mapping/mappingTributoOUtenza.json"),

@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -33,7 +35,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTULetturaA;
 
 public class MappingInsertTULetturaA {
 
-	public  List<LetturaAcqua> listLetturaAcqua = WrapperTULetturaA.listLetturaAcqua;
+	public WrapperTULetturaA wletturaacqua = new WrapperTULetturaA();
+	public  List<LetturaAcqua> listLetturaAcqua ;
 
 	public  String targetURL;
 	public MappingInsertTULetturaA(String targetURL_) {
@@ -41,6 +44,7 @@ public class MappingInsertTULetturaA {
 		targetURL=  targetURL_+"inserttable";
 		
 	}
+	private Logger log = Logger.getLogger(MappingInsertTULetturaA.class);
 	private  void LoadFile(File filename) {
 
 		Gson gson = new Gson();
@@ -211,8 +215,9 @@ public class MappingInsertTULetturaA {
 public  void run(String filePath, String fileMappings) {
 	//String path = "file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv";
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-	WrapperTULetturaA.estrazioneHeaderFile(filePath);
-	WrapperTULetturaA.letturaFile(filePath);
+	wletturaacqua.estrazioneHeaderFile(filePath);
+	wletturaacqua.letturaFile(filePath);
+	listLetturaAcqua = wletturaacqua.listLetturaAcqua;
 	// mapping e insert
 //	LoadFile(new File("file/file_mapping/mappingLetturaAcqua.json"));
 	LoadFile(new File(fileMappings));
@@ -224,8 +229,8 @@ public  void run(String filePath, String fileMappings) {
 
 		String path = "file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		WrapperTULetturaA.estrazioneHeaderFile(path);
-		WrapperTULetturaA.letturaFile(path);
+	//	WrapperTULetturaA.estrazioneHeaderFile(path);
+	//	WrapperTULetturaA.letturaFile(path);
 		// mapping e insert
 	//	LoadFile(new File("file/file_mapping/mappingLetturaAcqua.json"));
 

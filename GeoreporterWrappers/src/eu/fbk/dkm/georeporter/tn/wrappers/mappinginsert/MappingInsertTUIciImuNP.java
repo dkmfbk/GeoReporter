@@ -17,6 +17,8 @@ import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -38,7 +40,9 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaR;
 
 public class MappingInsertTUIciImuNP {
 
-	public  List<NudaProprieta> listNudaProprieta = WrapperTUIciImuNP.listNudaProprieta;
+	
+	public WrapperTUIciImuNP wiciNP = new WrapperTUIciImuNP();
+	public  List<NudaProprieta> listNudaProprieta ;
 
 	public  String targetURL;
 	public MappingInsertTUIciImuNP(String targetURL_) {
@@ -47,7 +51,7 @@ public class MappingInsertTUIciImuNP {
 		
 	}
 	
-	
+	private Logger log = Logger.getLogger(MappingInsertTUIciImuNP.class);
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -357,7 +361,9 @@ public class MappingInsertTUIciImuNP {
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
-			}
+			}else {
+				log.info("manca codice fiscale titolare contratto="+id);
+				}
 			// riga di tipo RIGATABELLA per IND C
 			if (listNudaProprieta.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
 				RigaTabella rigaTINDC = new RigaTabella();
@@ -441,7 +447,11 @@ public class MappingInsertTUIciImuNP {
 				}
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelNP.add(rel);
-			}
+			 }else {
+					
+					log.info("manca riferimento a identificativo catastale= "+id);
+				
+				}
 			
 			// riga di tipo RIGATABELLA per NUDA PROPRIETA
 			RigaTabella rigaTNP = new RigaTabella();
@@ -458,7 +468,11 @@ public class MappingInsertTUIciImuNP {
 				String codfisc = listNudaProprieta.get(j).getValori().get("codfiscale");
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
 				listRelNP.add(rel);
-			}
+			 }else {
+					
+					log.info("manca codice fiscale contribuente ="+id);
+				}
+
 
 			rigaTNP.setListarelazioni(listRelNP);
 
@@ -575,7 +589,8 @@ public class MappingInsertTUIciImuNP {
 		
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperTUIciImuNP.readXLSFile(filePath);
+			wiciNP.readXLSFile(filePath);
+			listNudaProprieta = wiciNP.listNudaProprieta;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -590,14 +605,14 @@ public class MappingInsertTUIciImuNP {
 	public  void run_old() {
 		String path = "file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperTUIciImuNP.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+	//		WrapperTUIciImuNP.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//		e.printStackTrace();
+	//	}
 		// mapping e insert
-		LoadFile(new File("file/file_mapping/mappingICIIMU.json"));
+	//	LoadFile(new File("file/file_mapping/mappingICIIMU.json"));
 
 		
 	}
@@ -605,12 +620,12 @@ public class MappingInsertTUIciImuNP {
 
 		String path = "file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperTUIciImuNP.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+	//		WrapperTUIciImuNP.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//		e.printStackTrace();
+	//	}
 		// mapping e insert
 	//	LoadFile(new File("file/file_mapping/mappingICIIMU.json"),
 	//			new File("file/file_mapping/mappingTributoOUtenza.json"),

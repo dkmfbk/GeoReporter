@@ -17,6 +17,8 @@ import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -36,7 +38,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaA;
 
 public class MappingInsertTUUtenzaA {
 
-	public  List<UtenzaAcqua> listUtenzaAcqua = WrapperTUUtenzaA.listUtenzaAcqua;
+	public WrapperTUUtenzaA wacqua = new WrapperTUUtenzaA();
+	public  List<UtenzaAcqua> listUtenzaAcqua ;
 
 	
 	public  String targetURL;
@@ -47,7 +50,7 @@ public class MappingInsertTUUtenzaA {
 	}
 	
 	
-	
+	private Logger log = Logger.getLogger(MappingInsertTUUtenzaA.class);
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -393,6 +396,9 @@ public class MappingInsertTUUtenzaA {
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
+				}else {
+				
+				log.info("manca codice fiscale titolare contratto="+id);
 			}
 			// riga di tipo RIGATABELLA per IND C
 			if (listUtenzaAcqua.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
@@ -487,6 +493,10 @@ public class MappingInsertTUUtenzaA {
 				}
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelUA.add(rel);
+                }else {
+				
+				log.info("manca riferimento a identificativo catastale= "+id);
+			
 			}
 
 			// riga di tipo RIGATABELLA per UTENZA ACUQA
@@ -504,6 +514,9 @@ public class MappingInsertTUUtenzaA {
 				String codfisc = listUtenzaAcqua.get(j).getValori().get("codfiscale");
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
 				listRelUA.add(rel);
+	           }else {
+				
+				log.info("manca codice fiscale titolare contratto="+id);
 			}
 
 			rigaTUA.setListarelazioni(listRelUA);
@@ -614,7 +627,8 @@ public class MappingInsertTUUtenzaA {
 	//	String path = "file/TN_file/TRAMBILENO_Utenze_H2O_DA GARBAGE.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperTUUtenzaA.readXLSFile(filePath);
+			wacqua.readXLSFile(filePath);
+			listUtenzaAcqua = wacqua.listUtenzaAcqua;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -630,12 +644,12 @@ public class MappingInsertTUUtenzaA {
 
 		String path = "file/TN_file/TRAMBILENO_Utenze_H2O_DA GARBAGE.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperTUUtenzaA.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+	//		WrapperTUUtenzaA.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//		e.printStackTrace();
+	//	}
 
 		// mapping e insert
 		LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),

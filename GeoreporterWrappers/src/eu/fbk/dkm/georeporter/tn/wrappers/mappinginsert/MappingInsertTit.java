@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -37,7 +39,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTit;
 public class MappingInsertTit {
 
 	// lista di elementi TITOLARITA del file WRAPPER
-	public  List<Titolarita> listTitolarita = WrapperTit.listTitolarita;
+	public WrapperTit wtit = new WrapperTit();
+	public  List<Titolarita> listTitolarita ;
 	public  String targetURL;
 	public String serviceURL;
 	public MappingInsertTit(String targetURL_) {
@@ -46,7 +49,7 @@ public class MappingInsertTit {
 		serviceURL=targetURL_;
 	}
 	
-	
+	private Logger log = Logger.getLogger(MappingInsertTit.class);
 	
 	
 	
@@ -275,6 +278,7 @@ public class MappingInsertTit {
 			String idecat = getICfromUI(codammideimm);
 			if (idecat.equals("FAIL")) {
 				idecat = "http://dkm.fbk.eu/georeporter#C0_N0_D0_S0";
+				log.info("manca lidentificativo catastale per l UI ="+codammideimm);
 			}
 			relTitIdCat.setUriRange(idecat);
 			listRelTIT.add(relTitIdCat);
@@ -289,6 +293,7 @@ public class MappingInsertTit {
 			if(codfis.equals("FAIL")) {
 			codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
              System.out.println("Soggetto non presente: "+cod);
+             log.info("Soggetto non presente =" +cod);
 			}
 			relTitSOG.setUriRange(codfis);
 			listRelTIT.add(relTitSOG);
@@ -503,8 +508,9 @@ public class MappingInsertTit {
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file TIT
-		WrapperTit.estrazioneHeaderFileTit(fileHeader);
-		WrapperTit.letturaFileTit(filePath);
+		wtit.estrazioneHeaderFileTit(fileHeader);
+		wtit.letturaFileTit(filePath);
+		 listTitolarita = wtit.listTitolarita;
 		// mapping e insert degli elementi TITOLARITA
 		
 		LoadFile(new File(fileMappings));
@@ -524,8 +530,8 @@ public class MappingInsertTit {
 
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		// dal file TIT
-		WrapperTit.estrazioneHeaderFileTit(pathP);
-		WrapperTit.letturaFileTit(pathT);
+	//	WrapperTit.estrazioneHeaderFileTit(pathP);
+	//	WrapperTit.letturaFileTit(pathT);
 		// mapping e insert degli elementi TITOLARITA
 	//	LoadFile(new File("file/file_mapping/mappingTitolarita.json"), new File("file/file_mapping/mappingNota2.json"));
 

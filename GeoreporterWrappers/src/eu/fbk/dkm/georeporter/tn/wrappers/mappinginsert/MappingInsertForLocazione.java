@@ -20,6 +20,8 @@ import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -48,8 +50,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForGas;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForLoc;
 
 public class MappingInsertForLocazione {
-
-	public  List<Locazione> listLocazione = WrapperForLoc.listLocazione;
+	public WrapperForLoc wlocaz =new WrapperForLoc();
+	public  List<Locazione> listLocazione;
 
 	
 	public  String targetURL;
@@ -58,7 +60,7 @@ public class MappingInsertForLocazione {
 		targetURL=  targetURL_+"inserttable";
 		
 	}
-	 
+	private Logger log = Logger.getLogger(MappingInsertForLocazione.class);
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -259,6 +261,9 @@ public class MappingInsertForLocazione {
 				relCFLPRO.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfpro.trim());
 
 				listRelCFL.add(relCFLPRO);
+			}else {
+				
+				log.info("manca codice fiscale proprietario="+uriCFL);
 			}
 
 			// riga di tipo RIGATABELLA per IND
@@ -304,6 +309,9 @@ public class MappingInsertForLocazione {
 				relCFLINQ.setUriDomain("http://dkm.fbk.eu/georeporter#CFL_" + time);
 				relCFLINQ.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfinq.trim());
 				listRelCFL.add(relCFLINQ);
+			}else {
+				
+				log.info("manca codice fiscale inquilino="+uriCFL);
 			}
 
 			// relazione FOR LOCAZIONE con IDE CAT
@@ -331,6 +339,7 @@ public class MappingInsertForLocazione {
 			}
 			if (num.equals("")){
 				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C0_N0_D0_S0");
+				log.info("manca riferimento all identificativo catastale="+uriCFL);
 			}else {
 				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);	
 			}
@@ -437,7 +446,8 @@ public class MappingInsertForLocazione {
 		String path = "file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperForLoc.readXLSFile(filePath);
+			wlocaz.readXLSFile(filePath);
+		    listLocazione = wlocaz.listLocazione;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -449,12 +459,12 @@ public class MappingInsertForLocazione {
 
 		String path = "file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperForLoc.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+	//		WrapperForLoc.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//		e.printStackTrace();
+	//	}
 		// mapping e insert
 		//LoadFile(new File("file/file_mapping/mappingFornituraLocazione.json"),
 		//		new File("file/file_mapping/mappingContratto2.json"),

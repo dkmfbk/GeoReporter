@@ -20,6 +20,8 @@ import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -47,7 +49,10 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForGas;
 
 public class MappingInsertForGas {
 
-	public  List<FornituraGas> listFornituraGas = WrapperForGas.listFornituraGas;
+	
+	
+	public WrapperForGas wgas = new WrapperForGas();
+	public  List<FornituraGas> listFornituraGas ;
 
 	
 	
@@ -58,7 +63,7 @@ public class MappingInsertForGas {
 		
 	}
 	
-	
+	private Logger log = Logger.getLogger(MappingInsertForGas.class);
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -221,6 +226,8 @@ public class MappingInsertForGas {
 				relCFGSOG.setUriDomain("http://dkm.fbk.eu/georeporter#CFG_" + idcfg);
 				relCFGSOG.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfsog);
 				listRelCFG.add(relCFGSOG);
+			}else {
+				log.info("manca codice fiscale titolare contratto="+idcfg);
 			}
 			
 			// riga di tipo RIGATABELLA per IND
@@ -352,7 +359,8 @@ public class MappingInsertForGas {
 		String path = "file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperForGas.readXLSFile(filePath);
+			wgas.readXLSFile(filePath);
+			 listFornituraGas = wgas.listFornituraGas;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -365,12 +373,12 @@ public class MappingInsertForGas {
 
 		String path = "file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperForGas.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+		//	WrapperForGas.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//		e.printStackTrace();
+	//	}
 		// mapping e insert
 	//	LoadFile(new File("file/file_mapping/mappingFornituraGas.json"),
 	//			new File("file/file_mapping/mappingContratto.json"),new File("file/file_mapping/mappingIndirizzoContratti.json"));

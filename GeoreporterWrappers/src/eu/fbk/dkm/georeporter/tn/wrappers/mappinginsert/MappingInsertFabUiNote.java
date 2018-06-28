@@ -46,9 +46,9 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFab;
 
 public class MappingInsertFabUiNote {
 
-	public  List<UnitaImmobiliare> listUnitaImmobiliari = WrapperFab.listUnitaImmobiliari;
+	public  List<UnitaImmobiliare> listUnitaImmobiliari ;
 	public  String targetURL;
-	
+	public WrapperFab wf = new WrapperFab();
 	
 	MappingInsertFabUiNote( String targetURL_){
 		
@@ -267,7 +267,8 @@ public class MappingInsertFabUiNote {
 			// relazione nella sua riga UI
 			List<Relazione> listRelUI = new ArrayList<Relazione>();
 			if (!listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get("progressivonota").isEmpty()) {
-				String relNIuri = insertRigaReturn(rigaTNI);
+				//String relNIuri = insertRigaReturn(rigaTNI);
+				String relNIuri = insertRiga(rigaTNI);
 				Relazione relNI = new Relazione();
 				relNI.setNomerelazione("http://dkm.fbk.eu/georeporter#hasNotaIniziale");
 				relNI.setUriDomain("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
@@ -276,7 +277,8 @@ public class MappingInsertFabUiNote {
 			}
 
 			if (!listUnitaImmobiliari.get(j).getNotaFinale().getValori().get("progressivonota").isEmpty()) {
-				String relNFuri = insertRigaReturn(rigaTNF);
+	//			String relNFuri = insertRigaReturn(rigaTNF);
+				String relNFuri = insertRiga(rigaTNF);
 				Relazione relNF = new Relazione();
 				relNF.setNomerelazione("http://dkm.fbk.eu/georeporter#hasNotaFinale");
 				relNF.setUriDomain("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
@@ -311,7 +313,7 @@ public class MappingInsertFabUiNote {
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
-	public  String insertRigaReturn(RigaTabella riga) {
+	public  String insertRigaReturn_(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -376,12 +378,12 @@ public class MappingInsertFabUiNote {
 	
 	
 	
-	public  void insertRiga(RigaTabella riga) {
+	public  String insertRiga(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 			
-	
+		 String responseEntity ="";
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
            try {
@@ -398,7 +400,7 @@ public class MappingInsertFabUiNote {
            	 WebApplicationException e = response.getEntity(WebApplicationException.class);
            	 System.out.println(e.toString());
           }
-           String responseEntity = response.getEntity(String.class);
+            responseEntity = response.getEntity(String.class);
            
           
           // System.out.println(responseEntity.toString());
@@ -408,7 +410,7 @@ public class MappingInsertFabUiNote {
    			// TODO Auto-generated catch block
    			e1.printStackTrace();
    		}
-           
+          return  responseEntity ; 
 	   }
     
 	
@@ -492,12 +494,12 @@ public class MappingInsertFabUiNote {
 		// IDR0000115470_TIPOFACSN_CAMML322
 		String pathF = "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB";
 		String pathP = "file/TN_header/headerfilefab.csv";
-
+		
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathP);
+		wf.estrazioneHeaderFileFab(pathP);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathF);
+		wf.letturaFileFab(pathF);
 
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
@@ -514,11 +516,11 @@ public  void run(String pathFile,String pathFileHeader, String pathFileMappings)
 	
    
 	// chiamata per l'estrazione degli header per la composizione della lista HEADER
-	WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
+	wf.estrazioneHeaderFileFab(pathFileHeader);
 
 	// chiamata per l'analisi del file .FAB
-	WrapperFab.letturaFileFab(pathFile);
-
+	wf.letturaFileFab(pathFile);
+	listUnitaImmobiliari = wf.listUnitaImmobiliari;
 	// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 	// per l'inserimento
 	// questo grazie ai file di mapping
@@ -538,10 +540,10 @@ public  void run(String pathFile,String pathFileHeader, String pathFileMappings)
 		String pathP = "file/TN_header/headerfilefab.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathP);
+	//	WrapperFab.estrazioneHeaderFileFab(pathP);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathF);
+	//	WrapperFab.letturaFileFab(pathF);
 
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento

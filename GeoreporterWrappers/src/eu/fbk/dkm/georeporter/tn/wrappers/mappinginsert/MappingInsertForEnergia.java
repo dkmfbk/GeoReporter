@@ -17,6 +17,8 @@ import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -36,7 +38,10 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForEne;
 
 public class MappingInsertForEnergia {
 
-	public  List<FornituraEnergia> listFornituraEnergia = WrapperForEne.listFornituraEnergia;
+	
+	
+	public WrapperForEne wenergia = new WrapperForEne();
+	public  List<FornituraEnergia> listFornituraEnergia ;
 
 	
 	public  String targetURL;
@@ -50,7 +55,7 @@ public class MappingInsertForEnergia {
 	
 	
 	
-	
+	private Logger log = Logger.getLogger(MappingInsertForEnergia.class);
 	
 	
 	
@@ -208,6 +213,9 @@ public class MappingInsertForEnergia {
 				relCFESOG.setUriDomain("http://dkm.fbk.eu/georeporter#CFE_" + idcfe);
 				relCFESOG.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfsog);
 				listRelCFE.add(relCFESOG);
+			}else {
+				
+				log.info("manca codice fiscale titolare contratto="+idcfe);
 			}
 			
 			// riga di tipo RIGATABELLA per IND
@@ -339,7 +347,8 @@ public  void run(String filepath, String fileMappings)
 ///	String path = "file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls";
 	// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 	try {
-		WrapperForEne.readXLSFile(filepath);
+		wenergia.readXLSFile(filepath);
+		 listFornituraEnergia = wenergia.listFornituraEnergia;
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -354,12 +363,12 @@ public  void run(String filepath, String fileMappings)
 
 		String path = "file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperForEne.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+	//		WrapperForEne.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			e.printStackTrace();
+//		}
 		// mapping e insert
 		//LoadFile(new File("file/file_mapping/mappingFornituraEnergia.json"),
 		//		new File("file/file_mapping/mappingContratto.json"),
