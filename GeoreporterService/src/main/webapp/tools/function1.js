@@ -9,16 +9,27 @@ $(function() {
 		documentData.append("filemappings",$('#formfabbricati input#filemappings')[0].files[0]);
 		documentData.append("fileheader",$('#formfabbricati input#fileheader')[0].files[0]);
 		documentData.append("tipodati",$('#formfabbricati input#tipodati')[0].value);
+		documentData.append("serviceURL",url);
 
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
+		$('#starttime').empty();
+		$('#endtime').empty();
+
+	//	for (var [key, value] of documentData.entries()) { 
+	//		console.log(key, value);
 			
-        }
+       // }
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
- 
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		
+		var intervallo=self.setInterval(getInserimenti, 10000);
+
+
+
 		$.ajax({
 			url : url_ , 
 			data : documentData, 
@@ -29,14 +40,20 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
+		
 		return false;
 	});
 
@@ -53,13 +70,21 @@ $(function() {
 		documentData.append("filemappings",$('#formsoggettifabbricati input#filemappings')[0].files[0]);
 		documentData.append("fileheader",$('#formsoggettifabbricati input#fileheader')[0].files[0]);
 		documentData.append("tipodati",$('#formsoggettifabbricati input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
+		
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		
+		var intervallo=self.setInterval(getInserimenti, 10000);
+		//for (var [key, value] of documentData.entries()) { 
+	//		console.log(key, value);
 			
-        }
+      //  }
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -73,11 +98,21 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+    		$('#endtime').html("<span> Fine:"+endtime+"</span>");
+
+
+
+
+
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
            //  $("#collapse2").hide();
           //  $("#summaryPanel").click(); 
-		}).fail(function(jqXHR, textStatus, errorThrown) { 
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			window.clearInterval(intervallo);	 
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -99,13 +134,20 @@ $(function() {
 		documentData.append("filemappings",$('#formtitolaritafabbricati input#filemappings')[0].files[0]);
 		documentData.append("fileheader",$('#formtitolaritafabbricati input#fileheader')[0].files[0]);
 		documentData.append("tipodati",$('#formtitolaritafabbricati input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
+
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
+		//for (var [key, value] of documentData.entries()) { 
+	///		console.log(key, value);
 			
-        }
+       // }
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -119,11 +161,17 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+			$('#endtime').html("<span> Fine:"+endtime+"</span>");
+			
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -145,13 +193,19 @@ $(function() {
 		documentData.append("filemappings",$('#formparticellefondiarie input#filemappings')[0].files[0]);
 		documentData.append("fileheader",$('#formparticellefondiarie input#fileheader')[0].files[0]);
 		documentData.append("tipodati",$('#formparticellefondiarie input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
+
+
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
+
+	
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -165,11 +219,20 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
+			
+			
+			
+			
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -192,13 +255,17 @@ $(function() {
 		documentData.append("filemappings",$('#formsoggettiparticelle input#filemappings')[0].files[0]);
 		documentData.append("fileheader",$('#formsoggettiparticelle input#fileheader')[0].files[0]);
 		documentData.append("tipodati",$('#formsoggettiparticelle input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
+
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
+	
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -211,12 +278,22 @@ $(function() {
 			type : 'POST'
 		
 		}).done(function(data, textStatus, jqXHR) {			
+			
+			
+			
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
+			
+			
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -240,14 +317,17 @@ $(function() {
 		documentData.append("filemappings",$('#formtitolaritaparticelle input#filemappings')[0].files[0]);
 		documentData.append("fileheader",$('#formtitolaritaparticelle input#fileheader')[0].files[0]);
 		documentData.append("tipodati",$('#formtitolaritaparticelle input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
-		
+
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
+	
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
 		$.ajax({
@@ -258,13 +338,18 @@ $(function() {
       cache: false,
 			type : 'POST'
 		
-		}).done(function(data, textStatus, jqXHR) {			
+		}).done(function(data, textStatus, jqXHR) {	
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");		
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -287,13 +372,18 @@ $(function() {
 		documentData.append("filedati",$('#formanagraficacomunale input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formanagraficacomunale input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formanagraficacomunale input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
+
+
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
+	
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -305,14 +395,19 @@ $(function() {
       cache: false,
 			type : 'POST'
 		
-		}).done(function(data, textStatus, jqXHR) {			
+		}).done(function(data, textStatus, jqXHR) {	
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");		
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
 
             $("#summaryPanel").click(); */
-		}).fail(function(jqXHR, textStatus, errorThrown) { 
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			window.clearInterval(intervallo);	 
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -333,13 +428,17 @@ $(function() {
 		documentData.append("filedati",$('#formanagraficafamiglie input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formanagraficafamiglie input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formanagraficafamiglie input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
+
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -351,7 +450,12 @@ $(function() {
       cache: false,
 			type : 'POST'
 		
-		}).done(function(data, textStatus, jqXHR) {			
+		}).done(function(data, textStatus, jqXHR) {
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+			$('#endtime').html("<span> Fine:"+endtime+"</span>");
+						
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
@@ -359,6 +463,7 @@ $(function() {
 
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -382,13 +487,16 @@ $(function() {
 		documentData.append("filedati",$('#formfornitureelettriche input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formfornitureelettriche input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formfornitureelettriche input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
+		
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -401,12 +509,17 @@ $(function() {
 			type : 'POST'
 		
 		}).done(function(data, textStatus, jqXHR) {			
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
-		}).fail(function(jqXHR, textStatus, errorThrown) { 
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			window.clearInterval(intervallo);	 
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -429,14 +542,16 @@ $(function() {
 		documentData.append("filedati",$('#formfornituregas input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formfornituregas input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formfornituregas input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
-		
+	
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
 		$.ajax({
@@ -449,11 +564,16 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
-		}).fail(function(jqXHR, textStatus, errorThrown) { 
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			window.clearInterval(intervallo);	 
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -476,14 +596,16 @@ $(function() {
 		documentData.append("filedati",$('#formcontrattilocazione input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formcontrattilocazione input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formcontrattilocazione input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
 		
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
 		$.ajax({
@@ -496,11 +618,16 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
-		}).fail(function(jqXHR, textStatus, errorThrown) { 
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			window.clearInterval(intervallo);	 
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -521,13 +648,16 @@ $(function() {
 		documentData.append("filedati",$('#formutenzerifiuti input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formutenzerifiuti input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formutenzerifiuti input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
+	
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -541,11 +671,16 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -565,14 +700,18 @@ $(function() {
 		documentData.append("filedati",$('#formutenzeacqua input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formutenzeacqua input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formutenzeacqua input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
-		
+	
+
+
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
 		$.ajax({
@@ -585,11 +724,16 @@ $(function() {
 		
 		}).done(function(data, textStatus, jqXHR) {			
 			//var print = eval("(" + data + ')'); 
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -611,13 +755,16 @@ $(function() {
 		documentData.append("filedati",$('#formlettureacqua input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formlettureacqua input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formlettureacqua input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
+	
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+		$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
@@ -629,13 +776,18 @@ $(function() {
       cache: false,
 			type : 'POST'
 		
-		}).done(function(data, textStatus, jqXHR) {			
+		}).done(function(data, textStatus, jqXHR) {
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");			
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -655,14 +807,16 @@ $(function() {
 		documentData.append("filedati",$('#formiciimuabitazioneprincipale input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formiciimuabitazioneprincipale input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formiciimuabitazioneprincipale input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
 		
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
 		$.ajax({
@@ -673,13 +827,19 @@ $(function() {
       cache: false,
 			type : 'POST'
 		
-		}).done(function(data, textStatus, jqXHR) {			
+		}).done(function(data, textStatus, jqXHR) {
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+			$('#endtime').html("<span> Fine:"+endtime+"</span>");
+						
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -699,14 +859,16 @@ $(function() {
 		documentData.append("filedati",$('#formiciimunudaproprieta input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formiciimunudaproprieta input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formiciimunudaproprieta input#tipodati')[0].value);
-
+		documentData.append("serviceURL",url);
 		$("#request").empty();
 		$("#result").empty();
-		for (var [key, value] of documentData.entries()) { 
-			console.log(key, value);
-			
-        }
-		
+	
+		$('#starttime').empty();
+		$('#endtime').empty();
+		var d = new Date();
+        var starttime = d.toLocaleString() 
+    	$('#starttime').html("<span>Inizio: "+starttime+"</span>");
+		var intervallo=self.setInterval(getInserimenti, 10000);
 		//$('#request').html("<span>GET " + url + "</span><br />" +key +"="+ value);
  
 		$.ajax({
@@ -718,12 +880,17 @@ $(function() {
 			type : 'POST'
 		
 		}).done(function(data, textStatus, jqXHR) {			
+			window.clearInterval(intervallo);	
+			var d2 = new Date();
+        	var endtime = d2.toLocaleString() 
+        	$('#endtime').html("<span> Fine:"+endtime+"</span>");
 			//var print = eval("(" + data + ')'); 
 			$("#result").empty();
 			$('#result').html(library.json.prettyPrint(data));
          /*    $("#collapse1").hide();
             $("#summaryPanel").click(); */
 		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			window.clearInterval(intervallo);	
 			$("#result").empty();
 			$('#result').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
 		});
@@ -781,6 +948,60 @@ $(function() {
 	});
 
 });
+
+
+function getInserimenti() {
+		//var queryType = "curatorsources";
+		var springlesserverURL = currenturl+"/openrdf-sesame";
+		var springlesserverURL = currenturl+"/openrdf-sesame";
+		var restURL = currenturl+"/SpringlesREST/rest/rest/";
+		var springlesrepositoryID= "georeporter";
+		var url_=restURL+"summary";
+        
+		
+
+		var dataSend ="springlesrepositoryID=" +springlesrepositoryID+"&springlesserverURL="+springlesserverURL ;
+		
+	   
+		$("#summaryresponse").empty();
+	
+		
+		$.ajax({
+			url : url_ , 
+			data : dataSend, 
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+			type : "GET"
+		
+		}).done(function(data, textStatus, jqXHR) {
+					
+			$("#summaryresponse").empty();
+			var d = new Date();
+
+            var result = d.toLocaleString()   ;
+            
+			result+="<table class='table table-striped' style='font-size:0.9em;' ><tbody>";
+         //   result+="<tr><th>ID:</th><td>"+data["ID"]+"</td></tr>";
+         //   result+="<tr><th>Title:</th><td>"+data["Title"]+"</td></tr>";
+         //   result+="<tr><th>Location:</th><td>"+data["Location"]+"</td></tr>";
+          //  result+="<tr><th>Server: </th><td>"+data["Server"]+"</td></tr>";
+            result+="<tr><th>Numero totale di record:</th><td>"+data["Total statements"]+"</td></tr>";
+          
+          
+            result+="</tbody></table>";
+            $('#summaryresponse').html(result);
+       
+		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			$("#summaryresponse").empty();
+			$('#summaryresponse').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
+		});
+		return false;
+	
+
+	};
+
+
+
 
 
 
