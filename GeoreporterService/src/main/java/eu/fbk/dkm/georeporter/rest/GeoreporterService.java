@@ -103,6 +103,7 @@ import eu.fbk.dkm.georeporter.pojos.Esiste;
 import eu.fbk.dkm.georeporter.pojos.FornituraEnergia;
 import eu.fbk.dkm.georeporter.pojos.FornituraGas;
 import eu.fbk.dkm.georeporter.pojos.FornituraLocazioni;
+import eu.fbk.dkm.georeporter.pojos.IDCatastale;
 import eu.fbk.dkm.georeporter.pojos.Indirizzo;
 import eu.fbk.dkm.georeporter.pojos.Locazione;
 import eu.fbk.dkm.georeporter.pojos.MappingTabella;
@@ -2059,16 +2060,13 @@ public class GeoreporterService {
 	//public String uploadUnitaImmobiliari (MultiPart multiPart,MultiPart multiPart2) {
 	public String  importaDati (
 			@FormDataParam("tipodati") String tipodati,
-		
+			@FormDataParam("serviceURL") String serviceURL,
 			@FormDataParam("fileheader") InputStream fileHeaderIS,
-			
-		
-   @FormDataParam("fileheader") FormDataContentDisposition fileHeaderDetail,
-   
-	@FormDataParam("filedati") InputStream fileDatiIS,
-	@FormDataParam("filedati") FormDataContentDisposition fileDatiDetail,
-	@FormDataParam("filemappings") InputStream fileMappingIS,
-	@FormDataParam("filemappings") FormDataContentDisposition fileMappingsDetail) throws IOException 
+            @FormDataParam("fileheader") FormDataContentDisposition fileHeaderDetail,
+            @FormDataParam("filedati") InputStream fileDatiIS,
+            @FormDataParam("filedati") FormDataContentDisposition fileDatiDetail,
+            @FormDataParam("filemappings") InputStream fileMappingIS,
+            @FormDataParam("filemappings") FormDataContentDisposition fileMappingsDetail) throws IOException 
 	
 	{
 		String uploadedFileMappingsLocation =  fileMappingsDetail.getFileName();
@@ -2091,13 +2089,15 @@ public class GeoreporterService {
 		
 	
 	String result="fail";
-	 String serviceURL="http://localhost:8080/GeoreporterService/servizio/rest/";
+	// String serviceURL="http://localhost:8080/GeoreporterService/servizio/rest/";
 		ImportGeoreporter importgr= new ImportGeoreporter(serviceURL);
 		
 	//ImportGeoreporter.importaContrattiLocazione(fileDatiDetail.getFileName(), fileMappingsDetail.getFileName());
 	switch (tipodati) {
     case "fabbricati": 
-    	importgr.importaUnitaImmobiliari(filePath, fileHeader, fileMappings);
+    	importgr.importaUnitaImmobiliari1(filePath, fileHeader, fileMappings);
+    	importgr.importaUnitaImmobiliari2(filePath, fileHeader, fileMappings);
+    	importgr.importaUnitaImmobiliari3(filePath, fileHeader, fileMappings);
              break;
     case "soggettifabbricati": 
     	importgr.importaSoggettiFabbricati(filePath, fileHeader, fileMappings);    
@@ -3912,6 +3912,155 @@ String result="";
 	
 		return "{"+result+"}";
 	}
+
+	
+	
+	
+	
+	
+	@GET
+	@Path("icdacampi")
+
+
+	 @Consumes("application/json")
+    @Produces("application/json")	
+	
+	
+	
+	public List<IDCatastale> getICFromFields(
+			@QueryParam("codiceamministrativo") String codiceamministrativo,
+			@QueryParam("comunecatastale") String comunecatastale,
+			@QueryParam("numero") String numero,
+			@QueryParam("denominatore") String denominatore,
+			@QueryParam("subalterno") String subalterno
+			
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+		 List<IDCatastale> risultato = new  ArrayList<IDCatastale> ();
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ "SELECT ?ic  ?tpa WHERE { "
+					+ "    ?ic a :IdentificativoCatastale ." 
+					+ "    ?ic :codiceAmministrativo  \"" +codiceamministrativo +"\". "
+			        + "    ?ic :numero  " +numero +" . "
+			      //  + "    ?ic :denominatore  " +denominatore +" ."
+			        + "    ?ic :hasParticella ?pa . " 
+			     
+			        + "    ?pa :tipoDiParticella ?tpa . ";
+			       
+			
+			
+			
+			
+			  if (comunecatastale==null||comunecatastale.equals("")) {   
+		        	queryString=queryString  + "	 FILTER NOT EXISTS { ?ic :comunecatastale ?z  }. "	;
+		        			
+		        }else {
+		        	
+		      
+		            queryString=queryString  + "     ?ic :comuneCatastale  \"" +comunecatastale +"\" .";
+					      
+		        }
+		
+			  if (denominatore==null||denominatore.equals("")) {   
+		        	queryString=queryString  + "	 FILTER NOT EXISTS { ?ic :denominatore ?z  }. "	;
+		        			
+		        }else {
+		        	
+		      
+		            queryString=queryString  + "     ?ic :denominatore  " +denominatore +" .";
+					System.out.println("denominatore="+ denominatore);        
+		        }  
+			  
+			  
+			  if (subalterno==null||subalterno.equals("")) {   
+			        	queryString=queryString  + "	 FILTER NOT EXISTS { ?ic :subalterno ?y  }. " ;	
+			        		
+			        }else {
+			        	
+			      
+			            queryString=queryString  + "     ?ic :subalterno  \"" +subalterno +"\" . ";
+			            System.out.println("subalterno="+ subalterno);              
+			        
+			        }
+			 	
+			        queryString=queryString +"}";
+			        
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+		
+		
+			
+			
+			while (qresult.hasNext()) {
+				IDCatastale idc= new IDCatastale();
+				
+				BindingSet bindingSet = qresult.next();
+				Value icURI = bindingSet.getValue("ic");
+				Value tipoParticella = bindingSet.getValue("tpa");
+				
+				
+				if (icURI!=null) {
+					
+					idc.setId(icURI.stringValue());	
+				}
+				if (tipoParticella!=null) {
+					
+					idc.setTipoParticella(tipoParticella.stringValue());	
+					}
+				
+				
+				risultato.add(idc);
+				}
+			
+			
+			
+			
+			
+			
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return risultato;
+	}
+	
+
+	
+	
+	
+	
+	
 	
 	
 	@GET
@@ -4041,6 +4190,155 @@ String result="";
 
 		return result;
 	}
+	
+	@GET
+	@Path("icfromparid")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getICFromParID(
+
+			@QueryParam("parid") String parid
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+"SELECT  ?ic "  
+					+"		WHERE { " 
+					+"			{ ?ic a :IdentificativoCatastale . "
+					+"		  ?ic :hasParticellaFondiaria  ?parf . "
+					+"		    ?parf :identificativoParticella "+parid+"} "
+					+"		 UNION{?ic a :IdentificativoCatastale . "
+					+"							     ?ic :hasParticella  ?par . "
+					+"		    ?par :identificativoParticella "+parid+" "
+							  
+					+"		  } "
+
+					+"		}  ";
+
+			//System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				
+				Value icURI = bindingSet.getValue("ic");
+				result= icURI.stringValue();
+				}
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return result;
+	}
+	
+	
+	
+	
+	
+	@GET
+	@Path("icfromIndirizzo")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getICFromIndirizzo(
+
+			@QueryParam("tipo") String tipo,
+			@QueryParam("relazione") String relazione
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+"SELECT  ?ic "  
+					+"		WHERE { " 
+					+"			 ?ic a :IdentificativoCatastale . "
+					+"		      ?ic :UnitaImmobiliare  ?ui . "
+					+"		      ?ui :hasIndirizzo ?ind ."
+					+"            ?ind latitudine ?lat ."
+					+"            ?ind l ?lat ."
+							  
+					+"		  } "
+
+					+"		  ";
+
+			//System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				
+				Value icURI = bindingSet.getValue("ic");
+				result= icURI.stringValue();
+				}
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return result;
+	}
+	
+	
+	
+	
+	
 	
 	
 	
