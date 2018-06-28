@@ -17,6 +17,8 @@ import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.api.client.Client;
@@ -36,7 +38,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaR;
 
 public class MappingInsertTUUtenzaR {
 
-	public  List<UtenzaRifiuti> listUtenzaRifiuti = WrapperTUUtenzaR.listUtenzaRifiuti;
+	public WrapperTUUtenzaR wrifiuti =new WrapperTUUtenzaR();
+	public  List<UtenzaRifiuti> listUtenzaRifiuti;
 
 
 	public  String targetURL;
@@ -45,7 +48,7 @@ public class MappingInsertTUUtenzaR {
 		targetURL=  targetURL_+"inserttable";
 		
 	}
-	
+	private Logger log = Logger.getLogger(MappingInsertTUUtenzaR.class);
 	public  void LoadFile(File fileMappings) {
 
 		Gson gson = new Gson();
@@ -390,6 +393,9 @@ public class MappingInsertTUUtenzaR {
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
+			}else {
+				
+				log.info("manca codice fiscale titolare contratto="+id);
 			}
 
 			// riga di tipo RIGATABELLA per IND C
@@ -479,6 +485,11 @@ public class MappingInsertTUUtenzaR {
 				}
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				listRelUR.add(rel);
+			
+				}else {
+				
+				log.info("manca riferimento a identificativo catastale= "+id);
+			
 			}
 
 			// riga di tipo RIGATABELLA per UTENZA RIFIUTI
@@ -499,6 +510,9 @@ public class MappingInsertTUUtenzaR {
 				String codfisc = listUtenzaRifiuti.get(j).getValori().get("codfiscale");
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
 				listRelUR.add(rel);
+			}else {
+				
+				log.info("manca codice fiscale titolare contratto="+id);
 			}
 
 			rigaTUR.setListarelazioni(listRelUR);
@@ -603,10 +617,11 @@ public class MappingInsertTUUtenzaR {
 	}
 	public  void run(String filePath, String fileMappings) {
 		
-		String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";
+		//String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
-			WrapperTUUtenzaR.readXLSFile(filePath);
+			wrifiuti.readXLSFile(filePath);
+			listUtenzaRifiuti = wrifiuti.listUtenzaRifiuti;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -631,12 +646,12 @@ public class MappingInsertTUUtenzaR {
 
 		String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
-		try {
-			WrapperTUUtenzaR.readXLSFile(path);
-		} catch (IOException e) {
+	//	try {
+		//	WrapperTUUtenzaR.readXLSFile(path);
+	//	} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	//		e.printStackTrace();
+	//	}
 		// mapping e insert
 	/*	LoadFile(new File("file/file_mapping/mappingTributoOUtenza.json"),
 				new File("file/file_mapping/mappingUtenza.json"),
