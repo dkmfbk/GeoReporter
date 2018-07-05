@@ -20,17 +20,17 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 public class WrapperSog {
 
 	// lista di vettori per l'elenco degli HEADER SOG (3 tipi)
-	public static List<String[]> headerSog = new ArrayList<String[]>();
+	public  List<String[]> headerSog = new ArrayList<String[]>();
 
-	public static String[] filename = { "P", "G", "T" };
+	public  String[] filename = { "P", "G", "T" };
 
 	// lista di tipo P G e T degli elementi estratti dal file SOG
-	public static List<PersonaFisica> listPersonaFisica = new ArrayList<PersonaFisica>();
-	public static List<PersonaGiuridica> listPersonaGiuridica = new ArrayList<PersonaGiuridica>();
-	public static List<ProprietarioproTempore> listProprietarioproTempore = new ArrayList<ProprietarioproTempore>();
+	public  List<PersonaFisica> listPersonaFisica = new ArrayList<PersonaFisica>();
+	public  List<PersonaGiuridica> listPersonaGiuridica = new ArrayList<PersonaGiuridica>();
+	public  List<ProprietarioproTempore> listProprietarioproTempore = new ArrayList<ProprietarioproTempore>();
 
 	// estrazione delle liste di HEADER
-	public static void estrazioneHeaderFileSog(String pathP) {
+	public  void estrazioneHeaderFileSog(String pathP) {
 
 		String[] tmp ;
 
@@ -56,7 +56,7 @@ public class WrapperSog {
 	}
 
 	// creazione e SET della LIST degli elementi del file SOG
-	public static void letturaFileSog(String pathP) {
+	public  void letturaFileSog(String pathP) {
 
 		try {
 			File file = new File(pathP);
@@ -165,7 +165,7 @@ public class WrapperSog {
 	}
 
 	// metodo per settare le 3 differenti liste di elementi
-	public static void settareElementoSog(int indice, Map<String, String> campi,
+	public  void settareElementoSog(int indice, Map<String, String> campi,
 			List<Map<String, String>> listaValoriChiave) {
 
 		switch (indice) {

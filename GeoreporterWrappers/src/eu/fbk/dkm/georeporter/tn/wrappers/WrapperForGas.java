@@ -35,12 +35,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperForGas {
 
 	// vettore per l'elenco degli HEADER GAS
-	public static String[] headerFG ;
+	public  String[] headerFG ;
 	// lista di tipo FORNITURA GAS degli elementi estratti dal file XLS
-	public static List<FornituraGas> listFornituraGas = new ArrayList<FornituraGas>();
+	public  List<FornituraGas> listFornituraGas = new ArrayList<FornituraGas>();
 
 	// estrazione degli HEADER
-	public static void readXLSFile(String path) throws IOException {
+	public  void readXLSFile(String path) throws IOException {
 		InputStream ExcelFileToRead = new FileInputStream(path);
 		HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
 

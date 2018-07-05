@@ -51,12 +51,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperForEne {
 
 	// vettore per l'elenco degli HEADER ENERGIA
-	public static String[] headerFE ;
+	public  String[] headerFE ;
 	// lista di tipo FORNITURA ENERGIA degli elementi estratti dal file XLS
-	public static List<FornituraEnergia> listFornituraEnergia = new ArrayList<FornituraEnergia>();
+	public  List<FornituraEnergia> listFornituraEnergia = new ArrayList<FornituraEnergia>();
 
 	// estrazione degli HEADER
-	public static void readXLSFile(String path) throws IOException {
+	public  void readXLSFile(String path) throws IOException {
 		InputStream ExcelFileToRead = new FileInputStream(path);
 		HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
 

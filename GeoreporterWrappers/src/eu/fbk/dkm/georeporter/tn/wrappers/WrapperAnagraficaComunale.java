@@ -23,12 +23,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperAnagraficaComunale {
 
 	// vettore per l'elenco degli HEADER
-	public static String[] header;
+	public  String[] header;
 	// lista di tipo AC degli elementi estratti dal file
-	public static List<AnagraficaComunale> listAnagraficaComunale = new ArrayList<AnagraficaComunale>();
-	public static String codiceComunecatastale;
+	public  List<AnagraficaComunale> listAnagraficaComunale = new ArrayList<AnagraficaComunale>();
+	public  String codiceComunecatastale;
 	// estrazione HEADER
-	public static void estrazioneHeaderFile(String path) {
+	public  void estrazioneHeaderFile(String path) {
 
 		try {
 			File file = new File(path);
@@ -44,7 +44,7 @@ public class WrapperAnagraficaComunale {
 		}
 	}
 
-	public static void LetturaFile(String path) {
+	public  void LetturaFile(String path) {
 		try {
 			File file = new File(path);
 			BufferedReader reader = new BufferedReader(new FileReader(file));

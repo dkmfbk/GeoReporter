@@ -24,12 +24,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperTtcFon {
 
 	// vettore per l'elenco degli HEADER TTC
-	public static String[] headerTtc;
+	public  String[] headerTtc;
 	// lista di tipo TITOLARITA degli elementi estratti dal file TTC
-	public static List<TitolaritaCompleta> listTitolaritaCompleta = new ArrayList<TitolaritaCompleta>();
+	public  List<TitolaritaCompleta> listTitolaritaCompleta = new ArrayList<TitolaritaCompleta>();
 
 	// estrazione degli HEADER
-	public static void estrazioneHeaderFileTtcFon(String pathP) {
+	public  void estrazioneHeaderFileTtcFon(String pathP) {
 
 		try {
 			File file = new File(pathP);
@@ -49,7 +49,7 @@ public class WrapperTtcFon {
 	}
 
 	// creazione e SET della LIST degli elementi del file TTC
-	public static void letturaFileTtcFon(String pathP) {
+	public  void letturaFileTtcFon(String pathP) {
 
 		try {
 			File file = new File(pathP);

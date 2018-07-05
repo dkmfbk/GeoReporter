@@ -37,18 +37,18 @@ public class WrapperFab {
 
 	// lista degli "header" inseriti dal file esterno HEADER FILE FAB, 6 liste
 	// diverse, una per ogni TIPO RECORD
-	public static List<String[]> header = new ArrayList<String[]>();
+	public  List<String[]> header = new ArrayList<String[]>();
 	// liste che raccolgono tutti gli elementi del file FAB divisi per TIPO
-	public static List<UnitaImmobiliare> listUnitaImmobiliari = new ArrayList<UnitaImmobiliare>();
-	public static List<IdentificativiCatastali> listIdentificativiCatastali = new ArrayList<IdentificativiCatastali>();
-	public static List<Indirizzo> listIndirizzi = new ArrayList<Indirizzo>();
-	public static List<Comuni> listComuni = new ArrayList<Comuni>();
-	public static List<Riserve> listRiserve = new ArrayList<Riserve>();
-	public static List<Annotazioni> listAnnotazioni = new ArrayList<Annotazioni>();
+	public  List<UnitaImmobiliare> listUnitaImmobiliari = new ArrayList<UnitaImmobiliare>();
+	public  List<IdentificativiCatastali> listIdentificativiCatastali = new ArrayList<IdentificativiCatastali>();
+	public  List<Indirizzo> listIndirizzi = new ArrayList<Indirizzo>();
+	public  List<Comuni> listComuni = new ArrayList<Comuni>();
+	public  List<Riserve> listRiserve = new ArrayList<Riserve>();
+	public  List<Annotazioni> listAnnotazioni = new ArrayList<Annotazioni>();
 
 	// metodo che analizza il file (che deve esser caricato) degli HEADER e crea la
 	// lista dei 6 header
-	public static void estrazioneHeaderFileFab(String pathP) {
+	public  void estrazioneHeaderFileFab(String pathP) {
 		String[] tmp;
 
 		try {
@@ -68,7 +68,7 @@ public class WrapperFab {
 		}
 	}
 
-	public static void letturaFileFab(String pathP) {
+	public  void letturaFileFab(String pathP) {
 
 		try {
 
@@ -225,7 +225,7 @@ public class WrapperFab {
 
 	// metodo con cui in base al tipo di elemento che ho appena estratto lo aggiungo
 	// alla relativa lista di elementi dello stesso tipo
-	public static void settareElemento(int indice, Map<String, String> campi,
+	public  void settareElemento(int indice, Map<String, String> campi,
 			List<Map<String, String>> listaValoriChiave) {
 
 		switch (indice) {

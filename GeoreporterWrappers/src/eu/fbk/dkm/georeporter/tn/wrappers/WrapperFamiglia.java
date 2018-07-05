@@ -22,12 +22,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperFamiglia {
 
 	// vettore per l'elenco degli HEADER
-	public static String[] header;
+	public  String[] header;
 	// lista di tipo FAM degli elementi estratti dal file
-	public static List<Famiglia> listFamiglia = new ArrayList<Famiglia>();
-	public static String codiceComunecatastale;
+	public  List<Famiglia> listFamiglia = new ArrayList<Famiglia>();
+	public  String codiceComunecatastale;
 	// estrazione HEADER
-	public static void estrazioneHeaderFile(String path) {
+	public  void estrazioneHeaderFile(String path) {
 
 		try {
 			File file = new File(path);
@@ -43,7 +43,7 @@ public class WrapperFamiglia {
 		}
 	}
 
-	public static void LetturaFile(String path) {
+	public  void LetturaFile(String path) {
 		try {
 			File file = new File(path);
 			BufferedReader reader = new BufferedReader(new FileReader(file));

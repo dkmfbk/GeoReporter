@@ -37,12 +37,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperTUUtenzaA {
 
 	// vettore per l'elenco degli HEADER
-	public static String[] header;
+	public  String[] header;
 	// lista di tipo UTENZA ACQUA degli elementi estratti dal file XLS
-	public static List<UtenzaAcqua> listUtenzaAcqua = new ArrayList<UtenzaAcqua>();
+	public  List<UtenzaAcqua> listUtenzaAcqua = new ArrayList<UtenzaAcqua>();
 
 	// estrazione degli HEADER
-	public static void readXLSFile(String path) throws IOException {
+	public  void readXLSFile(String path) throws IOException {
 		InputStream ExcelFileToRead = new FileInputStream(path);
 		HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
 

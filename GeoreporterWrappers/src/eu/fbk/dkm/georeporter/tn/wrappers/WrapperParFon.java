@@ -39,14 +39,14 @@ public class WrapperParFon {
 
 	// lista degli "header" inseriti dal file esterno HEADER FILE FAB, 6 liste
 	// diverse, una per ogni TIPO RECORD
-	public static List<String[]> headerP = new ArrayList<String[]>();
+	public  List<String[]> headerP = new ArrayList<String[]>();
 	// liste che raccolgono tutti gli elementi del file PAR divisi per TIPO
-	public static List<Particella> listParticella = new ArrayList<Particella>();
-	public static List<PorzioneParticella> listPorzioneParticella = new ArrayList<PorzioneParticella>();
-	public static String codiceComunecatastale;
+	public  List<Particella> listParticella = new ArrayList<Particella>();
+	public  List<PorzioneParticella> listPorzioneParticella = new ArrayList<PorzioneParticella>();
+	public  String codiceAmministrativo;
 	// metodo che analizza il file (che deve esser caricato) degli HEADER e crea la
 	// lista dei 6 header
-	public static void estrazioneHeaderFilePar(String pathP) {
+	public  void estrazioneHeaderFilePar(String pathP) {
 		String[] tmp;
 
 		try {
@@ -66,7 +66,7 @@ public class WrapperParFon {
 		}
 	}
 
-	public static void letturaFilePar(String pathP) {
+	public  void letturaFilePar(String pathP) {
 
 		try {
 
@@ -161,7 +161,7 @@ public class WrapperParFon {
 
 	// metodo con cui in base al tipo di elemento che ho appena estratto lo aggiungo
 	// alla relativa lista di elementi dello stesso tipo
-	public static void settareElemento(Map<String, String> campi, List<Map<String, String>> listaValoriChiave) {
+	public  void settareElemento(Map<String, String> campi, List<Map<String, String>> listaValoriChiave) {
 
 		PorzioneParticella pp = new PorzioneParticella();
 		pp.setValori(campi);

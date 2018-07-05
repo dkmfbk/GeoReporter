@@ -21,12 +21,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperTit {
 
 	// vettore per l'elenco degli HEADER TIT
-	public static String[] headerTit;
+	public  String[] headerTit;
 	// lista di tipo TITOLARITA degli elementi estratti dal file TIT
-	public static List<Titolarita> listTitolarita = new ArrayList<Titolarita>();
+	public  List<Titolarita> listTitolarita = new ArrayList<Titolarita>();
 
 	// estrazione degli HEADER
-	public static void estrazioneHeaderFileTit(String pathP) {
+	public  void estrazioneHeaderFileTit(String pathP) {
 
 		try {
 			File file = new File(pathP);
@@ -46,7 +46,7 @@ public class WrapperTit {
 	}
 
 	// creazione e SET della LIST degli elementi del file TIT
-	public static void letturaFileTit(String pathP) {
+	public  void letturaFileTit(String pathP) {
 
 		try {
 			File file = new File(pathP);

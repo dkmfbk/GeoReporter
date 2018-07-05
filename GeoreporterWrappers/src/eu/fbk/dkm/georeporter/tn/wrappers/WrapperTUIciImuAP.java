@@ -37,13 +37,13 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperTUIciImuAP {
 
 	// vettore per l'elenco degli HEADER 
-	public static String[] header ;
+	public  String[] header ;
 	// lista di tipo ABITAZIONE PRINCIPALE di TRIBUTO UTENZA di ICI IMU degli elementi estratti dal file XLS
-	public static List<AbitazionePrincipale> listICIIMU_AP = new ArrayList<AbitazionePrincipale>();
+	public  List<AbitazionePrincipale> listICIIMU_AP = new ArrayList<AbitazionePrincipale>();
 
 
 	// estrazione degli HEADER
-	public static void readXLSFile(String path) throws IOException {
+	public  void readXLSFile(String path) throws IOException {
 		InputStream ExcelFileToRead = new FileInputStream(path);
 		HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
 

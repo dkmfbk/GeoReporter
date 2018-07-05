@@ -34,12 +34,12 @@ import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 public class WrapperForLoc {
 
 	// vettore per l'elenco degli HEADER LOCAZIONE
-	public static String[] headerFL;
+	public  String[] headerFL;
 	// lista di tipo FLOCAZIONE degli elementi estratti dal file XLS
-	public static List<Locazione> listLocazione = new ArrayList<Locazione>();
+	public  List<Locazione> listLocazione = new ArrayList<Locazione>();
 
 	// estrazione degli HEADER
-	public static void readXLSFile(String path) throws IOException {
+	public  void readXLSFile(String path) throws IOException {
 		InputStream ExcelFileToRead = new FileInputStream(path);
 		HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
 
