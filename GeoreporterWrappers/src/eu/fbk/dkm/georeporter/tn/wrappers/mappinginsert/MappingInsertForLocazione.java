@@ -36,6 +36,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Famiglia;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.FornituraEnergia;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.FornituraGas;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Locazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
@@ -120,7 +121,7 @@ public class MappingInsertForLocazione {
 	
 	
 	
-	private  void LoadFile(File filename, File filename2, File filename3, File mappingIndirizzoContratti) {
+	private  void LoadFile(File locazione, File contratto, File identificativocatastale, File mappingIndirizzoContratti) {
 
 		Gson gson = new Gson();
 		JsonReader reader;
@@ -133,18 +134,18 @@ public class MappingInsertForLocazione {
 		Gson gson4 = new Gson();
 		JsonReader reader4;
 		try {
-			reader = new JsonReader(new FileReader(filename));
-			MappingTabella data = gson.fromJson(reader, MappingTabella.class);
+			reader = new JsonReader(new FileReader(locazione));
+			MappingTabella dataLocazione = gson.fromJson(reader, MappingTabella.class);
 
-			reader2 = new JsonReader(new FileReader(filename2));
-			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
-			reader3 = new JsonReader(new FileReader(filename3));
-			MappingTabella data3 = gson3.fromJson(reader3, MappingTabella.class);
+			reader2 = new JsonReader(new FileReader(contratto));
+			MappingTabella dataContratto = gson2.fromJson(reader2, MappingTabella.class);
+			reader3 = new JsonReader(new FileReader(identificativocatastale));
+			MappingTabella dataIC = gson3.fromJson(reader3, MappingTabella.class);
 			reader4 = new JsonReader(new FileReader(mappingIndirizzoContratti));
-			MappingTabella data4 = gson4.fromJson(reader4, MappingTabella.class);
+			MappingTabella dataIndirizzoContratti = gson4.fromJson(reader4, MappingTabella.class);
 			
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(data, data2, data3, data4);
+			associazioneMappingNomeVal(dataLocazione, dataContratto, dataIC, dataIndirizzoContratti);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -153,23 +154,57 @@ public class MappingInsertForLocazione {
 
 	}
 
-	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3,MappingTabella data4) {
+	public  void associazioneMappingNomeVal(MappingTabella dataLocazione, MappingTabella dataContratto, MappingTabella dataIC,MappingTabella dataIndirizzoContratti) {
+		
+		
+		
+		
+		Map<String,String> nameMappingsIDCatastaliHM = new HashMap<String,String>();
+	
+	      
+		
+		
+		
+		
+		for (int i = 0; i < dataIC.getAttributi().size(); i++) {
+			nameMappingsIDCatastaliHM.put(dataIC.getAttributi().get(i).getMapping().split("#")[1], dataIC.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		// ciclo la lista degli elementi LOC
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		for (int j = 0; j < listLocazione.size(); j++) {
 
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
 
 			// ciclo per crea listaATTRIBUTI richiesti dal mapping LOC
-			for (int i = 0; i < data.getAttributi().size(); i++) {
+			for (int i = 0; i < dataLocazione.getAttributi().size(); i++) {
 
-				String string = data.getAttributi().get(i).getNome();
+				String string = dataLocazione.getAttributi().get(i).getNome();
 				String[] parts = string.split("#");
 
 				Attributo tmp = new Attributo();
-				tmp.setNome(data.getAttributi().get(i).getNome());
-				tmp.setMapping(data.getAttributi().get(i).getMapping());
-				tmp.setTipo(data.getAttributi().get(i).getTipo());
+				tmp.setNome(dataLocazione.getAttributi().get(i).getNome());
+				tmp.setMapping(dataLocazione.getAttributi().get(i).getMapping());
+				tmp.setTipo(dataLocazione.getAttributi().get(i).getTipo());
 
 				if ((listLocazione.get(j).getValori().get(parts[1]) != null)
 						&& (listLocazione.get(j).getValori().get(parts[1]).isEmpty() == false)) {
@@ -180,15 +215,15 @@ public class MappingInsertForLocazione {
 			}
 
 			// ciclo per crea e listaATTRIBUTI richiesti dal mapping Contratto
-			for (int i = 0; i < data2.getAttributi().size(); i++) {
+			for (int i = 0; i < dataContratto.getAttributi().size(); i++) {
 
-				String string2 = data2.getAttributi().get(i).getNome();
+				String string2 = dataContratto.getAttributi().get(i).getNome();
 				String[] parts2 = string2.split("#");
 
 				Attributo tmp2 = new Attributo();
-				tmp2.setNome(data2.getAttributi().get(i).getNome());
-				tmp2.setMapping(data2.getAttributi().get(i).getMapping());
-				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
+				tmp2.setNome(dataContratto.getAttributi().get(i).getNome());
+				tmp2.setMapping(dataContratto.getAttributi().get(i).getMapping());
+				tmp2.setTipo(dataContratto.getAttributi().get(i).getTipo());
 
 				if ((listLocazione.get(j).getValori().get(parts2[1]) != null)
 						&& (listLocazione.get(j).getValori().get(parts2[1]).isEmpty() == false)) {
@@ -200,15 +235,15 @@ public class MappingInsertForLocazione {
 
 			
 			// ciclo per crea e listaATTRIBUTI richiesti dal mapping Contratto
-						for (int i = 0; i < data3.getAttributi().size(); i++) {
+						for (int i = 0; i < dataIC.getAttributi().size(); i++) {
 
-							String string3 = data3.getAttributi().get(i).getNome();
+							String string3 = dataIC.getAttributi().get(i).getNome();
 							String[] parts3 = string3.split("#");
 
 							Attributo tmp3 = new Attributo();
-							tmp3.setNome(data3.getAttributi().get(i).getNome());
-							tmp3.setMapping(data3.getAttributi().get(i).getMapping());
-							tmp3.setTipo(data3.getAttributi().get(i).getTipo());
+							tmp3.setNome(dataIC.getAttributi().get(i).getNome());
+							tmp3.setMapping(dataIC.getAttributi().get(i).getMapping());
+							tmp3.setTipo(dataIC.getAttributi().get(i).getTipo());
 
 							if ((listLocazione.get(j).getValori().get(parts3[1]) != null)
 									&& (listLocazione.get(j).getValori().get(parts3[1]).isEmpty() == false)) {
@@ -222,15 +257,15 @@ public class MappingInsertForLocazione {
 			
 						List<Attributo> listAttributiI = new ArrayList<Attributo>();
 						// ciclo per crea e listaATTRIBUTI richiesti dal mapping Contratto
-						for (int i = 0; i < data4.getAttributi().size(); i++) {
+						for (int i = 0; i < dataIndirizzoContratti.getAttributi().size(); i++) {
 
-							String string4 = data4.getAttributi().get(i).getNome();
+							String string4 = dataIndirizzoContratti.getAttributi().get(i).getNome();
 							String[] parts4 = string4.split("#");
 
 							Attributo tmp4 = new Attributo();
-							tmp4.setNome(data4.getAttributi().get(i).getNome());
-							tmp4.setMapping(data4.getAttributi().get(i).getMapping());
-							tmp4.setTipo(data4.getAttributi().get(i).getTipo());
+							tmp4.setNome(dataIndirizzoContratti.getAttributi().get(i).getNome());
+							tmp4.setMapping(dataIndirizzoContratti.getAttributi().get(i).getMapping());
+							tmp4.setTipo(dataIndirizzoContratti.getAttributi().get(i).getTipo());
 
 							if ((listLocazione.get(j).getValori().get(parts4[1]) != null)
 									&& (listLocazione.get(j).getValori().get(parts4[1]).isEmpty() == false)) {
@@ -243,7 +278,7 @@ public class MappingInsertForLocazione {
 			
 			// riga di tipo RIGATABELLA per FOR LOCAZIONE
 			RigaTabella rigaTFL = new RigaTabella();
-			rigaTFL.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
+			rigaTFL.setNometabella("http://dkm.fbk.eu/georeporter#" + dataLocazione.getIdTabella().getMapping());
 			rigaTFL.setListaattributi(listAttributi);
 			// creo l'indirizzo univoco grazie dalla data d'inserimento
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
@@ -278,7 +313,7 @@ public class MappingInsertForLocazione {
 							
 							
 							RigaTabella rigaTIND = new RigaTabella();
-							rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + data4.getIdTabella().getMapping());
+							rigaTIND.setNometabella("http://dkm.fbk.eu/georeporter#" + dataIndirizzoContratti.getIdTabella().getMapping());
 							rigaTIND.setListaattributi(listAttributiI);
 							// creo l'indirizzo univoco grazie dalla data d'inserimento
 							Calendar cal2 = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
@@ -318,11 +353,26 @@ public class MappingInsertForLocazione {
 			Relazione relCFLIDECAT = new Relazione();
 			relCFLIDECAT.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale");
 			relCFLIDECAT.setUriDomain("http://dkm.fbk.eu/georeporter#CFL_" + time);
-			String codamm = listLocazione.get(j).getValori().get("codcomune").trim();
-			String sub = listLocazione.get(j).getValori().get("subalterno").trim();
-			String numden = listLocazione.get(j).getValori().get("particella").trim();
+			
+	//		String codamm = listLocazione.get(j).getValori().get("codcomune").trim();
+	//		String sub = listLocazione.get(j).getValori().get("subalterno").trim();
+	//		String numden = listLocazione.get(j).getValori().get("particella").trim();
+            String comuneCatastale=listLocazione.get(j).getValori().get(nameMappingsIDCatastaliHM.get("comuneCatastale")).trim();
+			String codamm = listLocazione.get(j).getValori().get(nameMappingsIDCatastaliHM.get("codiceAmministrativo")).trim();
+			String sub = listLocazione.get(j).getValori().get(nameMappingsIDCatastaliHM.get("subalterno")).trim();
+			String numden = listLocazione.get(j).getValori().get(nameMappingsIDCatastaliHM.get("particella")).trim();
+				
+			
+			
+			
+			
+			
+			
+			
 			// controllo particella
 			numden.replace("/", " ");
+			numden.replace("-", " ");
+			
 			//tolgo tutti gli spazi doppi
 			numden = numden.replaceAll("\\s+", " ");
 			String[] tmp = numden.split("[ ]", -1);
@@ -338,10 +388,18 @@ public class MappingInsertForLocazione {
 				sub="";
 			}
 			if (num.equals("")){
-				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C0_N0_D0_S0");
+				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#A0_C0_N0_D0_S0");
 				log.info("manca riferimento all identificativo catastale="+uriCFL);
 			}else {
-				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);	
+				
+				RestCalls rc=new RestCalls();
+				IDCatastale idc=rc.getIDCatastale(codamm, comuneCatastale, num, den, sub);
+				//relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);	
+				System.out.println(idc.getId());
+				if (idc.getId().equals("http://dkm.fbk.eu/georeporter#A0_C0_N0_D0_S0")) {
+				log.info("identificativo catastale non trovato ="+uriCFL);
+				}
+				relCFLIDECAT.setUriRange(idc.getId());
 			}
 			listRelCFL.add(relCFLIDECAT);
 			

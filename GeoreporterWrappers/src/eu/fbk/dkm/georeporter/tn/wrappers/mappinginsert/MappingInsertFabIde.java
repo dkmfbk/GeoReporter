@@ -12,6 +12,8 @@ import java.util.Map;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.apache.log4j.Logger;
+
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -39,13 +41,14 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Riserve;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
+
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFab;
 
 public class MappingInsertFabIde {
 
-	public  List<IdentificativiCatastali> listIdentificativiCatastali = WrapperFab.listIdentificativiCatastali;
+	public  List<IdentificativiCatastali> listIdentificativiCatastali ;
 	public  String targetURL;
-	
+	public WrapperFab wf = new WrapperFab();
 	
 	
 	public MappingInsertFabIde(String targetURL_) {
@@ -74,7 +77,7 @@ public class MappingInsertFabIde {
 			MappingTabella data2 = gson2.fromJson(reader2, MappingTabella.class);
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeValIdentificativo(data, data2);
+			//associazioneMappingNomeValIdentificativo(data, data2);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -93,6 +96,7 @@ public class MappingInsertFabIde {
 
 		MappingTabella mappingParticella= new MappingTabella();
 		MappingTabella mappingIdentificativocatastale=new MappingTabella();
+		MappingTabella mappingUnitaImmobiliare=new MappingTabella();
 
 		try {
 			reader = new JsonReader(new FileReader(fileMappings));
@@ -110,12 +114,16 @@ public class MappingInsertFabIde {
 					mappingIdentificativocatastale=mappingTabella;
 					
 					
+				}else if(mappingTabella.getIdTabella().getMapping().equals("UnitaImmobiliare")){
+					mappingUnitaImmobiliare=mappingTabella;
+					
+					
 				}
 			}
 			
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeValIdentificativo(mappingParticella,mappingIdentificativocatastale);
+			associazioneMappingNomeValIdentificativo(mappingParticella,mappingIdentificativocatastale,mappingUnitaImmobiliare);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -130,13 +138,39 @@ public class MappingInsertFabIde {
 	
 	
 	
-	public  void associazioneMappingNomeValIdentificativo(MappingTabella data, MappingTabella data2) {
+	public  void associazioneMappingNomeValIdentificativo(MappingTabella data, MappingTabella data2,MappingTabella data3) {
 		// ciclo la lista degli elementi IDE CAt
 
+	
+		
+
+	      //writing some logs at different levels
+		Map<String,String> nameMappingsParticellaHM = new HashMap<String,String>();
+		Map<String,String> nameMappingsIDCatastaliHM = new HashMap<String,String>();
+		Map<String,String> nameMappingsUIHM = new HashMap<String,String>();
+	      
+		
+		
+		for (int i = 0; i < data.getAttributi().size(); i++) {
+			nameMappingsParticellaHM.put(data.getAttributi().get(i).getMapping().split("#")[1], data.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		for (int i = 0; i < data2.getAttributi().size(); i++) {
+			nameMappingsIDCatastaliHM.put(data2.getAttributi().get(i).getMapping().split("#")[1], data2.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		for (int i = 0; i < data3.getAttributi().size(); i++) {
+			nameMappingsUIHM.put(data3.getAttributi().get(i).getMapping().split("#")[1], data3.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
 		for (int j = 0; j < listIdentificativiCatastali.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
 			List<Attributo> listChiavi = new ArrayList<Attributo>();
-
+			
+			
 			// ciclo per crea la listaCHIAVI e listaATTRIBUTI richiesti dal mapping
 			for (int i = 0; i < data.getAttributi().size(); i++) {
 				String string = data.getAttributi().get(i).getNome();
@@ -146,7 +180,8 @@ public class MappingInsertFabIde {
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
-
+				
+			
 				if ((listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1]) != null)
 						&& (listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(parts[1])
 								.isEmpty() == false)) {
@@ -164,7 +199,7 @@ public class MappingInsertFabIde {
 			//aggiungo il tipo particella = E edificiale
 			Attributo tmp = new Attributo();
 			tmp.setNome("http://dkm.fbk.eu/georeporter#tipoparticella");
-			tmp.setMapping("http://dkm.fbk.eu/georeporter#tipoParticella");
+			tmp.setMapping("http://dkm.fbk.eu/georeporter#tipoDiParticella");
 			tmp.setTipo("http://www.w3.org/2001/XMLSchema#string");
 			tmp.setValore("E");
 			listAttributi.add(tmp);
@@ -174,14 +209,16 @@ public class MappingInsertFabIde {
 			rigaTPar.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTPar.setListaattributi(listAttributi);
 			rigaTPar.setListachiave(listChiavi);
-			String codamm = listIdentificativiCatastali.get(j).getListaValoriChiave().get(0)
-					.get("codiceamministrativo");
-			String ideimm = listIdentificativiCatastali.get(j).getListaValoriChiave().get(0)
-					.get("identificativoimmobile");
+		//	String codamm = listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
+			String codamm = listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(nameMappingsParticellaHM.get("codiceAmministrativo"));
+		//	String ideimm = listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get("identificativoimmobile");
+			String ideimm = listIdentificativiCatastali.get(j).getListaValoriChiave().get(0).get(nameMappingsUIHM.get("identificativoImmobile"));
+			
 			// controllo su uri
-			String num = listIdentificativiCatastali.get(j).getValori().get("numero");
-			String den = listIdentificativiCatastali.get(j).getValori().get("denominatore");
-			String sub = listIdentificativiCatastali.get(j).getValori().get("subalterno");
+			String num = listIdentificativiCatastali.get(j).getValori().get(nameMappingsIDCatastaliHM.get("numero"));
+			String den = listIdentificativiCatastali.get(j).getValori().get(nameMappingsIDCatastaliHM.get("denominatore"));
+			String sub = listIdentificativiCatastali.get(j).getValori().get(nameMappingsIDCatastaliHM.get("subalterno"));
+			String comunecatastale = listIdentificativiCatastali.get(j).getValori().get(nameMappingsParticellaHM.get("codiceComuneCatastale"));
 
 			if (num != null) {
 				String[] tmpv = num.split("/", -1);
@@ -194,9 +231,15 @@ public class MappingInsertFabIde {
 					den = tmpv[1];
 				}
 			}
-			rigaTPar.setUririga("http://dkm.fbk.eu/georeporter#PA_C" + codamm + "_N" + num + "_D" + den);
-
-			String relRange = insertRigaReturn(rigaTPar);
+			
+			
+			String uriIdCatastale="http://dkm.fbk.eu/georeporter#A"+codamm +"_C" + comunecatastale + "_NE" + num + "_D" + den + "_S" + sub;
+			String uriParticella="http://dkm.fbk.eu/georeporter#PAE_A"+codamm+"_C" + comunecatastale + "_NE" + num + "_D" + den;
+			
+			
+			//rigaTPar.setUririga("http://dkm.fbk.eu/georeporter#PAE_C" + comunecatastale + "_N" + num + "_D" + den);
+			rigaTPar.setUririga(uriParticella);
+			String relRange = insertRiga(rigaTPar);
 
 			// ciclo per crea la listaCHIAVI e listaATTRIBUTI richiesti dal mapping
 			List<Attributo> listAttributi2 = new ArrayList<Attributo>();
@@ -248,22 +291,22 @@ public class MappingInsertFabIde {
 			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
 			Relazione relPartIdeCat = new Relazione();
 			relPartIdeCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasParticella");
-			relPartIdeCat
-					.setUriDomain("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
+			//relPartIdeCat.setUriDomain("http://dkm.fbk.eu/georeporter#C" + comunecatastale + "_N" + num + "_D" + den + "_S" + sub);
+			relPartIdeCat.setUriDomain(uriIdCatastale);
 			relPartIdeCat.setUriRange(relRange);
 			listRelPartIdeCat.add(relPartIdeCat);
 
 			Relazione relUIIdeCat = new Relazione();
 			relUIIdeCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasUnitaImmobiliare");
-			relUIIdeCat.setUriDomain("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
+			relUIIdeCat.setUriDomain(uriIdCatastale);
 			relUIIdeCat.setUriRange("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
 			listRelPartIdeCat.add(relUIIdeCat);
 
 			RigaTabella rigaTIdeCat = new RigaTabella();
 			rigaTIdeCat.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
 			rigaTIdeCat.setListaattributi(listAttributi2);
-			//rigaTIdeCat.setListachiave(listChiavi2);
-			rigaTIdeCat.setUririga("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den + "_S" + sub);
+		    rigaTIdeCat.setListachiave(listChiavi2);
+			rigaTIdeCat.setUririga(uriIdCatastale);
 
 			rigaTIdeCat.setListarelazioni(listRelPartIdeCat);
 			// controllo relazione particella ide cat
@@ -275,7 +318,7 @@ public class MappingInsertFabIde {
 	
 	
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping
-	public  String insertRigaReturn(RigaTabella riga) {
+	public  String insertRigaReturn_old(RigaTabella riga) {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
@@ -313,7 +356,7 @@ public class MappingInsertFabIde {
 			// String output;
 			// System.out.println("Output from Server:\n");
 			while ((output = responseBuffer.readLine()) != null) {
-				// System.out.println(output);
+				System.out.println("return="+output);
 				// output = responseBuffer.readLine();
 				return output;
 			}
@@ -329,19 +372,21 @@ public class MappingInsertFabIde {
 			e.printStackTrace();
 
 		}
+		System.out.println("return="+output);
 		return output;
 	}
 
 	
 	
-	public  void insertRiga(RigaTabella riga) {
-
+	public  String insertRiga(RigaTabella riga) {
+		 Logger log = Logger.getLogger(MappingInsertFabIde.class);
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
 		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";	
-	
+		 String responseEntity="";
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
+		//System.out.println("insertriga= "+json);
            try {
 			URL targetUrl = new URL(targetURL);
 		
@@ -356,17 +401,17 @@ public class MappingInsertFabIde {
            	 WebApplicationException e = response.getEntity(WebApplicationException.class);
            	 System.out.println(e.toString());
           }
-           String responseEntity = response.getEntity(String.class);
+           responseEntity = response.getEntity(String.class);
            
-          
-          // System.out.println(responseEntity.toString());
+          log.debug(responseEntity.toString());
+         //  System.out.println(responseEntity.toString());
            
            client.destroy();
            } catch (MalformedURLException e1) {
    			// TODO Auto-generated catch block
    			e1.printStackTrace();
    		}
-           
+           return responseEntity;
 	   }
     
 	
@@ -433,10 +478,11 @@ public class MappingInsertFabIde {
 		
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathFileHeader);
+        wf.estrazioneHeaderFileFab(pathFileHeader);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathFile);
+		wf.letturaFileFab(pathFile);
+		listIdentificativiCatastali = wf.listIdentificativiCatastali;
 
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
@@ -455,10 +501,10 @@ public class MappingInsertFabIde {
 		String pathP = "file/TN_header/headerfilefab.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperFab.estrazioneHeaderFileFab(pathP);
+//		WrapperFab.estrazioneHeaderFileFab(pathP);
 
 		// chiamata per l'analisi del file .FAB
-		WrapperFab.letturaFileFab(pathF);
+//		WrapperFab.letturaFileFab(pathF);
 
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
@@ -469,3 +515,4 @@ public class MappingInsertFabIde {
 	}
 
 }
+

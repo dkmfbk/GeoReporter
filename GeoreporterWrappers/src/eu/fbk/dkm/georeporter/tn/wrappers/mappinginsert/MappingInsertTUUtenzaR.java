@@ -29,6 +29,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
@@ -118,16 +119,6 @@ public class MappingInsertTUUtenzaR {
 	}
 	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -466,14 +457,24 @@ public class MappingInsertTUUtenzaR {
 				rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data9.getIdTabella().getMapping());
 				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
 				rigaTIDECAT.setListachiave(listChiaveIDECAT);
-				String cc = listUtenzaRifiuti.get(j).getValori().get("codcomune");
+				String codiceAmministrativo = listUtenzaRifiuti.get(j).getValori().get("codcomune");
+				String cc = listUtenzaRifiuti.get(j).getValori().get("sezione");
 				String den = listUtenzaRifiuti.get(j).getValori().get("particellaestensione");
 				String sub = listUtenzaRifiuti.get(j).getValori().get("subalterno");
 				if (sub.equals("0")){
 					sub="";
 				}
-				rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				
+				RestCalls rc=new RestCalls();
+				IDCatastale idc=rc.getIDCatastale(codiceAmministrativo, cc, num, den, sub);
+				rigaTIDECAT.setUririga(idc.getId());
+				System.out.println(idc.getId());
+				if (idc.getId().equals("http://dkm.fbk.eu/georeporter#A0_C0_N0_D0_S0")) {
+				log.info("identificativo catastale non trovato = http://dkm.fbk.eu/georeporter#TUUR_"+id);
+				}
+				//rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				// inserimento dell'elemento
+				
 				insertRiga(rigaTIDECAT);
 
 				Relazione rel = new Relazione();
@@ -483,7 +484,8 @@ public class MappingInsertTUUtenzaR {
 				if (sub.equals("0")){
 					sub="";
 				}
-				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				//rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				rel.setUriRange(idc.getId());
 				listRelUR.add(rel);
 			
 				}else {

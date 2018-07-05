@@ -25,6 +25,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
@@ -38,7 +39,8 @@ import eu.fbk.dkm.georeporter.tn.wrappers.WrapperParFon;
 public class MappingInsertParFon {
 
 	// lista di elementi PARTICELLA del file WRAPPER
-	public  List<Particella> listParticella = WrapperParFon.listParticella;
+	WrapperParFon wpartfond = new WrapperParFon();
+	public  List<Particella> listParticella;
 
 
 public  String targetURL;
@@ -228,13 +230,21 @@ public MappingInsertParFon(String targetURL_){
 			}
 			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
 
-		//	String codamm = listParticella.get(j).getListaValoriChiave().get(0).get("comunecatastale");
-			String tipoparticella = listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticella");
-			String codamm = WrapperParFon.codiceComunecatastale;
+		    String cc = listParticella.get(j).getListaValoriChiave().get(0).get("comunecatastale");
+			String tipoparticellat = listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticellat");
+			String tipoparticella = listParticella.get(j).getValori().get("tipoparticella");
+			//System.out.println("TIPOPARTICELLA="+tipoparticella);
+			String codiceAmministrativo= listParticella.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
+			if (codiceAmministrativo==null) {
+				codiceAmministrativo = wpartfond.codiceAmministrativo;
+			}
 			String num = listParticella.get(j).getValori().get("numero");
 			String den = listParticella.get(j).getValori().get("denominatore");
 			String idepar = listParticella.get(j).getListaValoriChiave().get(0).get("identificativoparticella");
 
+			RestCalls rc=new RestCalls();
+			IDCatastale idc=rc.getIDCatastale(codiceAmministrativo, cc, num, den, "");
+			
 			// Intavolazione INIZIALE
 			RigaTabella rigaTPAR = new RigaTabella();
 
@@ -244,13 +254,23 @@ public MappingInsertParFon(String targetURL_){
 				rigaTPAR.setListachiave(listChiavi);
 			}
 			
-			rigaTPAR.setUririga("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
-
+			
+			String uriIdCatastale="http://dkm.fbk.eu/georeporter#A"+codiceAmministrativo +"_C" + cc + "_NE" + num + "_D" + den + "_S";
+			//String uriParticella="http://dkm.fbk.eu/georeporter#PAE_A"+codiceAmministrativo+"_C" + cc + "_NE" + num + "_D" + den;
+			
+			String uriParticella="http://dkm.fbk.eu/georeporter#PA"+tipoparticella+"_A"+codiceAmministrativo+"_C" + cc + "_N"+tipoparticella + num + "_D" + den;
+			
+			
+			//rigaTPAR.setUririga("http://dkm.fbk.eu/georeporter#PA"+tipoparticella+"_" + codamm + "_" + idepar);
+			rigaTPAR.setUririga(uriParticella);
+		
+			
+			
 			RigaTabella rigaTINI = new RigaTabella();
 			rigaTINI.setNometabella("http://dkm.fbk.eu/georeporter#" + dataIntavolazione.getIdTabella().getMapping());
 			rigaTINI.setListaattributi(listIntavolazioneI);
 			String numni = listParticella.get(j).getIntavolazioneIniziale().getValori().get("numerodocumento");
-			rigaTINI.setUririga("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar + "_" + numni);
+			rigaTINI.setUririga("http://dkm.fbk.eu/georeporter#INT_" + cc + "_" + idepar + "_" + numni);
 
 			// creare relazione per la intavolazione iniziale con tipo documento / tipo
 			// intavolazione
@@ -258,7 +278,7 @@ public MappingInsertParFon(String targetURL_){
 				List<Relazione> listRelNI = new ArrayList<Relazione>();
 				Relazione relNITipo = new Relazione();
 				relNITipo.setNomerelazione("http://dkm.fbk.eu/georeporter#hasTipoDocumento");
-				relNITipo.setUriDomain("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar + "_" + numni);
+				relNITipo.setUriDomain("http://dkm.fbk.eu/georeporter#INT_" + cc + "_" + idepar + "_" + numni);
 				relNITipo.setUriRange("http://dkm.fbk.eu/georeporter#"
 						+ listParticella.get(j).getIntavolazioneIniziale().getValori().get("tipodocumento"));
 				listRelNI.add(relNITipo);
@@ -271,7 +291,7 @@ public MappingInsertParFon(String targetURL_){
 			rigaTINF.setNometabella("http://dkm.fbk.eu/georeporter#" + dataIntavolazione.getIdTabella().getMapping());
 			rigaTINF.setListaattributi(listIntavolazioneI);
 			String numnf = listParticella.get(j).getIntavolazioneFinale().getValori().get("numerodocumento");
-			rigaTINF.setUririga("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + idepar + "_" + numnf);
+			rigaTINF.setUririga("http://dkm.fbk.eu/georeporter#NOT_" + cc + "_" + idepar + "_" + numnf);
 
 			// creare relazione per la intavolazione iniziale con tipo documento / tipo
 			// intavolazione
@@ -280,7 +300,7 @@ public MappingInsertParFon(String targetURL_){
 				Relazione relNFTipo = new Relazione();
 				relNFTipo.setNomerelazione("http://dkm.fbk.eu/georeporter#hasTipoDocumento");
 				// ??
-				relNFTipo.setUriDomain("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar + "_" + numnf);
+				relNFTipo.setUriDomain("http://dkm.fbk.eu/georeporter#INT_" + cc + "_" + idepar + "_" + numnf);
 				relNFTipo.setUriRange("http://dkm.fbk.eu/georeporter#"
 						+ listParticella.get(j).getIntavolazioneFinale().getValori().get("tipodocumento"));
 				listRelNF.add(relNFTipo);
@@ -295,8 +315,10 @@ public MappingInsertParFon(String targetURL_){
 				// String relNIuri = insertRigaReturn(rigaTINI);
 				Relazione relNI = new Relazione();
 				relNI.setNomerelazione("http://dkm.fbk.eu/georeporter#hasRegistrazioneIniziale");
-				relNI.setUriDomain("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
-				relNI.setUriRange("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar + "_" + numni);
+				//relNI.setUriDomain("http://dkm.fbk.eu/georeporter#PA"+tipoparticella+"_C" + codamm + "_N" + num + "_D" + den);
+				relNI.setUriDomain(uriParticella);
+				
+				relNI.setUriRange("http://dkm.fbk.eu/georeporter#INT_" + codiceAmministrativo + "_" + idepar + "_" + numni);
 				listRelPAR.add(relNI);
 			}
 
@@ -304,8 +326,9 @@ public MappingInsertParFon(String targetURL_){
 				// String relNFuri = insertRigaReturn(rigaTINF);
 				Relazione relNF = new Relazione();
 				relNF.setNomerelazione("http://dkm.fbk.eu/georeporter#hasRegistrazioneFinale");
-				relNF.setUriDomain("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
-				relNF.setUriRange("http://dkm.fbk.eu/georeporter#INT_" + codamm + "_" + idepar + "_" + numnf);
+				//relNF.setUriDomain("http://dkm.fbk.eu/georeporter#PA"+tipoparticella+"_C" + codamm + "_N" + num + "_D" + den);
+				relNF.setUriDomain(uriParticella);
+				relNF.setUriRange("http://dkm.fbk.eu/georeporter#INT_" + codiceAmministrativo + "_" + idepar + "_" + numnf);
 				listRelPAR.add(relNF);
 			}
 			// relazione tipo particella
@@ -328,13 +351,17 @@ public MappingInsertParFon(String targetURL_){
 			rigaTIdeCat.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
 			rigaTIdeCat.setListaattributi(listAttributi2);
 			rigaTIdeCat.setListachiave(listChiavi2);
-			rigaTIdeCat.setUririga("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den);
+		//	rigaTIdeCat.setUririga("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den);
 
+			rigaTIdeCat.setUririga(uriIdCatastale);
 			// relazione tra particella fondiaria e ide cat
 			Relazione relPartIdeCat = new Relazione();
-			relPartIdeCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasParticellaFondiaria");
-			relPartIdeCat.setUriDomain("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den);
-			relPartIdeCat.setUriRange("http://dkm.fbk.eu/georeporter#PAR_" + codamm + "_" + idepar);
+		    relPartIdeCat.setNomerelazione("http://dkm.fbk.eu/georeporter#hasParticella");
+//		    relPartIdeCat.setUriDomain("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den);
+//			relPartIdeCat.setUriRange("http://dkm.fbk.eu/georeporter#PA"+tipoparticella+"_C" + codamm + "_N" + num + "_D" + den);
+
+		    relPartIdeCat.setUriDomain(uriIdCatastale);
+			relPartIdeCat.setUriRange(uriParticella);
 			listRelPartIdeCat.add(relPartIdeCat);
 
 			rigaTIdeCat.setListarelazioni(listRelPartIdeCat);
@@ -514,18 +541,19 @@ public MappingInsertParFon(String targetURL_){
 
 	}
 
-	public  void run(String filePath, String fileHeaderPath, String fileMappings, String codicecomunecatastale) {
+	public  void run(String filePath, String fileHeaderPath, String fileMappings, String codiceamministrativo) {
 
 		// path del file .PAR e del file con gli HEADER inseriti a mano da un utente
 	//	String pathF = "file/TN_file/404_41097.PAR";
 	//	String pathP = "file/TN_header/headerfileparfon.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperParFon.estrazioneHeaderFilePar(fileHeaderPath);
+		wpartfond.estrazioneHeaderFilePar(fileHeaderPath);
 
 		// chiamata per l'analisi del file .PAR
-		WrapperParFon.letturaFilePar(filePath);
-		WrapperParFon.codiceComunecatastale=codicecomunecatastale;
+		wpartfond.letturaFilePar(filePath);
+		wpartfond.codiceAmministrativo=codiceamministrativo;
+		listParticella = wpartfond.listParticella;
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento
 		// questo grazie ai file di mapping
@@ -544,10 +572,10 @@ public MappingInsertParFon(String targetURL_){
 		String pathP = "file/TN_header/headerfileparfon.csv";
 
 		// chiamata per l'estrazione degli header per la composizione della lista HEADER
-		WrapperParFon.estrazioneHeaderFilePar(pathP);
+	//	WrapperParFon.estrazioneHeaderFilePar(pathP);
 
 		// chiamata per l'analisi del file .PAR
-		WrapperParFon.letturaFilePar(pathF);
+	//	WrapperParFon.letturaFilePar(pathF);
 
 		// chiamata al metodo che accoppia ELEMENTO appena acquisito al NOME che serve
 		// per l'inserimento

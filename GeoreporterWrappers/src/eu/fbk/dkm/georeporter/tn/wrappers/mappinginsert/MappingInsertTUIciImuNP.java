@@ -29,6 +29,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Attributo;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.NudaProprieta;
@@ -428,13 +429,26 @@ public class MappingInsertTUIciImuNP {
 				rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data8.getIdTabella().getMapping());
 				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
 				rigaTIDECAT.setListachiave(listChiaveIDECAT);
+				
+				String codiceAmministrativo = listNudaProprieta.get(j).getValori().get("codcomune");
 				String cc = listNudaProprieta.get(j).getValori().get("codcomune");
 				String den = listNudaProprieta.get(j).getValori().get("particellaestensione");
 				String sub = listNudaProprieta.get(j).getValori().get("subalterno");
+				
+				
+				
+				
 				if (sub.equals("0")){
 					sub="";
 				}
-				rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				
+				
+				RestCalls rc=new RestCalls();
+				IDCatastale idc=rc.getIDCatastale(codiceAmministrativo, cc, num, den, sub);
+				
+				
+				//rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				rigaTIDECAT.setUririga(idc.getId());
 				// inserimento dell'elemento
 				insertRiga(rigaTIDECAT);
 
@@ -445,7 +459,8 @@ public class MappingInsertTUIciImuNP {
 				if (sub.equals("0")){
 					sub="";
 				}
-				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				//rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				rel.setUriRange(idc.getId());
 				listRelNP.add(rel);
 			 }else {
 					
