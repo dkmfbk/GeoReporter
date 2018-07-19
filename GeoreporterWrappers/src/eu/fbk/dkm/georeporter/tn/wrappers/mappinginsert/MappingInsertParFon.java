@@ -228,6 +228,7 @@ public MappingInsertParFon(String targetURL_){
 					listAttributi2.add(tmp2);
 				}
 			}
+			
 			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
 
 		    String cc = listParticella.get(j).getListaValoriChiave().get(0).get("comunecatastale");
@@ -235,7 +236,7 @@ public MappingInsertParFon(String targetURL_){
 			String tipoparticella = listParticella.get(j).getValori().get("tipoparticella");
 			//System.out.println("TIPOPARTICELLA="+tipoparticella);
 			String codiceAmministrativo= listParticella.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
-			if (codiceAmministrativo==null) {
+			if (codiceAmministrativo==null||codiceAmministrativo.equals("")) {
 				codiceAmministrativo = wpartfond.codiceAmministrativo;
 			}
 			String num = listParticella.get(j).getValori().get("numero");
@@ -255,7 +256,7 @@ public MappingInsertParFon(String targetURL_){
 			}
 			
 			
-			String uriIdCatastale="http://dkm.fbk.eu/georeporter#A"+codiceAmministrativo +"_C" + cc + "_NE" + num + "_D" + den + "_S";
+			String uriIdCatastale="http://dkm.fbk.eu/georeporter#A"+codiceAmministrativo +"_C" + cc + "_N"+tipoparticella + num + "_D" + den + "_S";
 			//String uriParticella="http://dkm.fbk.eu/georeporter#PAE_A"+codiceAmministrativo+"_C" + cc + "_NE" + num + "_D" + den;
 			
 			String uriParticella="http://dkm.fbk.eu/georeporter#PA"+tipoparticella+"_A"+codiceAmministrativo+"_C" + cc + "_N"+tipoparticella + num + "_D" + den;
@@ -347,12 +348,24 @@ public MappingInsertParFon(String targetURL_){
 			// creato le relazioni
 			insertRiga(rigaTPAR);
 
+			Attributo codComuneAmministrativo = new Attributo();
+			codComuneAmministrativo.setNome("http://dkm.fbk.eu/georeporter#codiceamministrativo");
+			codComuneAmministrativo.setMapping("http://dkm.fbk.eu/georeporter#codiceAmministrativo");
+			codComuneAmministrativo.setTipo("http://www.w3.org/2001/XMLSchema#string");
+			codComuneAmministrativo.setValore(wpartfond.codiceAmministrativo);
+			listAttributi2.add(codComuneAmministrativo);
+			
+			
 			RigaTabella rigaTIdeCat = new RigaTabella();
 			rigaTIdeCat.setNometabella("http://dkm.fbk.eu/georeporter#" + data2.getIdTabella().getMapping());
 			rigaTIdeCat.setListaattributi(listAttributi2);
 			rigaTIdeCat.setListachiave(listChiavi2);
 		//	rigaTIdeCat.setUririga("http://dkm.fbk.eu/georeporter#C" + codamm + "_N" + num + "_D" + den);
 
+			
+			
+			
+			
 			rigaTIdeCat.setUririga(uriIdCatastale);
 			// relazione tra particella fondiaria e ide cat
 			Relazione relPartIdeCat = new Relazione();

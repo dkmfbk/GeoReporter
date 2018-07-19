@@ -144,7 +144,7 @@ public class MappingInsertFabIde {
 	
 		
 
-	      //writing some logs at different levels
+	    //memorizzo le coppie nome/mapping
 		Map<String,String> nameMappingsParticellaHM = new HashMap<String,String>();
 		Map<String,String> nameMappingsIDCatastaliHM = new HashMap<String,String>();
 		Map<String,String> nameMappingsUIHM = new HashMap<String,String>();

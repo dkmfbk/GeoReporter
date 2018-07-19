@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -41,6 +42,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
+
 import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.GetCoordinates;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFab;
@@ -120,7 +122,45 @@ public class MappingInsertFabIndirizzo {
 
 	}
 
+	
+	
+	
+	public String getDescrizioneToponimo(String codToponimo) {
+		
+		//System.out.println("codicecomune="+ codComune);
+		
+		return eu.fbk.dkm.georeporter.config.Costanti.toponimi.get(codToponimo);
+		
+		
+	}
+	
+	
+	
+	
 	public  void associazioneMappingNomeVal(MappingTabella data) {
+		
+		
+		
+		Map<String,String> nameMappingsIndirizzoHM = new HashMap<String,String>();
+		
+	      
+		
+		
+		for (int i = 0; i < data.getAttributi().size(); i++) {
+			nameMappingsIndirizzoHM.put(data.getAttributi().get(i).getMapping().split("#")[1], data.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		// ciclo la lista degli elementi IND
 		for (int j = 0; j < listIndirizzi.size(); j++) {
 
@@ -136,6 +176,9 @@ public class MappingInsertFabIndirizzo {
 				tmp.setNome(data.getAttributi().get(i).getNome());
 				tmp.setMapping(data.getAttributi().get(i).getMapping());
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
+				
+				
+				
 				if (parts[1].equals("codiceamministrativo")) {
 					tmp.setValore(listIndirizzi.get(j).getListaValoriChiave().get(i).get("codiceamministrativo"));
 					//tmp.setMapping(data.getAttributi().get(i).getMapping());
@@ -182,6 +225,8 @@ public class MappingInsertFabIndirizzo {
 			// riga tab UI con relazione con indirizzo
 			RigaTabella rigaTUI = new RigaTabella();
 			rigaTUI.setNometabella("http://dkm.fbk.eu/georeporter#UnitaImmobiliare");
+			//String codamm = listIndirizzi.get(j).getListaValoriChiave().get(0).get(nameMappingsIndirizzoHM.get("codiceAmministrativo"));
+			//String ideimm = listIndirizzi.get(j).getListaValoriChiave().get(0).get(nameMappingsIndirizzoHM.get("identificativoImmobile"));
 			String codamm = listIndirizzi.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
 			String ideimm = listIndirizzi.get(j).getListaValoriChiave().get(0).get("identificativoimmobile");
 			rigaTUI.setUririga("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);

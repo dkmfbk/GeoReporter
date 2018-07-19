@@ -128,6 +128,32 @@ public class MappingInsertFabUiNote {
 	
 	// accoppiamento valore dell'UI a quello di mapping
 	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
+	
+		
+		
+		Map<String,String> nameMappingsUnitaImmobiliareHM = new HashMap<String,String>();
+		Map<String,String> nameMappingsNotaHM = new HashMap<String,String>();
+	
+	      
+		
+		
+		for (int i = 0; i < data.getAttributi().size(); i++) {
+			nameMappingsUnitaImmobiliareHM.put(data.getAttributi().get(i).getMapping().split("#")[1], data.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		for (int i = 0; i < dataNote.getAttributi().size(); i++) {
+			nameMappingsNotaHM.put(dataNote.getAttributi().get(i).getMapping().split("#")[1], dataNote.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		// ciclo la lista degli elementi UI
 		for (int j = 0; j < listUnitaImmobiliari.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -223,15 +249,15 @@ public class MappingInsertFabUiNote {
 			rigaTUI.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTUI.setListaattributi(listAttributi);
 			rigaTUI.setListachiave(listChiavi);
-			String codamm = listUnitaImmobiliari.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
-			String ideimm = listUnitaImmobiliari.get(j).getListaValoriChiave().get(0).get("identificativoimmobile");
+			String codamm = listUnitaImmobiliari.get(j).getListaValoriChiave().get(0).get(nameMappingsUnitaImmobiliareHM.get("codiceAmministrativo"));
+			String ideimm = listUnitaImmobiliari.get(j).getListaValoriChiave().get(0).get(nameMappingsUnitaImmobiliareHM.get("identificativoImmobile"));
 			rigaTUI.setUririga("http://dkm.fbk.eu/georeporter#UI_" + codamm + "_" + ideimm);
 
 			// NOTA INIZIALE
 			RigaTabella rigaTNI = new RigaTabella();
 			rigaTNI.setNometabella("http://dkm.fbk.eu/georeporter#" + dataNote.getIdTabella().getMapping());
 			rigaTNI.setListaattributi(listNoteI);
-			String numni = listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get("numeronota");
+			String numni = listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(nameMappingsNotaHM.get("numeroNota"));
 			numni=numni.replaceAll("/", "_");
 			rigaTNI.setUririga("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + ideimm + "_" + numni);
 
@@ -241,7 +267,7 @@ public class MappingInsertFabUiNote {
 			relNITipo.setNomerelazione("http://dkm.fbk.eu/georeporter#hasTipoNota");
 			relNITipo.setUriDomain("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + ideimm + "_" + numni);
 			relNITipo.setUriRange("http://dkm.fbk.eu/georeporter#"
-					+ listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get("tiponota"));
+					+ listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(nameMappingsNotaHM.get("hasTipoNota")));
 			listRelNI.add(relNITipo);
 			rigaTNI.setListarelazioni(listRelNI);
 
@@ -249,7 +275,7 @@ public class MappingInsertFabUiNote {
 			RigaTabella rigaTNF = new RigaTabella();
 			rigaTNF.setNometabella("http://dkm.fbk.eu/georeporter#" + dataNote.getIdTabella().getMapping());
 			rigaTNF.setListaattributi(listNoteF);
-			String numnf = listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get("numeronota");
+			String numnf = listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(nameMappingsNotaHM.get("numeroNota"));
 			numnf=numnf.replaceAll("/", "_");
 			rigaTNF.setUririga("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + ideimm + "_" + numnf);
 
@@ -259,14 +285,14 @@ public class MappingInsertFabUiNote {
 			relNFTipo.setNomerelazione("http://dkm.fbk.eu/georeporter#hasTipoNota");
 			relNFTipo.setUriDomain("http://dkm.fbk.eu/georeporter#NOT_" + codamm + "_" + ideimm + "_" + numnf);
 			relNFTipo.setUriRange("http://dkm.fbk.eu/georeporter#"
-					+ listUnitaImmobiliari.get(j).getNotaFinale().getValori().get("tiponota"));
+					+ listUnitaImmobiliari.get(j).getNotaFinale().getValori().get(nameMappingsNotaHM.get("hasTipoNota")));
 			listRelNF.add(relNFTipo);
 			rigaTNF.setListarelazioni(listRelNF);
 
 			// inserisco NotaIniziale e Finale resisto per entrambe URI e iserisco la
 			// relazione nella sua riga UI
 			List<Relazione> listRelUI = new ArrayList<Relazione>();
-			if (!listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get("progressivonota").isEmpty()) {
+			if (!listUnitaImmobiliari.get(j).getNotaIniziale().getValori().get(nameMappingsNotaHM.get("progressivoNota")).isEmpty()) {
 				//String relNIuri = insertRigaReturn(rigaTNI);
 				String relNIuri = insertRiga(rigaTNI);
 				Relazione relNI = new Relazione();
@@ -276,7 +302,7 @@ public class MappingInsertFabUiNote {
 				listRelUI.add(relNI);
 			}
 
-			if (!listUnitaImmobiliari.get(j).getNotaFinale().getValori().get("progressivonota").isEmpty()) {
+			if (!listUnitaImmobiliari.get(j).getNotaFinale().getValori().get(nameMappingsNotaHM.get("progressivoNota")).isEmpty()) {
 	//			String relNFuri = insertRigaReturn(rigaTNF);
 				String relNFuri = insertRiga(rigaTNF);
 				Relazione relNF = new Relazione();
