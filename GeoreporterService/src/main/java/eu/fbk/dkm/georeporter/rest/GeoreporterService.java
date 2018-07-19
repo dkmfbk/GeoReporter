@@ -113,7 +113,9 @@ import eu.fbk.dkm.georeporter.pojos.QueryResult;
 import eu.fbk.dkm.georeporter.pojos.QueryResultItem;
 import eu.fbk.dkm.georeporter.pojos.QueryResultRow;
 import eu.fbk.dkm.georeporter.pojos.Soggetto;
+import eu.fbk.dkm.georeporter.pojos.TipoConCoordinate;
 import eu.fbk.dkm.georeporter.pojos.TributiICI;
+import eu.fbk.dkm.georeporter.pojos.UIConCoordinate;
 import eu.fbk.dkm.georeporter.pojos.UnitaImmobiliare;
 import eu.fbk.dkm.georeporter.pojos.UtenzaAcqua;
 import eu.fbk.dkm.georeporter.pojos.UtenzaRifiuti;
@@ -2893,6 +2895,194 @@ public class GeoreporterService {
 	}
 	
 	
+	public List<TipoConCoordinate> getListaTipoConCoordinate(
+
+		String tipo, String relazione
+			
+			
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<TipoConCoordinate> listaTCC = new ArrayList<TipoConCoordinate>();
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix 
+
+			+"	SELECT   ?idTipo ?idIndirizzo ?longitudine ?latitudine WHERE {"     
+			+"    ?idTipo a :"+tipo+" .    "
+			+"    ?idTipo :"+relazione+" ?idIndirizzo . "
+			+"    ?idIndirizzo :coordinateLong ?longitudine . "
+			+"    ?idIndirizzo :coordinateLat ?latitudine "
+			+ "} ";
+
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();
+
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value idTipo = bindingSet.getValue("idTipo");
+				Value idIndirizzo = bindingSet.getValue("idIndirizzo");
+				Value longitudine = bindingSet.getValue("longitudine");
+				Value latitudine = bindingSet.getValue("latitudine");
+				
+
+				TipoConCoordinate tcc = new TipoConCoordinate();
+
+				if (idTipo != null) {
+					tcc.setIdTipo(idTipo.stringValue());
+				}
+
+				if (idIndirizzo != null) {
+					tcc.setIdIndirizzo(idIndirizzo.stringValue());
+				}
+
+				if (longitudine != null) {
+					tcc.setLongitude(new Float(longitudine.stringValue()));
+				}
+				
+				
+				if (latitudine != null) {
+					tcc.setLatitude(new Float(latitudine.stringValue()));
+				}
+				
+						
+				
+				listaTCC.add(tcc);
+			}
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return listaTCC;
+	}
+
+	
+
+	public List<UIConCoordinate> getListaUIConCoordinate(
+
+			
+				
+				
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		) {
+
+			// String springlesrepositoryID ="georeporter";
+
+			List<BindingSet> tuples = new ArrayList<BindingSet>();
+			List<UIConCoordinate> listaUCC = new ArrayList<UIConCoordinate>();
+
+			Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+			try {
+				myRepository.initialize();
+
+				RepositoryConnection connection = myRepository.getConnection();
+
+				String queryString = queryStringPrefix 
+
+				+"	SELECT   ?idic ?idui ?idIndirizzo ?longitudine ?latitudine WHERE {"     
+				+"    ?idic a :IdentificativoCatastale .  "
+				+"    ?idic :hasUnitaImmobiliare ?idui . "
+				+"    ?idui :hasIndirizzo ?idIndirizzo ."
+				+"    ?idIndirizzo :coordinateLong ?longitudine . "
+				+"    ?idIndirizzo :coordinateLat ?latitudine "
+				+ "} ";
+
+
+				
+				System.out.println(queryString);
+				TupleQuery tupleQuery;
+
+				int i = 0;
+
+				tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+				TupleQueryResult qresult = tupleQuery.evaluate();
+
+				while (qresult.hasNext()) {
+					BindingSet bindingSet = qresult.next();
+
+					Value idic = bindingSet.getValue("idic");
+					Value idui = bindingSet.getValue("idui");
+					Value idIndirizzo = bindingSet.getValue("idIndirizzo");
+					Value longitudine = bindingSet.getValue("longitudine");
+					Value latitudine = bindingSet.getValue("latitudine");
+					
+
+					UIConCoordinate tcc = new UIConCoordinate();
+
+					if (idic != null) {
+						tcc.setIdIC(idic.stringValue());
+					}
+					if (idui != null) {
+						tcc.setIdUI(idui.stringValue());
+					}
+					if (idIndirizzo != null) {
+						tcc.setIdIndirizzo(idIndirizzo.stringValue());
+					}
+
+					if (longitudine != null) {
+						tcc.setLongitude(new Float(longitudine.stringValue()));
+					}
+					
+					
+					if (latitudine != null) {
+						tcc.setLatitude(new Float(latitudine.stringValue()));
+					}
+						
+					
+					listaUCC.add(tcc);
+				}
+				qresult.close();
+				connection.close();
+			} catch (RepositoryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+			} catch (MalformedQueryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (QueryEvaluationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+
+			}
+
+			return listaUCC;
+		}
+
+
+	
+	
+	
+	
 	
 	@GET
 	@Path("/attributitabella")
@@ -3475,7 +3665,7 @@ Gson gson = new Gson();
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("localita"));
 				stringa_indirizzo = stringa_indirizzo + "," + safeToString(attributi_indirizzo.get("cap"));
                   }
-				stringa_indirizzo = stringa_indirizzo + " " + safeToString(getNomeComune(attributi_indirizzo.get("codiceComuneCatastale")));
+				stringa_indirizzo = stringa_indirizzo + " " + safeToString(getNomeComune(attributi_indirizzo.get("codiceAmministrativo")));
                   
                 //  System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
 			
@@ -3556,6 +3746,119 @@ Gson gson = new Gson();
 	
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@GET
+	@Path("/cercaidcatastalevicino")
+
+	public  String cercaidcatastalevicino(
+			@QueryParam("callback") String callback,
+			@QueryParam("tipo") String tipo,
+			@QueryParam("relazione") String relazione
+	
+	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+	) {
+
+		// String springlesrepositoryID ="georeporter";
+		String returno="";	
+		
+		List<TipoConCoordinate> listaTipoConCoordinate=getListaTipoConCoordinate(tipo, relazione);
+		List<UIConCoordinate> listaUIConCoordinate=getListaUIConCoordinate();
+			
+		
+		for (TipoConCoordinate tipoConCoordinate : listaTipoConCoordinate) {
+			System.out.println(tipoConCoordinate.getIdIndirizzo());
+			System.out.println(tipoConCoordinate.getIdTipo());
+			System.out.println(tipoConCoordinate.getLatitude());
+			System.out.println(tipoConCoordinate.getLongitude());
+			
+			
+			
+			String icConDistanzaMinima=getICCondistanzaMinima(tipoConCoordinate,listaUIConCoordinate);
+			
+			 RigaTabella rigaTFL= new RigaTabella();
+			 rigaTFL.setNometabella("http://dkm.fbk.eu/georeporter#"+tipo);
+			 rigaTFL.setUririga(tipoConCoordinate.getIdTipo());
+			  List<Relazione> listRelCFL = new ArrayList<Relazione>();
+			  Relazione relCFLIDECAT = new Relazione();
+				relCFLIDECAT.setNomerelazione("http://dkm.fbk.eu/georeporter#hasPossibileIdentificativoCatastale");
+				relCFLIDECAT.setUriDomain(tipoConCoordinate.getIdTipo());
+				relCFLIDECAT.setUriRange(icConDistanzaMinima);
+				listRelCFL.add(relCFLIDECAT);
+				rigaTFL.setListarelazioni(listRelCFL);
+                insertTable(rigaTFL);
+			System.out.println(icConDistanzaMinima);
+		}
+		return returno;
+	
+		
+	}
+	
+	
+	private String getICCondistanzaMinima(TipoConCoordinate tipoConCoordinate , List<UIConCoordinate> listaUIConCoordinate) {
+		
+		String result="";
+		
+		
+		double distanzaminima= calcolaDistanzaMinimaFraCoordinate(tipoConCoordinate.getLatitude(),tipoConCoordinate.getLongitude(),listaUIConCoordinate.get(0).getLatitude(),listaUIConCoordinate.get(0).getLongitude());	
+		 result= listaUIConCoordinate.get(0).getIdIC();
+		for (UIConCoordinate uiConCoordinate : listaUIConCoordinate) {
+			System.out.println("ListaUICoordinate"+uiConCoordinate.getLatitude());
+			double distanzaminimatmp= calcolaDistanzaMinimaFraCoordinate(tipoConCoordinate.getLatitude(),tipoConCoordinate.getLongitude(),uiConCoordinate.getLatitude(),uiConCoordinate.getLongitude());
+		
+			System.out.println("distanzaminimatmp= "+distanzaminimatmp);
+			if (distanzaminimatmp < distanzaminima){
+			
+			distanzaminima=distanzaminimatmp;
+		    result= uiConCoordinate.getIdIC();
+		}
+		}
+		return result;
+		
+	}
+	
+	
+	
+	double calcolaDistanzaMinimaFraCoordinate(double lat1, double long1,double lat2, double long2) {
+		
+		double result =-1;	
+		
+		result =Math.sqrt(
+			    Math.pow(lat2-lat1, 2) +
+			    Math.pow(long2-long1, 2)
+			);
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	static String safeToString(Object obj) {
