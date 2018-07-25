@@ -27,7 +27,7 @@ mapping: definisce il nome della destinazione del dato nel'ontologia
 nome: definisce in nome della sorgente del dato nel file di importazione
 tipo: definisce il tipo di dato
 
-##Importazione dei dati
+## Importazione dei dati
 ImportGeoreporter.java e' La classe che contiene i metodi per importare i vari dati
 I dati di esempio  per il comune di Trambileno si trovano nella directory
 /file/Trambileno
