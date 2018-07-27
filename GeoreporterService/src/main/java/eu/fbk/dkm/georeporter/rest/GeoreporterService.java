@@ -150,6 +150,8 @@ public class GeoreporterService {
 
 	public GeoreporterService() {
 		super();
+		springlesserverURL=Costanti.springlesserverURL;
+		springlesrepositoryID=Costanti.springlesrepositoryID;
 	}
 
 	/**
@@ -239,18 +241,7 @@ public class GeoreporterService {
 
 	}
 
-	/**
-	 * Metodo che restituisce la lista di tutte le particelle
-	 * 
-	 * <p>
-	 * SELECT ?particella ?ui " WHERE { " ?x a :IdentificativoCatastale . ?x
-	 * :hasParticella ?particella . ?x :hasUnitaImmobiliare ?ui } ORDER by
-	 * ?particella
-	 * </p>
-	 * url : http://localhost:8080/GeoreporterService/rest/hallo
-	 * 
-	 * @return message to a web page
-	 */
+	
 	@GET
 	@Path("/particelle_old")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -352,13 +343,22 @@ public class GeoreporterService {
 	 * Metodo che restituisce la lista di tutte le particelle
 	 * 
 	 * <p>
-	 * SELECT ?particella ?ui " WHERE { " ?x a :IdentificativoCatastale . ?x
-	 * :hasParticella ?particella . ?x :hasUnitaImmobiliare ?ui } ORDER by
-	 * ?particella
+	 * SELECT DISTINCT ?particella ?ui ?comunecatastale ?numero  ?foglio ?denominatore 
+	 *  "WHERE { 
+				    ?x a :IdentificativoCatastale .
+				    ?x :hasParticella ?particella . 
+				    ?x :hasUnitaImmobiliare ?ui .
+                    ?x :numero ?numero . 
+				 OPTIONAL{   ?x :comuneCatastale ?comunecatastale }. 
+				 OPTIONAL{   ?x :foglio ?foglio  }. 
+				 OPTIONAL{   ?x :denominatore ?denominatore  } . 
+
+				}  
+
 	 * </p>
-	 * url : http://localhost:8080/GeoreporterService/rest/hallo
-	 * 
-	 * @return message to a web page
+	 * url : http://localhost:8080/GeoreporterService/rest/particelle
+	 * @param void
+	 * @return List<Particella>
 	 */
 	@GET
 	@Path("/particelle")
@@ -500,10 +500,10 @@ public class GeoreporterService {
 					+ "    ?x :hasUnitaImmobiliare ?ui ." 
 					+ "     OPTIONAL{ ?ui :classe ?classe }."
 					+ "     OPTIONAL{ ?ui :piano1 ?piano}. " 
-					+ "    OPTIONAL{  ?ui :superficie ?superficie}. "
-					+ "   OPTIONAL{  ?ui :interno ?interno}. " 
-					+ "   OPTIONAL{    ?ui :scala ?scala}. "
-					+ "    OPTIONAL{   ?ui :categoria ?categoria}. " 
+					+ "     OPTIONAL{  ?ui :superficie ?superficie}. "
+					+ "     OPTIONAL{  ?ui :interno ?interno}. " 
+					+ "     OPTIONAL{    ?ui :scala ?scala}. "
+					+ "     OPTIONAL{   ?ui :categoria ?categoria}. " 
 					+ "     OPTIONAL{  ?ui :titolare ?titolare}. "
 
 					+ "	} ";
@@ -581,6 +581,37 @@ public class GeoreporterService {
 	}
 
 	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Metodo che restituisce tutte le Unità Immobiliari presenti su una particella
+	 * 
+	 * <p>
+	 * select   ?ui ?classe ?piano ?interno ?scala ?categoria ?superficie ?renditaeuro ?valoreimis
+	 *				 where { 
+	 *				    ?x a :IdentificativoCatastale. 
+	 *				    ?x :hasParticella :" + particella + " . "
+	 *				    ?x :hasUnitaImmobiliare ?ui .
+	 *				    OPTIONAL{ ?ui :classe ?classe }.
+	 *				    OPTIONAL{ ?ui :piano ?piano}. 
+	 *				    OPTIONAL{ ?ui :superficie ?superficie}. 
+	 *				    OPTIONAL{ ?ui :interno ?interno}. 
+	 *				    OPTIONAL{ ?ui :scala ?scala}. 
+	 *				    OPTIONAL{ ?ui :categoria ?categoria}. 
+	 *				    OPTIONAL{ ?ui :renditaEuro ?renditaeuro}.  
+	 *				    OPTIONAL{ ?ui :valoreIMIS ?valoreimis}. 
+	 *				} 
+
+	 * </p>
+	 * url : http://localhost:8080/GeoreporterService/rest/unitaimmobiliari_su_particella
+	 * @param particella=IDParticella
+	 * @return List<UnitaImmobiliare>
+	 */
 	@GET
 	@Path("/unitaimmobiliari_su_particella")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -812,6 +843,31 @@ public class GeoreporterService {
 
 	}
 
+	
+	/**
+	 * Metodo che restituisce l’anagrafica dei titolari di un’unità immobiliare in formato JSON
+	 * 
+	 * <p>
+	 *	 select  distinct  ?soggetto  ?codicefiscale ?nome ?cognome ?denominazione ?datanascita ?sesso ?luogonascita
+	 *				 where {
+	 *				  ?x a :Titolarita .
+	 *				  ?x :hasSoggetto ?soggetto . 
+	 *				  ?x :hasIdentificativoCatastale ?ic . 
+	 *				 ?ic :hasUnitaImmobiliare :"+ui+" .
+	 *				 OPTIONAL{ ?soggetto :codiceFiscale ?codicefiscale } . 
+	 *				 OPTIONAL{ ?soggetto :denominazione ?denominazione } . 
+	 *				 OPTIONAL{ ?soggetto :nome ?nome }. 
+	 *				 OPTIONAL{ ?soggetto :cognome ?cognome}  
+	 *				 OPTIONAL{ ?soggetto :dataNascita ?datanascita}  
+	 *				 OPTIONAL{ ?soggetto :sesso ?sesso}  
+	 *				 OPTIONAL{ ?soggetto :luogoNascita ?luogonascita}  
+     *
+	 *				 }  
+	 * </p>
+	 * url : http://localhost:8080/GeoreporterService/rest/anagraficasoggettoui
+	 * @param ui=IDUnitaImmobiliare
+	 * @return List<Soggetto>
+	 */
 	@GET
 	@Path("/anagraficasoggettoui")
 	// @Produces(MediaType.APPLICATION_JSON)
@@ -1185,6 +1241,32 @@ public class GeoreporterService {
 
 
 	
+	
+	/**
+	 * Metodo che restituisce la lista delle utenze acqua relative ad un’unità immobiliare in formato JSON
+	 * 
+	 * <p>
+	 *select    ?acqua ?datainizio ?cognome ?nome ?contribuente ?categoriadescrizione ?notabreve  ?interno
+	 *		 where{ 
+	 *		  ?idcat a :IdentificativoCatastale .        
+	 *		  ?idcat :hasUnitaImmobiliare :" + codUI +" ."
+	 *	      ?acqua a :UtenzaAcqua .   "
+	 *	      ?acqua :hasIdentificativoCatastale ?idcat .   
+	 *	      ?acqua :dataInizio ?datainizio . 
+	 *		  ?acqua :categoriaDescrizione ?categoriadescrizione . 
+	 *		  ?acqua :codiceContribuente ?codcontribuente . 
+	 *		   OPTIONAL{   ?acqua :hasContribuente ?contribuente }. 
+	 *		   OPTIONAL{   ?contribuente :cognome ?cognome }. 
+	 *		   OPTIONAL{   ?contribuente :nome ?nome }. 
+	 *		   OPTIONAL{  ?acqua :notaBreve ?notabreve }.  
+	 *		   OPTIONAL{  ?acqua :interno ?interno}.}
+	 * </p>
+	 * url : http://localhost:8080/GeoreporterService/rest/utenzeacquaui
+	 * @param codui=IDUnitaImmobiliare
+	 * @return List<UtenzaAcqua>
+	 */
+	
+	
 	@GET
 	@Path("/utenzeacquaui")
 	@Produces({ "application/javascript" })
@@ -1441,7 +1523,29 @@ public class GeoreporterService {
 	}
 
 	
-	
+	/**
+	 * Metodo che restituisce la lista dei Tributi ICI/IMU i relative ad un’unità immobiliare in formato JSON
+	 * 
+	 * <p>
+     *  select    ?ici  ?cognome ?nome ?contribuente ?indirizzo ?categoriadescrizione ?rendita
+     *   where{ 
+		*			     ?idcat a :IdentificativoCatastale .   
+		*			     ?idcat :hasUnitaImmobiliare : codUI. 
+		*			     ?ici a :ICI_IMU_AbitazionePrincipale .   
+		*		    	 ?ici :hasIdentificativoCatastale ?idcat. 
+		*			     ?ici :hasIndirizzoContribuente ?idindirizzo. 
+		*			     OPTIONAL{    ?idindirizzo :indirizzoCompleto ?indirizzo}. 
+		*			     ?ici :categoriaDescrizione ?categoriadescrizione. 
+		*			     ?ici :hasContribuente ?contribuente. 
+		*    			OPTIONAL { ?contribuente :cognome ?cognome} .
+		*	    		OPTIONAL { ?contribuente :nome ?nome} .
+		*			    ?ici :rendita ?rendita. 			
+		*			 }
+	 * </p>
+	 * url : http://localhost:8080/GeoreporterService/rest/iciimuui
+	 * @param codui=IDUnitaImmobiliare
+	 * @return List<TributiICI>
+	 */
 	
 	@GET
 	@Path("/iciimuui")
@@ -1563,6 +1667,36 @@ public class GeoreporterService {
 
 	
 	
+	
+	
+	
+	
+	
+	/**
+	 * Metodo che restituisce la lista delle utenze rifiuti relative ad un’unità immobiliare in formato JSON
+	 * 
+	 * <p>
+	 *		 select    ?ur  ?categoria ?tipoUtenza ?mqLocali ?occupante ?categoriaDescrizione ?indirizzoCompleto 
+	 *		 where{ 
+	 *                  ?idcat a :IdentificativoCatastale .   
+	 *				     ?idcat :hasUnitaImmobiliare :"+codUI+ " ." 
+	 *				     ?ur a :UtenzaRifiuti .   
+	 *				     ?ur :hasIdentificativoCatastale ?idcat. 
+	 *				     ?ur :hasIndirizzoContribuente ?indirizzo.  
+								
+	 *				   OPTIONAL{   ?ur :categoria ?categoria }. 
+	 *				   OPTIONAL{   ?ur :tipoUtenza ?tipoUtenza }. 
+	 *				   OPTIONAL{   ?ur :mqLocali ?mqLocali }. 
+	 *				   OPTIONAL{   ?ur :occupante ?occupante }. 
+	 *				   OPTIONAL{   ?ur :categoriaDescrizione ?categoriaDescrizione }. 			
+	 *				   OPTIONAL{   ?indirizzo :indirizzoCompleto ?indirizzoCompleto }. 
+					
+	 *				 }
+	 * </p>
+	 * url : http://localhost:8080/GeoreporterService/rest/rifiutiui
+	 * @param codui=IDUnitaImmobiliare
+	 * @return List<UtenzaRifiuti>
+	 */
 	@GET
 	@Path("/rifiutiui")
 	@Produces({ "application/javascript" })
@@ -1672,6 +1806,32 @@ public class GeoreporterService {
 
 	}
 
+
+
+	
+	/**
+	 * Metodo che restituisce la lista dei contratti di locazione relative ad un’unità immobiliare in formato JSON
+	 * 
+	 * <p>
+     *    select    ?locaz  ?tipoCanone ?importoCanone ?denominazione ?denominazioneFile   
+	 *				 where{ 
+     *				     ?idcat a :IdentificativoCatastale .   
+	 *				     ?idcat :hasUnitaImmobiliare :"+codUI+ " ." 
+	 *				     ?locaz a :Locazione .   
+	 *				     ?locaz :hasIdentificativoCatastale ?idcat. 							
+     *				   OPTIONAL{   ?locaz :tipoCanone ?tipoCanone }.
+	 *				   OPTIONAL{   ?locaz :importoCanone ?importoCanone }. 
+	 *				   OPTIONAL{   ?locaz :denominazione ?denominazione }.
+	 *				   OPTIONAL{   ?locaz :denominazioneFile ?denominazioneFile }. 
+	 *				 }
+	 * </p>
+	 * url : http://localhost:8080/GeoreporterService/rest/locazioniui
+	 * @param codui=IDUnitaImmobiliare
+	 * @return List<Locazione>
+	 */
+	
+	
+	
 	
 	
 	@GET
@@ -2011,16 +2171,7 @@ public class GeoreporterService {
 
 	}
 
-	@GET
-	@Path("/utenzerifiutiintestatarioui")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<UtenzaRifiuti> getUtenzeRifiuti() {
-
-		List<UtenzaRifiuti> listaUtenzaRifiuti = new ArrayList<UtenzaRifiuti>();
-
-		return listaUtenzaRifiuti;
-
-	}
+	
 	
 
 	
@@ -3455,6 +3606,16 @@ Gson gson = new Gson();
 	
 	}
 
+	
+	
+	/**
+	 * Metodo che restituisce la gerarchia delle classi che compongono l’ontologia in formato JSON
+	 *  
+	 * url : http://localhost:8080/GeoreporterService/rest/gerarchiaclassi
+	 * @param 
+	 * @return List<GerarchiaClasse>
+	 */
+	
 	
 	@GET
 	@Path("/gerarchiaclassi")
