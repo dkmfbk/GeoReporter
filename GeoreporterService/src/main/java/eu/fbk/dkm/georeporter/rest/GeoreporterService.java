@@ -2203,8 +2203,27 @@ public class GeoreporterService {
 	return output;
 
 	
-
 	}
+	
+	
+	
+	
+
+	/**
+	 * Servizio per il caricamento dei file (anche tramite l’interfaccia web http://www.georeporter.it:8080/GeoreporterService/tools/import.html)
+	 * 
+	 * <p>	 
+     * File Catasto fabbricati(Unità Immobiliari, Soggetti,  Titolarità), 
+     * Anagrafe Comunale, Famiglia, 
+     * Contratti di Luce, Gas e Locazione, 
+     * Tributi ICI_IMU, Utenze Rifiuti, Utenza Acqua, Letture Acqua,
+     * File del catasto fondiario (Particelle Fondiarie, Soggetti, Titolarità)
+	 * </p>
+	 * url : http://localhost:8080/GeoreporterService/rest/importadati
+	 * @param Prende i parametri da una form html:file dati, file di mapping, file header, nome del tipo dati
+
+	 * @return List<UnitaImmobiliare>
+	 */
 	
 	
 	@POST
@@ -3716,6 +3735,19 @@ Gson gson = new Gson();
 	
 	}
 
+	
+	
+	
+	
+	/**
+	 * Metodo che normalizza gli indirizzi presenti nella Knowledge Base utilizzando il servizio di geodecoding di Google
+	 * 
+	 * 
+	 * url : http://localhost:8080/GeoreporterService/rest/normalizzaindirizzi
+	 * @param limit=”numero_di_indirizzi”
+	 * @return void
+	 */	
+
 	@GET
 	@Path("/normalizzaindirizzi")
 
@@ -3925,7 +3957,15 @@ Gson gson = new Gson();
 	
 	
 	
-	
+	/**
+	 * Servizio che restituisce l’Identificativo Catastale dell’unità immobiliare che si trova più vicina. Il sistema confronta le coordinate (latitudine e longitudine) degli indirizzi che sono stati normalizzati con il servizio offerto da Google.
+	 * 
+	 * 
+	 * url : http://localhost:8080/GeoreporterService/rest/cercaidcatastalevicino
+	 * @param tipo=“nome_tabella”
+     * @param relazione=”nome_relazione_indirizzo”
+	 * @return void
+	 */	
 	@GET
 	@Path("/cercaidcatastalevicino")
 
