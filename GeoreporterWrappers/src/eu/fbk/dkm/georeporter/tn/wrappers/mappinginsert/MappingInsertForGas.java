@@ -147,6 +147,31 @@ public class MappingInsertForGas {
 
 	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2,MappingTabella data3) {
 		// ciclo la lista degli elementi FG
+
+		
+	    //memorizzo le coppie nome/mapping
+			Map<String,String> nameMappingsFornituraGasHM = new HashMap<String,String>();
+			Map<String,String> nameMappingsContrattoHM = new HashMap<String,String>();
+			Map<String,String> nameMappingsIndirizzoHM = new HashMap<String,String>();
+		      
+			
+			
+			for (int i = 0; i < data.getAttributi().size(); i++) {
+				nameMappingsFornituraGasHM.put(data.getAttributi().get(i).getMapping().split("#")[1], data.getAttributi().get(i).getNome().split("#")[1]);
+			
+			}
+			
+			for (int i = 0; i < data2.getAttributi().size(); i++) {
+				nameMappingsContrattoHM.put(data2.getAttributi().get(i).getMapping().split("#")[1], data2.getAttributi().get(i).getNome().split("#")[1]);
+			
+			}
+			for (int i = 0; i < data3.getAttributi().size(); i++) {
+				nameMappingsIndirizzoHM.put(data3.getAttributi().get(i).getMapping().split("#")[1], data3.getAttributi().get(i).getNome().split("#")[1]);
+			
+			}
+		
+		
+		
 		for (int j = 0; j < listFornituraGas.size(); j++) {
 
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -214,7 +239,7 @@ public class MappingInsertForGas {
 			RigaTabella rigaTFG = new RigaTabella();
 			rigaTFG.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTFG.setListaattributi(listAttributi);
-			String idcfg = listFornituraGas.get(j).getValori().get("idsiatelgasdettaglio").trim();
+			String idcfg = listFornituraGas.get(j).getValori().get(nameMappingsFornituraGasHM.get("idSiatelGasDettaglio")).trim();
 			rigaTFG.setUririga("http://dkm.fbk.eu/georeporter#CFG_" + idcfg);
 
 			List<Relazione> listRelCFG = new ArrayList<Relazione>();
@@ -356,7 +381,7 @@ public class MappingInsertForGas {
 	}
 	public  void run(String filePath, String fileMappings)
 	{
-		String path = "file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls";
+		//String path = "file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls";
 		// chiamata ai metodi nel file WRAPPER estrazione HEADER ed estrazione elementi
 		try {
 			wgas.readXLSFile(filePath);
