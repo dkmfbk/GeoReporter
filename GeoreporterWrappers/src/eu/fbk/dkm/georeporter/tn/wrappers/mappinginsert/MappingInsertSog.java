@@ -14,12 +14,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.WebApplicationException;
 
 import org.apache.log4j.Logger;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Calendar;
 
 import com.google.gson.Gson;
@@ -194,6 +196,29 @@ public class MappingInsertSog {
 	}
 
 	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2) {
+	
+		
+		
+		  //memorizzo le coppie nome/mapping
+				Map<String,String> nameMappingsPersonaFisicaHM = new HashMap<String,String>();
+				Map<String,String> nameMappingsSoggettoHM = new HashMap<String,String>();
+				
+			      
+				
+				
+				for (int i = 0; i < data.getAttributi().size(); i++) {
+					nameMappingsPersonaFisicaHM.put(data.getAttributi().get(i).getMapping().split("#")[1], data.getAttributi().get(i).getNome().split("#")[1]);
+				
+				}
+		
+				
+				for (int i = 0; i < data2.getAttributi().size(); i++) {
+					nameMappingsSoggettoHM.put(data2.getAttributi().get(i).getMapping().split("#")[1], data2.getAttributi().get(i).getNome().split("#")[1]);
+				
+				}
+				
+				
+		
 		// ciclo la lista degli elementi P
 		for (int j = 0; j < listPersfis.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -233,7 +258,8 @@ public class MappingInsertSog {
 				tmp2.setTipo(data2.getAttributi().get(i).getTipo());
     
 			//	System.out.println(tmp2.getNome());
-				if(tmp2.getNome().equals("http://dkm.fbk.eu/georeporter#identificativosoggetto")) {
+			//	if(tmp2.getNome().equals("http://dkm.fbk.eu/georeporter#identificativosoggetto")) {
+				if(tmp2.getNome().equals("http://dkm.fbk.eu/georeporter#"+nameMappingsSoggettoHM.get("identificativoSoggetto"))) {
 					System.out.println(tmp2.getNome());
 	              tmp2.setMultiplo(true);
 	
@@ -246,8 +272,11 @@ public class MappingInsertSog {
 				}
 
 			}
-			String codfis = listPersfis.get(j).getValori().get("codicefiscale");
+			String codfis = listPersfis.get(j).getValori().get(nameMappingsPersonaFisicaHM.get("codiceFiscale"));
 			String idesog = listPersfis.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
+			//String idesog = listPersfis.get(j).getListaValoriChiave().get(0).get(nameMappingsPersonaFisicaHM.get("identificativoSoggetto"));
+			
+			
 			if (codfis.isEmpty()) {
 				log.info("Soggetto senza codice fiscale ="+idesog);
 				codfis = idesog;
@@ -269,6 +298,25 @@ public class MappingInsertSog {
 	}
 
 	public  void associazioneMappingNomeVal2(MappingTabella data, MappingTabella data2) {
+		
+		Map<String,String> nameMappingsPersonaGiuridicaHM = new HashMap<String,String>();
+		Map<String,String> nameMappingsSoggettoHM = new HashMap<String,String>();
+		
+	      
+		
+		
+		for (int i = 0; i < data.getAttributi().size(); i++) {
+			nameMappingsPersonaGiuridicaHM.put(data.getAttributi().get(i).getMapping().split("#")[1], data.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		
+		for (int i = 0; i < data2.getAttributi().size(); i++) {
+			nameMappingsSoggettoHM.put(data2.getAttributi().get(i).getMapping().split("#")[1], data2.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
 		// ciclo la lista degli elementi PG
 		for (int j = 0; j < listPersgiu.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -311,7 +359,7 @@ public class MappingInsertSog {
 				}
 
 			}
-			String codfis = listPersgiu.get(j).getValori().get("codicefiscale");
+			String codfis = listPersgiu.get(j).getValori().get(nameMappingsPersonaGiuridicaHM.get("codiceFiscale"));
 			if (!codfis.isEmpty()) {
 				// riga di tipo RIGATABELLA per P
 				RigaTabella rigaTPF = new RigaTabella();
@@ -320,6 +368,8 @@ public class MappingInsertSog {
 				rigaTPF.setListachiave(listChiavi);
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
+			
+				
 				insertRiga(rigaTPF);
 			}
 
@@ -328,6 +378,25 @@ public class MappingInsertSog {
 	}
 
 	public  void associazioneMappingNomeVal3(MappingTabella data, MappingTabella data2) {
+		
+		Map<String,String> nameMappingsProprietarioProtemporeHM = new HashMap<String,String>();
+		Map<String,String> nameMappingsSoggettoHM = new HashMap<String,String>();
+		
+	      
+		
+		
+		for (int i = 0; i < data.getAttributi().size(); i++) {
+			nameMappingsProprietarioProtemporeHM.put(data.getAttributi().get(i).getMapping().split("#")[1], data.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		
+		for (int i = 0; i < data2.getAttributi().size(); i++) {
+			nameMappingsSoggettoHM.put(data2.getAttributi().get(i).getMapping().split("#")[1], data2.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
 		// ciclo la lista degli elementi PPT
 		for (int j = 0; j < listPersprot.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
@@ -374,8 +443,8 @@ public class MappingInsertSog {
 			rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
 			rigaTPF.setListaattributi(listAttributi);
 			rigaTPF.setListachiave(listChiavi);
-			String codamm = listPersprot.get(j).getListaValoriChiave().get(0).get("codiceamministrativo");
-			String idesog = listPersprot.get(j).getListaValoriChiave().get(0).get("identificativosoggetto");
+			String codamm = listPersprot.get(j).getListaValoriChiave().get(0).get(nameMappingsSoggettoHM.get("codiceAmministrativo"));
+			String idesog = listPersprot.get(j).getListaValoriChiave().get(0).get(nameMappingsSoggettoHM.get("identificativoSoggetto"));
 			rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codamm + "_" + idesog);
 			// inserimento dell'elemento
 			insertRiga(rigaTPF);
@@ -427,7 +496,7 @@ public class MappingInsertSog {
 
 		// String targetURL =
 		// "http://kermadec.fbk.eu:8080/GeoreporterService/servizio/rest/inserttable";
-		String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
+		//String targetURL = "http://localhost:8080/GeoreporterService/servizio/rest/inserttable";
 
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
