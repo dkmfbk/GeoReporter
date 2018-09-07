@@ -12,7 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
@@ -112,8 +114,10 @@ public class MappingInsertTUUtenzaA {
 			
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(mappingTributo_o_Utenza,mappingUtenza,mappingUtenzaAcqua,mappingSoggetto,mappingPersonaFisica,
-					mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
+			associazioneMappingNomeVal(mappingTributo_o_Utenza,mappingUtenza,mappingUtenzaAcqua,
+					mappingSoggetto,mappingPersonaFisica,
+					mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,
+					mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -201,6 +205,44 @@ public class MappingInsertTUUtenzaA {
 	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3,
 			MappingTabella data4, MappingTabella data5, MappingTabella data6, MappingTabella data7,
 			MappingTabella data8, MappingTabella data9) {
+		
+		
+		
+		
+		
+		Map<String,String> nameMappingsIdentificativoCatastaleHM = new HashMap<String,String>();
+		Map<String,String> namePersonaFisicaHM = new HashMap<String,String>();
+		Map<String,String> nameIndirizzoContribuenteHM = new HashMap<String,String>();
+		
+	      
+		
+		
+		for (int i = 0; i < data9.getAttributi().size(); i++) {
+			nameMappingsIdentificativoCatastaleHM.put(data9.getAttributi().get(i).getMapping().split("#")[1],
+					data9.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		for (int i = 0; i < data5.getAttributi().size(); i++) {
+			namePersonaFisicaHM.put(data5.getAttributi().get(i).getMapping().split("#")[1], 
+					data5.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		
+		for (int i = 0; i < data6.getAttributi().size(); i++) {
+			nameIndirizzoContribuenteHM.put(data6.getAttributi().get(i).getMapping().split("#")[1],
+					data6.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		// ciclo la lista degli elementi UtenzaRifiuti
 		for (int j = 0; j < listUtenzaAcqua.size(); j++) {
 
@@ -383,12 +425,12 @@ public class MappingInsertTUUtenzaA {
 			String id = listUtenzaAcqua.get(j).getValori().get("codutenza");
 
 			// riga di tipo RIGATABELLA per PF
-			if (listUtenzaAcqua.get(j).getValori().get("codfiscale").isEmpty() == false) {
+			if (listUtenzaAcqua.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale")).isEmpty() == false) {
 				RigaTabella rigaTPF = new RigaTabella();
 				
 				rigaTPF.setListaattributi(listAttributiSOG);
 				rigaTPF.setListachiave(listChiaveSOG);
-				String codfis = listUtenzaAcqua.get(j).getValori().get("codfiscale");
+				String codfis = listUtenzaAcqua.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale"));
 				if (codfis.matches("[0-9]+")){
 					rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#PersonaGiuridica");
 				}else {
@@ -462,7 +504,8 @@ public class MappingInsertTUUtenzaA {
 				listRelUA.add(rel);
 			}
 
-			String num = listUtenzaAcqua.get(j).getValori().get("particellaedificabile");
+			String num = listUtenzaAcqua.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("numero"));
+			
 			if (!num.isEmpty()) {
 				// riga di tipo RIGATABELLA per IDE CAT
 				RigaTabella rigaTIDECAT = new RigaTabella();
@@ -470,10 +513,10 @@ public class MappingInsertTUUtenzaA {
 				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
 				rigaTIDECAT.setListachiave(listChiaveIDECAT);
 				
-				String codiceAmministrativo = listUtenzaAcqua.get(j).getValori().get("codcomune");
-				String cc = listUtenzaAcqua.get(j).getValori().get("codcomune");
-				String den = listUtenzaAcqua.get(j).getValori().get("particellaestensione");
-				String sub = listUtenzaAcqua.get(j).getValori().get("subalterno");
+				String codiceAmministrativo = listUtenzaAcqua.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("codiceAmministrativo"));
+				String cc = listUtenzaAcqua.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("comuneCatastale"));
+				String den = listUtenzaAcqua.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("denominatore"));
+				String sub = listUtenzaAcqua.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("subalterno"));
 				
 				if (num.contains("/")) {
 					
@@ -521,7 +564,7 @@ public class MappingInsertTUUtenzaA {
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasContribuente");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUA_" + id);
 				// ID contribuente
-				String codfisc = listUtenzaAcqua.get(j).getValori().get("codfiscale");
+				String codfisc = listUtenzaAcqua.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale"));
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
 				listRelUA.add(rel);
 	           }else {

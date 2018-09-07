@@ -12,7 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
@@ -105,8 +107,9 @@ public class MappingInsertTUIciImuAP {
 			
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(mappingICI_IMU,mappingTributo_o_Utenza,mappingSoggetto,mappingPersonaFisica,
-					mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
+			associazioneMappingNomeVal(mappingICI_IMU,mappingTributo_o_Utenza,mappingSoggetto,
+					mappingPersonaFisica,mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,
+					mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -189,6 +192,42 @@ public class MappingInsertTUIciImuAP {
 	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3,
 			MappingTabella data4, MappingTabella data5, MappingTabella data6, MappingTabella data7,
 			MappingTabella data8) {
+		
+		
+		
+		
+		
+		Map<String,String> nameMappingsIdentificativoCatastaleHM = new HashMap<String,String>();
+		Map<String,String> namePersonaFisicaHM = new HashMap<String,String>();
+		Map<String,String> nameIndirizzoContribuenteHM = new HashMap<String,String>();
+		
+	      
+		
+		
+		for (int i = 0; i < data8.getAttributi().size(); i++) {
+			nameMappingsIdentificativoCatastaleHM.put(data8.getAttributi().get(i).getMapping().split("#")[1], 
+					data8.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		for (int i = 0; i < data4.getAttributi().size(); i++) {
+			namePersonaFisicaHM.put(data4.getAttributi().get(i).getMapping().split("#")[1], 
+					data4.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		
+		for (int i = 0; i < data5.getAttributi().size(); i++) {
+			nameIndirizzoContribuenteHM.put(data5.getAttributi().get(i).getMapping().split("#")[1],
+					data5.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
+		
+		
+		
+
 		// ciclo la lista degli elementi UtenzaRifiuti
 		for (int j = 0; j < listICIIMU_AP.size(); j++) {
 
@@ -354,12 +393,12 @@ public class MappingInsertTUIciImuAP {
 			String id = listICIIMU_AP.get(j).getValori().get("codutenza");
 
 			// riga di tipo RIGATABELLA per PF
-			if (listICIIMU_AP.get(j).getValori().get("codfiscale").isEmpty() == false) {
+			if (listICIIMU_AP.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale")).isEmpty() == false) {
 				RigaTabella rigaTPF = new RigaTabella();
 				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data4.getIdTabella().getMapping());
 				rigaTPF.setListaattributi(listAttributiSOG);
 				rigaTPF.setListachiave(listChiaveSOG);
-				String codfis = listICIIMU_AP.get(j).getValori().get("codfiscale");
+				String codfis = listICIIMU_AP.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale"));
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
@@ -424,17 +463,17 @@ public class MappingInsertTUIciImuAP {
 				listRelAP.add(rel);
 			}
 			
-			String num = listICIIMU_AP.get(j).getValori().get("particellaedificabile");
+			String num = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("numero"));
 			if (!num.isEmpty()) {
 				// riga di tipo RIGATABELLA per IDE CAT
 				RigaTabella rigaTIDECAT = new RigaTabella();
 				rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data8.getIdTabella().getMapping());
 				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
 				rigaTIDECAT.setListachiave(listChiaveIDECAT);
-				String codiceAmministrativo = listICIIMU_AP.get(j).getValori().get("codcomune");
-				String cc = listICIIMU_AP.get(j).getValori().get("sezione");
-				String den = listICIIMU_AP.get(j).getValori().get("particellaestensione");
-				String sub = listICIIMU_AP.get(j).getValori().get("subalterno");
+				String codiceAmministrativo = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("codiceAmministrativo"));
+				String cc = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("comuneCatastale"));
+				String den = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("denominatore"));
+				String sub = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("subalterno"));
 				
 				
 				RestCalls rc=new RestCalls();
@@ -476,7 +515,7 @@ public class MappingInsertTUIciImuAP {
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasContribuente");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 				// ID contribuente
-				String codfisc = listICIIMU_AP.get(j).getValori().get("codfiscale");
+				String codfisc = listICIIMU_AP.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale"));
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
 				listRelAP.add(rel);
 			 }else {

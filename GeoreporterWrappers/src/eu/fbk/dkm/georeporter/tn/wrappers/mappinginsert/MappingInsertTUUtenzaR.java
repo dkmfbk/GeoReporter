@@ -12,7 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
@@ -108,8 +110,8 @@ public class MappingInsertTUUtenzaR {
 			
 
 			// chiamata al metodo per l'accoppiamento effettivo
-			associazioneMappingNomeVal(mappingTributo_o_Utenza,mappingUtenza,mappingUtenzaRifiuti,mappingSoggetto,mappingPersonaFisica,
-					mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
+			associazioneMappingNomeVal(mappingTributo_o_Utenza,mappingUtenza,mappingUtenzaRifiuti,mappingSoggetto,
+					mappingPersonaFisica,mappingIndirizzoContribuente,mappingIndirizzoRecapitoContribuente,mappingIndirizzoUtenza,mappingIdentificativoCatastale	);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -195,6 +197,31 @@ public class MappingInsertTUUtenzaR {
 			MappingTabella data4, MappingTabella data5, MappingTabella data6, MappingTabella data7,
 			MappingTabella data8, MappingTabella data9) {
 
+	
+		Map<String,String> nameMappingsIdentificativoCatastaleHM = new HashMap<String,String>();
+		Map<String,String> namePersonaFisicaHM = new HashMap<String,String>();
+		Map<String,String> nameIndirizzoContribuenteHM = new HashMap<String,String>();
+		
+	      
+		
+		
+		for (int i = 0; i < data9.getAttributi().size(); i++) {
+			nameMappingsIdentificativoCatastaleHM.put(data9.getAttributi().get(i).getMapping().split("#")[1], 
+					data9.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		for (int i = 0; i < data5.getAttributi().size(); i++) {
+			namePersonaFisicaHM.put(data5.getAttributi().get(i).getMapping().split("#")[1], 
+					data5.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		
+		for (int i = 0; i < data6.getAttributi().size(); i++) {
+			nameIndirizzoContribuenteHM.put(data6.getAttributi().get(i).getMapping().split("#")[1], data6.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
 		// ciclo la lista degli elementi UtenzaRifiuti
 		for (int j = 0; j < listUtenzaRifiuti.size(); j++) {
 
@@ -375,12 +402,12 @@ public class MappingInsertTUUtenzaR {
 			String id = listUtenzaRifiuti.get(j).getValori().get("codutenza");
 
 			// riga di tipo RIGATABELLA per PF
-			if (listUtenzaRifiuti.get(j).getValori().get("codfiscale").isEmpty() == false) {
+			if (listUtenzaRifiuti.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale")).isEmpty() == false) {
 				RigaTabella rigaTPF = new RigaTabella();
 				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data5.getIdTabella().getMapping());
 				rigaTPF.setListaattributi(listAttributiSOG);
 				rigaTPF.setListachiave(listChiaveSOG);
-				String codfis = listUtenzaRifiuti.get(j).getValori().get("codfiscale");
+				String codfis = listUtenzaRifiuti.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale"));
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
@@ -450,17 +477,26 @@ public class MappingInsertTUUtenzaR {
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelUR.add(rel);
 			}
-			String num = listUtenzaRifiuti.get(j).getValori().get("particellaedificabile");
+			
+			
+			//String num = listUtenzaRifiuti.get(j).getValori().get("particellaedificabile");
+			String num = listUtenzaRifiuti.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("numero"));
 			if (!num.isEmpty()) {
 				// riga di tipo RIGATABELLA per IDE CAT
 				RigaTabella rigaTIDECAT = new RigaTabella();
 				rigaTIDECAT.setNometabella("http://dkm.fbk.eu/georeporter#" + data9.getIdTabella().getMapping());
 				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
 				rigaTIDECAT.setListachiave(listChiaveIDECAT);
-				String codiceAmministrativo = listUtenzaRifiuti.get(j).getValori().get("codcomune");
-				String cc = listUtenzaRifiuti.get(j).getValori().get("sezione");
-				String den = listUtenzaRifiuti.get(j).getValori().get("particellaestensione");
-				String sub = listUtenzaRifiuti.get(j).getValori().get("subalterno");
+				//String codiceAmministrativo = listUtenzaRifiuti.get(j).getValori().get("codcomune");
+				String codiceAmministrativo = listUtenzaRifiuti.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("codiceAmministrativo"));
+				
+				//NOTA: CodiceComuneCatastale si trova nel campo sezione!!
+				
+				String cc = listUtenzaRifiuti.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("comuneCatastale"));
+				//String den = listUtenzaRifiuti.get(j).getValori().get("particellaestensione");
+				String den = listUtenzaRifiuti.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("denominatore"));
+				
+				String sub = listUtenzaRifiuti.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("subalterno"));
 				if (sub.equals("0")){
 					sub="";
 				}
@@ -509,7 +545,7 @@ public class MappingInsertTUUtenzaR {
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasContribuente");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUUR_" + id);
 				// ID contribuente
-				String codfisc = listUtenzaRifiuti.get(j).getValori().get("codfiscale");
+				String codfisc = listUtenzaRifiuti.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale"));
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + codfisc);
 				listRelUR.add(rel);
 			}else {

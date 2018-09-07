@@ -12,7 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.ws.rs.WebApplicationException;
@@ -188,6 +190,40 @@ public class MappingInsertTUIciImuNP {
 	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella data2, MappingTabella data3,
 			MappingTabella data4, MappingTabella data5, MappingTabella data6, MappingTabella data7,
 			MappingTabella data8) {
+	
+		
+		
+		
+		Map<String,String> nameMappingsIdentificativoCatastaleHM = new HashMap<String,String>();
+		Map<String,String> namePersonaFisicaHM = new HashMap<String,String>();
+		Map<String,String> nameIndirizzoContribuenteHM = new HashMap<String,String>();
+		
+	      
+		
+		
+		for (int i = 0; i < data8.getAttributi().size(); i++) {
+			nameMappingsIdentificativoCatastaleHM.put(data8.getAttributi().get(i).getMapping().split("#")[1], 
+					data8.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		for (int i = 0; i < data4.getAttributi().size(); i++) {
+			namePersonaFisicaHM.put(data4.getAttributi().get(i).getMapping().split("#")[1], 
+					data4.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
+		
+		for (int i = 0; i < data5.getAttributi().size(); i++) {
+			nameIndirizzoContribuenteHM.put(data5.getAttributi().get(i).getMapping().split("#")[1],
+					data5.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+		
+		
+		
+		
+		
 		// ciclo la lista degli elementi UtenzaRifiuti
 		for (int j = 0; j < listNudaProprieta.size(); j++) {
 
@@ -353,12 +389,12 @@ public class MappingInsertTUIciImuNP {
 			String id = listNudaProprieta.get(j).getValori().get("codutenza");
 
 			// riga di tipo RIGATABELLA per PF
-			if (listNudaProprieta.get(j).getValori().get("codfiscale").isEmpty() == false) {
+			if (listNudaProprieta.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale")).isEmpty() == false) {
 				RigaTabella rigaTPF = new RigaTabella();
 				rigaTPF.setNometabella("http://dkm.fbk.eu/georeporter#" + data4.getIdTabella().getMapping());
 				rigaTPF.setListaattributi(listAttributiSOG);
 				rigaTPF.setListachiave(listChiaveSOG);
-				String codfis = listNudaProprieta.get(j).getValori().get("codfiscale");
+				String codfis = listNudaProprieta.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale"));
 				rigaTPF.setUririga("http://dkm.fbk.eu/georeporter#SOG_" + codfis);
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
@@ -422,7 +458,7 @@ public class MappingInsertTUIciImuNP {
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelNP.add(rel);
 			}
-			String num = listNudaProprieta.get(j).getValori().get("particellaedificabile");
+			String num = listNudaProprieta.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("numero"));
 			if (!num.isEmpty()) {
 				// riga di tipo RIGATABELLA per IDE CAT
 				RigaTabella rigaTIDECAT = new RigaTabella();
@@ -430,12 +466,10 @@ public class MappingInsertTUIciImuNP {
 				rigaTIDECAT.setListaattributi(listAttributiIDECAT);
 				rigaTIDECAT.setListachiave(listChiaveIDECAT);
 				
-				String codiceAmministrativo = listNudaProprieta.get(j).getValori().get("codcomune");
-				String cc = listNudaProprieta.get(j).getValori().get("codcomune");
-				String den = listNudaProprieta.get(j).getValori().get("particellaestensione");
-				String sub = listNudaProprieta.get(j).getValori().get("subalterno");
-				
-				
+				String codiceAmministrativo = listNudaProprieta.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("codiceAmministrativo"));
+				String cc = listNudaProprieta.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("comuneCatastale"));
+				String den = listNudaProprieta.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("denominatore"));
+				String sub = listNudaProprieta.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("subalterno"));
 				
 				
 				if (sub.equals("0")){
