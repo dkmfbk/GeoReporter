@@ -250,11 +250,12 @@ public class MappingInsertAnagraficaComunale {
 
 			// relazione INQUI con AC
 			String resconv = listAnagraficaComunale.get(j).getValori().get("residenteconviv");
-			if (resconv!=null) {
+			if ((!resconv.equals(""))) {
+				System.out.println("resconv="+resconv);
 				Relazione relINQUIAC = new Relazione();
 				relINQUIAC.setNomerelazione("http://dkm.fbk.eu/georeporter#hasResidenteConvivente");
-				relINQUIAC.setUriDomain("http://dkm.fbk.eu/georeporter#SOG_" + resconv);
-				relINQUIAC.setUriRange("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
+				relINQUIAC.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + resconv);
+				relINQUIAC.setUriDomain("http://dkm.fbk.eu/georeporter#AC_" + numindiv);
 				listRelAC.add(relINQUIAC);
 			}
 			Attributo codComune = new Attributo();
