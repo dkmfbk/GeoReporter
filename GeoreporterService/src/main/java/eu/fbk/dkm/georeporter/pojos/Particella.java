@@ -9,6 +9,7 @@ public class Particella {
 
 	String uri;
 	String comuneCatastale;
+	String codiceAmministrativo;
 	String foglio;
 	String numero;
 	String denominatore;
@@ -63,6 +64,12 @@ public class Particella {
 	}
 	public void setDenominatore(String denominatore) {
 		this.denominatore = denominatore;
+	}
+	public String getCodiceAmministrativo() {
+		return codiceAmministrativo;
+	}
+	public void setCodiceAmministrativo(String codiceAmministrativo) {
+		this.codiceAmministrativo = codiceAmministrativo;
 	}
 	
 	
