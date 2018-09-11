@@ -14,6 +14,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -241,6 +243,28 @@ public class GeoreporterService {
 
 	}
 
+
+	
+	
+	
+	
+	
+	@GET
+	@Path("/logfile")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getLogFile(
+			@QueryParam("logfilename") String logfilename
+			) {
+	String contents="Log file";
+	try {
+		contents = new String(Files.readAllBytes(Paths.get(logfilename)));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return contents;
+	}
 	
 	@GET
 	@Path("/particelle_old")
@@ -2233,6 +2257,7 @@ public class GeoreporterService {
 	public String  importaDati (
 			@FormDataParam("tipodati") String tipodati,
 			@FormDataParam("serviceURL") String serviceURL,
+			@FormDataParam("codiceComuneCatastale") String codiceComuneCatastale,			
 			@FormDataParam("fileheader") InputStream fileHeaderIS,
             @FormDataParam("fileheader") FormDataContentDisposition fileHeaderDetail,
             @FormDataParam("filedati") InputStream fileDatiIS,
@@ -2278,10 +2303,10 @@ public class GeoreporterService {
     	importgr.importaTitolaritaFabbricati(filePath, fileHeader, fileMappings);
             break;
     case "anagraficacomunale": 
-    	importgr.importaAnagraficaComunale(filePath, fileMappings);
+    	importgr.importaAnagraficaComunale(filePath, fileMappings,codiceComuneCatastale);
             break;
     case "anagraficafamiglie": 
-    	importgr.importaAnagraficaFamiglie(filePath, fileMappings);
+    	importgr.importaAnagraficaFamiglie(filePath, fileMappings,codiceComuneCatastale);
             break;
     case "fornitureelettriche": 
     	importgr.importaFornitureElettriche(filePath, fileMappings);
@@ -2310,7 +2335,7 @@ public class GeoreporterService {
             break;   
 
     case "particellefondiarie": 
-    	importgr.importaParticelleFondiarie(filePath, fileHeader, fileMappings);
+    	importgr.importaParticelleFondiarie(filePath, fileHeader, fileMappings,codiceComuneCatastale);
              break;
     case "soggettiparticellefondiarie": 
     	importgr.importaSoggettiParticelleFondiarie(filePath, fileHeader, fileMappings);    
@@ -4560,6 +4585,105 @@ String result="";
 	}
 	
 
+	
+	@GET
+	@Path("dettaglioparticella")
+
+
+	 @Consumes("application/json")
+    @Produces("application/json")	
+	
+	
+	
+	public Particella getDettaglioParticella(
+			@QueryParam("idparticella") String idparticella
+			
+		// @QueryParam("springlesserverURL") String springlesserverURL,
+		// @QueryParam("springlesrepositoryID") String springlesrepositoryID
+		 ) {
+
+		// String springlesrepositoryID ="georeporter";
+		Particella risultato = new  Particella();
+		String result="FAIL";
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ "SELECT  ?ca ?ccc ?numero ?denominatore ?foglio WHERE { "
+					+ "  :"+ idparticella +" a :Particella ;" 
+					+ "     :codiceAmministrativo ?ca ;"
+					+ "     :codiceComuneCatastale ?ccc ;"
+			        + "     :numero  ?numero  ; "
+			        + "   OPTIONAL { :"+ idparticella + " :denominatore ?denominatore} ."
+			        + "   OPTIONAL { :"+ idparticella + " :foglioMappa ?foglio }." ;
+		        //    + " }";		 
+			 	
+			        queryString=queryString +"}";
+			        
+			System.out.println(queryString);
+			TupleQuery tupleQuery;
+
+			int i = 0;
+
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+
+			TupleQueryResult qresult = tupleQuery.evaluate();	
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+			
+				Value comunecatastale = bindingSet.getValue("ccc");
+				Value codiceAmministrativo = bindingSet.getValue("ca");
+				Value numero = bindingSet.getValue("numero");
+				Value denominatore = bindingSet.getValue("denominatore");
+				Value foglio = bindingSet.getValue("foglio");
+			
+
+				Particella particella = new Particella();
+
+				if (codiceAmministrativo != null) {
+					particella.setCodiceAmministrativo(codiceAmministrativo.stringValue());
+				}
+
+				if (comunecatastale != null) {
+					particella.setComuneCatastale(comunecatastale.stringValue());
+				}
+				if (foglio != null) {
+					particella.setFoglio(foglio.stringValue());
+				}
+				if (numero != null) {
+					particella.setNumero(numero.stringValue());
+				}
+				if (denominatore != null) {
+					particella.setDenominatore(denominatore.stringValue());
+				}
+				
+               risultato=particella;
+			}
+			
+			qresult.close();
+			connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+		return risultato;
+	}
 	
 	
 	
