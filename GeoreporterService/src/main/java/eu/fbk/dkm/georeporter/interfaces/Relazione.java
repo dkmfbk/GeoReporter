@@ -7,6 +7,8 @@ public class Relazione {
     String uriDomain;
     String nomerelazione;
     String uriRange;
+    String label;
+    
 	public String getUriDomain() {
 		return uriDomain;
 	}
@@ -24,5 +26,11 @@ public class Relazione {
 	}
 	public void setUriRange(String uriRange) {
 		this.uriRange = uriRange;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }
