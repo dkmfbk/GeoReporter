@@ -56,7 +56,10 @@ public final class Costanti
     public static final URI BOOLEAN = create("boolean");
 
     public static final String nomeFileComuni=loadProperties("filecomuni");
-    public static final String georeporterNS=loadProperties("georeporternamespace");;
+    public static final String georeporterNS=loadProperties("georeporternamespace");
+    public static final String springlesserverURL=loadProperties("springlesserverURL");
+    public static final String springlesrepositoryID=loadProperties("springlesrepositoryID");
+   
     public static final Map<String, String> comuni_italiani= loadComuni(nomeFileComuni);
    
    
