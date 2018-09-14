@@ -42,7 +42,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
-
+import eu.fbk.dkm.georeporter.config.Costanti;
 import eu.fbk.dkm.georeporter.tn.wrappers.ControlloValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.GetCoordinates;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperFab;
@@ -128,8 +128,12 @@ public class MappingInsertFabIndirizzo {
 	public String getDescrizioneToponimo(String codToponimo) {
 		
 		//System.out.println("codicecomune="+ codComune);
-		
-		return eu.fbk.dkm.georeporter.config.Costanti.toponimi.get(codToponimo);
+		Costanti c= new Costanti();
+		System.out.println("COSTANTI cod toponimo=="+codToponimo);
+		System.out.println("COSTANTI cod toponimo=="+codToponimo);
+		String descrizione=c.toponimi.get(codToponimo);
+		System.out.println(descrizione);
+		return descrizione;
 		
 		
 	}
@@ -140,7 +144,7 @@ public class MappingInsertFabIndirizzo {
 	public  void associazioneMappingNomeVal(MappingTabella data) {
 		
 		
-		
+		 //memorizzo le coppie nome/mapping
 		Map<String,String> nameMappingsIndirizzoHM = new HashMap<String,String>();
 		
 	      
@@ -178,7 +182,11 @@ public class MappingInsertFabIndirizzo {
 				tmp.setTipo(data.getAttributi().get(i).getTipo());
 				
 				
-				
+				if (parts[1].equals("toponimo")) {
+					tmp.setValore(getDescrizioneToponimo(listIndirizzi.get(j).getValori().get(parts[1])));
+					listAttributi.add(tmp);
+					continue;
+				}
 				if (parts[1].equals("codiceamministrativo")) {
 					tmp.setValore(listIndirizzi.get(j).getListaValoriChiave().get(i).get("codiceamministrativo"));
 					//tmp.setMapping(data.getAttributi().get(i).getMapping());
