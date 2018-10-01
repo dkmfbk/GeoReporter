@@ -130,6 +130,9 @@ public class MappingInsertFabUiNote {
 	public  void associazioneMappingNomeVal(MappingTabella data, MappingTabella dataNote) {
 	
 		
+		// HashMap che contengono l'associazione nome (contenuto nelle tabelle) e mapping (contenuto nell ontologia)
+		// quando ricerco un nome negli attributi delle tabelle lo recupero da qui attraverso il suo mapping
+		// perche' il nome nell'ontologia non varia
 		
 		Map<String,String> nameMappingsUnitaImmobiliareHM = new HashMap<String,String>();
 		Map<String,String> nameMappingsNotaHM = new HashMap<String,String>();
@@ -148,13 +151,10 @@ public class MappingInsertFabUiNote {
 		}
 		
 		
+
 		
 		
-		
-		
-		
-		
-		// ciclo la lista degli elementi UI
+	// ciclo la lista degli elementi UI
 		for (int j = 0; j < listUnitaImmobiliari.size(); j++) {
 			List<Attributo> listAttributi = new ArrayList<Attributo>();
 			// List<Attributo> listAttributiI = new ArrayList<Attributo>();
