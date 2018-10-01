@@ -544,7 +544,11 @@ public class MappingInsertTUUtenzaA {
 				if (sub.equals("0")){
 					sub="";
 				}
-				rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				//rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
+				
+				System.out.println("ID CATASTALE= "+idc.getId());
+				rel.setUriRange(idc.getId());
+				
 				listRelUA.add(rel);
                 }else {
 				
