@@ -126,7 +126,8 @@
 {"mapping":"http://dkm.fbk.eu/georeporter#interno","nome":"http://dkm.fbk.eu/georeporter#interno","tipo":"http://www.w3.org/2001/XMLSchema#string"}],
 "idTabella":{"mapping":"Indirizzo","nome":"IndirizzoUtenza"}},
 {"attributi":[
-{"mapping":"http://dkm.fbk.eu/georeporter#comuneCatastale","nome":"http://dkm.fbk.eu/georeporter#codcomune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#comuneCatastale","nome":"http://dkm.fbk.eu/georeporter#sezione","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codiceAmministrativo","nome":"http://dkm.fbk.eu/georeporter#codcomune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#edificialita","nome":"http://dkm.fbk.eu/georeporter#edificialita","tipo":"http://www.w3.org/2001/XMLSchema#boolean"},
 {"mapping":"http://dkm.fbk.eu/georeporter#foglio","nome":"http://dkm.fbk.eu/georeporter#foglio","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#hasParticella","nome":"http://dkm.fbk.eu/georeporter#hasParticella","tipo":"http://dkm.fbk.eu/georeporter#Particella"},
