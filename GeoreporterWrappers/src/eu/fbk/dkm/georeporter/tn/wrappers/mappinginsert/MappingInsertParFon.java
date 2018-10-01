@@ -247,6 +247,18 @@ public MappingInsertParFon(String targetURL_){
 			IDCatastale idc=rc.getIDCatastale(codiceAmministrativo, cc, num, den, "");
 			
 			// Intavolazione INIZIALE
+			
+			
+			
+			
+			
+			Attributo codComuneAmministrativo = new Attributo();
+			codComuneAmministrativo.setNome("http://dkm.fbk.eu/georeporter#codiceamministrativo");
+			codComuneAmministrativo.setMapping("http://dkm.fbk.eu/georeporter#codiceAmministrativo");
+			codComuneAmministrativo.setTipo("http://www.w3.org/2001/XMLSchema#string");
+			codComuneAmministrativo.setValore(wpartfond.codiceAmministrativo);
+			listAttributi.add(codComuneAmministrativo);
+			
 			RigaTabella rigaTPAR = new RigaTabella();
 
 			rigaTPAR.setNometabella("http://dkm.fbk.eu/georeporter#" + data.getIdTabella().getMapping());
@@ -348,11 +360,11 @@ public MappingInsertParFon(String targetURL_){
 			// creato le relazioni
 			insertRiga(rigaTPAR);
 
-			Attributo codComuneAmministrativo = new Attributo();
-			codComuneAmministrativo.setNome("http://dkm.fbk.eu/georeporter#codiceamministrativo");
-			codComuneAmministrativo.setMapping("http://dkm.fbk.eu/georeporter#codiceAmministrativo");
-			codComuneAmministrativo.setTipo("http://www.w3.org/2001/XMLSchema#string");
-			codComuneAmministrativo.setValore(wpartfond.codiceAmministrativo);
+			Attributo codiceComuneAmministrativo = new Attributo();
+			codiceComuneAmministrativo.setNome("http://dkm.fbk.eu/georeporter#codiceamministrativo");
+			codiceComuneAmministrativo.setMapping("http://dkm.fbk.eu/georeporter#codiceAmministrativo");
+			codiceComuneAmministrativo.setTipo("http://www.w3.org/2001/XMLSchema#string");
+			codiceComuneAmministrativo.setValore(wpartfond.codiceAmministrativo);
 			listAttributi2.add(codComuneAmministrativo);
 			
 			
