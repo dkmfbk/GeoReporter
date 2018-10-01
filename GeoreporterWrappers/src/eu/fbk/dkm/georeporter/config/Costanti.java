@@ -3,6 +3,7 @@ package eu.fbk.dkm.georeporter.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,6 +20,9 @@ import org.apache.commons.io.IOUtils;
 //import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
 
 
 
@@ -33,9 +37,16 @@ public final class Costanti
 
     // Namespace
 
+    public  String nomeFileToponimi;
+  
+    public  Map<String, String> toponimi;
+   
 
     public Costanti() {
-		
+    	  nomeFileToponimi=loadProperties("toponimi");
+   	   
+    	  toponimi=  loadToponimi(nomeFileToponimi); 
+   	  
 	}
 
 
@@ -47,16 +58,14 @@ public final class Costanti
 
    
 
-    public static final String nomeFileToponimi=loadProperties("toponimi");
-  
-    public static final Map<String, String> toponimi= loadToponimi(nomeFileToponimi);
-   
-   
+
+	 
+
     
     // Utilities and constructor
 
     
-    private static Map loadToponimi(String nomeFileToponimi) {
+    private    Map<String, String> loadToponimi(String nomeFileToponimi) {
     	
     Map<String, String> toponimiHM= new HashMap<String, String>();
     
@@ -69,7 +78,12 @@ public final class Costanti
 	// lines = IOUtils.readLines(inputStream, StandardCharsets.UTF_8);
 	
 
-		lines = Files.readAllLines(Paths.get(nomeFileToponimi), Charset.forName("ISO-8859-2"));
+	//	lines = Files.readAllLines(Paths.get(nomeFileToponimi), Charset.forName("ISO-8859-2"));
+		URL u= Costanti.class.getClassLoader().getResource(nomeFileToponimi);
+		
+		System.out.println("url=" +u);
+		lines=Resources.readLines(u, Charsets.UTF_8);
+		
 		Iterator iterator = lines.iterator();
 		String header = (String) iterator.next();
 		String[] header_array = header.split(";");
@@ -83,6 +97,15 @@ public final class Costanti
 		        toponimiHM.put(fields[0],fields[1]);
 		    		
 				}
+		    for (String name : toponimiHM.keySet())  
+	        { 
+	            // search  for value 
+	            String url = toponimiHM.get(name); 
+	            System.out.println("Key = " + name + ", Value = " + url); 
+	        } 
+	    
+	
+		  
 		   
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -98,7 +121,7 @@ public final class Costanti
     	
    
     
-    public static String loadProperties(String property){
+    public  String loadProperties(String property){
     	
     	String result="";
     	Properties prop = new Properties();
