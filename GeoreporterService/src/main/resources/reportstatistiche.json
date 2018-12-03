@@ -1,0 +1,216 @@
+{"statistiche":[
+
+{
+       "categoria" : "Contratti fornitura Locazione",
+       "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :Locazione }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "locazioni_codicifiscali_proprietario_contratto_mancanti",
+                        "label": "Codice Fiscale Proprietario",
+                        "sparql":"SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :Locazione . filter not exists{ ?object1 :hasProprietario ?ic.}}",
+                        "mancanti" :0
+                       },
+                       { 
+                        "id" : "locazioni_indirizzi_utenza_mancanti",
+                        "label": "Indirizzo",
+                        "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :Locazione . filter not exists{ ?object1 :hasIndirizzoUtenza ?ind}}",
+                        "mancanti" :0
+                       },
+                       
+                        { 
+                        "id" : "locazioni_idcatastale_mancanti",
+                        "label": "Identificativo Catastale",
+                        "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :Locazione .  ?object1 :hasIdentificativoCatastale ?ic BIND(?ic AS ?tmp)   FILTER (?tmp  in(:A0_C0_N0_D0_S0))}",
+                        "mancanti" :0
+                       }
+    
+              ]
+},
+
+{
+       "categoria" : "Contratti fornitura Gas",
+       "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :FornituraGas }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "gas_codicifiscali_titolari_contratto_mancanti",
+                        "label": "Codice Fiscale Titolare",
+                        "mancanti" :0,
+                       "sparql":"SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :FornituraGas . filter not exists{ ?object1 :hasTitolareContratto ?ic.}}"
+                      
+                      },
+                       { 
+                        "id" : "gas_indirizzi_utenza_mancanti",
+                        "label": "Indirizzi",
+                        "mancanti" :0,
+                         "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :FornituraGas . filter not exists{ ?object1 :hasIndirizzoUtenza ?ind}}"
+                       }
+    
+              ]
+},
+
+{
+       "categoria" : "Contratti fornitura Energia",
+       "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :FornituraEnergia }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "energia_codicifiscali_titolari_contratto_mancanti",
+                        "label": "Codice Fiscale Titolare",
+                        "mancanti" :0,
+                       "sparql":"SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :FornituraEnergia . filter not exists{ ?object1 :hasTitolareContratto ?ic.}}"
+                        },
+                       { 
+                        "id" : "energia_indirizzi_utenza_mancanti",
+                        "label": "Indirizzi",
+                        "mancanti" :0,
+                         "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :FornituraEnergia . filter not exists{ ?object1 :hasIndirizzoUtenza ?ind}}"
+                       }
+    
+              ]
+},
+
+{
+       "categoria" : "Utenza Rifiuti",
+       "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaRifiuti }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "rifiuti_codicifiscale_conribuente_mancanti",
+                        "label": "Codice Fiscale Contribuente",
+                        "mancanti" :0,
+                       "sparql":"SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaRifiuti . filter not exists{ ?object1 :hasContribuente ?ic.}}"
+                        },
+                       { 
+                        "id" : "rifiuti_indirizzi_contribuente_mancanti",
+                        "label": "Indirizzi",
+                        "mancanti" :0,
+                         "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaRifiuti . filter not exists{ ?object1 :hasIndirizzoUtenza ?ind}}"
+                       },
+                         { 
+                        "id" : "rifiuti_idcatastale_mancanti",
+                        "label": "Identificativo Catastale",
+                        "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaRifiuti .  ?object1 :hasIdentificativoCatastale ?ic BIND(?ic AS ?tmp)   FILTER (?tmp  in(:A0_C0_N0_D0_S0))}",
+                        "mancanti" :0
+                       }
+    
+              ]
+},
+{
+       "categoria" : "Utenza Acqua",
+       "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaAcqua }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "acqua_codicifiscale_contribuente_mancanti",
+                        "label": "Codice Fiscale Contribuente",
+                        "mancanti" :0,
+                       "sparql":"SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaAcqua . filter not exists{ ?object1 :hasContribuente ?ic.}}"
+                        },
+                       { 
+                        "id" : "acqua_indirizzi_contribuente_mancanti",
+                        "label": "Indirizzi",
+                        "mancanti" :0,
+                         "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaAcqua . filter not exists{ ?object1 :hasIndirizzoUtenza ?ind}}"
+                       },
+                         { 
+                        "id" : "acqua_idcatastale_mancanti",
+                        "label": "Identificativo Catastale",
+                        "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UtenzaAcqua .  ?object1 :hasIdentificativoCatastale ?ic BIND(?ic AS ?tmp)   FILTER (?tmp  in(:A0_C0_N0_D0_S0))}",
+                        "mancanti" :0
+                       }
+    
+              ]
+},
+
+{
+       "categoria" : "ICI_IMU Abitazione Principale",
+       "sparql": "SELECT  (COUNT(DISTINCT  ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_AbitazionePrincipale }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "iciimuap_codicifiscale_contribuente_mancanti",
+                        "label": "Codice Fiscale Contribuente",
+                        "mancanti" :0,
+                       "sparql":"SELECT  (COUNT(DISTINCT  ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_AbitazionePrincipale . filter not exists{ ?object1 :hasContribuente ?ic.}}"
+                        },
+                       { 
+                        "id" : "iciimuap_indirizzi_contribuente_mancanti",
+                        "label": "Indirizzi",
+                        "mancanti" :0,
+                         "sparql": "SELECT  (COUNT(DISTINCT  ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_AbitazionePrincipale . filter not exists{ ?object1 :hasIndirizzoUtenza ?ind}}"
+                       },
+                         { 
+                        "id" : "iciimuap_idcatastale_mancanti",
+                        "label": "Identificativo Catastale",
+                        "sparql": "SELECT  (COUNT(DISTINCT   ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_AbitazionePrincipale .  ?object1 :hasIdentificativoCatastale ?ic BIND(?ic AS ?tmp)   FILTER (?tmp  in(:A0_C0_N0_D0_S0))}",
+                        "mancanti" :0
+                       }
+    
+              ]
+},
+{
+       "categoria" : "ICI_IMU Nuda Proprieta",
+       "sparql": "SELECT  (COUNT(DISTINCT  ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_NudaProprieta }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "iciimunp_codicifiscale_contribuente_mancanti",
+                        "label": "Codice Fiscale Contribuente",
+                        "mancanti" :0,
+                       "sparql":"SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_NudaProprieta . filter not exists{ ?object1 :hasContribuente ?ic.}}"
+                        },
+                       { 
+                        "id" : "iciimuap_indirizzi_utenza_mancanti",
+                        "label": "Indirizzi",
+                        "mancanti" :0,
+                         "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_NudaProprieta . filter not exists{ ?object1 :hasIndirizzoUtenza ?ind}}"
+                       },
+                         { 
+                        "id" : "iciimuap_idcatastale_mancanti",
+                        "label": "Identificativo Catastale",
+                        "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :ICI_IMU_NudaProprieta .  ?object1 :hasIdentificativoCatastale ?ic BIND(?ic AS ?tmp)   FILTER (?tmp  in(:A0_C0_N0_D0_S0))}",
+                        "mancanti" :0
+                       }
+    
+              ]
+},
+
+
+{
+       "categoria" : "Unita Immobiliari",
+       "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :UnitaImmobiliare }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "titolarita_mancanti",
+                        "label": "Titolarita",
+                        "mancanti" :0,
+                       "sparql":"SELECT   (COUNT(DISTINCT  ?ui) as ?pCount) where{  ?ui a :UnitaImmobiliare .Filter Not Exists{ ?tit a :Titolarita .?tit :hasIdentificativoCatastale ?ic . ?ic :hasUnitaImmobiliare ?ui  }}"
+                       }
+                      
+    
+              ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+]}

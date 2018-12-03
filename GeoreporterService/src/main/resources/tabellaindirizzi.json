@@ -1,0 +1,19 @@
+{ "indirizzoNormalizzato":[
+  
+  {"stringaricerca":"ViaSabbioni 5/A",
+   "coordinateLat":11.2033,
+   "coordinateLong":41.5445,
+   "indirizzoNormalizzato":"via Sabbioni 5/A"
+  
+  },
+  
+   {"stringaricerca":"Via Sommarive 18",
+   "coordinateLat":11.2033,
+   "coordinateLong":41.5445,
+   "indirizzoNormalizzato":"via Sommarive 18"
+  
+  }
+  
+  ]
+  
+}
