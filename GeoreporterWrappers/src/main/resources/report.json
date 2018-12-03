@@ -1,0 +1,154 @@
+{
+  "Reports": [
+    {
+      "id": "fabbricati_cancellati",
+      "label": "Fabbricati Cancellati",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "fabbricati_titolarita_soggetti_mancanti",
+      "label": "Fabbricati Titolarita: soggetti mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "fabbricati_titolarita_idcatastali_mancanti",
+      "label": "Fabbricati Titolarita: Unita immobiliari mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+     {
+      "id": "anagrafica_codiciFiscali_nulli",
+      "label": "Anagrafica Comunale: Codici Fiscali Nulli",
+      "value": 0,
+      "totale": 0
+    },
+    
+    
+    {
+      "id": "gas_codicifiscali_titolari_contratto_mancanti",
+      "label": "Contratti fornitura Gas:  Codice Fiscale Titolari contratto mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "gas_indirizzi_utenza_mancanti",
+      "label": "Contratti fornitura Gas:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+     {
+      "id": "energia_codicifiscali_titolari_contratto_mancanti",
+      "label": "Contratti fornitura Energia:  Codice Fiscale Titolari contratto mancanti",
+      "value": 0,
+      "totale": 0
+    },
+     {
+      "id": "energia_indirizzi_utenza_mancanti",
+      "label": "Contratti fornitura Energia:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+    
+     {
+      "id": "locazioni_codicifiscali_titolari_contratto_mancanti",
+      "label": "Contratti fornitura Locazione:  Codice Fiscale Titolari contratto mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+     {
+      "id": "locazioni_indirizzi_utenza_mancanti",
+      "label": "Contratti fornitura Locazione:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "locazione_idcatastale_mancanti",
+      "label": "Contratti fornitura Locazione:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+      {
+      "id": "rifiuti_codicifiscali_titolari_contratto_mancanti",
+      "label": "Contratti fornitura Locazione:  Codice Fiscale Titolari contratto mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+     {
+      "id": "rifiuti_indirizzi_utenza_mancanti",
+      "label": "Contratti fornitura Locazione:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "rifiuti_idcatastale_mancanti",
+      "label": "Contratti fornitura Locazione:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+       {
+      "id": "acqua_codicifiscali_titolari_contratto_mancanti",
+      "label": "Utenza Acqua:  Codice Fiscale Titolari utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+     {
+      "id": "acqua_indirizzi_utenza_mancanti",
+      "label": "Utenza Acqua:  Indirizzi Utenza  mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "acqua_idcatastale_mancanti",
+      "label": "Utenza Acqua:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+         {
+      "id": "iciAP_codicifiscali_titolari_contratto_mancanti",
+      "label": "Tributi ICI_IMU Abitazione Principale:  Codice Fiscale Titolari utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+     {
+      "id": "iciAP_indirizzi_utenza_mancanti",
+      "label": "Tributi ICI_IMU Abitazione Principale:  Indirizzi Utenza  mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "iciAP_idcatastale_mancanti",
+      "label": "Tributi ICI_IMU Abitazione Principale:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+         {
+      "id": "iciNP_codicifiscali_titolari_contratto_mancanti",
+      "label": "Tributi ICI_IMU Nuda Proprieta:  Codice Fiscale Titolari utenza mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    
+     {
+      "id": "iciNP_indirizzi_utenza_mancanti",
+      "label": "Tributi ICI_IMU Nuda Proprieta:  Indirizzi Utenza  mancanti",
+      "value": 0,
+      "totale": 0
+    },
+    {
+      "id": "iciNP_idcatastale_mancanti",
+      "label": "Tributi ICI_IMU Nuda Proprieta:  Indirizzi Utenza mancanti",
+      "value": 0,
+      "totale": 0
+    }
+    ]
+}
