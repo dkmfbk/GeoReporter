@@ -35,6 +35,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UtenzaRifiuti;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaR;
@@ -43,7 +44,11 @@ public class MappingInsertTUUtenzaR {
 
 	public WrapperTUUtenzaR wrifiuti =new WrapperTUUtenzaR();
 	public  List<UtenzaRifiuti> listUtenzaRifiuti;
-
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreCodiciFiscali= new ReportValore("rifiuti_codicifiscali_titolari_contratto_mancanti");
+	public ReportValore reportValoreIndirizzi= new ReportValore("rifiuti_indirizzi_utenza_mancanti");
+	public ReportValore reportValoreIDCatastale= new ReportValore("rifiuti_idcatastale_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();*/
 
 	public  String targetURL;
 	public MappingInsertTUUtenzaR(String targetURL_) {
@@ -476,6 +481,9 @@ public class MappingInsertTUUtenzaR {
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelUR.add(rel);
+			}else {
+				log.info("manca l indirizzo dell utenza=");
+//				reportValoreIndirizzi.incrementaValore();
 			}
 			
 			
@@ -507,6 +515,8 @@ public class MappingInsertTUUtenzaR {
 				System.out.println(idc.getId());
 				if (idc.getId().equals("http://dkm.fbk.eu/georeporter#A0_C0_N0_D0_S0")) {
 				log.info("identificativo catastale non trovato = http://dkm.fbk.eu/georeporter#TUUR_"+id);
+//				reportValoreIDCatastale.incrementaValore();
+				
 				}
 				//rigaTIDECAT.setUririga("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				// inserimento dell'elemento
@@ -527,6 +537,7 @@ public class MappingInsertTUUtenzaR {
 				}else {
 				
 				log.info("manca riferimento a identificativo catastale= "+id);
+//				reportValoreIDCatastale.incrementaValore();
 			
 			}
 
@@ -551,13 +562,21 @@ public class MappingInsertTUUtenzaR {
 			}else {
 				
 				log.info("manca codice fiscale titolare contratto="+id);
+//				reportValoreCodiciFiscali.incrementaValore();
 			}
 
 			rigaTUR.setListarelazioni(listRelUR);
 
 			insertRiga(rigaTUR);
+//			reportValoreIndirizzi.incrementaTotale();
+//			reportValoreCodiciFiscali.incrementaTotale();
+//			reportValoreIDCatastale.incrementaTotale();
 
 		}
+//		reportList.add(reportValoreIDCatastale);
+//		reportList.add(reportValoreCodiciFiscali);
+//		reportList.add(reportValoreIndirizzi);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	
@@ -680,6 +699,12 @@ public class MappingInsertTUUtenzaR {
 	}
 		
 	
+
+
+
+
+
+
 	public static void main(String[] args) {
 
 		String path = "file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls";

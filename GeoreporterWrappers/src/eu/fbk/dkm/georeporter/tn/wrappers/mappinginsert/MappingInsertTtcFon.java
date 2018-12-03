@@ -31,6 +31,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.TitolaritaCompleta;
@@ -45,7 +46,11 @@ public class MappingInsertTtcFon {
 	public WrapperTtcFon wtittpartfond = new WrapperTtcFon();
 	public  List<TitolaritaCompleta> listTitolaritaCompleta;
 
-	
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreSogg= new ReportValore("Fondiario_titolarita_sog_mancanti");
+	public ReportValore reportValoreIDCatastali= new ReportValore("Fondiario_titolarita_idcatastali_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();
+*/	
 
 	
 public  String targetURL;
@@ -309,6 +314,7 @@ public MappingInsertTtcFon(String targetURL_){
 						if (idecat.equals("FAIL")) {
 							idecat = "http://dkm.fbk.eu/georeporter#PAR_000000000";
 							log.info("Particella non presente: "+idepar);
+//							 reportValoreIDCatastali.incrementaValore();
 						}
 						relTitIdCat.setUriRange(idecat);
 						listRelTTC.add(relTitIdCat);
@@ -323,6 +329,7 @@ public MappingInsertTtcFon(String targetURL_){
 				if(codfis.equals("FAIL")) {
 					codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
 			         log.info("Soggetto non presente: "+cod);
+//			         reportValoreSogg.incrementaValore();
 				}
 				relTitSOG.setUriRange(codfis);
 				listRelTTC.add(relTitSOG);
@@ -335,8 +342,13 @@ public MappingInsertTtcFon(String targetURL_){
 			// inserisco l'elemento di RIGATABELLA TIT dopo aver inserito NOTE e creato le
 			// relazioni
 			insertRiga(rigaTTTC);
+//			   reportValoreIDCatastali.incrementaTotale();
+//	            reportValoreSogg.incrementaTotale();
 
 		}
+//		reportList.add(reportValoreSogg);
+//		reportList.add(reportValoreIDCatastali);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping

@@ -35,6 +35,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UtenzaAcqua;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUUtenzaA;
@@ -44,7 +45,12 @@ public class MappingInsertTUUtenzaA {
 	public WrapperTUUtenzaA wacqua = new WrapperTUUtenzaA();
 	public  List<UtenzaAcqua> listUtenzaAcqua ;
 
-	
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreCodiciFiscali= new ReportValore("acqua_codicifiscali_titolari_contratto_mancanti");
+	public ReportValore reportValoreIndirizzi= new ReportValore("acqua_indirizzi_utenza_mancanti");
+	public ReportValore reportValoreIDCatastale= new ReportValore("acqua_idcatastale_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();
+*/
 	public  String targetURL;
 	public MappingInsertTUUtenzaA(String targetURL_) {
 		
@@ -442,6 +448,7 @@ public class MappingInsertTUUtenzaA {
 				}else {
 				
 				log.info("manca codice fiscale titolare contratto="+id);
+//				reportValoreCodiciFiscali.incrementaValore();
 			}
 			// riga di tipo RIGATABELLA per IND C
 			if (listUtenzaAcqua.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
@@ -502,6 +509,9 @@ public class MappingInsertTUUtenzaA {
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelUA.add(rel);
+			}else {
+				log.info("manca l indirizzo dell utenza=");
+//				reportValoreIndirizzi.incrementaValore();
 			}
 
 			String num = listUtenzaAcqua.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("numero"));
@@ -546,14 +556,14 @@ public class MappingInsertTUUtenzaA {
 				}
 				//rel.setUriRange("http://dkm.fbk.eu/georeporter#C" + cc + "_N" + num + "_D" + den + "_S" + sub);
 				
-				System.out.println("ID CATASTALE= "+idc.getId());
+			//	System.out.println("ID CATASTALE= "+idc.getId());
 				rel.setUriRange(idc.getId());
 				
 				listRelUA.add(rel);
                 }else {
 				
 				log.info("manca riferimento a identificativo catastale= "+id);
-			
+//				reportValoreIDCatastale.incrementaValore();
 			}
 
 			// riga di tipo RIGATABELLA per UTENZA ACUQA
@@ -573,14 +583,22 @@ public class MappingInsertTUUtenzaA {
 				listRelUA.add(rel);
 	           }else {
 				
-				log.info("manca codice fiscale titolare contratto="+id);
+				log.info("manca codice fiscale contribuente contratto="+id);
+				//reportValoreCodiciFiscali.incrementaValore();
 			}
 
 			rigaTUA.setListarelazioni(listRelUA);
 
 			insertRiga(rigaTUA);
+//			reportValoreIndirizzi.incrementaTotale();
+//			reportValoreCodiciFiscali.incrementaTotale();
+//			reportValoreIDCatastale.incrementaTotale();
 
 		}
+//		reportList.add(reportValoreIDCatastale);
+//		reportList.add(reportValoreCodiciFiscali);
+//		reportList.add(reportValoreIndirizzi);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	

@@ -36,6 +36,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.NudaProprieta;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUIciImuAP;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUIciImuNP;
@@ -46,7 +47,12 @@ public class MappingInsertTUIciImuNP {
 	
 	public WrapperTUIciImuNP wiciNP = new WrapperTUIciImuNP();
 	public  List<NudaProprieta> listNudaProprieta ;
-
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreCodiciFiscali= new ReportValore("ici_NP_codicifiscali_titolari_contratto_mancanti");
+	public ReportValore reportValoreIndirizzi= new ReportValore("ici_NP_indirizzi_utenza_mancanti");
+	public ReportValore reportValoreIDCatastale= new ReportValore("ici_NP_idcatastale_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();
+*/
 	public  String targetURL;
 	public MappingInsertTUIciImuNP(String targetURL_) {
 		
@@ -400,6 +406,7 @@ public class MappingInsertTUIciImuNP {
 				insertRiga(rigaTPF);
 			}else {
 				log.info("manca codice fiscale titolare contratto="+id);
+//				reportValoreCodiciFiscali.incrementaValore();
 				}
 			// riga di tipo RIGATABELLA per IND C
 			if (listNudaProprieta.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
@@ -457,7 +464,11 @@ public class MappingInsertTUIciImuNP {
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelNP.add(rel);
+			}else {
+				log.info("manca l indirizzo dell utenza=");
+//				reportValoreIndirizzi.incrementaValore();
 			}
+
 			String num = listNudaProprieta.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("numero"));
 			if (!num.isEmpty()) {
 				// riga di tipo RIGATABELLA per IDE CAT
@@ -499,7 +510,7 @@ public class MappingInsertTUIciImuNP {
 			 }else {
 					
 					log.info("manca riferimento a identificativo catastale= "+id);
-				
+//					reportValoreIDCatastale.incrementaValore();
 				}
 			
 			// riga di tipo RIGATABELLA per NUDA PROPRIETA
@@ -524,10 +535,16 @@ public class MappingInsertTUIciImuNP {
 
 
 			rigaTNP.setListarelazioni(listRelNP);
-
+//			reportValoreIndirizzi.incrementaTotale();
+//			reportValoreCodiciFiscali.incrementaTotale();
+//			reportValoreIDCatastale.incrementaTotale();
 			insertRiga(rigaTNP);
 
 		}
+//		reportList.add(reportValoreIDCatastale);
+//		reportList.add(reportValoreCodiciFiscali);
+//		reportList.add(reportValoreIndirizzi);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	

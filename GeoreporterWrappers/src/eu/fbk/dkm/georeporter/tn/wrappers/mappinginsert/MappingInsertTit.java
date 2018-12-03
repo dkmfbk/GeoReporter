@@ -31,6 +31,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
@@ -43,6 +44,11 @@ public class MappingInsertTit {
 	public  List<Titolarita> listTitolarita ;
 	public  String targetURL;
 	public String serviceURL;
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreSogg= new ReportValore("Fabbricati_titolarita_sog_mancanti");
+	public ReportValore reportValoreIDCatastali= new ReportValore("Fabbricati_titolarita_idcatastali_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();*/
+	
 	public MappingInsertTit(String targetURL_) {
 		
 		targetURL=  targetURL_+"inserttable";
@@ -278,7 +284,8 @@ public class MappingInsertTit {
 			String idecat = getICfromUI(codammideimm);
 			if (idecat.equals("FAIL")) {
 				idecat = "http://dkm.fbk.eu/georeporter#C0_N0_D0_S0";
-				log.info("manca lidentificativo catastale per l UI ="+codammideimm);
+				log.info("manca l identificativo catastale per l UI ="+codammideimm);
+//				 reportValoreIDCatastali.incrementaValore();
 			}
 			relTitIdCat.setUriRange(idecat);
 			listRelTIT.add(relTitIdCat);
@@ -294,6 +301,7 @@ public class MappingInsertTit {
 			codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
              System.out.println("Soggetto non presente: "+cod);
              log.info("Soggetto non presente =" +cod);
+//             reportValoreSogg.incrementaValore();
 			}
 			relTitSOG.setUriRange(codfis);
 			listRelTIT.add(relTitSOG);
@@ -302,8 +310,12 @@ public class MappingInsertTit {
 			// inserisco l'elemento di RIGATABELLA TIT dopo aver inserito NOTE e creato le
 			// relazioni
 			insertRiga(rigaTTIT);
-
+//            reportValoreIDCatastali.incrementaTotale();
+//            reportValoreSogg.incrementaTotale();
 		}
+//		reportList.add(reportValoreSogg);
+//		reportList.add(reportValoreIDCatastali);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	// metodo per l'inserimento dell'elemento pronto dopo il mapping

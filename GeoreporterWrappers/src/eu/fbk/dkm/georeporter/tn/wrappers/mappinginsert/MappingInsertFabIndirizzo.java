@@ -129,10 +129,10 @@ public class MappingInsertFabIndirizzo {
 		
 		//System.out.println("codicecomune="+ codComune);
 		Costanti c= new Costanti();
-		System.out.println("COSTANTI cod toponimo=="+codToponimo);
-		System.out.println("COSTANTI cod toponimo=="+codToponimo);
+	//	System.out.println("COSTANTI cod toponimo=="+codToponimo);
+		
 		String descrizione=c.toponimi.get(codToponimo);
-		System.out.println(descrizione);
+	//	System.out.println(descrizione);
 		return descrizione;
 		
 		

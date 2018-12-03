@@ -39,6 +39,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
@@ -53,8 +54,11 @@ public class MappingInsertForGas {
 	
 	public WrapperForGas wgas = new WrapperForGas();
 	public  List<FornituraGas> listFornituraGas ;
-
-	
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreCodiciFiscali= new ReportValore("gas_codicifiscali_titolari_contratto_mancanti");
+	public ReportValore reportValoreIndirizzi= new ReportValore("gas_indirizzi_utenza_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();
+	*/
 	
 	public  String targetURL;
 	public MappingInsertForGas(String targetURL_) {
@@ -253,6 +257,7 @@ public class MappingInsertForGas {
 				listRelCFG.add(relCFGSOG);
 			}else {
 				log.info("manca codice fiscale titolare contratto="+idcfg);
+//				reportValoreCodiciFiscali.incrementaValore();
 			}
 			
 			// riga di tipo RIGATABELLA per IND
@@ -276,12 +281,22 @@ public class MappingInsertForGas {
 				//long time = cal.getTimeInMillis();
 				relCFGIND.setUriRange(uriInd);
 				listRelCFG.add(relCFGIND);
+			}else {
+				log.info("manca l indirizzo dell utenza="+idcfg);
+//				reportValoreIndirizzi.incrementaValore();
 			}
 			rigaTFG.setListarelazioni(listRelCFG);
 
 			insertRiga(rigaTFG);
-
+//			reportValoreIndirizzi.incrementaTotale();
+//			reportValoreCodiciFiscali.incrementaTotale();
 		}
+		
+		
+		
+//		reportList.add(reportValoreCodiciFiscali);
+//		reportList.add(reportValoreIndirizzi);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	

@@ -36,6 +36,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForLoc;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperTUIciImuAP;
@@ -44,7 +45,13 @@ public class MappingInsertTUIciImuAP {
 
 	public WrapperTUIciImuAP wiciAP = new WrapperTUIciImuAP();
 	public  List<AbitazionePrincipale> listICIIMU_AP;
-
+	
+//	public ReportManager reportManager = new ReportManager("report.json");
+//	public ReportValore reportValoreCodiciFiscali= new ReportValore("ici_AP_codicifiscali_titolari_contratto_mancanti");
+//	public ReportValore reportValoreIndirizzi= new ReportValore("ici_AP_indirizzi_utenza_mancanti");
+//	public ReportValore reportValoreIDCatastale= new ReportValore("ici_AP_idcatastale_mancanti");
+//	public List<ReportValore> reportList= new ArrayList<ReportValore>();
+	
 	public  String targetURL;
 	public MappingInsertTUIciImuAP(String targetURL_) {
 		
@@ -403,7 +410,8 @@ public class MappingInsertTUIciImuAP {
 				// inserimento dell'elemento
 				insertRiga(rigaTPF);
 			}else {
-			log.info("manca codice fiscale titolare contratto="+id);
+		    	log.info("manca codice fiscale titolare contratto="+id);
+/*		    	reportValoreCodiciFiscali.incrementaValore();*/
 			}
 			// riga di tipo RIGATABELLA per IND C
 			if (listICIIMU_AP.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
@@ -461,7 +469,11 @@ public class MappingInsertTUIciImuAP {
 				// creo l'indirizzo univoco grazie dalla data d'inserimento
 				rel.setUriRange("http://dkm.fbk.eu/georeporter#IND_" + time);
 				listRelAP.add(rel);
+			}else {
+				log.info("manca l indirizzo dell utenza=");
+//				reportValoreIndirizzi.incrementaValore();
 			}
+
 			
 			String num = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("numero"));
 			if (!num.isEmpty()) {
@@ -500,7 +512,7 @@ public class MappingInsertTUIciImuAP {
 			 }else {
 					
 					log.info("manca riferimento a identificativo catastale= "+id);
-				
+//					reportValoreIDCatastale.incrementaValore();
 				}
 
 			// riga di tipo RIGATABELLA per AbitazionePrincipale
@@ -521,13 +533,20 @@ public class MappingInsertTUIciImuAP {
 			 }else {
 					
 					log.info("manca codice fiscale contribuente ="+id);
+					
 				}
 
 			rigaTUA.setListarelazioni(listRelAP);
-
+//			reportValoreIndirizzi.incrementaTotale();
+//			reportValoreCodiciFiscali.incrementaTotale();
+//			reportValoreIDCatastale.incrementaTotale();
 			insertRiga(rigaTUA);
 
 		}
+//		reportList.add(reportValoreIDCatastale);
+//		reportList.add(reportValoreCodiciFiscali);
+//		reportList.add(reportValoreIndirizzi);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	

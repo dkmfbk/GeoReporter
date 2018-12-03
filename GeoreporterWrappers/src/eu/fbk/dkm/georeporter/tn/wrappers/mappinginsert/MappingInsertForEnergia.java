@@ -33,6 +33,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.FornituraEnergia;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.WrapperForEne;
 
@@ -43,6 +44,13 @@ public class MappingInsertForEnergia {
 	public WrapperForEne wenergia = new WrapperForEne();
 	public  List<FornituraEnergia> listFornituraEnergia ;
 
+	
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreCodiciFiscali= new ReportValore("energia_codicifiscali_titolari_contratto_mancanti");
+	public ReportValore reportValoreIndirizzi= new ReportValore("energia_indirizzi_utenza_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();
+*/	
+	
 	
 	public  String targetURL;
 	public MappingInsertForEnergia(String targetURL_) {
@@ -216,6 +224,7 @@ public class MappingInsertForEnergia {
 			}else {
 				
 				log.info("manca codice fiscale titolare contratto="+idcfe);
+//				reportValoreCodiciFiscali.incrementaValore();
 			}
 			
 			// riga di tipo RIGATABELLA per IND
@@ -229,7 +238,7 @@ public class MappingInsertForEnergia {
 			rigaTIND.setUririga(uriInd);
 			insertRiga(rigaTIND);
 			
-			// relazione FOR GAS con INDIRIZZO
+			// relazione FOR Energis con INDIRIZZO
 			if (listFornituraEnergia.get(j).getValori().get("indirizzoutenza").isEmpty() == false) {
 				Relazione relCFEIND = new Relazione();
 				relCFEIND.setNomerelazione("http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza");
@@ -239,12 +248,21 @@ public class MappingInsertForEnergia {
 			//	long time = cal.getTimeInMillis();
 				relCFEIND.setUriRange(uriInd);
 				listRelCFE.add(relCFEIND);
+			}else {
+				log.info("manca l indirizzo dell utenza="+idcfe);
+//				reportValoreIndirizzi.incrementaValore();
+				
 			}
 			rigaTFE.setListarelazioni(listRelCFE);
 
 			insertRiga(rigaTFE);
+//			reportValoreIndirizzi.incrementaTotale();
+//			reportValoreCodiciFiscali.incrementaTotale();
 
 		}
+//		reportList.add(reportValoreCodiciFiscali);
+//		reportList.add(reportValoreIndirizzi);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	

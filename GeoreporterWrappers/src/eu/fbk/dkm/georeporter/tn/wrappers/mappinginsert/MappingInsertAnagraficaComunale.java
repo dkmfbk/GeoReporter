@@ -36,6 +36,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
@@ -47,7 +48,10 @@ public class MappingInsertAnagraficaComunale {
 	
 	public WrapperAnagraficaComunale wanag = new WrapperAnagraficaComunale();
 	public  List<AnagraficaComunale> listAnagraficaComunale;
+//	public ReportManager reportManager = new ReportManager("report.json");
+//	public ReportValore reportValoreCodFisc= new ReportValore("Anagrafica_codiciFiscali_nulli");
 
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();
 	
 	public  String targetURL;
 	
@@ -244,14 +248,14 @@ public class MappingInsertAnagraficaComunale {
 				rigaTPF.setListarelazioni(listRelPFAC);
 				insertRiga(rigaTPF);
 			}else {
-				
+//				reportValoreCodFisc.incrementaValore();
 				System.out.println("CodiceFiscaleNullo "+numindiv);
 			}
 
 			// relazione INQUI con AC
 			String resconv = listAnagraficaComunale.get(j).getValori().get("residenteconviv");
 			if ((!resconv.equals(""))) {
-				System.out.println("resconv="+resconv);
+				//System.out.println("resconv="+resconv);
 				Relazione relINQUIAC = new Relazione();
 				relINQUIAC.setNomerelazione("http://dkm.fbk.eu/georeporter#hasResidenteConvivente");
 				relINQUIAC.setUriRange("http://dkm.fbk.eu/georeporter#SOG_" + resconv);
@@ -284,8 +288,11 @@ public class MappingInsertAnagraficaComunale {
 			rigaTAC.setListarelazioni(listRelAC);
 
 			insertRiga(rigaTAC);
-
+//			reportValoreCodFisc.incrementaTotale();
 		}
+		
+//		reportList.add(reportValoreCodFisc);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	public  void insertRiga(RigaTabella riga) {

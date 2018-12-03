@@ -42,6 +42,7 @@ import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.MappingTabelle;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Nota;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Relazione;
+import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Titolarita;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.UnitaImmobiliare;
@@ -54,7 +55,12 @@ public class MappingInsertForLocazione {
 	public WrapperForLoc wlocaz =new WrapperForLoc();
 	public  List<Locazione> listLocazione;
 
-	
+/*	public ReportManager reportManager = new ReportManager("report.json");
+	public ReportValore reportValoreCodiciFiscali= new ReportValore("locazione_codicifiscali_titolari_contratto_mancanti");
+	public ReportValore reportValoreIndirizzi= new ReportValore("locazione_indirizzi_utenza_mancanti");
+	public ReportValore reportValoreIDCatastale= new ReportValore("locazione_idcatastale_mancanti");
+	public List<ReportValore> reportList= new ArrayList<ReportValore>();
+*/	
 	public  String targetURL;
 	public MappingInsertForLocazione(String targetURL_) {
 		
@@ -173,22 +179,9 @@ public class MappingInsertForLocazione {
 		
 		
 		
-		
-		
-		
-		
-		
 		// ciclo la lista degli elementi LOC
 	
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 		for (int j = 0; j < listLocazione.size(); j++) {
 
@@ -299,6 +292,7 @@ public class MappingInsertForLocazione {
 			}else {
 				
 				log.info("manca codice fiscale proprietario="+uriCFL);
+//				reportValoreCodiciFiscali.incrementaValore();
 			}
 
 			// riga di tipo RIGATABELLA per IND
@@ -334,6 +328,9 @@ public class MappingInsertForLocazione {
 						//	long time = cal.getTimeInMillis();
 							relCFLIND.setUriRange(uriInd);
 							listRelCFL.add(relCFLIND);
+						}else {
+							log.info("manca l indirizzo dell utenza="+uriCFL);
+//							reportValoreIndirizzi.incrementaValore();
 						}
 						
 			// relazione FOR LOCAZIONE con INQUILINO
@@ -347,6 +344,7 @@ public class MappingInsertForLocazione {
 			}else {
 				
 				log.info("manca codice fiscale inquilino="+uriCFL);
+			//	reportValoreCodiciFiscali.incrementaValore();
 			}
 
 			// relazione FOR LOCAZIONE con IDE CAT
@@ -390,6 +388,7 @@ public class MappingInsertForLocazione {
 			if (num.equals("")){
 				relCFLIDECAT.setUriRange("http://dkm.fbk.eu/georeporter#A0_C0_N0_D0_S0");
 				log.info("manca riferimento all identificativo catastale="+uriCFL);
+//				reportValoreIDCatastale.incrementaValore();
 			}else {
 				
 				RestCalls rc=new RestCalls();
@@ -398,6 +397,7 @@ public class MappingInsertForLocazione {
 				System.out.println(idc.getId());
 				if (idc.getId().equals("http://dkm.fbk.eu/georeporter#A0_C0_N0_D0_S0")) {
 				log.info("identificativo catastale non trovato ="+uriCFL);
+//				reportValoreIDCatastale.incrementaValore();
 				}
 				relCFLIDECAT.setUriRange(idc.getId());
 			}
@@ -406,8 +406,14 @@ public class MappingInsertForLocazione {
 			rigaTFL.setListarelazioni(listRelCFL);
 
 			insertRiga(rigaTFL);
-
+//			reportValoreIndirizzi.incrementaTotale();
+//			reportValoreCodiciFiscali.incrementaTotale();
+//			reportValoreIDCatastale.incrementaTotale();
 		}
+//		reportList.add(reportValoreIDCatastale);
+//		reportList.add(reportValoreCodiciFiscali);
+//		reportList.add(reportValoreIndirizzi);
+//		reportManager.updateReportsFile(reportList);
 	}
 
 	public  void insertRiga(RigaTabella riga) {
