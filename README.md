@@ -43,7 +43,7 @@ Oltre che tramite la classe ImportGeoreporter.java, e' possibile fare l'importe 
 http://<nome_del_server:porta>/GeoreporterService/tools/import.html
 
 Informazioni piu' dettagliate sul software possone essere trovare nel seguente documento:
-link al [Manaule di istallazione](https://docs.google.com/document/d/1OHoRJwT-uBXXvKavwfqAKlDdgckw85ixRX99mn5Kvmk/edit?usp=sharing)
+link al [Manuale di istallazione](https://docs.google.com/document/d/1OHoRJwT-uBXXvKavwfqAKlDdgckw85ixRX99mn5Kvmk/edit?usp=sharing)
 
 
 
