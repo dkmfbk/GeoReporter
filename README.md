@@ -2,7 +2,7 @@
 Istruzioni per l'istallazione del software
 
 ## Descrizione del Software
-Il sofware, sviluppato nell ambito del progetto Geopartner, offre la funzionalita' di importare i dati provenienti da differenti basi dati e in differenti formati e caricarli in un knowledge store secondo uno schema ontologico.
+Il software, sviluppato nell ambito del progetto Geopartner, offre la funzionalita' di importare i dati provenienti da differenti basi dati e in differenti formati e caricarli in un knowledge store secondo uno schema ontologico.
 I dominio dell applicazione e' quello dei dati catastali e dei vari tributi, utenze e contratti associati alle Unita' Immobiliari
 Il spftware e' formato da 2 componenti principali: GeoreporterWrappers e GeoreporterService.
 
