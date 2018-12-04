@@ -39,8 +39,11 @@ per alcuni dati che non contengono le intestazioni dei dati, bisogna fornire un 
 Nel metodo main vengono forniti degli esempi di come effettare le chiamate per fare l'import
 
 ## Importazione dei dati via web
-Oltre che tramite la classe ImportGeoreporter,java, e' possibile fare l'importe dei dati attraverso un interfaccia web accedendo all' indirizzo:
+Oltre che tramite la classe ImportGeoreporter.java, e' possibile fare l'importe dei dati attraverso un interfaccia web accedendo all' indirizzo:
 http://<nome_del_server:porta>/GeoreporterService/tools/import.html
+
+Informazioni piu' dettagliate sul software possone essere trovare nel seguente documento:
+link al [Manaule di istallazione](https://docs.google.com/document/d/1OHoRJwT-uBXXvKavwfqAKlDdgckw85ixRX99mn5Kvmk/edit?usp=sharing)
 
 
 
