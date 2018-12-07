@@ -16,6 +16,8 @@ public class Particella {
 	String subalterno;
 	String porzionemateriale;
 	String ui;
+	String tipo;
+	
 	public String getUri() {
 		return uri;
 	}
@@ -70,6 +72,12 @@ public class Particella {
 	}
 	public void setCodiceAmministrativo(String codiceAmministrativo) {
 		this.codiceAmministrativo = codiceAmministrativo;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	
