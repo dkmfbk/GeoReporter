@@ -19,6 +19,11 @@ public class UnitaImmobiliare {
 	String renditaEuro;
 	String valoreIMIS;
 	
+	String numero;
+	String denominatore;
+	String subalterno;
+	
+	
 	Soggetto stitolare;
 	public String getUri() {
 		return uri;
@@ -85,6 +90,24 @@ public class UnitaImmobiliare {
 	}
 	public void setValoreIMIS(String valoreIMIS) {
 		this.valoreIMIS = valoreIMIS;
+	}
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+	public String getDenominatore() {
+		return denominatore;
+	}
+	public void setDenominatore(String denominatore) {
+		this.denominatore = denominatore;
+	}
+	public String getSubalterno() {
+		return subalterno;
+	}
+	public void setSubalterno(String subalterno) {
+		this.subalterno = subalterno;
 	}
 	
 }
