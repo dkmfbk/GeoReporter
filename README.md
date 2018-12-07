@@ -2,7 +2,7 @@
 Istruzioni per l'istallazione del software
 
 ## Descrizione del Software
-Il sofware, sviluppato nell ambito del progetto Geopartner, offre la funzionalita' di importare i dati provenienti da differenti basi dati e in differenti formati e caricarli in un knowledge store secondo uno schema ontologico.
+Il software, sviluppato nell ambito del progetto Geopartner, offre la funzionalita' di importare i dati provenienti da differenti basi dati e in differenti formati e caricarli in un knowledge store secondo uno schema ontologico.
 I dominio dell applicazione e' quello dei dati catastali e dei vari tributi, utenze e contratti associati alle Unita' Immobiliari
 Il spftware e' formato da 2 componenti principali: GeoreporterWrappers e GeoreporterService.
 
@@ -39,8 +39,11 @@ per alcuni dati che non contengono le intestazioni dei dati, bisogna fornire un 
 Nel metodo main vengono forniti degli esempi di come effettare le chiamate per fare l'import
 
 ## Importazione dei dati via web
-Oltre che tramite la classe ImportGeoreporter,java, e' possibile fare l'importe dei dati attraverso un interfaccia web accedendo all' indirizzo:
+Oltre che tramite la classe ImportGeoreporter.java, e' possibile fare l'importe dei dati attraverso un interfaccia web accedendo all' indirizzo:
 http://<nome_del_server:porta>/GeoreporterService/tools/import.html
+
+Informazioni piu' dettagliate sul software possone essere trovare nel seguente documento:
+link al [Manuale di istallazione](https://docs.google.com/document/d/1OHoRJwT-uBXXvKavwfqAKlDdgckw85ixRX99mn5Kvmk/edit?usp=sharing)
 
 
 
