@@ -16,7 +16,7 @@
 {"mapping":"http://dkm.fbk.eu/georeporter#denominazione","nome":"http://dkm.fbk.eu/georeporter#denominazione","tipo":"http://www.w3.org/2001/XMLSchema#string"}],
 "idTabella":{"mapping":"Contratto","nome":"Contratto"}},
 {"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#barraEsponente","nome":"http://dkm.fbk.eu/georeporter#barr","tipo":"http://www.w3.org/2001/XMLSchema#string"},
-{"mapping":"http://dkm.fbk.eu/georeporter#codiceComuneCatastale","nome":"http://dkm.fbk.eu/georeporter#codcomune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
+{"mapping":"http://dkm.fbk.eu/georeporter#codiceAmministrativo","nome":"http://dkm.fbk.eu/georeporter#codcomune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#cap","nome":"http://dkm.fbk.eu/georeporter#cap","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#civico","nome":"http://dkm.fbk.eu/georeporter#civico","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#codViaFrazione","nome":"http://dkm.fbk.eu/georeporter#codviafraz","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
