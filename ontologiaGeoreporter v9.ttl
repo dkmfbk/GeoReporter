@@ -1,0 +1,3667 @@
+@prefix : <http://dkm.fbk.eu/georeporter#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://dkm.fbk.eu/georeporter> .
+
+<http://dkm.fbk.eu/georeporter> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Annotation properties
+#
+#################################################################
+
+
+###  http://dkm.fbk.eu/georeporter#ComuneCatastale
+
+:ComuneCatastale rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Denominatore
+
+:Denominatore rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Foglio
+
+:Foglio rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Numero
+
+:Numero rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm1
+
+:Pm1 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm2
+
+:Pm2 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm3
+
+:Pm3 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm4
+
+:Pm4 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm5
+
+:Pm5 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm6
+
+:Pm6 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm7
+
+:Pm7 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm8
+
+:Pm8 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Pm9
+
+:Pm9 rdf:type owl:AnnotationProperty .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Subalterno
+
+:Subalterno rdf:type owl:AnnotationProperty .
+
+
+
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://dkm.fbk.eu/georeporter#hasAnagrafica
+
+:hasAnagrafica rdf:type owl:ObjectProperty ;
+               
+               rdfs:domain :PersonaFisica ;
+               
+               rdfs:range :AnagraficaComunale ;
+               
+               rdfs:label "ha anagrafica" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasContribuente
+
+:hasContribuente rdf:type owl:ObjectProperty ;
+                 
+                 rdfs:domain :Tributo_o_Utenza ;
+                 
+                 rdfs:range :Soggetto ;
+                 
+                 rdfs:label "ha contribuente" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasIdentificativoCatastale
+
+:hasIdentificativoCatastale rdf:type owl:ObjectProperty ;
+                            
+                            rdfs:subPropertyOf owl:topObjectProperty ;
+                            
+                            rdfs:domain [ rdf:type owl:Class ;
+                                          owl:unionOf ( :Contratto
+                                                        :Titolarita
+                                                        :Tributo_o_Utenza
+                                                      )
+                                        ] ;
+                            
+                            rdfs:range :IdentificativoCatastale ;
+                            
+                            rdfs:label "ha identificativo catastale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasIndirizzo
+
+:hasIndirizzo rdf:type owl:ObjectProperty ;
+              
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :AnagraficaComunale
+                                          :Famiglia
+                                          :UnitaImmobiliare
+                                        )
+                          ] ;
+              
+              rdfs:range :Indirizzo ;
+              
+              rdfs:label "ha indirizzo" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasIndirizzoContribuente
+
+:hasIndirizzoContribuente rdf:type owl:ObjectProperty ;
+                          
+                          rdfs:subPropertyOf owl:topObjectProperty ;
+                          
+                          rdfs:domain :Tributo_o_Utenza ;
+                          
+                          rdfs:range :Indirizzo ;
+                          
+                          rdfs:label "ha indirizzo del contribuente" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasIndirizzoRecapitoContribuente
+
+:hasIndirizzoRecapitoContribuente rdf:type owl:ObjectProperty ;
+                                  
+                                  rdfs:domain :Tributo_o_Utenza ;
+                                  
+                                  rdfs:range :Indirizzo ;
+                                  
+                                  rdfs:label "ha indirizzo (recapito) del contribuente" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasIndirizzoUtenza
+
+:hasIndirizzoUtenza rdf:type owl:ObjectProperty ;
+                    
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( :Contratto
+                                                :Tributo_o_Utenza
+                                              )
+                                ] ;
+                    
+                    rdfs:range :Indirizzo ;
+                    
+                    rdfs:label "ha indirizzo utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasInquilino
+
+:hasInquilino rdf:type owl:ObjectProperty ;
+              
+              rdfs:domain :Locazione ;
+              
+              rdfs:range :Soggetto ;
+              
+              rdfs:label "ha inquilino" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasNotaFinale
+
+:hasNotaFinale rdf:type owl:ObjectProperty ;
+               
+               rdfs:domain :UnitaImmobiliare ;
+               
+               rdfs:range :Nota ;
+               
+               rdfs:label "ha nota finale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasNotaIniziale
+
+:hasNotaIniziale rdf:type owl:ObjectProperty ;
+                 
+                 rdfs:domain :UnitaImmobiliare ;
+                 
+                 rdfs:range :Nota ;
+                 
+                 rdfs:label "ha nota iniziale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasNotaTitolaritaFinale
+
+:hasNotaTitolaritaFinale rdf:type owl:ObjectProperty ;
+                         
+                         rdfs:subPropertyOf owl:topObjectProperty ;
+                         
+                         rdfs:domain :Titolarita ;
+                         
+                         rdfs:range :Nota ;
+                         
+                         rdfs:label "ha titolarità finale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasNotaTitolaritaIniziale
+
+:hasNotaTitolaritaIniziale rdf:type owl:ObjectProperty ;
+                           
+                           rdfs:domain :Titolarita ;
+                           
+                           rdfs:range :Nota ;
+                           
+                           rdfs:label "ha titolarità iniziale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasNucleoFamiliare
+
+:hasNucleoFamiliare rdf:type owl:ObjectProperty ;
+                    
+                    rdfs:domain :AnagraficaComunale ;
+                    
+                    rdfs:range :Famiglia ;
+                    
+                    rdfs:label "ha nucleo familiare" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasParticella
+
+:hasParticella rdf:type owl:ObjectProperty ;
+               
+               rdfs:domain :IdentificativoCatastale ;
+               
+               rdfs:range :Particella ;
+               
+               rdfs:label "ha particella (edificiale)" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasProprietario
+
+:hasProprietario rdf:type owl:ObjectProperty ;
+                 
+                 rdfs:domain :Locazione ;
+                 
+                 rdfs:range :Soggetto ;
+                 
+                 rdfs:label "ha proprietario" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasRegime
+
+:hasRegime rdf:type owl:ObjectProperty ;
+           
+           rdfs:domain :Titolarita ;
+           
+           rdfs:range :TipoRegime ;
+           
+           rdfs:label "ha regime (di titolarità)" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasRegistrazioneFinale
+
+:hasRegistrazioneFinale rdf:type owl:ObjectProperty ;
+                        
+                        rdfs:domain :Particella ;
+                        
+                        rdfs:range :Intavolazione ;
+                        
+                        rdfs:label "ha registrazione finale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasRegistrazioneIniziale
+
+:hasRegistrazioneIniziale rdf:type owl:ObjectProperty ;
+                          
+                          rdfs:domain :Particella ;
+                          
+                          rdfs:range :Intavolazione ;
+                          
+                          rdfs:label "ha registrazione iniziale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasResidenteConvivente
+
+:hasResidenteConvivente rdf:type owl:ObjectProperty ;
+                        
+                        rdfs:domain :AnagraficaComunale ;
+                        
+                        rdfs:range :PersonaFisica .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasSoggetto
+
+:hasSoggetto rdf:type owl:ObjectProperty ;
+             
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             
+             rdfs:domain :Titolarita ;
+             
+             rdfs:range :Soggetto ;
+             
+             rdfs:label "ha soggetto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasTipoDocumento
+
+:hasTipoDocumento rdf:type owl:ObjectProperty ;
+                  
+                  rdfs:domain :Intavolazione ;
+                  
+                  rdfs:range :TipoIntavolazione ;
+                  
+                  rdfs:label "ha tipo documento" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasTipoNota
+
+:hasTipoNota rdf:type owl:ObjectProperty ;
+             
+             rdfs:domain :Nota ;
+             
+             rdfs:range :TipoNota ;
+             
+             rdfs:label "ha tipo nota" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasTipoParticella
+
+:hasTipoParticella rdf:type owl:ObjectProperty ;
+                   
+                   rdfs:domain :Particella ;
+                   
+                   rdfs:range :TipoParticella ;
+                   
+                   rdfs:label "ha tipo particella" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasTitolareContratto
+
+:hasTitolareContratto rdf:type owl:ObjectProperty ;
+                      
+                      rdfs:domain [ rdf:type owl:Class ;
+                                    owl:unionOf ( :FornituraEnergia
+                                                  :FornituraGas 
+                                                )
+                                  ] ;
+                      
+                      rdfs:range :Soggetto ;
+                      
+                      rdfs:label "ha titolare contratto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasUnitaImmobiliare
+
+:hasUnitaImmobiliare rdf:type owl:ObjectProperty ;
+                     
+                     rdfs:domain :IdentificativoCatastale ;
+                     
+                     rdfs:range :UnitaImmobiliare ;
+                     
+                     rdfs:label "ha unità immobiliare" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasUtenzaAcqua
+
+:hasUtenzaAcqua rdf:type owl:ObjectProperty ;
+                
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                
+                rdfs:domain :LetturaAcqua ;
+                
+                rdfs:range :UtenzaAcqua ;
+                
+                rdfs:label "ha utenza acqua" .
+
+
+
+###  http://www.w3.org/2002/07/owl#topObjectProperty
+
+owl:topObjectProperty rdfs:domain :Titolarita ;
+                      
+                      rdfs:range :Nota .
+
+
+
+
+
+
+
+
+###  http://dkm.fbk.eu/georeporter#hasPossibileIdentificativoCatastale
+
+:hasPossibileIdentificativoCatastale rdf:type owl:ObjectProperty ;
+                      
+                      rdfs:domain [ rdf:type owl:Class ;
+                                    owl:unionOf ( :FornituraEnergia
+                                                  :FornituraGas
+                                                  :Locazione
+                                                  :ICI_IMU_AbitazionePrincipale
+                                                  :ICI_IMU_NudaProprieta
+                                                  :UtenzaAcqua
+                                                  :UtenzaRifiuti
+                                                )
+                                  ] ;
+                      
+                      rdfs:range :IdentificativoCatastale ;
+                      
+                      rdfs:label "ha Possibile IdentificativoCatastale" .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://dkm.fbk.eu/georeporter#TipoDiParticella
+
+:tipoDiParticella rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :Particella ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "Tipo di Particella" .
+
+
+
+
+
+
+
+
+
+
+###  http://dkm.fbk.eu/georeporter#ISTATComuneNascita
+
+:ISTATComuneNascita rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :AnagraficaComunale ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "ISTAT comune nascita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#IdMutazioneFinale
+
+:IdMutazioneFinale rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :Particella
+                                               :Titolarita
+                                               :UnitaImmobiliare
+                                             )
+                               ] ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "Identificativo mutazione finale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#IdMutazioneIniziale
+
+:IdMutazioneIniziale rdf:type owl:DatatypeProperty ;
+                     
+                     rdfs:domain [ rdf:type owl:Class ;
+                                   owl:unionOf ( :Particella
+                                                 :Titolarita
+                                                 :UnitaImmobiliare
+                                               )
+                                 ] ;
+                     
+                     rdfs:range xsd:integer ;
+                     
+                     rdfs:label "Identificativo mutazione iniziale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#MAMGSenzaFigli
+
+:MAMGSenzaFigli rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Famiglia ;
+                
+                rdfs:range xsd:boolean ;
+                
+                rdfs:label "MAMG senza figli" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ammontareFatturato
+
+:ammontareFatturato rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :FornituraGas ;
+                    
+                    rdfs:range xsd:integer ;
+                    
+                    rdfs:label "Ammontare fatturato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#annoDocumento
+
+:annoDocumento rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Intavolazione ;
+               
+               rdfs:range xsd:integer ;
+               
+               rdfs:label "Anno documento" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#annoLocazione
+
+:annoLocazione rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Locazione ;
+               
+               rdfs:range xsd:integer ;
+               
+               rdfs:label "Anno locazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#annoNota
+
+:annoNota rdf:type owl:DatatypeProperty ;
+          
+          rdfs:domain :Nota ;
+          
+          rdfs:range xsd:integer ;
+          
+          rdfs:label "Anno nota" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#annoPratica
+
+:annoPratica rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :Utenza ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Anno pratica" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#annoRiferimento
+
+:annoRiferimento rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :Contratto ;
+                 
+                 rdfs:range xsd:integer ;
+                 
+                 rdfs:label "Anno di riferimento" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#annotazione
+
+:annotazione rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Particella
+                                         :UnitaImmobiliare
+                                       )
+                         ] ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Annotazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#barraEsponente
+
+:barraEsponente rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Indirizzo ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Barra / esponente" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#calcolaMinori
+
+:calcolaMinori rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :ICI_IMU ;
+               
+               rdfs:range xsd:boolean ;
+               
+               rdfs:label "Calcola minori" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#cap
+
+:cap rdf:type owl:DatatypeProperty ;
+     
+     rdfs:domain :Indirizzo ;
+     
+     rdfs:range xsd:integer ;
+     
+     rdfs:label "Cap" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#capUtenza
+
+:capUtenza rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :FornituraEnergia ;
+           
+           rdfs:range xsd:integer ;
+           
+           rdfs:label "CAP utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#categoria
+
+:categoria rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain [ rdf:type owl:Class ;
+                         owl:unionOf ( :UnitaImmobiliare
+                                       :Utenza
+                                     )
+                       ] ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Categoria" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#categoriaDescrizione
+
+:categoriaDescrizione rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain :Tributo_o_Utenza ;
+                      
+                      rdfs:range xsd:string ;
+                      
+                      rdfs:label "Categoria descrizione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#certificato
+
+:certificato rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :ICI_IMU ;
+             
+             rdfs:range xsd:integer ;
+             
+             rdfs:label "Certificato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#circoloElettorale
+
+:circoloElettorale rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :AnagraficaComunale ;
+                   
+                   rdfs:range xsd:string ;
+                   
+                   rdfs:label "Circolo elettorale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#circoscrizione
+
+:circoscrizione rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Famiglia ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Circoscrizione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#cittOmogenea
+
+:cittOmogenea rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :Famiglia ;
+              
+              rdfs:range xsd:boolean ;
+              
+              rdfs:label "Cittadinanza omogenea" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#cittadinanza
+
+:cittadinanza rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :AnagraficaComunale
+                                          :Famiglia
+                                        )
+                          ] ;
+              
+              rdfs:range xsd:string ;
+              
+              rdfs:label "Cittadinanza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#civico
+
+:civico rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain :Indirizzo ;
+        
+        rdfs:range xsd:string ;
+        
+        rdfs:label "Civico" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#classe
+
+:classe rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain [ rdf:type owl:Class ;
+                      owl:unionOf ( :ICI_IMU
+                                    :UnitaImmobiliare
+                                  )
+                    ] ;
+        
+        rdfs:range xsd:string ;
+        
+        rdfs:label "Classe" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codCategoriaUtenza
+
+:codCategoriaUtenza rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :Tributo_o_Utenza ;
+                    
+                    rdfs:range xsd:integer ;
+                    
+                    rdfs:label "Codice categoria utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codCategoriaUtenzaComunale
+
+:codCategoriaUtenzaComunale rdf:type owl:DatatypeProperty ;
+                            
+                            rdfs:domain :UtenzaRifiuti ;
+                            
+                            rdfs:range xsd:integer ;
+                            
+                            rdfs:label "Codice categoria utenza comunale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codComuneContratto
+
+:codComuneContratto rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( :Contratto
+                                                :Tributo_o_Utenza
+                                              )
+                                ] ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "Codice comune contratto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codCondominio
+
+:codCondominio rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Utenza ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "Codice condominio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codEsternoAreaCircolazione
+
+:codEsternoAreaCircolazione rdf:type owl:DatatypeProperty ;
+                            
+                            rdfs:domain :Tributo_o_Utenza ;
+                            
+                            rdfs:range xsd:string ;
+                            
+                            rdfs:label "Codice esterno area circolazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codMacroCategoria
+
+:codMacroCategoria rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :UtenzaRifiuti ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "Codice macro categoria" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codTipoDenunciaFine
+
+:codTipoDenunciaFine rdf:type owl:DatatypeProperty ;
+                     
+                     rdfs:domain :Tributo_o_Utenza ;
+                     
+                     rdfs:range xsd:integer ;
+                     
+                     rdfs:label "Codice tipo denuncia fine" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codTipoDenunciaInizio
+
+:codTipoDenunciaInizio rdf:type owl:DatatypeProperty ;
+                       
+                       rdfs:domain :Tributo_o_Utenza ;
+                       
+                       rdfs:range xsd:integer ;
+                       
+                       rdfs:label "Codice tipo denuncia inizio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codTitoloOccupazione
+
+:codTitoloOccupazione rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain :Utenza ;
+                      
+                      rdfs:range xsd:integer ;
+                      
+                      rdfs:label "Codice titolo occupazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codUtenzaComunale
+
+:codUtenzaComunale rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :UtenzaAcqua ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "Codice utenza comunale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codViaFrazione
+
+:codViaFrazione rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Indirizzo ;
+                
+                rdfs:range xsd:integer ;
+                
+                rdfs:label "Codice via/frazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceAmministrativo
+
+:codiceAmministrativo rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain [ rdf:type owl:Class ;
+                                    owl:unionOf ( :Particella
+                                                  :Soggetto
+                                                  :Titolarita
+                                                  :UnitaImmobiliare
+                                                  :IdentificativoCatastale
+                                                  :Indirizzo
+                                                )
+                                  ] ;
+                      
+                      rdfs:range xsd:string ;
+                      
+                      rdfs:label "Codice amministrativo" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceCliente
+
+:codiceCliente rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Tributo_o_Utenza ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "Codice cliente" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceComuneCatastale
+
+:codiceComuneCatastale rdf:type owl:DatatypeProperty ;
+                       
+                       rdfs:domain [ rdf:type owl:Class ;
+                                     owl:unionOf ( :Indirizzo
+                                                   :Particella
+                                                   :Titolarita
+                                                 )
+                                   ] ;
+                       
+                       rdfs:range xsd:integer ;
+                       
+                       rdfs:label "Codice comune catastale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceComuneSede
+
+:codiceComuneSede rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :PersonaGiuridica ;
+                  
+                  rdfs:range xsd:string ;
+                  
+                  rdfs:label "Codice comunale sede" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceConsegna
+
+:codiceConsegna rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :UtenzaRifiuti ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Codice consegna" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceContrattoComunale
+
+:codiceContrattoComunale rdf:type owl:DatatypeProperty ;
+                         
+                         rdfs:domain :Tributo_o_Utenza ;
+                         
+                         rdfs:range xsd:string ;
+                         
+                         rdfs:label "Codice contratto comunale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceContribuente
+
+:codiceContribuente rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :Tributo_o_Utenza ;
+                    
+                    rdfs:range xsd:integer ;
+                    
+                    rdfs:label "Codice contribuente" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceDiritto
+
+:codiceDiritto rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Titolarita ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "Codice diritto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceEcografico
+
+:codiceEcografico rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :Utenza ;
+                  
+                  rdfs:range xsd:string ;
+                  
+                  rdfs:label "Codice ecografico" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceEsternoUtenza
+
+:codiceEsternoUtenza rdf:type owl:DatatypeProperty ;
+                     
+                     rdfs:domain :UtenzaRifiuti ;
+                     
+                     rdfs:range xsd:string ;
+                     
+                     rdfs:label "CodiceEsternoUtenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceFamiglia
+
+:codiceFamiglia rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :UtenzaRifiuti ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Codice famiglia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceFiscale
+
+:codiceFiscale rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :PersonaFisica
+                                           :PersonaGiuridica
+                                         )
+                           ] ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "Codice fiscale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceFrazione
+
+:codiceFrazione rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Indirizzo ;
+                
+                rdfs:range xsd:integer ;
+                
+                rdfs:label "Codice frazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceLuogoNascita
+
+:codiceLuogoNascita rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :PersonaFisica ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "Codice luogo di nascita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceNegozio
+
+:codiceNegozio rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Locazione ;
+               
+               rdfs:range xsd:integer ;
+               
+               rdfs:label "Codice negozio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codicePDF
+
+:codicePDF rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :UtenzaRifiuti ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Codice PDF" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codicePOD
+
+:codicePOD rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :Utenza ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Codice POD" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codicePODPresente
+
+:codicePODPresente rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Utenza ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "Codice POD presente" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceRione
+
+:codiceRione rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :Indirizzo ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Codice rione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codiceUtenza
+
+:codiceUtenza rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :Tributo_o_Utenza ;
+              
+              rdfs:range xsd:string ;
+              
+              rdfs:label "Codice utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#codicepratica
+
+:codicepratica rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Utenza ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "CodicePratica" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#cognome
+
+:cognome rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :PersonaFisica ;
+         
+         rdfs:range xsd:string ;
+         
+         rdfs:label "Cognome" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#collegioCamera
+
+:collegioCamera rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :AnagraficaComunale ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Collegio camera" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#collegioProvinciale
+
+:collegioProvinciale rdf:type owl:DatatypeProperty ;
+                     
+                     rdfs:domain :AnagraficaComunale ;
+                     
+                     rdfs:range xsd:int ;
+                     
+                     rdfs:label "Collegio provinciale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#collegioSenato
+
+:collegioSenato rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :AnagraficaComunale ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Collegio senato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#componentiAnagrafe
+
+:componentiAnagrafe rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :UtenzaRifiuti ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "ComponentiAnagrafe" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#comuneCatastale
+
+:comuneCatastale rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :IdentificativoCatastale ;
+                 
+                 rdfs:range xsd:string ;
+                 
+                 rdfs:label "comune catastale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#comuneContratto
+
+:comuneContratto rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :Contratto ;
+                 
+                 rdfs:range xsd:string .
+
+
+
+###  http://dkm.fbk.eu/georeporter#conStranieri
+
+:conStranieri rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :Famiglia ;
+              
+              rdfs:range xsd:boolean ;
+              
+              rdfs:label "Con stranieri" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#conUltra64enni
+
+:conUltra64enni rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Famiglia ;
+                
+                rdfs:range xsd:boolean ;
+                
+                rdfs:label "Con ultra64enni" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#condizioneProfessionale
+
+:condizioneProfessionale rdf:type owl:DatatypeProperty ;
+                         
+                         rdfs:domain :AnagraficaComunale ;
+                         
+                         rdfs:range xsd:string ;
+                         
+                         rdfs:label "Condizione professionale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#consistenza
+
+:consistenza rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :ICI_IMU
+                                         :UnitaImmobiliare
+                                         :UtenzaRifiuti
+                                       )
+                         ] ;
+             
+             rdfs:range xsd:integer ;
+             
+             rdfs:label "Consistenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#consumoFatturato
+
+:consumoFatturato rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :FornituraGas ;
+                  
+                  rdfs:range xsd:integer ;
+                  
+                  rdfs:label "Consumo fatturato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#contrattoFirmato
+
+:contrattoFirmato rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :UtenzaAcqua ;
+                  
+                  rdfs:range xsd:boolean ;
+                  
+                  rdfs:label "Contratto firmato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#convivenza
+
+:convivenza rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :Famiglia ;
+            
+            rdfs:range xsd:boolean ;
+            
+            rdfs:label "Convivenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#coordinateLat
+
+:coordinateLat rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Indirizzo ;
+               
+               rdfs:range xsd:float ;
+               
+               rdfs:label "Coordinale Latitudine" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#coordinateLong
+
+:coordinateLong rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Indirizzo ;
+                
+                rdfs:range xsd:float ;
+                
+                rdfs:label "Coordinate Longitudine" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataConcessione
+
+:dataConcessione rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :UtenzaRifiuti ;
+                 
+                 rdfs:range xsd:dateTime ;
+                 
+                 rdfs:label "DataConcessione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataDecConiuge
+
+:dataDecConiuge rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :AnagraficaComunale ;
+                
+                rdfs:range xsd:dateTime ;
+                
+                rdfs:label "Data decesso coniuge" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataDenunciaFine
+
+:dataDenunciaFine rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :UtenzaRifiuti ;
+                  
+                  rdfs:range xsd:float ;
+                  
+                  rdfs:label "Data denuncia fine" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataDenunciaInizio
+
+:dataDenunciaInizio rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :Tributo_o_Utenza ;
+                    
+                    rdfs:range xsd:dateTime ;
+                    
+                    rdfs:label "Data denuncia inizio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataEfficacia
+
+:dataEfficacia rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Nota ;
+               
+               rdfs:range xsd:dateTime ;
+               
+               rdfs:label "Data di efficacia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataFine
+
+:dataFine rdf:type owl:DatatypeProperty ;
+          
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :Locazione
+                                      :Tributo_o_Utenza
+                                    )
+                      ] ;
+          
+          rdfs:range xsd:dateTime ;
+          
+          rdfs:label "Data fine" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataFineMatrimonio
+
+:dataFineMatrimonio rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :AnagraficaComunale ;
+                    
+                    rdfs:range xsd:dateTime ;
+                    
+                    rdfs:label "Data fine matrimonio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataInizio
+
+:dataInizio rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :Locazione
+                                        :Tributo_o_Utenza
+                                      )
+                        ] ;
+            
+            rdfs:range xsd:dateTime ;
+            
+            rdfs:label "Data inizio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataIntavolazione
+
+:dataIntavolazione rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Intavolazione ;
+                   
+                   rdfs:range xsd:dateTime ;
+                   
+                   rdfs:label "Data di intavolazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataLetturaAcqua
+
+:dataLetturaAcqua rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :LetturaAcqua ;
+                  
+                  rdfs:range xsd:dateTime ;
+                  
+                  rdfs:label "Data lettura acqua" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataMatrimonio
+
+:dataMatrimonio rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :AnagraficaComunale ;
+                
+                rdfs:range xsd:dateTime ;
+                
+                rdfs:label "Data matrimonio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataNascita
+
+:dataNascita rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :PersonaFisica ;
+             
+             rdfs:range xsd:dateTime ;
+             
+             rdfs:label "Data di nascita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataRegistrazione
+
+:dataRegistrazione rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :Intavolazione
+                                               :Nota
+                                               :Titolarita
+                                             )
+                               ] ;
+                   
+                   rdfs:range xsd:dateTime ;
+                   
+                   rdfs:label "Data di registrazione in atti" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#datainserimento
+
+:datainserimento rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :UtenzaRifiuti ;
+                 
+                 rdfs:range xsd:float ;
+                 
+                 rdfs:label "DataInserimento" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#dataultimavariazione
+
+:dataultimavariazione rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain :UtenzaRifiuti ;
+                      
+                      rdfs:range xsd:float ;
+                      
+                      rdfs:label "DataUltimaVariazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#denominatore
+
+:denominatore rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :IdentificativoCatastale
+                                          :Particella
+                                        )
+                          ] ;
+              
+              rdfs:range xsd:integer ;
+              
+              rdfs:label "Denominatore" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#denominazione
+
+:denominazione rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( :Contratto
+                                           :Indirizzo
+                                           :PersonaGiuridica
+                                           :ProprietarioProTempore
+                                           :Utenza
+                                         )
+                           ] ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "Denominazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#denominazioneCircoscrizione
+
+:denominazioneCircoscrizione rdf:type owl:DatatypeProperty ;
+                             
+                             rdfs:domain :Tributo_o_Utenza ;
+                             
+                             rdfs:range xsd:string ;
+                             
+                             rdfs:label "Denominazione circoscrizione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#denominazioneFile
+
+:denominazioneFile rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Locazione ;
+                   
+                   rdfs:range xsd:string ;
+                   
+                   rdfs:label "Denominazione file" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#denominazioneTipoDenunciaFine
+
+:denominazioneTipoDenunciaFine rdf:type owl:DatatypeProperty ;
+                               
+                               rdfs:domain :Tributo_o_Utenza ;
+                               
+                               rdfs:range xsd:string ;
+                               
+                               rdfs:label "Denominazione tipo denuncia fine" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#denominazioneTipoDenunciaInizio
+
+:denominazioneTipoDenunciaInizio rdf:type owl:DatatypeProperty ;
+                                 
+                                 rdfs:domain :Tributo_o_Utenza ;
+                                 
+                                 rdfs:range xsd:string ;
+                                 
+                                 rdfs:label "Denominazione tipo denuncia inizio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#descCondProfessionale
+
+:descCondProfessionale rdf:type owl:DatatypeProperty ;
+                       
+                       rdfs:domain :AnagraficaComunale ;
+                       
+                       rdfs:range xsd:string ;
+                       
+                       rdfs:label "Descrizione condizione professionale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#descrizione
+
+:descrizione rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Locazione
+                                         :UtenzaRifiuti
+                                       )
+                         ] ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Descrizione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#distrettoSanitario
+
+:distrettoSanitario rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :AnagraficaComunale ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "DistrettoSanitario" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#edificialita
+
+:edificialita rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
+              
+              rdfs:domain :IdentificativoCatastale ;
+              
+              rdfs:range xsd:boolean ;
+              
+              rdfs:label "Edificialità" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#edificio
+
+:edificio rdf:type owl:DatatypeProperty ;
+          
+          rdfs:domain :UnitaImmobiliare ;
+          
+          rdfs:range xsd:integer ;
+          
+          rdfs:label "Edificio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#email
+
+:email rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :UtenzaRifiuti ;
+       
+       rdfs:range xsd:string ;
+       
+       rdfs:label "Email" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#enteConcessionario
+
+:enteConcessionario rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :UtenzaRifiuti ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "EnteConcessionario" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ereditaCatasto
+
+:ereditaCatasto rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :ICI_IMU ;
+                
+                rdfs:range xsd:boolean ;
+                
+                rdfs:label "Eredita catasto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#esclusioneAllineamentoAnagrafe
+
+:esclusioneAllineamentoAnagrafe rdf:type owl:DatatypeProperty ;
+                                
+                                rdfs:domain :UtenzaRifiuti ;
+                                
+                                rdfs:range xsd:boolean ;
+                                
+                                rdfs:label "EsclusioneAllineamentoAnagrafe" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#esclusioneFatturazione
+
+:esclusioneFatturazione rdf:type owl:DatatypeProperty ;
+                        
+                        rdfs:domain :Tributo_o_Utenza ;
+                        
+                        rdfs:range xsd:boolean ;
+                        
+                        rdfs:label "Esclusione fatturazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#etaMax
+
+:etaMax rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain :Famiglia ;
+        
+        rdfs:range xsd:int ;
+        
+        rdfs:label "Età max" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#etaMin
+
+:etaMin rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain :Famiglia ;
+        
+        rdfs:range xsd:int ;
+        
+        rdfs:label "Età min" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#foglio
+
+:foglio rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain :IdentificativoCatastale ;
+        
+        rdfs:range xsd:integer ;
+        
+        rdfs:label "Foglio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#foglioMappa
+
+:foglioMappa rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :Particella ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "FoglioMappa" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idAliquotaApplicata
+
+:idAliquotaApplicata rdf:type owl:DatatypeProperty ;
+                     
+                     rdfs:domain :ICI_IMU ;
+                     
+                     rdfs:range xsd:integer ;
+                     
+                     rdfs:label "Id aliquota applicata" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idImmobile
+
+:idImmobile rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :ICI_IMU ;
+            
+            rdfs:range xsd:integer ;
+            
+            rdfs:label "ID immobile" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idImmobilePrincipale
+
+:idImmobilePrincipale rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain :ICI_IMU ;
+                      
+                      rdfs:range xsd:integer ;
+                      
+                      rdfs:label "ID immobile principale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idSiatelEnergia
+
+:idSiatelEnergia rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :FornituraEnergia ;
+                 
+                 rdfs:range xsd:integer ;
+                 
+                 rdfs:label "ID SIATEL energia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idSiatelEnergiaDettaglio
+
+:idSiatelEnergiaDettaglio rdf:type owl:DatatypeProperty ;
+                          
+                          rdfs:domain :FornituraEnergia ;
+                          
+                          rdfs:range xsd:integer ;
+                          
+                          rdfs:label "ID SIATEL energia dettaglio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idSiatelGas
+
+:idSiatelGas rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :FornituraGas ;
+             
+             rdfs:range xsd:integer ;
+             
+             rdfs:label "ID SIATEL Gas" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idSiatelGasDettaglio
+
+:idSiatelGasDettaglio rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain :FornituraGas ;
+                      
+                      rdfs:range xsd:integer ;
+                      
+                      rdfs:label "ID SIATEL Gas dettaglio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idSiatelLocazioni
+
+:idSiatelLocazioni rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Locazione ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "ID SIATEL locazioni" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#idTitolarita
+
+:idTitolarita rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :Titolarita ;
+              
+              rdfs:range xsd:integer ;
+              
+              rdfs:label "Identificativo titolarita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#identificativoImmobile
+
+:identificativoImmobile rdf:type owl:DatatypeProperty ;
+                        
+                        rdfs:domain :UnitaImmobiliare ;
+                        
+                        rdfs:range xsd:integer ;
+                        
+                        rdfs:label "Identificativo immobile" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#identificativoParticella
+
+:identificativoParticella rdf:type owl:DatatypeProperty ;
+                          
+                          rdfs:domain [ rdf:type owl:Class ;
+                                        owl:unionOf ( :Particella
+                                                      :Titolarita
+                                                    )
+                                      ] ;
+                          
+                          rdfs:range xsd:integer ;
+                          
+                          rdfs:label "Identificativo particella" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#identificativoSoggetto
+
+:identificativoSoggetto rdf:type owl:DatatypeProperty ;
+                        
+                        rdfs:domain :Soggetto ;
+                        
+                        rdfs:range xsd:integer ;
+                        
+                        rdfs:label "Identificativo soggetto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#importoCanone
+
+:importoCanone rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Locazione ;
+               
+               rdfs:range xsd:float ;
+               
+               rdfs:label "Importo canone" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#indicazioniSupplementari
+
+:indicazioniSupplementari rdf:type owl:DatatypeProperty ;
+                          
+                          rdfs:domain :PersonaFisica ;
+                          
+                          rdfs:range xsd:string ;
+                          
+                          rdfs:label "Indicazioni supplementari" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#indirizzoCompleto
+
+:indirizzoCompleto rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Indirizzo ;
+                   
+                   rdfs:range xsd:string ;
+                   
+                   rdfs:label "Indirizzo completo" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#indirizzoNormalizzato
+
+:indirizzoNormalizzato rdf:type owl:DatatypeProperty ;
+                       
+                       rdfs:domain :Indirizzo ;
+                       
+                       rdfs:range xsd:string ;
+                       
+                       rdfs:label "Indirizzo Normalizzato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#interno
+
+:interno rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( :Indirizzo
+                                     :UnitaImmobiliare
+                                   )
+                     ] ;
+         
+         rdfs:range xsd:string ;
+         
+         rdfs:label "Interno" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#isElettore
+
+:isElettore rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :AnagraficaComunale ;
+            
+            rdfs:range xsd:boolean ;
+            
+            rdfs:label "è elettore" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#isolato
+
+:isolato rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :Indirizzo ;
+         
+         rdfs:range xsd:string ;
+         
+         rdfs:label "Isolato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#kwhFatturato
+
+:kwhFatturato rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :FornituraEnergia ;
+              
+              rdfs:range xsd:integer ;
+              
+              rdfs:label "KWh fatturato" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#lettera
+
+:lettera rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :Indirizzo ;
+         
+         rdfs:range xsd:string ;
+         
+         rdfs:label "Lettera" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#lettura
+
+:lettura rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :LetturaAcqua ;
+         
+         rdfs:range xsd:integer ;
+         
+         rdfs:label "Lettura" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#localita
+
+:localita rdf:type owl:DatatypeProperty ;
+          
+          rdfs:domain :Indirizzo ;
+          
+          rdfs:range xsd:string ;
+          
+          rdfs:label "Località" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#lotto
+
+:lotto rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :UnitaImmobiliare ;
+       
+       rdfs:range xsd:string ;
+       
+       rdfs:label "Lotto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#luogoNascita
+
+:luogoNascita rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :PersonaFisica ;
+              
+              rdfs:range xsd:string ;
+              
+              rdfs:label "Luogo di nascita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#madreFigli
+
+:madreFigli rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :Famiglia ;
+            
+            rdfs:range xsd:boolean ;
+            
+            rdfs:label "Madre figli" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#matricola
+
+:matricola rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :LetturaAcqua ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Matricola" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#monoparentale
+
+:monoparentale rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :Famiglia ;
+               
+               rdfs:range xsd:boolean ;
+               
+               rdfs:label "Monoparentale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#mqCatastali
+
+:mqCatastali rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :UtenzaRifiuti ;
+             
+             rdfs:range xsd:integer ;
+             
+             rdfs:label "MqCatastali" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#mqLocali
+
+:mqLocali rdf:type owl:DatatypeProperty ;
+          
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :ICI_IMU
+                                      :UtenzaRifiuti
+                                    )
+                      ] ;
+          
+          rdfs:range xsd:float ;
+          
+          rdfs:label "MQ Locali" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#mqLocaliPertinenza
+
+:mqLocaliPertinenza rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :UtenzaRifiuti ;
+                    
+                    rdfs:range xsd:integer ;
+                    
+                    rdfs:label "MQLocaliPertinenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#mqMax
+
+:mqMax rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :UtenzaRifiuti ;
+       
+       rdfs:range xsd:integer ;
+       
+       rdfs:label "MQ max" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#mqMin
+
+:mqMin rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :UtenzaRifiuti ;
+       
+       rdfs:range xsd:integer ;
+       
+       rdfs:label "MQ min" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#nome
+
+:nome rdf:type owl:DatatypeProperty ;
+      
+      rdfs:domain :PersonaFisica ;
+      
+      rdfs:range xsd:string ;
+      
+      rdfs:label "Nome" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#nomeCondominio
+
+:nomeCondominio rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :UtenzaRifiuti ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "NomeCondominio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#notaBreve
+
+:notaBreve rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :Tributo_o_Utenza ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Nota breve" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#note
+
+:note rdf:type owl:DatatypeProperty ;
+      
+      rdfs:domain :UtenzaAcqua ;
+      
+      rdfs:range xsd:string ;
+      
+      rdfs:label "Note" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#noteAccertamenti
+
+:noteAccertamenti rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :UtenzaRifiuti ;
+                  
+                  rdfs:range xsd:string ;
+                  
+                  rdfs:label "Note accertamenti" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numConcessione
+
+:numConcessione rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :UtenzaRifiuti ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "NumConcessione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numContatori
+
+:numContatori rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :LetturaAcqua ;
+              
+              rdfs:range xsd:integer ;
+              
+              rdfs:comment "Numero contatori" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numMinoriFino6Anni
+
+:numMinoriFino6Anni rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :Famiglia ;
+                    
+                    rdfs:range xsd:int ;
+                    
+                    rdfs:label "Numero minori fino 6 anni" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numero
+
+:numero rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain [ rdf:type owl:Class ;
+                      owl:unionOf ( :IdentificativoCatastale
+                                    :Locazione
+                                    :Particella
+                                    :Tributo_o_Utenza
+                                  )
+                    ] ;
+        
+        rdfs:range xsd:integer ;
+        
+        rdfs:label "Numero" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroComponenti
+
+:numeroComponenti rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :Famiglia ;
+                  
+                  rdfs:range xsd:int ;
+                  
+                  rdfs:label "Numero componenti" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroDipendenze
+
+:numeroDipendenze rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :UtenzaAcqua ;
+                  
+                  rdfs:range xsd:integer ;
+                  
+                  rdfs:label "Numero dipendenze" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroDocumento
+
+:numeroDocumento rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :Intavolazione ;
+                 
+                 rdfs:range xsd:string ;
+                 
+                 rdfs:label "Numero documento" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroFamiglia
+
+:numeroFamiglia rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Famiglia ;
+                
+                rdfs:range xsd:int ;
+                
+                rdfs:label "Numero famiglia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroFigli
+
+:numeroFigli rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :Famiglia ;
+             
+             rdfs:range xsd:int ;
+             
+             rdfs:label "Numero figli" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroFigliFino26Anni
+
+:numeroFigliFino26Anni rdf:type owl:DatatypeProperty ;
+                       
+                       rdfs:domain :Famiglia ;
+                       
+                       rdfs:range xsd:int ;
+                       
+                       rdfs:label "Numero figli fino 26 anni" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroFigliFino6Anni
+
+:numeroFigliFino6Anni rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain :Famiglia ;
+                      
+                      rdfs:range xsd:int ;
+                      
+                      rdfs:label "Numero figli fino a 6 anni" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroFigliMinori
+
+:numeroFigliMinori rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Famiglia ;
+                   
+                   rdfs:range xsd:int ;
+                   
+                   rdfs:label "Numero figli minori" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroIndividuale
+
+:numeroIndividuale rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :AnagraficaComunale ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "Numero individuale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroMesiFatturazione
+
+:numeroMesiFatturazione rdf:type owl:DatatypeProperty ;
+                        
+                        rdfs:domain :Contratto ;
+                        
+                        rdfs:range xsd:integer ;
+                        
+                        rdfs:label "Numero mesi di fatturazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroMinori
+
+:numeroMinori rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :Famiglia ;
+              
+              rdfs:range xsd:int ;
+              
+              rdfs:label "Numero minori" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#numeroNota
+
+:numeroNota rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :Nota ;
+            
+            rdfs:range xsd:string ;
+            
+            rdfs:label "Numero nota" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#occupante
+
+:occupante rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :Tributo_o_Utenza ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Occupante" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#oggetto
+
+:oggetto rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :Utenza ;
+         
+         rdfs:range xsd:string ;
+         
+         rdfs:label "Oggetto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#origineCodiceFiscale
+
+:origineCodiceFiscale rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain [ rdf:type owl:Class ;
+                                    owl:unionOf ( :PersonaFisica
+                                                  :PersonaGiuridica
+                                                )
+                                  ] ;
+                      
+                      rdfs:range xsd:boolean ;
+                      
+                      rdfs:label "Origine codice fiscale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#padreFigli
+
+:padreFigli rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :Famiglia ;
+            
+            rdfs:range xsd:boolean ;
+            
+            rdfs:label "Padre figli" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#particellaEstensione
+
+:particellaEstensione rdf:type owl:DatatypeProperty ;
+                      
+                      rdfs:domain :Tributo_o_Utenza ;
+                      
+                      rdfs:range xsd:integer ;
+                      
+                      rdfs:label "Particella estensione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#partita
+
+:partita rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( :Particella
+                                     :Titolarita
+                                     :UnitaImmobiliare
+                                   )
+                     ] ;
+         
+         rdfs:range xsd:string ;
+         
+         rdfs:label "Partita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#percentualeDiRipartizione
+
+:percentualeDiRipartizione rdf:type owl:DatatypeProperty ;
+                           
+                           rdfs:domain :LetturaAcqua ;
+                           
+                           rdfs:range xsd:string ;
+                           
+                           rdfs:label "Percentuale di ripartizione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#percentualeQuote
+
+:percentualeQuote rdf:type owl:DatatypeProperty ;
+                  
+                  rdfs:domain :ICI_IMU ;
+                  
+                  rdfs:range xsd:float ;
+                  
+                  rdfs:label "Percentuale quote" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#piano
+
+:piano rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :UnitaImmobiliare ;
+       
+       rdfs:range xsd:string ;
+       
+       rdfs:label "Piano1" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#porzioneMateriale
+
+:porzioneMateriale rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :IdentificativoCatastale
+                                               :Titolarita
+                                             )
+                               ] ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "Porzione materiale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#progressivo
+
+:progressivo rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Famiglia
+                                         :Particella
+                                         :UnitaImmobiliare
+                                       )
+                         ] ;
+             
+             rdfs:range xsd:integer ;
+             
+             rdfs:label "Progressivo" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#progressivoNota
+
+:progressivoNota rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :Nota ;
+                 
+                 rdfs:range xsd:string ;
+                 
+                 rdfs:label "Progressivo nota" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#proprieta
+
+:proprieta rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :Utenza ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Proprieta" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#protocolloNotifica
+
+:protocolloNotifica rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( :Particella
+                                                :UnitaImmobiliare
+                                              )
+                                ] ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "Protocollo notifica" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#provincia
+
+:provincia rdf:type owl:DatatypeProperty ;
+           
+           rdfs:domain :Indirizzo ;
+           
+           rdfs:range xsd:string ;
+           
+           rdfs:label "Provincia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#quotaDenominatore
+
+:quotaDenominatore rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Titolarita ;
+                   
+                   rdfs:range xsd:integer ;
+                   
+                   rdfs:label "Quota denominatore" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#quotaNumeratore
+
+:quotaNumeratore rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :Titolarita ;
+                 
+                 rdfs:range xsd:integer ;
+                 
+                 rdfs:label "Quota numeratore" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ramoAttivita
+
+:ramoAttivita rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :AnagraficaComunale ;
+              
+              rdfs:range xsd:string ;
+              
+              rdfs:label "Ramo attività" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#redditoAgrario
+
+:redditoAgrario rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Particella ;
+                
+                rdfs:range xsd:float ;
+                
+                rdfs:label "Reddito agrario (euro)" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#redditoDominicale
+
+:redditoDominicale rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :Particella ;
+                   
+                   rdfs:range xsd:float ;
+                   
+                   rdfs:label "Reddito dominicale (euro)" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#regime
+
+:regime rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain :Titolarita ;
+        
+        rdfs:range xsd:string ;
+        
+        rdfs:label "Regime" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#relazioneParentela
+
+:relazioneParentela rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :Famiglia ;
+                    
+                    rdfs:range xsd:string ;
+                    
+                    rdfs:label "Relazione di parentela" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#rendita
+
+:rendita rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( :ICI_IMU
+                                     :UtenzaRifiuti
+                                   )
+                     ] ;
+         
+         rdfs:range xsd:float ;
+         
+         rdfs:label "Rendita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#renditaCatasto
+
+:renditaCatasto rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :ICI_IMU ;
+                
+                rdfs:range xsd:float ;
+                
+                rdfs:label "Rendita catasto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#renditaEuro
+
+:renditaEuro rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :UnitaImmobiliare ;
+             
+             rdfs:range xsd:float ;
+             
+             rdfs:label "Rendita euro" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#renditaLire
+
+:renditaLire rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :UnitaImmobiliare ;
+             
+             rdfs:range xsd:integer ;
+             
+             rdfs:label "Rendita lire" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#renditaUtenza
+
+:renditaUtenza rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :ICI_IMU ;
+               
+               rdfs:range xsd:float ;
+               
+               rdfs:label "Rendita utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#riferimento
+
+:riferimento rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :UtenzaRifiuti ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Riferimento" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#rione
+
+:rione rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :AnagraficaComunale ;
+       
+       rdfs:range xsd:string ;
+       
+       rdfs:label "Rione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#scala
+
+:scala rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :UnitaImmobiliare ;
+       
+       rdfs:range xsd:string ;
+       
+       rdfs:label "Scala" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#sede
+
+:sede rdf:type owl:DatatypeProperty ;
+      
+      rdfs:domain :PersonaGiuridica ;
+      
+      rdfs:range xsd:string ;
+      
+      rdfs:label "Sede" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#sesso
+
+:sesso rdf:type owl:DatatypeProperty ;
+       
+       rdfs:domain :PersonaFisica ;
+       
+       rdfs:range xsd:string ;
+       
+       rdfs:label "Sesso" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#settoreAttivita
+
+:settoreAttivita rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :AnagraficaComunale ;
+                 
+                 rdfs:range xsd:string ;
+                 
+                 rdfs:label "Settore attività" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#sezione
+
+:sezione rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :Titolarita ;
+         
+         rdfs:range xsd:integer ;
+         
+         rdfs:label "Sezione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#sezioneCensimento
+
+:sezioneCensimento rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :AnagraficaComunale
+                                               :Famiglia
+                                             )
+                               ] ;
+                   
+                   rdfs:range xsd:string ;
+                   
+                   rdfs:label "Sezione censimento" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#sezioneElettorale
+
+:sezioneElettorale rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :AnagraficaComunale ;
+                   
+                   rdfs:range xsd:string ;
+                   
+                   rdfs:label "Sezione elettorale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#sezionePartitaTavolare
+
+:sezionePartitaTavolare rdf:type owl:DatatypeProperty ;
+                        
+                        rdfs:domain :Particella ;
+                        
+                        rdfs:range xsd:string ;
+                        
+                        rdfs:label "Sezione partita tavolare" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#soggettoRegime
+
+:soggettoRegime rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Titolarita ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Soggetto di riferimento regime" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#soloUltra65enni
+
+:soloUltra65enni rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :Famiglia ;
+                 
+                 rdfs:range xsd:boolean ;
+                 
+                 rdfs:label "Solo ultra 65enni" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#spesaConsumo
+
+:spesaConsumo rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :FornituraEnergia ;
+              
+              rdfs:range xsd:integer ;
+              
+              rdfs:label "Spesa consumo" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#statoCivile
+
+:statoCivile rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :Famiglia ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Stato civile" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#statoCodicePDF
+
+:statoCodicePDF rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :UtenzaRifiuti ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Stato codice PDF" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#statoNascita
+
+:statoNascita rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :AnagraficaComunale ;
+              
+              rdfs:range xsd:string ;
+              
+              rdfs:label "Stato nascita" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#statocodpdf
+
+:statocodpdf rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :UtenzaRifiuti ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "StatoCodPDF" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#subalterno
+
+:subalterno rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :IdentificativoCatastale ;
+            
+            rdfs:range xsd:string ;
+            
+            rdfs:label "Subalterno" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#superficie
+
+:superficie rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :Particella
+                                        :UnitaImmobiliare
+                                      )
+                        ] ;
+            
+            rdfs:range xsd:integer ;
+            
+            rdfs:label "Superficie" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#superficieCatastale
+
+:superficieCatastale rdf:type owl:DatatypeProperty ;
+                     
+                     rdfs:domain :UtenzaRifiuti ;
+                     
+                     rdfs:range xsd:integer ;
+                     
+                     rdfs:label "SuperficieCatastale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#tag
+
+:tag rdf:type owl:DatatypeProperty ;
+     
+     rdfs:domain :Tributo_o_Utenza ;
+     
+     rdfs:range xsd:string ;
+     
+     rdfs:label "Tag" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#testoIscrizioniFoglioC
+
+:testoIscrizioniFoglioC rdf:type owl:DatatypeProperty ;
+                        
+                        rdfs:domain :Titolarita ;
+                        
+                        rdfs:range xsd:string ;
+                        
+                        rdfs:comment "testo iscrizioni foglio C" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#tipoCanone
+
+:tipoCanone rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :Locazione ;
+            
+            rdfs:range xsd:string ;
+            
+            rdfs:label "Tipo canone" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#tipoParticella
+
+:tipoParticella rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Titolarita ;
+                
+                rdfs:range xsd:integer ;
+                
+                rdfs:label "Tipo particella" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#tipoUtenza
+
+:tipoUtenza rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :Tributo_o_Utenza ;
+            
+            rdfs:range xsd:string ;
+            
+            rdfs:label "Tipo utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#tipoUtenzaEnergia
+
+:tipoUtenzaEnergia rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :FornituraEnergia ;
+                   
+                   rdfs:range xsd:string ;
+                   
+                   rdfs:label "Tipo utenza energia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#tipoUtenzaGas
+
+:tipoUtenzaGas rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :FornituraGas ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "Tipo utenza gas" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#tipoimmobile
+
+:tipoimmobile rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :Titolarita
+                                          :UnitaImmobiliare
+                                        )
+                          ] ;
+              
+              rdfs:range xsd:string ;
+              
+              rdfs:label "TipoImmobile" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#titolo
+
+:titolo rdf:type owl:DatatypeProperty ;
+        
+        rdfs:domain :Titolarita ;
+        
+        rdfs:range xsd:string ;
+        
+        rdfs:label "Titolo (non codificato)" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#titoloStudio
+
+:titoloStudio rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :AnagraficaComunale ;
+              
+              rdfs:range xsd:integer ;
+              
+              rdfs:label "Titolo di studio" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#toponimo
+
+:toponimo rdf:type owl:DatatypeProperty ;
+          
+          rdfs:domain :Indirizzo ;
+          
+          rdfs:range xsd:string ;
+          
+          rdfs:label "Toponimo" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ultracentenari
+
+:ultracentenari rdf:type owl:DatatypeProperty ;
+                
+                rdfs:domain :Famiglia ;
+                
+                rdfs:range xsd:string ;
+                
+                rdfs:label "Ultracentenari" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#unipersonale
+
+:unipersonale rdf:type owl:DatatypeProperty ;
+              
+              rdfs:domain :Famiglia ;
+              
+              rdfs:range xsd:boolean ;
+              
+              rdfs:label "Unipersonale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#utenzaCondominiale
+
+:utenzaCondominiale rdf:type owl:DatatypeProperty ;
+                    
+                    rdfs:domain :Utenza ;
+                    
+                    rdfs:range xsd:integer ;
+                    
+                    rdfs:label "Utenza condominiale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#utenzaGiornaliera
+
+:utenzaGiornaliera rdf:type owl:DatatypeProperty ;
+                   
+                   rdfs:domain :UtenzaRifiuti ;
+                   
+                   rdfs:range xsd:string ;
+                   
+                   rdfs:label "UtenzaGiornaliera" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#utenzaOrigine
+
+:utenzaOrigine rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :UtenzaRifiuti ;
+               
+               rdfs:range xsd:string ;
+               
+               rdfs:label "UtenzaOrigine" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#valoreIMIS
+
+:valoreIMIS rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :UnitaImmobiliare ;
+            
+            rdfs:range xsd:float ;
+            
+            rdfs:label "Valore IMIS" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#valoreUtenzaT
+
+:valoreUtenzaT rdf:type owl:DatatypeProperty ;
+               
+               rdfs:domain :ICI_IMU ;
+               
+               rdfs:range xsd:float ;
+               
+               rdfs:label "Valore utenza T" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#viaFrazione
+
+:viaFrazione rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :Indirizzo ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Via/frazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#zona
+
+:zona rdf:type owl:DatatypeProperty ;
+      
+      rdfs:domain :UnitaImmobiliare ;
+      
+      rdfs:range xsd:integer ;
+      
+      rdfs:label "Zona" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#zonaMontana
+
+:zonaMontana rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :Indirizzo ;
+             
+             rdfs:range xsd:string ;
+             
+             rdfs:label "Zona montana" .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://dkm.fbk.eu/georeporter#AnagraficaComunale
+
+:AnagraficaComunale rdf:type owl:Class ;
+                    
+                    rdfs:label "Anagrafica comunale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Contratto
+
+:Contratto rdf:type owl:Class ;
+           
+           rdfs:label "Contratto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Famiglia
+
+:Famiglia rdf:type owl:Class ;
+          
+          rdfs:label "Famiglia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#FornituraEnergia
+
+:FornituraEnergia rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Contratto ;
+                  
+                  rdfs:label "Fornitura energia" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#FornituraGas
+
+:FornituraGas rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Contratto ;
+              
+              rdfs:label "Fornitura gas" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ICI_IMU
+
+:ICI_IMU rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Tributo_o_Utenza ;
+         
+         rdfs:label "ICI - IMU" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ICI_IMU_AbitazionePrincipale
+
+:ICI_IMU_AbitazionePrincipale rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :ICI_IMU ;
+                              
+                              rdfs:label "ICI - IMU abitazione principale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ICI_IMU_NudaProprieta
+
+:ICI_IMU_NudaProprieta rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :ICI_IMU ;
+                       
+                       rdfs:label "ICI - IMU nuda proprietà" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#IdentificativoCatastale
+
+:IdentificativoCatastale rdf:type owl:Class ;
+                         
+                         rdfs:label "Identificativo catastale" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Indirizzo
+
+:Indirizzo rdf:type owl:Class ;
+           
+           rdfs:label "Indirizzo" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Intavolazione
+
+:Intavolazione rdf:type owl:Class ;
+               
+               rdfs:label "Intavolazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#LetturaAcqua
+
+:LetturaAcqua rdf:type owl:Class ;
+              
+              rdfs:label "Lettura acqua" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Locazione
+
+:Locazione rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Contratto ;
+           
+           rdfs:label "Locazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Nota
+
+:Nota rdf:type owl:Class ;
+      
+      rdfs:label "Nota" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Particella
+
+:Particella rdf:type owl:Class ;
+            
+            rdfs:label "Particella (edificiale)" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#PersonaFisica
+
+:PersonaFisica rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Soggetto ;
+               
+               rdfs:label "Persona fisica" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#PersonaGiuridica
+
+:PersonaGiuridica rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Soggetto ;
+                  
+                  rdfs:label "Persona giuridica" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#ProprietarioProTempore
+
+:ProprietarioProTempore rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :Soggetto ;
+                        
+                        rdfs:label "Proprietario pro-tempore" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Soggetto
+
+:Soggetto rdf:type owl:Class ;
+          
+          rdfs:label "Soggetto" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#TipoIntavolazione
+
+:TipoIntavolazione rdf:type owl:Class ;
+                   
+                   rdfs:label "Tipo intavolazione" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#TipoNota
+
+:TipoNota rdf:type owl:Class ;
+          
+          rdfs:label "Tipo nota" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#TipoParticella
+
+:TipoParticella rdf:type owl:Class ;
+                
+                rdfs:label "Tipo particella" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#TipoRegime
+
+:TipoRegime rdf:type owl:Class ;
+            
+            rdfs:label "Tipo regime" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Titolarita
+
+:Titolarita rdf:type owl:Class ;
+            
+            rdfs:label "Titolarità" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Tributo_o_Utenza
+
+:Tributo_o_Utenza rdf:type owl:Class ;
+                  
+                  rdfs:label "Tributo o utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#UnitaImmobiliare
+
+:UnitaImmobiliare rdf:type owl:Class ;
+                  
+                  rdfs:label "Unità immobiliare" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#Utenza
+
+:Utenza rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Tributo_o_Utenza ;
+        
+        rdfs:label "Utenza" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#UtenzaAcqua
+
+:UtenzaAcqua rdf:type owl:Class ;
+             
+             rdfs:subClassOf :Utenza ;
+             
+             rdfs:label "Utenza acqua" .
+
+
+
+###  http://dkm.fbk.eu/georeporter#UtenzaRifiuti
+
+:UtenzaRifiuti rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Utenza ;
+               
+               rdfs:label "Utenza rifiuti" .
+
+
+
+
+###  Generated by the OWL API (version 4.1.3.20151118-2017) https://github.com/owlcs/owlapi
+
