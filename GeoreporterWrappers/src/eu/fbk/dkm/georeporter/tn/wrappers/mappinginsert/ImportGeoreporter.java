@@ -23,8 +23,30 @@ public class ImportGeoreporter {
 	
 	
 
+	public  void importaUnitaImmobiliariITA2(String filePath,String fileHeader, String fileMappings) {
+		
+		MappingInsertFabIde_ITA fabIDE=new MappingInsertFabIde_ITA(targetURL);
+		fabIDE.run(filePath,fileHeader,fileMappings);
+		
+		
+	}
 	
+public  void importaUnitaImmobiliariITA1(String filePath,String fileHeader, String fileMappings) {
+		
+	MappingInsertFabUiNoteITA fabIDE=new MappingInsertFabUiNoteITA(targetURL);
+		fabIDE.run(filePath,fileHeader,fileMappings);
+		
+		
+	}
+
+
+public  void importaUnitaImmobiliariITA3(String filePath,String fileHeader, String fileMappings) {
 	
+	MappingInsertFabIndirizzoITA fabind=new MappingInsertFabIndirizzoITA(targetURL);
+	fabind.run(filePath,fileHeader,fileMappings);
+}
+
+
 	public  void importaUnitaImmobiliari1(String filePath,String fileHeader, String fileMappings) {
 		
 	//	 MappingInsertFabUiNote.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
@@ -61,11 +83,22 @@ public class ImportGeoreporter {
 		fabind.run(filePath,fileHeader,fileMappings);
 	}
 	
+	
+	public  void importaSoggettiFabbricatiITA(String filePath,String fileHeader, String fileMappings) {
+		MappingInsertSogITA inssog= new MappingInsertSogITA(targetURL);
+		inssog.run(filePath, fileHeader, fileMappings);
+	}
+	
+	
 	public  void importaSoggettiFabbricati(String filePath,String fileHeader, String fileMappings) {
 		MappingInsertSog inssog= new MappingInsertSog(targetURL);
 		inssog.run(filePath, fileHeader, fileMappings);
 	}
 	
+	public  void importaTitolaritaFabbricatiITA(String filePath,String fileHeader, String fileMappings) {
+		MappingInsertTitITA instit=new MappingInsertTitITA(targetURL);
+		instit.run(filePath, fileHeader, fileMappings);
+	}
 	
 	public  void importaTitolaritaFabbricati(String filePath,String fileHeader, String fileMappings) {
 		MappingInsertTit instit=new MappingInsertTit(targetURL);
@@ -171,129 +204,112 @@ public static void main(String[] args) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
-        String serviceURL="http://localhost:8080/GeoreporterService/servizio/rest/";
+        String serviceURL="http://localhost:8081/GeoreporterService/servizio/rest/";
 		ImportGeoreporter importgr= new ImportGeoreporter(serviceURL);
 	 
 		
 		
-	
-		///	importgr.importaTributiUtenzaICI_IMU_NudaProprieta("file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop.xls","file/file_mapping/mappingICIIMU.json");
+		// importgr.importaUnitaImmobiliariITA2("file/ITA_file/A281305833_1.FAB","file/ITA_headerfilefab.csv","file/file_mapping/mappingFabbricatiUI_ITA.json");
+        // importgr.importaSoggettiFabbricatiITA("file/ITA_file/A281305833_1.SOG","file/ITA_File/headerfilesogITA.csv","file/file_mapping/mappingSoggettiFabbricati_ITA.json");
+		/// importgr.importaTitolaritaFabbricatiITA("file/ITA_file/A281305833_1.TIT","file/TN_header/headerfiletitITA.csv","file/file_mapping/mappingTitolaritaFabITA.json"); 
+				
+
 		
-		//importgr.importaSoggettiParticelleFondiarie("file/TN_file/404_41097.SOG","file/TN_header/headerfilesogfon.csv","file/file_mapping/mappingSoggettoFon.json");
-	//	importgr.importaSoggettiParticelleFondiarie("file/TN_file/404_41097.SOG","file/TN_header/headerfilesogfon.csv","file/file_mapping/mappingSoggettoFon.json");
-	//	importgr.importaTitolaritaParticelleFondiarie("file/TN_file/404_41097.TTC","file/TN_header/headerfilettcfon.csv","file/file_mapping/mappingTitolaritaFondiaria.json");
+//********************* FABBRICATI *************************************//		
+		System.out.println("1-Inserimento UnitaImmobiliari e Note. 4min"+date);
+	   //importgr.importaUnitaImmobiliari1("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
 		
-		System.out.println("1-Inserimento UnitaImmobiliari e Note. 7min"+date);
-	//	   importgr.importaUnitaImmobiliari1("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
-		//MappingInsertFabUiNote.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingUI_Nota.json");
-//		MappingInsertFabUiNote mifuin=new MappingInsertFabUiNote();
-//	    mifuin.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");	
-	
-	//	MappingInsertFabUiNote.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
+		
 		// file di import, file header, file di mappings
         date = new Date();
         System.out.println("2-Inserimento Identificativi Catastali..6min"+date);
-  //     importgr.importaUnitaImmobiliari2("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
-        //MappingInsertFabIde.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingCatastoFabbricati.json");
-	//  MappingInsertFabIde.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
-	  
+//        importgr.importaUnitaImmobiliari2("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
+
+      
 		date = new Date();
 		System.out.println("3-Inserimento UI..Indirizzi 3min"+date);
 //		importgr.importaUnitaImmobiliari3("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
-  //  	MappingInsertFabIndirizzo.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingIndirizzoFab.json");
-  // 	MappingInsertFabIndirizzo.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.FAB","file/TN_header/headerfilefab.csv","file/file_mapping/mappingFabbricatiUI.json");
+  
 		
 		date = new Date();
 		System.out.println("4-Inserimento Fabbricati..Soggetti "+dateFormat.format(date));
-	
-	//	importgr.importaSoggettiFabbricati("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG","file/TN_header/headerfilesog.csv","file/file_mapping/mappingSoggettiFabbricati.json");
-		//	MappingInsertSog.run( "file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG","file/TN_header/headerfilesog.csv","file/file_mapping/mappingSoggettiFabbricati.json");
+//	  	importgr.importaSoggettiFabbricati("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.SOG","file/TN_header/headerfilesog.csv","file/file_mapping/mappingSoggettiFabbricati.json");
+		
 		
 		date = new Date();
-		System.out.println("5-Inserimento Fabbricati..Titolarita "+date);
+		System.out.println("5-Inserimento Fabbricati..Titolarita 13min"+date);
+//		importgr.importaTitolaritaFabbricati("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT","file/TN_header/headerfiletit.csv","file/file_mapping/mappingTitolaritaFab.json");
+
 		
-		
-	//	MappingInsertTit mitit= new MappingInsertTit(serviceURL);
-	//	mitit.run("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT","file/TN_header/headerfiletit.csv","file/file_mapping/mappingTitolaritaFab.json");
-//	importgr.importaTitolaritaFabbricati("file/TN_file/IDR0000115470_TIPOFACSN_CAMML322.TIT","file/TN_header/headerfiletit.csv","file/file_mapping/mappingTitolaritaFab.json");
-		//anagrafica
+//****************** Anagrafica ******************************************//
 		date = new Date();
-		System.out.println("6-Inserimento Anagrafica.. "+date);
-//	    MappingInsertAnagraficaComunale.run("file/TN_file/DGASBANN.csv","file/file_mapping/mappingAnagraficaComunale.json","L322");
-	    
-		
+		System.out.println("6-Inserimento Anagrafica.. 5min"+date);
 //		importgr.importaAnagraficaComunale("file/TN_file/DGASBANN.csv","file/file_mapping/mappingAnagraficaComunale.json","L322");
-	    date = new Date();
+
+		date = new Date();
 	    System.out.println("7-Inserimento Anagrafica..famiglie "+date);
-//		MappingInsertFamiglia.run("file/TN_file/DGASBAN2.csv","file/file_mapping/mappingFamiglia.json","L322");
 //	    importgr.importaAnagraficaFamiglie("file/TN_file/DGASBAN2.csv","file/file_mapping/mappingFamiglia.json","L322");
 	
+	   
+//******************************* Particelle Fondiarie *********************************//	    
 	    
-	    
-	    
-		System.out.println("16-Inserimento Particelle fondiarie 20min"+date);
-	//	importgr.importaParticelleFondiarie( "file/TN_file/404_41097.PAR","file/TN_header/headerfileparfon.csv","file/file_mapping/mappingParticellaFondiaria.json","L322");
-		
-//		MappingInsertParFon.run( "file/TN_file/404_41097.PAR","file/TN_header/headerfileparfon.csv","file/file_mapping/mappingParticellaFondiaria.json","L322");
-		
-	    
-	    
-	    
-	    
-		//Contratti/
+		System.out.println("8-Inserimento Particelle fondiarie 20min"+date);
+    	//importgr.importaParticelleFondiarie( "file/TN_file/404_41097.PAR","file/TN_header/headerfileparfon.csv","file/file_mapping/mappingParticellaFondiaria.json","L322");
+	
 		date = new Date();
-     	System.out.println("8-Inserimento Fornitura Energia "+date);
-//	    MappingInsertForEnergia.run("file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls","file/file_mapping/mappingFornituraEnergia.json");
-     	importgr.importaFornitureElettriche("file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls","file/file_mapping/mappingFornituraEnergia.json");
-		date = new Date();
-	    System.out.println("9-Inserimento Fornitura Gas "+date);
-	//	MappingInsertForGas.run("file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls","file/file_mapping/mappingFornituraGas.json");
-	    importgr.importaFornitureGas("file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls","file/file_mapping/mappingFornituraGas.json");
-		date = new Date();
-		System.out.println("10-Inserimento Fornitura Locazione "+date);
-    //	MappingInsertForLocazione.run("file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls","file/file_mapping/mappingFornituraLocazione.json");
-    importgr.importaContrattiLocazione("file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls","file/file_mapping/mappingFornituraLocazione.json");
-		//Utenze
-		date = new Date();
-  	    System.out.println("11-Inserimento ICI AP "+date);
-//		MappingInsertTUIciImuAP.run("file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_ABPRINCIPALE.xls","file/file_mapping/mappingICIIMU.json");
-		//MappingInsertTUIciImuAP.run("file/TN_file/TambilenoMaggio2018/TRAMBILENO_Utenze_I_C_I__I_M_U_ABPRINCIPALE2017.xls","file/file_mapping/mappingICIIMU.json");
-  	    importgr.importaTributiUtenzaICI_IMU_AbitazionePrincipale("file/TN_file/TambilenoMaggio2018/TRAMBILENO_Utenze_I_C_I__I_M_U_ABPRINCIPALE2017.xls","file/file_mapping/mappingICIIMU.json");
-		date = new Date();
-		System.out.println("12-Inserimento ICI NP "+date);
-//		MappingInsertTUIciImuNP.run("file/TN_file/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop.xls","file/file_mapping/mappingICIIMU.json");
-//		MappingInsertTUIciImuNP.run("file/TN_file/TambilenoMaggio2018/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop2017.xls","file/file_mapping/mappingICIIMU.json");
-		importgr.importaTributiUtenzaICI_IMU_NudaProprieta("file/TN_file/TambilenoMaggio2018/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop2017.xls","file/file_mapping/mappingICIIMU.json");
-		date = new Date();
-		System.out.println("13-Inserimento Acqua "+date);
-//	    MappingInsertTUUtenzaA.run("file/TN_file/TRAMBILENO_Utenze_H2O_DA GARBAGE.xls","file/file_mapping/mappingUtenzaAcqua.json");
-//		 MappingInsertTUUtenzaA.run("file/TN_file/TambilenoMaggio2018/utenze_attive_nel_2017_trambileno_da_nostro_gestionale.xls","file/file_mapping/mappingUtenzaAcqua.json");
-	    importgr.importaTributiUtenzaAcqua("file/TN_file/TambilenoMaggio2018/utenze_attive_nel_2017_trambileno_da_nostro_gestionale.xls","file/file_mapping/mappingUtenzaAcqua.json");
-	    date = new Date();
-		System.out.println("14-Inserimento Lettura Acqua "+date);		
-//	    MappingInsertTULetturaA.run("file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv","file/file_mapping/mappingLetturaAcqua.json");
-//	    importgr.importaTributiLetturaAcqua("file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv","file/file_mapping/mappingLetturaAcqua.json");
-	    date = new Date();
-		System.out.println("15-Inserimento Rifiuti "+date);
- //   	MappingInsertTUUtenzaR.run("file/TN_file/TRAMBILENO_UtenzeRIFIUTUI.xls","file/file_mapping/mappingUtenzaRifiuti.json");
-	//	MappingInsertTUUtenzaR.run("file/TN_file/TambilenoMaggio2018/TRAMBILENO_UtenzeRIFIUTi2017.xls","file/file_mapping/mappingUtenzaRifiuti.json");
-		importgr.importaTributiUtenzeRifiuti("file/TN_file/TambilenoMaggio2018/TRAMBILENO_UtenzeRIFIUTi2017.xls","file/file_mapping/mappingUtenzaRifiuti.json");
-		date = new Date();
-		System.out.println("16-Inserimento Particelle fondiarie 20min"+date);
-		//importgr.importaParticelleFondiarie( "file/TN_file/404_41097.PAR","file/TN_header/headerfileparfon.csv","file/file_mapping/mappingParticellaFondiaria.json","L322");
-		
-//		MappingInsertParFon.run( "file/TN_file/404_41097.PAR","file/TN_header/headerfileparfon.csv","file/file_mapping/mappingParticellaFondiaria.json","L322");
-		
-		date = new Date();
-		System.out.println("17-Inserimento Soggetti Particelle fondiarie "+date);
-		
-	//importgr.importaSoggettiParticelleFondiarie("file/TN_file/404_41097.SOG","file/TN_header/headerfilesogfon.csv","file/file_mapping/mappingSoggettoFon.json");
- //       MappingInsertSogFon.run("file/TN_file/404_41097.SOG","file/TN_header/headerfilesogfon.csv","file/file_mapping/mappingSogettoFon.json");
+		System.out.println("9-Inserimento Soggetti Particelle fondiarie "+date);
+//       importgr.importaSoggettiParticelleFondiarie("file/TN_file/404_41097.SOG","file/TN_header/headerfilesogfon.csv","file/file_mapping/mappingSoggettoFon.json");
+
         
         date = new Date();
-	    System.out.println("18-Inserimento Titolarita Particelle fondiarie 2 ore!!"+date);
-//		MappingInsertTtcFon.run("file/TN_file/404_41097.TTC","file/TN_header/headerfilettcfon.csv","file/file_mapping/mappingTitolaritaFondiaria.json");
-	 //   importgr.importaTitolaritaParticelleFondiarie("file/TN_file/404_41097.TTC","file/TN_header/headerfilettcfon.csv","file/file_mapping/mappingTitolaritaFondiaria.json");
+	    System.out.println("10-Inserimento Titolarita Particelle fondiarie 2 ore!!"+date);
+ //       importgr.importaTitolaritaParticelleFondiarie("file/TN_file/404_41097.TTC","file/TN_header/headerfilettcfon.csv","file/file_mapping/mappingTitolaritaFondiaria.json");
+		
+	    
+	    
+	    
+	    
+//************* Contratti **************************************/
+		date = new Date();
+     	System.out.println("11-Inserimento Fornitura Energia "+date);
+ //    	importgr.importaFornitureElettriche("file/TN_file/trambileno_Fornitura_Energia_dettaglio.xls","file/file_mapping/mappingFornituraEnergia.json");
+		
+     	date = new Date();
+	    System.out.println("12-Inserimento Fornitura Gas "+date);	
+//	    importgr.importaFornitureGas("file/TN_file/trambileno_Fornitura_Gas_dettaglio.xls","file/file_mapping/mappingFornituraGas.json");
+	    
+		date = new Date();
+		System.out.println("13-Inserimento Fornitura Locazione "+date);
+//        importgr.importaContrattiLocazione("file/TN_file/trambileno_Fornitura_Locazione_dettaglio.xls","file/file_mapping/mappingFornituraLocazione.json");
+
+    
+    
+//*********************************  Utenze ********************************//
+		date = new Date();
+  	    System.out.println("14-Inserimento ICI AP "+date);
+//  	importgr.importaTributiUtenzaICI_IMU_AbitazionePrincipale("file/TN_file/TambilenoMaggio2018/TRAMBILENO_Utenze_I_C_I__I_M_U_ABPRINCIPALE2017.xls","file/file_mapping/mappingICIIMU.json");
+
+  	    
+  	    date = new Date();
+		System.out.println("15-Inserimento ICI NP "+date);
+
+//		importgr.importaTributiUtenzaICI_IMU_NudaProprieta("file/TN_file/TambilenoMaggio2018/TRAMBILENO_Utenze_I_C_I__I_M_U_nudoprop2017.xls","file/file_mapping/mappingICIIMU.json");
+		date = new Date();
+		System.out.println("16-Inserimento Acqua "+date);
+
+		//	    importgr.importaTributiUtenzaAcqua("file/TN_file/TambilenoMaggio2018/utenze_attive_nel_2017_trambileno_da_nostro_gestionale.xls","file/file_mapping/mappingUtenzaAcqua.json");
+	    date = new Date();
+		System.out.println("17-Inserimento Lettura Acqua "+date);		
+
+//	    importgr.importaTributiLetturaAcqua("file/TN_file/TRAMBILENO_H2OExportlLETTURE_ixu3oqzmsnlv2bwhra5xvd3p1860500686.csv","file/file_mapping/mappingLetturaAcqua.json");
+	    date = new Date();
+		System.out.println("18-Inserimento Rifiuti "+date);
+
+//		importgr.importaTributiUtenzeRifiuti("file/TN_file/TambilenoMaggio2018/TRAMBILENO_UtenzeRIFIUTi2017.xls","file/file_mapping/mappingUtenzaRifiuti.json");
+		date = new Date();
+		
+		
+		
 		date = new Date();
 		System.out.println("FINE"+date);
 	}
