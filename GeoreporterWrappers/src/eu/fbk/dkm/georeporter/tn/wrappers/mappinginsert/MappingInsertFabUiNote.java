@@ -222,7 +222,8 @@ public class MappingInsertFabUiNote {
 
 				Attributo tmpNI = new Attributo();
 				Attributo tmpNF = new Attributo();
-
+               if (dataNote.getAttributi().get(k).getMapping().equals("http://dkm.fbk.eu/georeporter#hasTipoNota"))
+               continue;
 				tmpNI.setNome(dataNote.getAttributi().get(k).getNome());
 				tmpNI.setMapping(dataNote.getAttributi().get(k).getMapping());
 				tmpNI.setTipo(dataNote.getAttributi().get(k).getTipo());
