@@ -41,7 +41,7 @@ public final class Costanti
   
     public  Map<String, String> toponimi;
    
-
+ 
     public Costanti() {
     	  nomeFileToponimi=loadProperties("toponimi");
    	   
@@ -52,9 +52,12 @@ public final class Costanti
 
 	public static final String XML_NAMESPACE = "http://www.w3.org/2001/XMLSchema#";
 
+	public static final String googleKey = "http://www.w3.org/2001/XMLSchema#";
     
     
-    // Shared repository configuration
+	// Shared repository configuration
+    public static final String serveraddress=loadProperties("serveraddress");
+    public static final String restservicebaseaddress=loadProperties("restservicebaseaddress");
 
    
 
@@ -81,7 +84,7 @@ public final class Costanti
 	//	lines = Files.readAllLines(Paths.get(nomeFileToponimi), Charset.forName("ISO-8859-2"));
 		URL u= Costanti.class.getClassLoader().getResource(nomeFileToponimi);
 		
-		System.out.println("url=" +u);
+		//System.out.println("url=" +u);
 		lines=Resources.readLines(u, Charsets.UTF_8);
 		
 		Iterator iterator = lines.iterator();
@@ -101,7 +104,7 @@ public final class Costanti
 	        { 
 	            // search  for value 
 	            String url = toponimiHM.get(name); 
-	            System.out.println("Key = " + name + ", Value = " + url); 
+	         //   System.out.println("Key = " + name + ", Value = " + url); 
 	        } 
 	    
 	
@@ -121,7 +124,7 @@ public final class Costanti
     	
    
     
-    public  String loadProperties(String property){
+    public static String loadProperties(String property){
     	
     	String result="";
     	Properties prop = new Properties();
