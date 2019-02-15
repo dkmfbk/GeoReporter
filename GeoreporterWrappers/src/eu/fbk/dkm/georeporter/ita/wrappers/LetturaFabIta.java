@@ -132,7 +132,7 @@ public class LetturaFabIta {
 
 	public static void stampaFileFab1() {
 		try {
-			FileWriter writer = new FileWriter("/home/ameneghini/Desktop/ITA_stampa/unitaImmobiliari.csv", false);
+			FileWriter writer = new FileWriter("unitaImmobiliari.csv", false);
 
 			for (int k = 0; k < header.get(0).length; k++) {
 				writer.append(header.get(0)[k]);
@@ -158,7 +158,7 @@ public class LetturaFabIta {
 
 	public static void stampaFileFab2() {
 		try {
-			FileWriter writer = new FileWriter("/home/ameneghini/Desktop/ITA_stampa/identificativiCatastali.csv", false);
+			FileWriter writer = new FileWriter("file/identificativiCatastali.csv", false);
 
 			for (int k = 0; k < header.get(1).length; k++) {
 				writer.append(header.get(1)[k]);
@@ -184,7 +184,7 @@ public class LetturaFabIta {
 
 	public static void stampaFileFab3() {
 		try {
-			FileWriter writer = new FileWriter("/home/ameneghini/Desktop/ITA_stampa/indirizzi.csv", false);
+			FileWriter writer = new FileWriter("file/indirizzi.csv", false);
 
 			for (int k = 0; k < header.get(2).length; k++) {
 				writer.append(header.get(2)[k]);
@@ -210,7 +210,7 @@ public class LetturaFabIta {
 
 	public static void stampaFileFab4() {
 		try {
-			FileWriter writer = new FileWriter("/home/ameneghini/Desktop/ITA_stampa/comuni.csv", false);
+			FileWriter writer = new FileWriter("file/comuni.csv", false);
 
 			for (int k = 0; k < header.get(3).length; k++) {
 				writer.append(header.get(3)[k]);
@@ -236,7 +236,7 @@ public class LetturaFabIta {
 
 	public static void stampaFileFab5() {
 		try {
-			FileWriter writer = new FileWriter("/home/ameneghini/Desktop/ITA_stampa/riserve.csv", false);
+			FileWriter writer = new FileWriter("file/riserve.csv", false);
 
 			for (int k = 0; k < header.get(4).length; k++) {
 				writer.append(header.get(4)[k]);
@@ -262,8 +262,8 @@ public class LetturaFabIta {
 
 	public static void main(String[] args) {
 
-		String pathF = "/home/ameneghini/Desktop/ITA_file/A281305833_1.FAB";
-		String pathP = "/home/ameneghini/Desktop/ITA_header/filefab.csv";
+		String pathF = "file/ITA_file/A281305833_1.FAB";
+		String pathP = "file/ITA_headerfilefab.csv";
 
 		estrazioneHeaderFileFab(pathP);
 		letturaFileFab(pathF);
