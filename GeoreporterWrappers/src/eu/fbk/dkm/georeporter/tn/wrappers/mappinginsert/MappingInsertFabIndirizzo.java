@@ -77,7 +77,7 @@ public class MappingInsertFabIndirizzo {
 			List<MappingTabella> listofMappings= mappings.getMappings();
 
 			for (MappingTabella mappingTabella : listofMappings) {
-				System.out.println(mappingTabella.getIdTabella().getNome());	
+				//System.out.println(mappingTabella.getIdTabella().getNome());	
 				if (mappingTabella.getIdTabella().getMapping().equals("Indirizzo")){
 					mappingIndirizzo=mappingTabella;				
 					
@@ -277,7 +277,7 @@ public class MappingInsertFabIndirizzo {
          
            if (response.getStatus() != 200) {
            	 WebApplicationException e = response.getEntity(WebApplicationException.class);
-           	 System.out.println(e.toString());
+           	// System.out.println(e.toString());
           }
            String responseEntity = response.getEntity(String.class);
            
