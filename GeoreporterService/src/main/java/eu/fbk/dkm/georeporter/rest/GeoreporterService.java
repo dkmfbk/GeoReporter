@@ -1,35 +1,23 @@
 package eu.fbk.dkm.georeporter.rest;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.InvalidKeyException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.swing.plaf.metal.MetalBorders.Flush3DBorder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -42,16 +30,9 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.naming.factory.ResourceFactory;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.type.MapType;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.openrdf.OpenRDFException;
@@ -62,7 +43,6 @@ import org.openrdf.model.ValueFactory;
 import org.openrdf.model.impl.LiteralImpl;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.RDF;
-import org.openrdf.model.vocabulary.XMLSchema;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
@@ -70,33 +50,22 @@ import org.openrdf.query.QueryLanguage;
 import org.openrdf.query.TupleQuery;
 import org.openrdf.query.TupleQueryResult;
 import org.openrdf.query.Update;
-import org.openrdf.query.UpdateExecutionException;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.http.HTTPRepository;
 import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderRequest;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.JsonIOException;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
-import com.sun.jersey.api.client.ClientResponse.Status;
 import com.sun.jersey.api.json.JSONWithPadding;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.core.spi.factory.ResponseBuilderImpl;
-import com.sun.jersey.multipart.BodyPartEntity;
 import com.sun.jersey.multipart.FormDataParam;
-import com.sun.jersey.multipart.MultiPart;
-
-import eu.fbk.dkm.georeporter.ExceptionHandlingRelated.CustomerDataNotFoundException;
-
 import eu.fbk.dkm.georeporter.interfaces.Attributo;
 import eu.fbk.dkm.georeporter.interfaces.AttributoEntita;
 import eu.fbk.dkm.georeporter.interfaces.Entita;
@@ -109,7 +78,9 @@ import eu.fbk.dkm.georeporter.pojos.FornituraEnergia;
 import eu.fbk.dkm.georeporter.pojos.FornituraGas;
 import eu.fbk.dkm.georeporter.pojos.FornituraLocazioni;
 import eu.fbk.dkm.georeporter.pojos.IDCatastale;
+import eu.fbk.dkm.georeporter.pojos.IndirizziNormalizzazione;
 import eu.fbk.dkm.georeporter.pojos.Indirizzo;
+import eu.fbk.dkm.georeporter.pojos.IndirizzoNormalizzato;
 import eu.fbk.dkm.georeporter.pojos.Locazione;
 import eu.fbk.dkm.georeporter.pojos.MappingTabella;
 import eu.fbk.dkm.georeporter.pojos.Particella;
@@ -129,8 +100,6 @@ import eu.fbk.dkm.georeporter.pojos.UtenzaAcqua;
 import eu.fbk.dkm.georeporter.pojos.UtenzaRifiuti;
 import eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert.ImportGeoreporter;
 import eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert.ReportManager;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.Report;
-import eu.fbk.dkm.georeporter.tn.wrappers.pojo.ReportValore;
 //import eu.fbk.dkm.georeporter.tn.wrappers.mappinginsert.ImportGeoreporter;
 import eu.fbk.dkm.georeporter.utils.Costanti;
 import eu.fbk.dkm.georeporter.utils.ProgramDirectoryUtilities;
@@ -302,7 +271,7 @@ public class GeoreporterService {
 
 		// String springlesrepositoryID ="georeporter";
 
-		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		//List<BindingSet> tuples = new ArrayList<BindingSet>();
 		List<Particella> listaParticella = new ArrayList<Particella>();
 
 		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
@@ -327,7 +296,7 @@ public class GeoreporterService {
 			//System.out.println(queryString);
 			TupleQuery tupleQuery;
 
-			int i = 0;
+		//	int i = 0;
 
 			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
 
@@ -2509,8 +2478,8 @@ public class GeoreporterService {
 	//ImportGeoreporter.importaContrattiLocazione(fileDatiDetail.getFileName(), fileMappingsDetail.getFileName());
 	switch (tipodati) {
     case "fabbricati": 
-    //	importgr.importaUnitaImmobiliari1(filePath, fileHeader, fileMappings);
-    //	importgr.importaUnitaImmobiliari2(filePath, fileHeader, fileMappings);
+    	importgr.importaUnitaImmobiliari1(filePath, fileHeader, fileMappings);
+    	importgr.importaUnitaImmobiliari2(filePath, fileHeader, fileMappings);
     	importgr.importaUnitaImmobiliari3(filePath, fileHeader, fileMappings);
              break;
     case "soggettifabbricati": 
@@ -4015,7 +3984,10 @@ Gson gson = new Gson();
 		String returno="";	
 		List<BindingSet> tuples = new ArrayList<BindingSet>();
 		List<Indirizzo> listaClassi= new ArrayList<Indirizzo>();
+        Map <String,Indirizzo> indirizzilocali =new HashMap<String,Indirizzo>();
 
+ 
+		
 		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
 		//System.out.println("Limit=" +limit);
 		int limiteiterazioni=limit.intValue();
@@ -4051,7 +4023,7 @@ Gson gson = new Gson();
 			TupleQueryResult qresult = tupleQuery.evaluate();
 			
 			Map <String,Map<String,String>> indirizzi_HM= new HashMap<String,Map<String,String>>();
-			
+			Map<String,IndirizzoNormalizzato>	tabellaIndirizziLocali=getTabellaIndirizziNormalizzati();
 			while (qresult.hasNext()) {
 				BindingSet bindingSet = qresult.next();
 				Value uri = bindingSet.getValue("s");
@@ -4095,18 +4067,23 @@ Gson gson = new Gson();
 			for (String key : indirizzi_HM.keySet()) {
 				Map<String,String> attributi_indirizzo = indirizzi_HM.get(key);			
 				String stringa_indirizzo="";
-				//System.out.println("INRIRIZZO NORMALIZZATO=="+attributi_indirizzo.get("indirizzoNormalizzato"));
+				System.out.println("INRIRIZZO NORMALIZZATO=="+attributi_indirizzo.get("indirizzoNormalizzato"));
 				 
-                if (attributi_indirizzo.get("indirizzoNormalizzato")==null||attributi_indirizzo.get("indirizzoNormalizzato").equals("")){
+                if (attributi_indirizzo.get("indirizzoNormalizzato")==null||
+                		attributi_indirizzo.get("indirizzoNormalizzato").equals("")){
             	
         
                 	  stringa_indirizzo = safeToString(attributi_indirizzo.get("indirizzoCompleto"));
+                	  if(!stringa_indirizzo.contains(safeToString(attributi_indirizzo.get("civico")))) {
                 	  stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("civico"));
+                	  }
                 if 	 (stringa_indirizzo.equals("")) { 
                 	 // System.out.println("Indirizzo completo ="+ stringa_indirizzo);
                   
             	stringa_indirizzo=safeToStringFrazione(attributi_indirizzo.get("viaFrazione"));
+            	if(!stringa_indirizzo.contains(safeToString(attributi_indirizzo.get("civico")))) {
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("civico"));
+            	}
 				stringa_indirizzo = stringa_indirizzo + safeToString(attributi_indirizzo.get("lettera"));
 				stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("localita"));
 				stringa_indirizzo = stringa_indirizzo + "," + safeToString(attributi_indirizzo.get("cap"));
@@ -4116,24 +4093,44 @@ Gson gson = new Gson();
                 //  System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
 			
 				
-				try {
-					Thread.sleep(1100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+//				try {
+//					Thread.sleep(1100);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+				
+				
+//	Map<String,IndirizzoNormalizzato>	tabellaIndirizziLocali=getTabellaIndirizziNormalizzati();
+	 Indirizzo indirizzoGeoDecoded= new Indirizzo();
+				 if (limiteiterazioni>0) {
+					
+				IndirizzoNormalizzato indirizzoLocaleNormalizzato = tabellaIndirizziLocali.get(safeToStringFrazione(stringa_indirizzo));
+					 
+				if (indirizzoLocaleNormalizzato !=null) {
+					indirizzoGeoDecoded.setCoordinateLat(indirizzoLocaleNormalizzato.getCoordinateLat());
+					indirizzoGeoDecoded.setCoordinateLong(indirizzoLocaleNormalizzato.getCoordinateLong());
+					indirizzoGeoDecoded.setIndirizzoCompleto(indirizzoLocaleNormalizzato.getIndirizzoNormalizzato());
+				}else
+		    	  indirizzoGeoDecoded= geoDecode(safeToStringFrazione(stringa_indirizzo));
+					// Indirizzo indirizzoGeoDecoded= decodificaIndirizzo(safeToStringFrazione(stringa_indirizzo));
+				IndirizzoNormalizzato indirizzoNormalizzatoGeoDecoded = new IndirizzoNormalizzato();
+				indirizzoNormalizzatoGeoDecoded.setCoordinateLat(indirizzoGeoDecoded.getCoordinateLat());
+				indirizzoNormalizzatoGeoDecoded.setCoordinateLong(indirizzoGeoDecoded.getCoordinateLong());
+				indirizzoNormalizzatoGeoDecoded.setIndirizzoNormalizzato(indirizzoGeoDecoded.getIndirizzoCompleto());
+				indirizzoNormalizzatoGeoDecoded.setStringaricerca(safeToStringFrazione(stringa_indirizzo));
+				
+				
+				if(tabellaIndirizziLocali.get(safeToStringFrazione(stringa_indirizzo))==null){
+					tabellaIndirizziLocali.put((safeToStringFrazione(stringa_indirizzo)), indirizzoNormalizzatoGeoDecoded);
+					
 				}
 				
 				
-				
-				
-				 if (limiteiterazioni>0) {
-					
-						
-				
-		    	 Indirizzo indirizzoGeoDecoded= geoDecode(safeToStringFrazione(stringa_indirizzo));
-						
 				  limiteiterazioni--;
-				 if(!indirizzoGeoDecoded.getIndirizzoCompleto().equals("NULLO")) {
+				
+					 
+		
 				  RigaTabella rt= new RigaTabella();
 				  rt.setNometabella("http://dkm.fbk.eu/georeporter#Indirizzo");
 				  rt.setUririga("http://dkm.fbk.eu/georeporter#"+key);
@@ -4142,7 +4139,7 @@ Gson gson = new Gson();
 				  Attributo latitudine =new Attributo();
 				  Attributo longitudine =new Attributo();
 				  Attributo indirizzoNormalizzato =new Attributo();
-				  
+				  if(!indirizzoGeoDecoded.getIndirizzoCompleto().equals("NULLO")) {
 				  latitudine.setMapping("http://dkm.fbk.eu/georeporter#coordinateLat");
 				  latitudine.setValore(String.valueOf(indirizzoGeoDecoded.getCoordinateLat()));
 				  latitudine.setTipo("http://www.w3.org/2001/XMLSchema#float");
@@ -4159,7 +4156,17 @@ Gson gson = new Gson();
 				  listaattributi.add(indirizzoNormalizzato);
 				  rt.setListaattributi(listaattributi);
 				  insertTable(rt);
+				  }else {
+					  indirizzoNormalizzato.setMapping("http://dkm.fbk.eu/georeporter#indirizzoNormalizzato");
+					  indirizzoNormalizzato.setValore("NULLO");
+					  indirizzoNormalizzato.setTipo("http://www.w3.org/2001/XMLSchema#string"); 
+					  listaattributi.add(indirizzoNormalizzato);
+					  rt.setListaattributi(listaattributi);
+					  insertTable(rt);
 				 }
+				 
+				 
+				 
 				  }else {
 				         break;
 					  }
@@ -4167,6 +4174,9 @@ Gson gson = new Gson();
                 }
 			
 			}
+			updateFileLocaleIndirizzi(tabellaIndirizziLocali);
+			
+			
 			
 			
 			qresult.close();
@@ -4184,10 +4194,7 @@ Gson gson = new Gson();
 	
 		} finally {
 
-		}
-		
-
-		
+		}		
 		return returno;
 	
 		
@@ -4197,160 +4204,92 @@ Gson gson = new Gson();
 	
 	
 	@GET
-	@Path("/creatabellaindirizzi")
-
-	public  void creaTabellaIndirizzi(
-			@QueryParam("callback") String callback
+	@Path("/tabellaindirizzinormalizzati")
+	public  Map <String,IndirizzoNormalizzato> getTabellaIndirizziNormalizzati()
 		
-	
-	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
-	) {
+	 {
 
-		// String springlesrepositoryID ="georeporter";
-		String returno="";	
-		List<BindingSet> tuples = new ArrayList<BindingSet>();
-		List<Indirizzo> listaClassi= new ArrayList<Indirizzo>();
-
-		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
-		//System.out.println("Limit=" +limit);
-		
-		
+		 Map <String,IndirizzoNormalizzato> returno= new HashMap <String, IndirizzoNormalizzato>();	
+	      
+		 Gson gson = new Gson();
+			BufferedReader br = null;
 			try {
-				myRepository.initialize();
-		
-			RepositoryConnection connection = myRepository.getConnection();
 
-			String queryString = queryStringPrefix
+			URL	fileurl = ReportManager.class.getClassLoader().getResource("./" + "tabellaindirizzi.json");
+				// System.out.println("fileurl="+ fileurl);
 
-				//	+ "select ?property ?domain ?range where { "
-				//	+ "  ?property rdfs:domain/(owl:unionOf/rdf:rest*/rdf:first)* :" + entita + " ."
-				//	+ " ?property rdfs:range ?range " + "}";
-
-					
-					
-			+ "	SELECT ?s ?p ?o WHERE {\r\n" + 
-			"  ?s rdf:type :Indirizzo .\r\n" + 
-			"  ?s ?p ?o .\r\n" + 
-			"  ?p rdf:type owl:DatatypeProperty\r\n" + 
-			"}";
-					
-	
-			
-			
-		//	System.out.println(queryString);
-			TupleQuery tupleQuery;
-
-			int i = 0;
-
-			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-
-			TupleQueryResult qresult = tupleQuery.evaluate();
-			
-			Map <String,Map<String,String>> indirizzi_HM= new HashMap<String,Map<String,String>>();
-			
-			while (qresult.hasNext()) {
-				BindingSet bindingSet = qresult.next();
-				Value uri = bindingSet.getValue("s");
-				Value proprieta = bindingSet.getValue("p");
-				Value valore = bindingSet.getValue("o");
+				URLConnection yc;
 				
-                String key="";
-                String prop="";
-                String val="";
-				if (uri != null) {
-				
-				key=	uri.stringValue().substring(uri.stringValue().lastIndexOf('#') + 1);
-					
-				}
-				if (proprieta != null) {
-					
-			
-					prop=proprieta.stringValue().substring(proprieta.stringValue().lastIndexOf('#') + 1);
-				}
-				if (valore != null) {
-					
-				val=	valore.stringValue();
-					
-				}
+					yc = fileurl.openConnection();
+					br = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+					IndirizziNormalizzazione indirizzinormalizzazione = gson.fromJson(br, IndirizziNormalizzazione.class);
 
-				if (indirizzi_HM.containsKey(key)) {
-					
-					Map tmp_valori_HM=indirizzi_HM.get(key);
-					
-					tmp_valori_HM.put(prop, val);
-				}else {
-					Map <String,String> valori_HM = new HashMap<String,String>();
-					valori_HM.put(prop, val);
-					indirizzi_HM.put(key, valori_HM);
-					
-				}
-			}
-				
-			
-		
-			for (String key : indirizzi_HM.keySet()) {
-				Map<String,String> attributi_indirizzo = indirizzi_HM.get(key);	
-				
-				Set<String> header = attributi_indirizzo.keySet();
-			//scrivi i titoli	
-			}
-			for (String key : indirizzi_HM.keySet()) {
-				Map<String,String> attributi_indirizzo = indirizzi_HM.get(key);	
-				
-				
-				String stringa_indirizzo="";
-				//System.out.println("INRIRIZZO NORMALIZZATO=="+attributi_indirizzo.get("indirizzoNormalizzato"));
+					if (indirizzinormalizzazione != null) {
+						for (IndirizzoNormalizzato r : indirizzinormalizzazione.getIndirizzoNormalizzato()) {
+							System.out.println(r.getStringaricerca());
+							System.out.println(r.getIndirizzoNormalizzato());
+							System.out.println(r.getCoordinateLat());
+							System.out.println(r.getCoordinateLong());
+							
+							returno.put(r.getStringaricerca(),r);
+							
+						}
+					}
 				 
-              //  if (attributi_indirizzo.get("indirizzoNormalizzato")==null||attributi_indirizzo.get("indirizzoNormalizzato").equals("")){
-            	
-        
-                	  stringa_indirizzo = safeToString(attributi_indirizzo.get("indirizzoCompleto"));
-                	  stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("civico"));
-                if 	 (stringa_indirizzo.equals("")) { 
-                	 // System.out.println("Indirizzo completo ="+ stringa_indirizzo);
-                  
-            	stringa_indirizzo=safeToStringFrazione(attributi_indirizzo.get("viaFrazione"));
-				stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("civico"));
-				stringa_indirizzo = stringa_indirizzo + safeToString(attributi_indirizzo.get("lettera"));
-				stringa_indirizzo = stringa_indirizzo + " " + safeToString(attributi_indirizzo.get("localita"));
-				stringa_indirizzo = stringa_indirizzo + "," + safeToString(attributi_indirizzo.get("cap"));
-                  }
-				stringa_indirizzo = stringa_indirizzo + " " + safeToString(getNomeComune(attributi_indirizzo.get("codiceAmministrativo")));
-                  
-                //  System.out.println("Stringa Indirizzo "+safeToString(stringa_indirizzo));	 
-			
-				
-				try {
-					Thread.sleep(1100);
-				} catch (InterruptedException e) {
+				//	updateFileLocaleIndirizzi(returno);
+					
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-			}				
-				
-			} catch (RepositoryException | MalformedQueryException | QueryEvaluationException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	
-			
-						
-						
-				
-		   //	
+
 		
+		 
+		 
+		 return returno;
+	
 	}
 	
 	
+	public void updateFileLocaleIndirizzi(Map <String,IndirizzoNormalizzato> inList) {
+	List<IndirizzoNormalizzato> listaindirizzinormalizzati= new ArrayList<IndirizzoNormalizzato>();
 	
-	
-	
-	
-	
-	
-	
-	
+	/*IndirizzoNormalizzato tmp= new IndirizzoNormalizzato();
+	tmp.setStringaricerca("Via Matteotti 29");
+	tmp.setCoordinateLat(new Float(23.32));
+	tmp.setCoordinateLong(new Float(23.4432));
+	listaindirizzinormalizzati.add(tmp);*/
+	for (String key : inList.keySet()) {
+		
+		listaindirizzinormalizzati.add(inList.get(key));
+		
+	}
+IndirizziNormalizzazione indnorm = new IndirizziNormalizzazione();
+indnorm.setIndirizzoNormalizzato(listaindirizzinormalizzati);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		try {
+
+			String jsonString = gson.toJson(indnorm);
+			// Write JSON String to file
+
+		//	FileWriter fileWriter = new FileWriter(new File(fileurl.getPath()));
+			FileWriter fileWriter = new FileWriter(new File(ReportManager.class.getClassLoader().getResource("./" + "tabellaindirizzi.json").getFile()));
+			
+			fileWriter.write(jsonString);
+			fileWriter.close();
+
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+
+	}
+
 	
 	
 	
@@ -4484,18 +4423,22 @@ Gson gson = new Gson();
 		Geocoder geocoder;
 		
 		Indirizzo indirizzo_normalizzato= new Indirizzo();
+		indirizzo_normalizzato.setIndirizzoCompleto("NULLO");
+	//	if (true)
+	//	return indirizzo_normalizzato;
 	//	indirizzo_normalizzato.setIndirizzoCompleto(indirizzo);
 	//	indirizzo_normalizzato.setCoordinateLat(Float.valueOf("2222.222"));
 	//	indirizzo_normalizzato.setCoordinateLong(Float.valueOf("2222.222"));
 		
 		
 			     GeoApiContext context = new GeoApiContext.Builder()
-	        	    .apiKey("AIzaSyC135Qkw2a-S2R7MvGHkcz3aECrXuAk_z4")
+	        	   // .apiKey(Costanti.googleKey)
+			    		 .apiKey("AIzaSyC135Qkw2a-S2R7MvGHkcz3aECrXuAk_z4")
+			    		 
 	        	    .build();
 	        	GeocodingResult[] results;
 				try {
-					results = GeocodingApi.geocode(context,
-					   indirizzo).await();
+					results = GeocodingApi.geocode(context,indirizzo).await();
 					Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		        //	System.out.println(gson.toJson(results[0].addressComponents));
 					if (results.length >0) {
