@@ -78,7 +78,7 @@ public class MappingInsertTitITA {
 			List<MappingTabella> listofMappings= mappings.getMappings();
 
 			for (MappingTabella mappingTabella : listofMappings) {
-				System.out.println(mappingTabella.getIdTabella().getNome());	
+				//System.out.println(mappingTabella.getIdTabella().getNome());	
 				if (mappingTabella.getIdTabella().getMapping().equals("Titolarita")){
 					mappingTitolarita=mappingTabella;
 					
@@ -333,7 +333,7 @@ public class MappingInsertTitITA {
 			
 			if(codfis.equals("FAIL")) {
 			codfis="http://dkm.fbk.eu/georeporter#SOG_0000000";
-             System.out.println("Soggetto non presente: "+cod);
+            // System.out.println("Soggetto non presente: "+cod);
              log.info("Soggetto non presente =" +cod);
 //             reportValoreSogg.incrementaValore();
 			}
