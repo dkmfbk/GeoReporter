@@ -80,7 +80,7 @@ public	MappingInsertSogITA(String targetURL_){
 			List<MappingTabella> listofMappings= mappings.getMappings();
 
 			for (MappingTabella mappingTabella : listofMappings) {
-				System.out.println(mappingTabella.getIdTabella().getNome());	
+				//System.out.println(mappingTabella.getIdTabella().getNome());	
 				if (mappingTabella.getIdTabella().getMapping().equals("Soggetto")){
 					mappingSoggetto=mappingTabella;
 					
@@ -260,7 +260,7 @@ public	MappingInsertSogITA(String targetURL_){
 			//	System.out.println(tmp2.getNome());
 			//	if(tmp2.getNome().equals("http://dkm.fbk.eu/georeporter#identificativosoggetto")) {
 				if(tmp2.getNome().equals("http://dkm.fbk.eu/georeporter#"+nameMappingsSoggettoHM.get("identificativoSoggetto"))) {
-					System.out.println(tmp2.getNome());
+					//System.out.println(tmp2.getNome());
 	              tmp2.setMultiplo(true);
 	
 	
