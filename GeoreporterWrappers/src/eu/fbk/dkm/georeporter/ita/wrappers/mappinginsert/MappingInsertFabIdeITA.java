@@ -379,7 +379,7 @@ public class MappingInsertFabIdeITA {
 			e.printStackTrace();
 
 		}
-		System.out.println("return="+output);
+		//System.out.println("return="+output);
 		return output;
 	}
 
@@ -393,7 +393,7 @@ public class MappingInsertFabIdeITA {
 		 String responseEntity="";
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-		System.out.println("insertriga= "+json);
+		//System.out.println("insertriga= "+json);
            try {
 			URL targetUrl = new URL(targetURL);
 		
