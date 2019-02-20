@@ -100,7 +100,7 @@ public	MappingInsertFabUiNoteITA( String targetURL_){
 			List<MappingTabella> listofMappings= mappings.getMappings();
 
 			for (MappingTabella mappingTabella : listofMappings) {
-				System.out.println(mappingTabella.getIdTabella().getNome());	
+			//	System.out.println(mappingTabella.getIdTabella().getNome());	
 				if (mappingTabella.getIdTabella().getMapping().equals("UnitaImmobiliare")){
 					mappingUntaImmobiliare=mappingTabella;
 					
