@@ -80,7 +80,7 @@ public MappingInsertParFonITA(String targetURL_){
 			List<MappingTabella> listofMappings= mappings.getMappings();
 
 			for (MappingTabella mappingTabella : listofMappings) {
-				System.out.println(mappingTabella.getIdTabella().getNome());	
+			//	System.out.println(mappingTabella.getIdTabella().getNome());	
 				if (mappingTabella.getIdTabella().getMapping().equals("Particella")){
 					mappingParticella=mappingTabella;
 					
@@ -515,7 +515,7 @@ public MappingInsertParFonITA(String targetURL_){
 	
 		Gson gson = new Gson();
 		String json = gson.toJson(riga);
-System.out.println("json= "+json);		
+//System.out.println("json= "+json);		
            try {
 			URL targetUrl = new URL(targetURL);
 		
