@@ -27,7 +27,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
-
+import eu.fbk.dkm.georeporter.config.Costanti;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.IDCatastale;
 import eu.fbk.dkm.georeporter.tn.wrappers.pojo.RigaTabella;
 
@@ -55,7 +55,9 @@ public class RestCalls {
 	}
 
 	public RestCalls() {
-		this.serverurl = "http://localhost:8080/GeoreporterService/servizio/rest/";
+		Costanti cost= new Costanti();
+		this.serverurl=cost.serveraddress+cost.restservicebaseaddress;
+		//this.serverurl = "http://localhost:8081/GeoreporterService/servizio/rest/";
 	}
 
 	public  IDCatastale getIDCatastale(String codiceamministrativo,String comunecatastale, String numero,String denominatore, String subalterno) {
