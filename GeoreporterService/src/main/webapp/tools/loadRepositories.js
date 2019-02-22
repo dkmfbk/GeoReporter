@@ -1,5 +1,8 @@
 var repoID;
-var restURL = "http://localhost:8080/SpringlesREST/rest/rest/";
+
+var currenturl=window.location.origin;
+//var restURL = "http://localhost:8080/SpringlesREST/rest/rest/";
+var restURL = currenturl+"/SpringlesREST/rest/rest/";
 var serverURL = "";
 $(function() {	
 	$(document).on("ready",function() {
