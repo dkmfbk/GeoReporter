@@ -268,7 +268,7 @@ public MappingInsertParFonITA(String targetURL_){
 			
 			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
 
-		   String cc = listParticella.get(j).getListaValoriChiave().get(0).get(nameMappingsParticellaHM.get("codiceAmministrativo"));
+		   String cc = listParticella.get(j).getListaValoriChiave().get(0).get(nameMappingsParticellaHM.get("foglio"));
 		//	String cc="";
 		
 			
