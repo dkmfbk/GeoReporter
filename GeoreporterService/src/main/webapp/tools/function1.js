@@ -188,7 +188,7 @@ $(function() {
 	
 		var url_=url+"importadati";
 	    var documentData = new FormData();
-	  
+		documentData.append("codiceComuneCatastale",$('#formparticellefondiarie input#codiceComuneCatastale')[0].value);
 		documentData.append("filedati",$('#formparticellefondiarie input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formparticellefondiarie input#filemappings')[0].files[0]);
 		documentData.append("fileheader",$('#formparticellefondiarie input#fileheader')[0].files[0]);
@@ -368,7 +368,8 @@ $(function() {
 	
 		var url_=url+"importadati";
 	    var documentData = new FormData();
-	  
+	
+		documentData.append("codiceComuneCatastale",$('#formanagraficacomunale input#codiceComuneCatastale')[0].value);
 		documentData.append("filedati",$('#formanagraficacomunale input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formanagraficacomunale input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formanagraficacomunale input#tipodati')[0].value);
@@ -424,7 +425,7 @@ $(function() {
 	
 		var url_=url+"importadati";
 	    var documentData = new FormData();
-	  
+		documentData.append("codiceComuneCatastale",$('#formanagraficafamiglie input#codiceComuneCatastale')[0].value);
 		documentData.append("filedati",$('#formanagraficafamiglie input#filedati')[0].files[0]);
 		documentData.append("filemappings",$('#formanagraficafamiglie input#filemappings')[0].files[0]);
 		documentData.append("tipodati",$('#formanagraficafamiglie input#tipodati')[0].value);
@@ -1003,6 +1004,100 @@ function getInserimenti() {
 
 
 
+function getInserimenti() {
+		//var queryType = "curatorsources";
+		var springlesserverURL = currenturl+"/openrdf-sesame";
+		var springlesserverURL = currenturl+"/openrdf-sesame";
+		var restURL = currenturl+"/SpringlesREST/rest/rest/";
+		var springlesrepositoryID= "georeporter";
+		var url_=restURL+"summary";
+        
+		
+
+		var dataSend ="springlesrepositoryID=" +springlesrepositoryID+"&springlesserverURL="+springlesserverURL ;
+		
+	   
+		$("#summaryresponse").empty();
+	
+		
+		$.ajax({
+			url : url_ , 
+			data : dataSend, 
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+			type : "GET"
+		
+		}).done(function(data, textStatus, jqXHR) {
+					
+			$("#summaryresponse").empty();
+			var d = new Date();
+
+            var result = d.toLocaleString()   ;
+            
+			result+="<table class='table table-striped' style='font-size:0.9em;' ><tbody>";
+         //   result+="<tr><th>ID:</th><td>"+data["ID"]+"</td></tr>";
+         //   result+="<tr><th>Title:</th><td>"+data["Title"]+"</td></tr>";
+         //   result+="<tr><th>Location:</th><td>"+data["Location"]+"</td></tr>";
+          //  result+="<tr><th>Server: </th><td>"+data["Server"]+"</td></tr>";
+            result+="<tr><th>Numero totale di record:</th><td>"+data["Total statements"]+"</td></tr>";
+          
+          
+            result+="</tbody></table>";
+            $('#summaryresponse').html(result);
+       
+		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			$("#summaryresponse").empty();
+			$('#summaryresponse').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
+		});
+		return false;
+	
+
+	};
 
 
+	function getLog() {
 
+		
+		var url_=url+"logfile"; 
+		
+
+		var dataSend ="logfilename=georeporter.log"  ;
+		
+	   
+		$("#logfile").empty();
+	
+		
+		$.ajax({
+			url : url_ , 
+			data : dataSend, 
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+			type : "GET"
+		
+		}).done(function(data, textStatus, jqXHR) {
+					
+			$("#logfile").empty();
+			var d = new Date();
+
+            var result = d.toLocaleString()   ;
+            
+		//	result+="<table class='table table-striped' style='font-size:0.9em;' ><tbody>";
+         //   result+="<tr><th>ID:</th><td>"+data["ID"]+"</td></tr>";
+         //   result+="<tr><th>Title:</th><td>"+data["Title"]+"</td></tr>";
+         //   result+="<tr><th>Location:</th><td>"+data["Location"]+"</td></tr>";
+          //  result+="<tr><th>Server: </th><td>"+data["Server"]+"</td></tr>";
+         //   result+="<tr><th>Numero totale di record:</th><td>"+data["Total statements"]+"</td></tr>";
+          
+          
+          //  result+="</tbody></table>";
+            $('#logfile').html(result);
+       
+		}).fail(function(jqXHR, textStatus, errorThrown) { 
+			$("#logfile").empty();
+			$('#logfile').html("<span> " + jqXHR.status + " " + jqXHR.responseText + "</span><br />");
+		});
+		return false;
+	
+
+
+	};
