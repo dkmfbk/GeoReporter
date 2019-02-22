@@ -200,8 +200,24 @@
                       
     
               ]
-}
+},
 
+{
+       "categoria" : "Indirizzi",
+       "sparql": "SELECT  (COUNT(DISTINCT ?object1) as ?pCount) where{  ?object1 a :Indirizzo }",
+       "totale" :0,
+       "subcategoria" :
+              [
+                      { 
+                        "id" : "indirizzi_mancanti",
+                        "label": "Indirizzi Normalizzati",
+                        "mancanti" :0,
+                       "sparql": "SELECT   (COUNT(DISTINCT  ?ind) as ?pCount) where{  ?ind a :Indirizzo . ?ind :indirizzoNormalizzato ?indn  FILTER (?indn !=NULLO)  }"
+                       }
+                      
+    
+              ]
+}
 
 
 
