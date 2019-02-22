@@ -59,7 +59,7 @@ public final class Costanti
     public static final String georeporterNS=loadProperties("georeporternamespace");
     public static final String springlesserverURL=loadProperties("springlesserverURL");
     public static final String springlesrepositoryID=loadProperties("springlesrepositoryID");
-   
+    public static final String googleKey=loadProperties("googleKey");
     public static final Map<String, String> comuni_italiani= loadComuni(nomeFileComuni);
    
    
