@@ -75,7 +75,13 @@
     <version>4.4.7</version>
 </dependency>
 
-<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-client -->
+<!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-core -->
+<dependency>
+    <groupId>com.sun.jersey</groupId>
+    <artifactId>jersey-core</artifactId>
+    <version>1.19</version>
+</dependency>
+
 <dependency>
     <groupId>com.sun.jersey</groupId>
     <artifactId>jersey-client</artifactId>
@@ -108,7 +114,16 @@
     <artifactId>log4j</artifactId>
     <version>1.2.17</version>
 </dependency>
-
+<dependency>
+    <groupId>com.google.maps</groupId>
+    <artifactId>google-maps-services</artifactId>
+    <version>0.2.6</version>
+</dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-nop</artifactId>
+    <version>1.7.25</version>
+</dependency>
 
   </dependencies>
 </project>
