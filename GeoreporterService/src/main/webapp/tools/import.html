@@ -17,6 +17,11 @@
 .json-string {
 	color: olive;
 }
+#logfile {
+  height:150px;
+  overflow-y: scroll;
+}
+
 </style>
 
 </head>
@@ -187,6 +192,12 @@
 				<form id="formparticellefondiarie" role="form" method="POST">
 			
 					<div class="form-group">
+						<label for="codiceComuneCatastale">Codice Amministrativo</label>
+						<input type="text" class="form-control" id="codiceComuneCatastale" >	
+					</div>
+
+					
+					<div class="form-group">
 						<label for="filedati">File Dati</label>
 						<input type="file" class="form-control" id="filedati" >
 						
@@ -323,6 +334,11 @@
 						<form id="formanagraficacomunale" role="form" method="POST">
 					
 							<div class="form-group">
+								<label for="codiceComuneCatastale">Codice Comune Catastale</label>
+								<input type="text" class="form-control" id="codiceComuneCatastale" >	
+							</div>
+
+							<div class="form-group">
 								<label for="filedati">File Dati</label>
 								<input type="file" class="form-control" id="filedati" >
 								
@@ -356,6 +372,11 @@
 		<div class="panel-body">
 			<form id="formanagraficafamiglie" role="form" method="POST">
 		
+				<div class="form-group">
+					<label for="codiceComuneCatastale">Codice Comune Catastale</label>
+					<input type="text" class="form-control" id="codiceComuneCatastale" >	
+				</div>
+
 				<div class="form-group">
 					<label for="filedati">File Dati</label>
 					<input type="file" class="form-control" id="filedati" >
@@ -679,34 +700,25 @@
 					
 					<h3 class="center text-center">Risposta</h3>
 					<div id="result" class="text-left">
-					<script>
-				document.getElementById("result").innerHTML =
-                 " Page location is href= " + window.location.href + 
-				 "<br> Page location is url= " + window.location.url + 
-				 "<br> Page location is hostname " + window.location.hostname + 
-				 "<br> Page location is pathname " + window.location.pathname + 
-				 "<br> Page location is origin " + window.location.origin + 
-				 "<br> Page location is host " + window.location.host ;
-
-					
-					
-					</script>
 						
 					</div>
 				</pre>
 				<pre>
-						<div  id="summaryPanel" >
-							<h4 class="text-left">
-								<a  href="#collation18" >Visualizza numero di oggetti inseriti</a>
-							</h4>
+						<div  id="starttime" >
 						</div>
+						<div  id="endtime" >
+							</div>
+						
 						
 				
 					<div id="summaryresponse" class="text-left">
 					</div>
+					<div id="logfile" class="text-left">
+					</div><button onclick="getLog()">Get Log</button>
 				</pre>
 			</div>
 		</div>
+		
 	</div>
 
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
