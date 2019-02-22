@@ -8,6 +8,12 @@
 
 /*! normalize.css v2.1.3 | MIT License | git.io/normalize */
 
+
+.logfile {
+  height:150px;
+  overflow-y: scroll;
+}
+
 article,
 aside,
 details,
