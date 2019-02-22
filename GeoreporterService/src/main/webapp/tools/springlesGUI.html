@@ -331,8 +331,9 @@ a, .delete{
 		/*INSERT THE CORRECT URL*/
 		
         var rulesets = new Array();
-        var springlesserverURL = "http://localhost:8080/openrdf-sesame";
-     
+        var currenturl=window.location.origin;
+       // var springlesserverURL = "http://localhost:8080/openrdf-sesame";
+       var springlesserverURL = currenturl+"/openrdf-sesame";
 		$("#repoChoice").on("change",function(){
             $(".panel-collapse").hide();
             $(".springlesrepositoryID").each(function(){
@@ -352,7 +353,7 @@ a, .delete{
             }
         });
         
-		var url = ":http://localhost:8081/SpringlesREST/rest/rest/";
+		var url = ":http://localhost:8080/SpringlesREST/rest/rest/";
     	var url2 = ":8080/ToolisseSemanticQueryAnswering/toolisse/sqa/";
     	
 		if($.isEmptyObject(url))
