@@ -221,8 +221,8 @@ public class MappingInsertFabIdeITA {
 			String sub = listIdentificativiCatastali.get(j).getValori().get(nameMappingsIDCatastaliHM.get("subalterno"));
 			sub=StringUtils.stripStart(sub,"0");
 			num=StringUtils.stripStart(num,"0");
-			String comunecatastale = listIdentificativiCatastali.get(j).getValori().get(nameMappingsParticellaHM.get("codiceAmministrativo"));
-			comunecatastale=codamm;
+			String comunecatastale = listIdentificativiCatastali.get(j).getValori().get(nameMappingsParticellaHM.get("codiceComuneCatastale"));
+			//comunecatastale=codamm;
 			if (comunecatastale==null) {
             	comunecatastale="";
             }
@@ -242,6 +242,9 @@ public class MappingInsertFabIdeITA {
 			
 			String uriIdCatastale="http://dkm.fbk.eu/georeporter#A"+codamm +"_C" + comunecatastale + "_NE" + num + "_D" + den + "_S" + sub;
 			String uriParticella="http://dkm.fbk.eu/georeporter#PAE_A"+codamm+"_C" + comunecatastale + "_NE" + num + "_D" + den;
+			
+			//System.out.println("uriIdCatastale"+uriIdCatastale);
+			//System.out.println("uriParticella"+uriParticella);
 			
 			
 			//rigaTPar.setUririga("http://dkm.fbk.eu/georeporter#PAE_C" + comunecatastale + "_N" + num + "_D" + den);
