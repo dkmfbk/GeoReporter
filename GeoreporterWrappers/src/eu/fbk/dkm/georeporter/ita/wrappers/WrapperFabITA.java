@@ -178,11 +178,33 @@ public class WrapperFabITA {
 							valoriChiave.put(header.get(indice - 1)[i].toLowerCase(),
 									ControlloValore.controlloValore(tmpRiga[i]));
 							listaValoriChiave.add(valoriChiave);
+							
+							
 						} else {
-						campi.put(header.get(indice - 1)[i].toLowerCase(), tmpRiga[i]);
+
+							if ((header.get(indice - 1)[i].toLowerCase().equals("foglio"))
+									|| (header.get(indice - 1)[i].toLowerCase().equals("numero"))
+									|| (header.get(indice - 1)[i].toLowerCase().equals("denominatore"))
+									|| (header.get(indice - 1)[i].toLowerCase().equals("subalterno"))
+											&& (header.get(indice - 1)[i].toLowerCase() != null)) {
+								campi.put(header.get(indice - 1)[i].toLowerCase(),
+										ControlloValore.TolgoZeri(ControlloValore.controlloValore(tmpRiga[i])));
+							} else {
+
+								campi.put(header.get(indice - 1)[i].toLowerCase(),
+										ControlloValore.controlloValore(tmpRiga[i]));
+							}
+
 						}
 					}
-					settareElemento(indice, campi,listaValoriChiave);
+					settareElemento(indice, campi, listaValoriChiave);
+					
+					
+					
+					
+					
+					
+					
 				} else {
 					int rip = ((tmpRiga.length) - 7) / ((header.get(indice - 1).length) - 7);
 					System.out.println(((header.get(indice - 1).length) - 7));
