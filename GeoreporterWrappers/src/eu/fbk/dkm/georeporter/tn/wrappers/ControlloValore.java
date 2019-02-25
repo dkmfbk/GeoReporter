@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
+
 public class ControlloValore {
 
 	public static String controlloVIR(String val) {
@@ -47,7 +49,7 @@ public class ControlloValore {
 		return reportDate;
 	}
 
-	public static String TolgoZeri(String valore) {
+	public static String TolgoZeri_old(String valore) {
 		String tmp = valore;
 		if ((!valore.isEmpty()) && (valore.substring(0, 1).equals("0"))) {
 			tmp = (Integer.toString(Integer.parseInt(valore)));
@@ -55,6 +57,23 @@ public class ControlloValore {
 		return tmp;
 	}
 
+	public static String TolgoZeri(String valore) {
+		String tmp = valore;
+		if ((!valore.isEmpty())) {
+			tmp = StringUtils.stripStart(valore,"0");
+		}
+	//	System.out.println("valore= "+valore);
+	//	System.out.println("tmp= "+tmp);
+		
+		return tmp;
+	}
+	
+	
+	
+	
+	
+	
+	
 	public static String controlloValore(String valore) {
 		return valore.trim();
 	}
