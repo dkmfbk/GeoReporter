@@ -205,26 +205,64 @@ public class WrapperFabITA {
 					
 					
 					
-				} else {
-					int rip = ((tmpRiga.length) - 7) / ((header.get(indice - 1).length) - 7);
-					System.out.println(((header.get(indice - 1).length) - 7));
-					for (int j = 0; j < rip; j++) {
-						Map<String, String> campi2 = new HashMap<String, String>();
-						for (int i = 0; i < 6; i++) {
-							
-								valoriChiave.put(header.get(indice - 1)[i].toLowerCase(),
-										ControlloValore.controlloValore(tmpRiga[i]));
-								listaValoriChiave.add(valoriChiave);
-							
-							//campi2.put(header.get(indice - 1)[i].toLowerCase(), tmpRiga[i]);
-						}
-						for (int k = 6; k < ((header.get(indice - 1).length)); k++) {
-							campi2.put(header.get(indice - 1)[k].toLowerCase(),
-									tmpRiga[k + (((header.get(indice - 1).length) - 7) * j)]);
-						}
-						settareElemento(indice, campi2,listaValoriChiave);
-					}
-				}
+/*//				} else {
+//					int rip = ((tmpRiga.length) - 7) / ((header.get(indice - 1).length) - 7);
+//					System.out.println(((header.get(indice - 1).length) - 7));
+//					for (int j = 0; j < rip; j++) {
+//						Map<String, String> campi2 = new HashMap<String, String>();
+//						for (int i = 0; i < 6; i++) {
+//							
+//								valoriChiave.put(header.get(indice - 1)[i].toLowerCase(),
+//										ControlloValore.controlloValore(tmpRiga[i]));
+//								listaValoriChiave.add(valoriChiave);
+//							
+//							//campi2.put(header.get(indice - 1)[i].toLowerCase(), tmpRiga[i]);
+//						}
+//						for (int k = 6; k < ((header.get(indice - 1).length)); k++) {
+//							campi2.put(header.get(indice - 1)[k].toLowerCase(),
+//									tmpRiga[k + (((header.get(indice - 1).length) - 7) * j)]);
+//						}
+//						settareElemento(indice, campi2,listaValoriChiave);
+//					}
+//				}
+*/					} else {
+	int rip = ((tmpRiga.length) - 7) / ((header.get(indice - 1).length) - 7);
+	for (int j = 0; j < rip; j++) {
+		Map<String, String> campi2 = new HashMap<String, String>();
+		// Map<String, String> valoriChiave2 = new HashMap<String, String>();
+		for (int i = 0; i < 6; i++) {
+			valoriChiave.put(header.get(indice - 1)[i].toLowerCase(),
+					ControlloValore.controlloValore(tmpRiga[i]));
+			listaValoriChiave.add(valoriChiave);
+		}
+		for (int k = 6; k < ((header.get(indice - 1).length)); k++) {
+
+			if ((header.get(indice - 1)[k].toLowerCase().equals("foglio"))
+					|| (header.get(indice - 1)[k].toLowerCase().equals("numero"))
+					|| (header.get(indice - 1)[k].toLowerCase().equals("denominatore"))
+					|| (header.get(indice - 1)[k].toLowerCase().equals("subalterno"))
+							&& (header.get(indice - 1)[k].toLowerCase() != null)) {
+				campi2.put(header.get(indice - 1)[k].toLowerCase(),
+						ControlloValore.TolgoZeri(ControlloValore.controlloValore(
+								tmpRiga[k + (((header.get(indice - 1).length) - 7) * j)])));
+			} else {
+				campi2.put(header.get(indice - 1)[k].toLowerCase(), ControlloValore
+						.controlloValore(tmpRiga[k + (((header.get(indice - 1).length) - 7) * j)]));
+			}
+
+		}
+		settareElemento(indice, campi2, listaValoriChiave);
+	}
+}
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				}
 				rigaCorrente = reader.readLine();
 			}
