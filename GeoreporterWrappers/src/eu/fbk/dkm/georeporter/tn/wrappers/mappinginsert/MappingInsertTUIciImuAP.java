@@ -205,11 +205,24 @@ public class MappingInsertTUIciImuAP {
 		
 		
 		Map<String,String> nameMappingsIdentificativoCatastaleHM = new HashMap<String,String>();
+		Map<String,String> nameTributo_o_UtenzaHM = new HashMap<String,String>();
 		Map<String,String> namePersonaFisicaHM = new HashMap<String,String>();
 		Map<String,String> nameIndirizzoContribuenteHM = new HashMap<String,String>();
+		Map<String,String> nameIndirizzoRecapitoContribuenteHM = new HashMap<String,String>();
+		Map<String,String> nameIndirizzoUtenzaHM = new HashMap<String,String>();
 		
 	      
+
 		
+		
+		
+		
+		for (int i = 0; i < data2.getAttributi().size(); i++) {
+			nameTributo_o_UtenzaHM.put(data2.getAttributi().get(i).getMapping().split("#")[1], 
+					data2.getAttributi().get(i).getNome().split("#")[1]);
+		
+		}
+
 		
 		for (int i = 0; i < data8.getAttributi().size(); i++) {
 			nameMappingsIdentificativoCatastaleHM.put(data8.getAttributi().get(i).getMapping().split("#")[1], 
@@ -230,8 +243,16 @@ public class MappingInsertTUIciImuAP {
 		
 		}
 		
+		for (int i = 0; i < data6.getAttributi().size(); i++) {
+			nameIndirizzoRecapitoContribuenteHM.put(data6.getAttributi().get(i).getMapping().split("#")[1],
+					data6.getAttributi().get(i).getNome().split("#")[1]);
 		
+		}
+		for (int i = 0; i < data7.getAttributi().size(); i++) {
+			nameIndirizzoUtenzaHM.put(data7.getAttributi().get(i).getMapping().split("#")[1],
+					data7.getAttributi().get(i).getNome().split("#")[1]);
 		
+		}
 		
 		
 
@@ -397,7 +418,7 @@ public class MappingInsertTUIciImuAP {
 			// lista per le relazioni
 			List<Relazione> listRelAP = new ArrayList<Relazione>();
 			// ID UNIVOCO ??
-			String id = listICIIMU_AP.get(j).getValori().get("codutenza");
+			String id = listICIIMU_AP.get(j).getValori().get(nameTributo_o_UtenzaHM.get("codiceUtenza"));
 
 			// riga di tipo RIGATABELLA per PF
 			if (listICIIMU_AP.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale")).isEmpty() == false) {
@@ -414,7 +435,7 @@ public class MappingInsertTUIciImuAP {
 /*		    	reportValoreCodiciFiscali.incrementaValore();*/
 			}
 			// riga di tipo RIGATABELLA per IND C
-			if (listICIIMU_AP.get(j).getValori().get("indirizzocontribuente").isEmpty() == false) {
+			if (listICIIMU_AP.get(j).getValori().get(nameIndirizzoContribuenteHM.get("indirizzoCompleto")).isEmpty() == false) {
 				RigaTabella rigaTINDC = new RigaTabella();
 				rigaTINDC.setNometabella("http://dkm.fbk.eu/georeporter#" + data5.getIdTabella().getMapping());
 				rigaTINDC.setListaattributi(listAttributiINDC);
@@ -431,7 +452,9 @@ public class MappingInsertTUIciImuAP {
 				listRelAP.add(rel);
 			}
 			// riga di tipo RIGATABELLA per IND R
-			if (listICIIMU_AP.get(j).getValori().get("indirizzorecapitocontribuente").isEmpty() == false) {
+			//if (listICIIMU_AP.get(j).getValori().get("indirizzorecapitocontribuente").isEmpty() == false) {
+			if (listICIIMU_AP.get(j).getValori().get(nameIndirizzoRecapitoContribuenteHM.get("indirizzoCompleto"))!=null) {
+			
 				RigaTabella rigaTINDRC = new RigaTabella();
 				rigaTINDRC.setNometabella("http://dkm.fbk.eu/georeporter#" + data6.getIdTabella().getMapping());
 				rigaTINDRC.setListaattributi(listAttributiINDRC);
@@ -451,7 +474,7 @@ public class MappingInsertTUIciImuAP {
 				listRelAP.add(rel);
 			}
 			// riga di tipo RIGATABELLA per IND U
-			if (listICIIMU_AP.get(j).getValori().get("indirizzo").isEmpty() == false) {
+			if (listICIIMU_AP.get(j).getValori().get(nameIndirizzoUtenzaHM.get("indirizzoCompleto")).isEmpty() == false) {
 				RigaTabella rigaTINDU = new RigaTabella();
 				rigaTINDU.setNometabella("http://dkm.fbk.eu/georeporter#" + data7.getIdTabella().getMapping());
 				rigaTINDU.setListaattributi(listAttributiINDU);
@@ -486,8 +509,13 @@ public class MappingInsertTUIciImuAP {
 				String cc = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("comuneCatastale"));
 				String den = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("denominatore"));
 				String sub = listICIIMU_AP.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("subalterno"));
+				System.out.println("codiceAmministrativo= "+codiceAmministrativo);
+				System.out.println("cc= "+cc);
+				System.out.println("den= "+den);
+				System.out.println("sub= "+sub);
 				
-				
+				if (den==null)
+					den="";
 				RestCalls rc=new RestCalls();
 				IDCatastale idc=rc.getIDCatastale(codiceAmministrativo, cc, num, den, sub);
 				
@@ -522,7 +550,7 @@ public class MappingInsertTUIciImuAP {
 			rigaTUA.setUririga("http://dkm.fbk.eu/georeporter#TUAP_" + id);
 
 			// relazione TributiUtenza AbitazionePrincipale con CONTRIBUENTE
-			if (listICIIMU_AP.get(j).getValori().get("codfiscale").isEmpty() == false) {
+			if (listICIIMU_AP.get(j).getValori().get(namePersonaFisicaHM.get("codiceFiscale")).isEmpty() == false) {
 				Relazione rel = new Relazione();
 				rel.setNomerelazione("http://dkm.fbk.eu/georeporter#hasContribuente");
 				rel.setUriDomain("http://dkm.fbk.eu/georeporter#TUAP_" + id);
