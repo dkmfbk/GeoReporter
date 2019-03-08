@@ -206,12 +206,14 @@ public class MappingInsertFabIndirizzoITA {
 							tmp2.setNome(data.getAttributi().get(i).getNome());
 							tmp2.setMapping(data.getAttributi().get(i).getMapping());
 							tmp2.setTipo(data.getAttributi().get(i).getTipo());
-							tmp2.setValore(listIndirizzi.get(j).getValori().get("civico" + v));
+							tmp2.setValore(ControlloValore.TolgoZeri(listIndirizzi.get(j).getValori().get("civico" + v)));
+							
 							listAttributi.add(tmp2);
 							v++;
 						}
 					} else {
-						tmp.setValore(listIndirizzi.get(j).getValori().get(parts[1]));
+						tmp.setValore(ControlloValore.TolgoZeri(listIndirizzi.get(j).getValori().get(parts[1])));
+						System.out.println(tmp.getValore());
 						listAttributi.add(tmp);
 					}
 				}
@@ -227,6 +229,7 @@ public class MappingInsertFabIndirizzoITA {
 			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			long time = cal.getTimeInMillis();
 			String id_indirizzo="http://dkm.fbk.eu/georeporter#IND_" + time;
+		//	System.out.println(id_indirizzo);
 			rigaTIND.setUririga(id_indirizzo);
 
 			insertRiga(rigaTIND);
