@@ -68,6 +68,7 @@ public class WrapperTUIciImuAP {
 				} else {
 					//aggiungere controllo in caso di valore null
 					if(row.getCell(g) != null) {
+						System.out.println();
 						if (header[k].contains("data")) {
 							campi.put(header[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
 						} else if (header[k].equals("contribuente")) {
@@ -87,7 +88,24 @@ public class WrapperTUIciImuAP {
 								campi.put("nome_split", nome);
 							
 						   }}
+						} else if (header[k].equals("contrib")) {
+							String contribuente=row.getCell(g).getStringCellValue();
+							int count = StringUtils.countMatches(contribuente, "/");
+							if (count ==1){
+							System.out.println("contribuente="+ contribuente);
+							 int start = contribuente.indexOf('/');
+						   if (start>0) {   
+						String cognome=contribuente.substring(0, start);
+						String nome=contribuente.substring(start+1, contribuente.length());
+
+									//campi.put(header[k], ControlloValore.controlloDataEXCEL(row.getCell(g).getDateCellValue()));
+						System.out.println("nome="+nome);
+						System.out.println("cognome="+cognome);
+						campi.put("cognome_split", cognome);
+								campi.put("nome_split", nome);
 							
+						   }}
+								
 						} else {
 							campi.put(header[k], ControlloValore.controlloVIR(row.getCell(g).toString()));
 						}
