@@ -94,6 +94,10 @@ public String printWhereConditons() {
 	for (Rule rule : rules) {
 		if (rule.getOperator().equals("between")) {
 			rulestring= rulestring+"  ?"+getObject()+ " :" +rule.getId()+ " ?"+getObject() + "_"+rule.getId()+" . FILTER (?"+getObject() + "_"+rule.getId()+" >  "+rule.getValues().get(0)+" &&  ?"+getObject() + "_"+rule.getId()+" <  "+rule.getValues().get(1)+ " ) . ";
+		
+		}else if(rule.getOperator().equals("contains")){
+			rulestring= rulestring+"  ?"+getObject()+ " :" +rule.getId()+ " ?"+getObject() + "_"+rule.getId()+" . FILTER contains(?"+getObject() + "_"+rule.getId()+" , "+" "+rule.getValue()+" ) . ";	
+		
 		}else {
 		rulestring= rulestring+"  ?"+getObject()+ " :" +rule.getId()+ " ?"+getObject() + "_"+rule.getId()+" . FILTER (?"+getObject() + "_"+rule.getId()+" "+rule.getOperator()+" "+rule.getValue()+" ) . ";
 		}
