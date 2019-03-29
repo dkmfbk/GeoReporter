@@ -61,7 +61,7 @@
 {"mapping":"http://dkm.fbk.eu/georeporter#origineCodiceFiscale","nome":"http://dkm.fbk.eu/georeporter#originecodiceciscale","tipo":"http://www.w3.org/2001/XMLSchema#boolean"}],
 "idTabella":{"mapping":"PersonaFisica","nome":"PersonaFisica"}},
 {"attributi":[{"mapping":"http://dkm.fbk.eu/georeporter#barraEsponente","nome":"http://dkm.fbk.eu/georeporter#barr","tipo":"http://www.w3.org/2001/XMLSchema#string"},
-{"mapping":"http://dkm.fbk.eu/georeporter#cap","nome":"http://dkm.fbk.eu/georeporter#cap","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
+{"mapping":"http://dkm.fbk.eu/georeporter#cap","nome":"http://dkm.fbk.eu/georeporter#capcontribuente","tipo":"http://www.w3.org/2001/XMLSchema#integer"},
 {"mapping":"http://dkm.fbk.eu/georeporter#codiceAmministrativo","nome":"http://dkm.fbk.eu/georeporter#codcomune","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#nomeComune","nome":"http://dkm.fbk.eu/georeporter#comunecontribuente","tipo":"http://www.w3.org/2001/XMLSchema#string"},
 {"mapping":"http://dkm.fbk.eu/georeporter#civico","nome":"http://dkm.fbk.eu/georeporter#civico","tipo":"http://www.w3.org/2001/XMLSchema#string"},
