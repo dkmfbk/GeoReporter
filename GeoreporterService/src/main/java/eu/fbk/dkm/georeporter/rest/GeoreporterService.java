@@ -2146,6 +2146,236 @@ public class GeoreporterService {
 
 	
 	
+	@GET
+	@Path("/energiaui")
+	@Produces({ "application/javascript" })
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public List<TributiICI> getICI_IMU_UI(
+
+	public JSONWithPadding getContrattoEnergiaSuUI(@QueryParam("callback") String callback, @QueryParam("codui") String codUI
+
+	) {
+
+		
+		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<FornituraEnergia> listaEnergia = new ArrayList<FornituraEnergia>();
+
+		/// Soggetto soggetto =new Soggetto(); 
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ " select   ?energia ?idSiatelEnergiaDettaglio  ?spesaConsumo ?kwhFatturato ?denominazione ?numeroMesiFatturazione  ?tipoUtenzaEnergia" 
+					+ " where{ "
+
+					+ "     ?idcat a :IdentificativoCatastale .   "
+					+ "     ?idcat :hasUnitaImmobiliare :"+codUI+ " ." 
+					+ "     ?energia a :FornituraEnergia .   "
+					+ "     ?energia :hasPossibileIdentificativoCatastale ?idcat. "
+					//+ "     ?locaz :hasIndirizzoContribuente ?indirizzo. " 
+								
+					+ "   OPTIONAL{   ?energia :idSiatelEnergiaDettaglio ?idSiatelEnergiaDettaglio }. "
+					+ "   OPTIONAL{   ?energia :spesaConsumo ?spesaConsumo }. "
+					+ "   OPTIONAL{   ?energia :kwhFatturato ?kwhFatturato }. "
+					+ "   OPTIONAL{   ?energia :denominazione ?denominazione }. "
+					+ "   OPTIONAL{   ?energia :numeroMesiFatturazione ?numeroMesiFatturazione }. "
+					+ "   OPTIONAL{   ?energia :tipoUtenzaEnergia ?tipoUtenzaEnergia }. "
+						
+					
+					
+					+ " }";
+
+			//System.out.println(queryString);
+			TupleQuery tupleQuery;
+			int i = 0;
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value uriEnergia = bindingSet.getValue("energia");
+				Value idSiatelEnergiaDettaglio = bindingSet.getValue("idSiatelEnergiaDettaglio");
+				Value spesaConsumo = bindingSet.getValue("spesaConsumo");
+				Value kwhFatturato = bindingSet.getValue("kwhFatturato");
+				Value denominazione = bindingSet.getValue("denominazione");
+				
+				Value numeroMesiFatturazione = bindingSet.getValue("numeroMesiFatturazione");
+				Value tipoUtenzaEnergia = bindingSet.getValue("tipoUtenzaEnergia");
+				
+				
+				
+				
+				FornituraEnergia energia = new FornituraEnergia();
+
+				if (uriEnergia != null) {
+				//	locazione.setUri(urLocaz.stringValue());
+				}
+				if (idSiatelEnergiaDettaglio != null) {
+					energia.setIdSiatelEnergia(new Integer((idSiatelEnergiaDettaglio.stringValue())));
+				}
+				if (spesaConsumo != null) {
+					energia.setSpesaConsumo(new Integer((spesaConsumo.stringValue())));
+				}
+				if (kwhFatturato != null) {
+					energia.setKwFatturato(new Integer(kwhFatturato.stringValue()));
+				}
+				
+				if (denominazione != null) {
+					energia.setDenominazione(denominazione.stringValue());
+				}
+				if (numeroMesiFatturazione != null) {
+					energia.setNumeroMesiFatturazione(new Integer(numeroMesiFatturazione.stringValue()));
+				}
+				if (tipoUtenzaEnergia != null) {
+					energia.setTipoUtenzaEnergia(tipoUtenzaEnergia.stringValue());
+				}
+				listaEnergia.add(energia);
+			}
+			// qresult.close();
+			// connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		return new JSONWithPadding(new GenericEntity<List<FornituraEnergia	>>(listaEnergia) {
+		}, callback);
+		// return listaTributiICI;
+
+	}
+
+	
+	
+	@GET
+	@Path("/gasui")
+	@Produces({ "application/javascript" })
+	// @Produces(MediaType.APPLICATION_JSON)
+	// public List<TributiICI> getICI_IMU_UI(
+
+	public JSONWithPadding getContrattoGasSuUI(@QueryParam("callback") String callback, @QueryParam("codui") String codUI
+
+	) {
+
+		
+		// String springlesserverURL = "http://localhost:8080/openrdf-sesame";
+
+		// String springlesrepositoryID ="georeporter";
+
+		List<BindingSet> tuples = new ArrayList<BindingSet>();
+		List<FornituraGas> listaGas = new ArrayList<FornituraGas>();
+
+		/// Soggetto soggetto =new Soggetto(); 
+
+		Repository myRepository = new HTTPRepository(springlesserverURL, springlesrepositoryID);
+		try {
+			myRepository.initialize();
+
+			RepositoryConnection connection = myRepository.getConnection();
+
+			String queryString = queryStringPrefix
+
+					+ " select   ?gas ?idSiatelGasDettaglio  ?consumoFatturato ?denominazione ?numeroMesiFatturazione  ?tipoUtenzaGas" 
+					+ " where{ "
+
+					+ "     ?idcat a :IdentificativoCatastale .   "
+					+ "     ?idcat :hasUnitaImmobiliare :"+codUI+ " ." 
+					+ "     ?gas a :FornituraGas .   "
+					+ "     ?gas :hasPossibileIdentificativoCatastale ?idcat. "
+					//+ "     ?locaz :hasIndirizzoContribuente ?indirizzo. " 
+								
+					+ "   OPTIONAL{   ?gas :idSiatelGasDettaglio ?idSiatelGasDettaglio }. "
+			
+					+ "   OPTIONAL{   ?gas :consumoFatturato ?consumoFatturato }. "
+					+ "   OPTIONAL{   ?gas :denominazione ?denominazione }. "
+					+ "   OPTIONAL{   ?gas :numeroMesiFatturazione ?numeroMesiFatturazione }. "
+					+ "   OPTIONAL{   ?gas :tipoUtenzaGas ?tipoUtenzaGas }. "
+						
+					
+					
+					+ " }";
+
+			//System.out.println(queryString);
+			TupleQuery tupleQuery;
+			int i = 0;
+			tupleQuery = connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+			TupleQueryResult qresult = tupleQuery.evaluate();
+			while (qresult.hasNext()) {
+				BindingSet bindingSet = qresult.next();
+
+				Value urigas = bindingSet.getValue("gas");
+				Value idSiatelGasDettaglio = bindingSet.getValue("idSiatelGasDettaglio");
+			
+				Value consumoFatturato = bindingSet.getValue("consumoFatturato");
+				Value denominazione = bindingSet.getValue("denominazione");
+				
+				Value numeroMesiFatturazione = bindingSet.getValue("numeroMesiFatturazione");
+				Value tipoUtenzaGas = bindingSet.getValue("tipoUtenzaGas");
+				
+				
+				
+				
+				FornituraGas gas = new FornituraGas();
+
+				if (urigas != null) {
+				//	locazione.setUri(urLocaz.stringValue());
+				}
+				if (idSiatelGasDettaglio != null) {
+					gas.setIdSiatelGas(new Integer((idSiatelGasDettaglio.stringValue())));
+				}
+				
+				if (consumoFatturato != null) {
+					gas.setConsumoFatturato(new Integer(consumoFatturato.stringValue()));
+				}
+				
+				if (denominazione != null) {
+					gas.setDenominazione(denominazione.stringValue());
+				}
+				if (numeroMesiFatturazione != null) {
+					gas.setNumeroMesiFatturazione(new Integer(numeroMesiFatturazione.stringValue()));
+				}
+				if (tipoUtenzaGas != null) {
+					gas.setTipoUtenzaGas(tipoUtenzaGas.stringValue());
+				}
+				listaGas.add(gas);
+			}
+			// qresult.close();
+			// connection.close();
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+		return new JSONWithPadding(new GenericEntity<List<FornituraGas	>>(listaGas) {
+		}, callback);
+		// return listaTributiICI;
+
+	}
+
 	
 	
 	
