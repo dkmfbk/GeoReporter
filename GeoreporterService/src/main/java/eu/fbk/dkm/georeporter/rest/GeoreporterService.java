@@ -2174,15 +2174,19 @@ public class GeoreporterService {
 
 			String queryString = queryStringPrefix
 
-					+ " select   ?energia ?idSiatelEnergiaDettaglio  ?spesaConsumo ?kwhFatturato ?denominazione ?numeroMesiFatturazione  ?tipoUtenzaEnergia" 
+					+ " select   ?energia ?idSiatelEnergiaDettaglio  ?spesaConsumo ?kwhFatturato ?nome ?cognome ?denominazionetit ?denominazione ?numeroMesiFatturazione  ?tipoUtenzaEnergia" 
 					+ " where{ "
 
 					+ "     ?idcat a :IdentificativoCatastale .   "
 					+ "     ?idcat :hasUnitaImmobiliare :"+codUI+ " ." 
 					+ "     ?energia a :FornituraEnergia .   "
 					+ "     ?energia :hasPossibileIdentificativoCatastale ?idcat. "
-					//+ "     ?locaz :hasIndirizzoContribuente ?indirizzo. " 
-								
+					//+ "     ?locaz :hasIndirizzoContribuente ?indirizzo. "
+					+ "     ?energia :hasTitolareContratto ?tit. " 
+					+ "  OPTIONAL{    ?tit :nome ?nome. }"
+					+ "  OPTIONAL{    ?tit :cognome ?cognome. }"
+					+ "  OPTIONAL{    ?tit :denominazione ?denominazionetit. }"
+					
 					+ "   OPTIONAL{   ?energia :idSiatelEnergiaDettaglio ?idSiatelEnergiaDettaglio }. "
 					+ "   OPTIONAL{   ?energia :spesaConsumo ?spesaConsumo }. "
 					+ "   OPTIONAL{   ?energia :kwhFatturato ?kwhFatturato }. "
@@ -2206,8 +2210,10 @@ public class GeoreporterService {
 				Value idSiatelEnergiaDettaglio = bindingSet.getValue("idSiatelEnergiaDettaglio");
 				Value spesaConsumo = bindingSet.getValue("spesaConsumo");
 				Value kwhFatturato = bindingSet.getValue("kwhFatturato");
+				Value nome = bindingSet.getValue("nome");
+				Value cognome = bindingSet.getValue("cognome");
+				Value denominazionetit = bindingSet.getValue("denominazionetit");
 				Value denominazione = bindingSet.getValue("denominazione");
-				
 				Value numeroMesiFatturazione = bindingSet.getValue("numeroMesiFatturazione");
 				Value tipoUtenzaEnergia = bindingSet.getValue("tipoUtenzaEnergia");
 				
@@ -2228,7 +2234,15 @@ public class GeoreporterService {
 				if (kwhFatturato != null) {
 					energia.setKwFatturato(new Integer(kwhFatturato.stringValue()));
 				}
-				
+				if (nome != null) {
+					energia.setNome((nome.stringValue()));
+				}
+				if (cognome != null) {
+					energia.setCognome((cognome.stringValue()));
+				}
+				if (denominazionetit != null) {
+					energia.setDenominazionetit(denominazionetit.stringValue());
+				}
 				if (denominazione != null) {
 					energia.setDenominazione(denominazione.stringValue());
 				}
@@ -2291,7 +2305,7 @@ public class GeoreporterService {
 
 			String queryString = queryStringPrefix
 
-					+ " select   ?gas ?idSiatelGasDettaglio  ?consumoFatturato ?denominazione ?numeroMesiFatturazione  ?tipoUtenzaGas" 
+					+ " select   ?gas ?idSiatelGasDettaglio ?nome ?cognome ?denominazionetit ?consumoFatturato ?denominazione ?numeroMesiFatturazione  ?tipoUtenzaGas" 
 					+ " where{ "
 
 					+ "     ?idcat a :IdentificativoCatastale .   "
@@ -2299,7 +2313,10 @@ public class GeoreporterService {
 					+ "     ?gas a :FornituraGas .   "
 					+ "     ?gas :hasPossibileIdentificativoCatastale ?idcat. "
 					//+ "     ?locaz :hasIndirizzoContribuente ?indirizzo. " 
-								
+					+ "     ?gas :hasTitolareContratto ?tit. "
+					+ "    OPTIONAL{   ?tit :nome ?nome. } "
+					+ "  OPTIONAL{     ?tit :cognome ?cognome.} "
+					+ "  OPTIONAL{    ?tit :denominazione ?denominazionetit. }"
 					+ "   OPTIONAL{   ?gas :idSiatelGasDettaglio ?idSiatelGasDettaglio }. "
 			
 					+ "   OPTIONAL{   ?gas :consumoFatturato ?consumoFatturato }. "
@@ -2320,6 +2337,10 @@ public class GeoreporterService {
 				BindingSet bindingSet = qresult.next();
 
 				Value urigas = bindingSet.getValue("gas");
+				Value nome = bindingSet.getValue("nome");
+				Value cognome = bindingSet.getValue("cognome");
+				Value denominazionetit = bindingSet.getValue("denominazionetit");
+				
 				Value idSiatelGasDettaglio = bindingSet.getValue("idSiatelGasDettaglio");
 			
 				Value consumoFatturato = bindingSet.getValue("consumoFatturato");
@@ -2336,6 +2357,17 @@ public class GeoreporterService {
 				if (urigas != null) {
 				//	locazione.setUri(urLocaz.stringValue());
 				}
+				if (nome != null) {
+					gas.setNome(((nome.stringValue())));
+				}
+				
+				if (cognome != null) {
+					gas.setCognome(((cognome.stringValue())));
+				}
+				if (denominazionetit != null) {
+					gas.setDenominazionetit(denominazionetit.stringValue());
+				}
+					
 				if (idSiatelGasDettaglio != null) {
 					gas.setIdSiatelGas(new Integer((idSiatelGasDettaglio.stringValue())));
 				}
@@ -2472,7 +2504,7 @@ public class GeoreporterService {
 			for (Relazione relazione : tableRelazioni_List) {
 				if (!esiste.checkEsiste(relazione.getNomerelazione())){
 				//Literal lit = getLiteral(attributo, factory);
-				//System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
+				System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
 				con.add( factory.createURI(relazione.getUriDomain()), factory.createURI(relazione.getNomerelazione()), factory.createURI(relazione.getUriRange()));
 				
 				//System.out.println(factory.createURI(relazione.getUriDomain())+" "+ factory.createURI(relazione.getNomerelazione())+" "+  factory.createURI(relazione.getUriRange()));
@@ -3508,7 +3540,7 @@ public class GeoreporterService {
 	
 	public List<TipoConCoordinate> getListaTipoConCoordinate(
 
-		String tipo, String relazione
+		String tipo, String relazione, String relazionesoggetto
 			
 			
 	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
@@ -3527,9 +3559,10 @@ public class GeoreporterService {
 
 			String queryString = queryStringPrefix 
 
-			+"	SELECT   ?idTipo ?idIndirizzo ?longitudine ?latitudine WHERE {"     
+			+"	SELECT   ?idTipo ?idIndirizzo ?sog ?longitudine ?latitudine WHERE {"     
 			+"    ?idTipo a :"+tipo+" .    "
 			+"    ?idTipo :"+relazione+" ?idIndirizzo . "
+			+"    ?idTipo :"+relazionesoggetto+" ?sog . "
 			+"    ?idIndirizzo :coordinateLong ?longitudine . "
 			+"    ?idIndirizzo :coordinateLat ?latitudine "
 			+ "} ";
@@ -3547,6 +3580,7 @@ public class GeoreporterService {
 				BindingSet bindingSet = qresult.next();
 
 				Value idTipo = bindingSet.getValue("idTipo");
+				Value sog = bindingSet.getValue("sog");
 				Value idIndirizzo = bindingSet.getValue("idIndirizzo");
 				Value longitudine = bindingSet.getValue("longitudine");
 				Value latitudine = bindingSet.getValue("latitudine");
@@ -3557,7 +3591,9 @@ public class GeoreporterService {
 				if (idTipo != null) {
 					tcc.setIdTipo(idTipo.stringValue());
 				}
-
+				if (sog != null) {
+					tcc.setSoggetto(sog.stringValue());
+				}
 				if (idIndirizzo != null) {
 					tcc.setIdIndirizzo(idIndirizzo.stringValue());
 				}
@@ -3617,7 +3653,21 @@ public class GeoreporterService {
 
 				String queryString = queryStringPrefix 
 
-				+"	SELECT   ?idic ?idui ?idIndirizzo ?longitudine ?latitudine WHERE {"     
+//				+"	SELECT   ?idic ?idui ?idIndirizzo ?longitudine ?latitudine WHERE {"     
+//				+"    ?idic a :IdentificativoCatastale .  "
+//				+"    ?idic :hasUnitaImmobiliare ?idui . "
+//				+"    ?idui :hasIndirizzo ?idIndirizzo ."
+//				+"    ?idIndirizzo :coordinateLong ?longitudine . "
+//				+"    ?idIndirizzo :coordinateLat ?latitudine "
+//				+ "} ";
+
+
+				
+				+"	SELECT  DISTINCT ?idic ?idui ?idIndirizzo ?sog ?longitudine ?latitudine WHERE {"     
+			
+				+"?tit a :Titolarita . "
+				+"		    ?tit :hasSoggetto ?sog . "
+				+"		    ?tit :hasIdentificativoCatastale ?idic . "
 				+"    ?idic a :IdentificativoCatastale .  "
 				+"    ?idic :hasUnitaImmobiliare ?idui . "
 				+"    ?idui :hasIndirizzo ?idIndirizzo ."
@@ -3625,7 +3675,10 @@ public class GeoreporterService {
 				+"    ?idIndirizzo :coordinateLat ?latitudine "
 				+ "} ";
 
-
+				
+				
+				
+		
 				
 				System.out.println(queryString);
 				TupleQuery tupleQuery;
@@ -3641,6 +3694,7 @@ public class GeoreporterService {
 
 					Value idic = bindingSet.getValue("idic");
 					Value idui = bindingSet.getValue("idui");
+					Value sog = bindingSet.getValue("sog");
 					Value idIndirizzo = bindingSet.getValue("idIndirizzo");
 					Value longitudine = bindingSet.getValue("longitudine");
 					Value latitudine = bindingSet.getValue("latitudine");
@@ -3653,6 +3707,9 @@ public class GeoreporterService {
 					}
 					if (idui != null) {
 						tcc.setIdUI(idui.stringValue());
+					}
+					if (sog != null) {
+						tcc.setSoggetto(sog.stringValue());
 					}
 					if (idIndirizzo != null) {
 						tcc.setIdIndirizzo(idIndirizzo.stringValue());
@@ -4540,28 +4597,29 @@ indnorm.setIndirizzoNormalizzato(listaindirizzinormalizzati);
 	public  String cercaidcatastalevicino(
 			@QueryParam("callback") String callback,
 			@QueryParam("tipo") String tipo,
-			@QueryParam("relazione") String relazione
-	
+			@QueryParam("relazione") String relazione,
+			@QueryParam("relazionesoggetto") String relazionesoggetto
 	// @QueryParam("springlesrepositoryID") String springlesrepositoryID
 	) {
 
 		// String springlesrepositoryID ="georeporter";
 		String returno="";	
-		
-		List<TipoConCoordinate> listaTipoConCoordinate=getListaTipoConCoordinate(tipo, relazione);
+	
+		List<TipoConCoordinate> listaTipoConCoordinate=getListaTipoConCoordinate(tipo, relazione,relazionesoggetto);
+	
 		List<UIConCoordinate> listaUIConCoordinate=getListaUIConCoordinate();
-			
+	
 		
 		for (TipoConCoordinate tipoConCoordinate : listaTipoConCoordinate) {
-			System.out.println(tipoConCoordinate.getIdIndirizzo());
-			System.out.println(tipoConCoordinate.getIdTipo());
-			System.out.println(tipoConCoordinate.getLatitude());
-			System.out.println(tipoConCoordinate.getLongitude());
+		//	System.out.println(tipoConCoordinate.getIdIndirizzo());
+		//	System.out.println(tipoConCoordinate.getIdTipo());
+		//	System.out.println(tipoConCoordinate.getLatitude());
+		//	System.out.println(tipoConCoordinate.getLongitude());
 			
 			
 			
 			String icConDistanzaMinima=getICCondistanzaMinima(tipoConCoordinate,listaUIConCoordinate);
-			
+			System.out.println("icConDistanzaMinima="+icConDistanzaMinima);
 			 RigaTabella rigaTFL= new RigaTabella();
 			 rigaTFL.setNometabella("http://dkm.fbk.eu/georeporter#"+tipo);
 			 rigaTFL.setUririga(tipoConCoordinate.getIdTipo());
@@ -4574,6 +4632,7 @@ indnorm.setIndirizzoNormalizzato(listaindirizzinormalizzati);
 				rigaTFL.setListarelazioni(listRelCFL);
                 insertTable(rigaTFL);
 			System.out.println(icConDistanzaMinima);
+		
 		}
 		return returno;
 	
@@ -4583,13 +4642,15 @@ indnorm.setIndirizzoNormalizzato(listaindirizzinormalizzati);
 	
 	private String getICCondistanzaMinima(TipoConCoordinate tipoConCoordinate , List<UIConCoordinate> listaUIConCoordinate) {
 		
-		String result="";
+		String result="http://dkm.fbk.eu/georeporter#A0_C0_N0_D0_S0";
 		
 		
 		double distanzaminima= calcolaDistanzaMinimaFraCoordinate(tipoConCoordinate.getLatitude(),tipoConCoordinate.getLongitude(),listaUIConCoordinate.get(0).getLatitude(),listaUIConCoordinate.get(0).getLongitude());	
-		 result= listaUIConCoordinate.get(0).getIdIC();
+		
 		for (UIConCoordinate uiConCoordinate : listaUIConCoordinate) {
-			System.out.println("ListaUICoordinate"+uiConCoordinate.getLatitude());
+			
+			if (uiConCoordinate.getSoggetto().equals(tipoConCoordinate.getSoggetto())) {
+		//	System.out.println("ListaUICoordinate"+uiConCoordinate.getLatitude());
 			double distanzaminimatmp= calcolaDistanzaMinimaFraCoordinate(tipoConCoordinate.getLatitude(),tipoConCoordinate.getLongitude(),uiConCoordinate.getLatitude(),uiConCoordinate.getLongitude());
 		
 			System.out.println("distanzaminimatmp= "+distanzaminimatmp);
@@ -4597,8 +4658,12 @@ indnorm.setIndirizzoNormalizzato(listaindirizzinormalizzati);
 			
 			distanzaminima=distanzaminimatmp;
 		    result= uiConCoordinate.getIdIC();
+		     }
 		}
 		}
+		
+		
+		
 		return result;
 		
 	}
