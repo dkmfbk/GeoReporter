@@ -16,6 +16,9 @@ public class FornituraGas {
 	Integer ConsumoFatturato;
 	String TipoUtenzaGas;
 	Integer IdSiatelGas;
+	String Nome;
+	String Cognome;
+	String denominazionetit;
 	public String getDenominazione() {
 		return Denominazione;
 	}
@@ -69,6 +72,24 @@ public class FornituraGas {
 	}
 	public void setIdSiatelGas(Integer idSiatelGas) {
 		IdSiatelGas = idSiatelGas;
+	}
+	public String getNome() {
+		return Nome;
+	}
+	public void setNome(String nome) {
+		Nome = nome;
+	}
+	public String getCognome() {
+		return Cognome;
+	}
+	public void setCognome(String cognome) {
+		Cognome = cognome;
+	}
+	public String getDenominazionetit() {
+		return denominazionetit;
+	}
+	public void setDenominazionetit(String denominazionetit) {
+		this.denominazionetit = denominazionetit;
 	}
 	
 	

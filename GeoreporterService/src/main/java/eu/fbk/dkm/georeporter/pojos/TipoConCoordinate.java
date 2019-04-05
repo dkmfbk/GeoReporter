@@ -14,6 +14,8 @@ package eu.fbk.dkm.georeporter.pojos;
 		String idIndirizzo;
 		float longitude;
 		float latitude;
+		String soggetto;
+		
 		public String getIdTipo() {
 			return idTipo;
 		}
@@ -37,6 +39,12 @@ package eu.fbk.dkm.georeporter.pojos;
 		}
 		public void setLatitude(float latitude) {
 			this.latitude = latitude;
+		}
+		public String getSoggetto() {
+			return soggetto;
+		}
+		public void setSoggetto(String soggetto) {
+			this.soggetto = soggetto;
 		}
 		
 		

@@ -1,12 +1,17 @@
 package eu.fbk.dkm.georeporter.pojos;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
-//@XmlType(propOrder = { "id", "nome", "cognome", "eta", "telefono", "email"  })
+//@XmlType(propOrder = { "nome", "cognome", "denominazionetit","kwFatturato", "spesaConsumo" ,"denominazione"})
 public class FornituraEnergia {
 
 	String uri;
+	String nome;
+	String cognome;
+	String denominazionetit;
+	
 	String denominazione;
 	String comune;
 	String codComune;
@@ -18,6 +23,8 @@ public class FornituraEnergia {
 	Integer kwFatturato;
 	Integer spesaConsumo;
 	Integer idSiatelEnergia;
+
+	
 	public String getUri() {
 		return uri;
 	}
@@ -89,6 +96,24 @@ public class FornituraEnergia {
 	}
 	public void setIdSiatelEnergia(Integer idSiatelEnergia) {
 		this.idSiatelEnergia = idSiatelEnergia;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getCognome() {
+		return cognome;
+	}
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+	public String getDenominazionetit() {
+		return denominazionetit;
+	}
+	public void setDenominazionetit(String denominazionetit) {
+		this.denominazionetit = denominazionetit;
 	}
 	
 	
