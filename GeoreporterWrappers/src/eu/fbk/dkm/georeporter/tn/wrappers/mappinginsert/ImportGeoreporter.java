@@ -229,18 +229,18 @@ public static void main(String[] args) {
 		/////////////////////////// GUAGNANO ////////////////////////////////////////////////////////	
 			
 //			importgr.importaUnitaImmobiliariITA1("file/Guagnano/UnitaImmobiliari/E2271394312_1.FAB","file/Guagnano/UnitaImmobiliari/headerfilefabITA.csv","file/Guagnano/UnitaImmobiliari/mappingFabbricatiUIITA.json");
-//    	   	importgr.importaUnitaImmobiliariITA2("file/Guagnano/UnitaImmobiliari/E2271394312_1.FAB","file/Guagnano/UnitaImmobiliari/headerfilefabITA.csv","file/Guagnano/UnitaImmobiliari/mappingFabbricatiUIITA.json");
-	//		importgr.importaUnitaImmobiliariITA3("file/Guagnano/UnitaImmobiliari/E2271394312_1.FAB","file/Guagnano/UnitaImmobiliari/headerfilefabITA.csv","file/Guagnano/UnitaImmobiliari/mappingFabbricatiUIITA.json");
+    	   	//importgr.importaUnitaImmobiliariITA2("file/Guagnano/UnitaImmobiliari/E2271394312_1.FAB","file/Guagnano/UnitaImmobiliari/headerfilefabITA.csv","file/Guagnano/UnitaImmobiliari/mappingFabbricatiUIITA.json");
+			//importgr.importaUnitaImmobiliariITA3("file/Guagnano/UnitaImmobiliari/E2271394312_1.FAB","file/Guagnano/UnitaImmobiliari/headerfilefabITA.csv","file/Guagnano/UnitaImmobiliari/mappingFabbricatiUIITA.json");
 			
-		    importgr.importaTributiUtenzaICI_IMU_AbitazionePrincipale("file/Guagnano/ICI_IMU/UTENZE IMMOBILI3.xls","file/Guagnano/ICI_IMU/mappingICIIMU.json");
-//            importgr.importaSoggettiFabbricatiITA("file/Guagnano/UnitaImmobiliariSoggetti/E2271394312_1.SOG","file/Guagnano/UnitaImmobiliariSoggetti/headerfilesogITA.csv","file/Guagnano/UnitaImmobiliariSoggetti/mappingSoggettiFabbricatiITA.json");
+
+ //           importgr.importaSoggettiFabbricatiITA("file/Guagnano/UnitaImmobiliariSoggetti/E2271394312_1.SOG","file/Guagnano/UnitaImmobiliariSoggetti/headerfilesogITA.csv","file/Guagnano/UnitaImmobiliariSoggetti/mappingSoggettiFabbricatiITA.json");
 //			importgr.importaTitolaritaFabbricatiITA("file/Guagnano/UnitaImmobiliariTitolarita/E2271394312_1.TIT","file/Guagnano/UnitaImmobiliariTitolarita/headerfiletitITA.csv","file/Guagnano/UnitaImmobiliariTitolarita/mappingTitolaritaFabITA.json"); 
-//			importgr.importaParticelleFondiarieITA( "file/Guagnano/ParticelleFondiarie/A281305835_1.TER","file/Guagnano/ParticelleFondiarie/headerfileparfonITA.csv","file/Guagnano/ParticelleFondiarie/mappingParticellaFondiariaITA.json");				
-//		    importgr.importaSoggettiFabbricatiITA("file/Guagnano/ParticelleFondiarieSoggetti/A281305835_1.SOG","file/Guagnano/ParticelleFondiarieSoggetti/headerfilesogfonITA.csv","file/Guagnano/ParticelleFondiarieSoggetti/mappingSoggettiFondiariaITA.json");
-//			importgr.importaTitolaritaFabbricatiITA("file/Guagnano/ParticelleFondiarieTitolarita/A281305835_1.TIT","file/Guagnano/ParticelleFondiarieTitolarita/headerfiletitfonITA.csv","file/Guagnano/ParticelleFondiarieTitolarita/mappingTitolaritaFondiariaITA.json"); 
+//			importgr.importaParticelleFondiarieITA( "file/Guagnano/ParticelleFondiarie/E2271487579_1.TER","file/Guagnano/ParticelleFondiarie/headerfileparfonITA.csv","file/Guagnano/ParticelleFondiarie/mappingParticellaFondiariaITA.json");				
+//		    importgr.importaSoggettiFabbricatiITA("file/Guagnano/ParticelleFondiarieSoggetti/E2271487579_1.SOG","file/Guagnano/ParticelleFondiarieSoggetti/headerfilesogfonITA.csv","file/Guagnano/ParticelleFondiarieSoggetti/mappingSoggettiFondiariaITA.json");
+//			importgr.importaTitolaritaFabbricatiITA("file/Guagnano/ParticelleFondiarieTitolarita/E2271487579_1.TIT","file/Guagnano/ParticelleFondiarieTitolarita/headerfiletitfonITA.csv","file/Guagnano/ParticelleFondiarieTitolarita/mappingTitolaritaFondiariaITA.json"); 
 			
 	
-		
+			//	    importgr.importaTributiUtenzaICI_IMU_AbitazionePrincipale("file/Guagnano/ICI_IMU/UTENZE IMMOBILI3.xls","file/Guagnano/ICI_IMU/mappingICIIMU.json");		
 		
 		
 		
