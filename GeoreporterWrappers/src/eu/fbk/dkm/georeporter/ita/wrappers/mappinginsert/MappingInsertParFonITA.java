@@ -268,9 +268,10 @@ public MappingInsertParFonITA(String targetURL_){
 			
 			List<Relazione> listRelPartIdeCat = new ArrayList<Relazione>();
 
-		   String cc = listParticella.get(j).getListaValoriChiave().get(0).get(nameMappingsParticellaHM.get("codiceComuneCatastale"));
+	//	   String cc = listParticella.get(j).getListaValoriChiave().get(0).get(nameMappingsParticellaHM.get("codiceComuneCatastale"));
+			   String cc = listParticella.get(j).getValori().get(nameMappingsIdentificativoCatastaleHM.get("foglio"));
 		//	String cc="";
-		
+			   System.out.println("CODICE COMUNE CATASTALE="+cc);
 			
 		  //  String tipoparticellat = listParticella.get(j).getListaValoriChiave().get(0).get("tipoparticellat");
 			//String tipoparticella = listParticella.get(j).getValori().get("tipoparticella");
